@@ -1,0 +1,26 @@
+<div class="ngx-progress-bar"
+  [class.progressing-foreground]="showForeground"
+  [class.foreground-closing]="foregroundClosing"></div>
+
+<div class="ngx-overlay"
+  [style.background-color]="overlayColor"
+  [class.progressing-foreground]="showForeground"
+  [class.foreground-closing]="foregroundClosing">
+  <div class="ngx-foreground-spinner" [style.width]="fgSize"
+    [style.height]="fgSize" [style.color]="fgColor">
+    <div [class]="fgSpinnerClass">
+      <div *ngFor="let div of fgDivs"></div>
+    </div>
+  </div>
+  <div class="ngx-loading-text"></div>
+</div>
+
+<div class="ngx-background-spinner"
+  [class.progressing-background]="showBackground"
+  [class.background-closing]="backgroundClosing"
+  [style.width]="bgSize" [style.height]="bgSize"
+  [style.color]="bgColor" [style.opacity]="bgOpacity">
+  <div [class]="bgSpinnerClass">
+    <div *ngFor="let div of bgDivs"></div>
+  </div>
+</div>

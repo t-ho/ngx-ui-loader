@@ -1,6 +1,14 @@
 # ngx-progress
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
+A customizable loader/spinner and progress bar for Angular 4, 5(tested) and 6+(tested) applications - AoT compatible.
+
+## Demo
+
+Live demo [here](https://ngx-progress-demo.stackblitz.io).
+
+Play with **ngx-gravatar** and **Angular 5** [here](https://stackblitz.com/edit/ngx-progress-demo) on stackblitz.
+
+Play with **ngx-gravatar** and **Angular 6** [here](https://stackblitz.com/edit/ngx-progress-demo-angular-6) on stackblitz.
 
 ## Development server
 

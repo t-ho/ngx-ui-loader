@@ -1,8 +1,48 @@
 {
   "name": "ngx-progress",
+  "description": "A customizable loader/spinner and progress bar for Angular 4, 5(tested) and 6+(tested) applications - AoT compatible.",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/t-ho/ngx-progress.git"
+  },
+  "author": "t-ho <toan.hmt@gmail.com>",
+  "license": "MIT",
+  "private": false,
   "peerDependencies": {
-    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
-    "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
-  }
+    "@angular/common": ">=4.4.0",
+    "@angular/core": ">=4.4.0"
+  },
+  "keywords": [
+    "Angular",
+    "Angular 5",
+    "Angular5",
+    "Angular 6",
+    "Angular 6",
+    "Angular6",
+    "ng",
+    "ngx",
+    "ngx-progress",
+    "ngx-loader",
+    "loader",
+    "loading",
+    "spinner",
+    "ngx-loading",
+    "ngx-spinner",
+    "progress bar",
+    "loader AoT compatible",
+    "Angular 5 loader",
+    "Angular 5 loading",
+    "Angular 5 spinner",
+    "Angular 5 progress bar",
+    "Angular 6 loader",
+    "Angular 6 loading",
+    "Angular 6 spinner",
+    "Angular 6 progress bar",
+    "Angular loader",
+    "Angular loading",
+    "Angular spinner",
+    "Angular progress bar",
+    "AoT"
+  ]
 }

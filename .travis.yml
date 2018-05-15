@@ -19,5 +19,6 @@ before_script:
 
 script: 
   - ng lint
+  - ng build ngx-progress
   - ng test --watch false -cc
   - ng build --prod
