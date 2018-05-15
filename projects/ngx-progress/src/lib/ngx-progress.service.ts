@@ -1,11 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { INTERVAL, DEFAULT_ID } from './ngx-progress.contants';
+import { INTERVAL, DEFAULT_ID, DEFAULT_CONFIG } from './ngx-progress.contants';
+import { NGX_PROGRESS_CONFIG_TOKEN } from './ngx-progress-config.token';
+import { NgxProgressConfig } from './ngx-progress-config';
 
 @Injectable()
 export class NgxProgressService {
 
+  private defaultConfig: NgxProgressConfig;
   private foregroundQueue: any;
   private backgroundQueue: any;
   private fgTimeoutHandler: any;
@@ -21,7 +24,13 @@ export class NgxProgressService {
   foregroundClosing: Observable<boolean>;
   backgroundClosing: Observable<boolean>;
 
-  constructor() {
+  constructor(@Optional() @Inject(NGX_PROGRESS_CONFIG_TOKEN) private progressConfig: NgxProgressConfig) {
+    this.defaultConfig = Object.assign({}, DEFAULT_CONFIG);
+
+    if (this.progressConfig) {
+      this.defaultConfig = { ...this.defaultConfig, ...this.progressConfig };
+    }
+
     this.foregroundQueue = {};
     this.backgroundQueue = {};
     this._showForeground = new BehaviorSubject<boolean>(false);
@@ -32,6 +41,10 @@ export class NgxProgressService {
     this.foregroundClosing = this._foregroundClosing.asObservable();
     this._backgroundClosing = new BehaviorSubject<boolean>(false);
     this.backgroundClosing = this._backgroundClosing.asObservable();
+  }
+
+  getDefaultConfig(): NgxProgressConfig {
+    return this.defaultConfig;
   }
 
   isActive() {

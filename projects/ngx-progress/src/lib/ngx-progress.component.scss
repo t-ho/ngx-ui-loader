@@ -1,5 +1,6 @@
 $loadingTextColor: #FFFFFF;
 $loadingTextFontSize: 1.2em;
+$loadingTextFontWeight: 400;
 $logoSize: 96px;
 $overlayColor: rgba(40, 40, 40, 0.8);
 $progressBarColor: #00ACC1;
@@ -112,7 +113,7 @@ $spinnerSize: 60px;
   margin: 0;
   transform: translate(-50%, -50%);
   font-family: sans-serif;
-  font-weight: 500;
+  font-weight: $loadingTextFontWeight;
   font-size: $loadingTextFontSize;
   color: $loadingTextColor;
 }

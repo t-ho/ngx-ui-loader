@@ -8,8 +8,8 @@ export interface NgxProgressConfig {
   fgsType?: string;
   logoUrl?: string;
   overlayColor?: string;
-  progressBarHeight: number;
-  progressBarColor: string;
+  progressBarHeight?: number;
+  progressBarColor?: string;
   text?: string;
   textColor?: string;
 }

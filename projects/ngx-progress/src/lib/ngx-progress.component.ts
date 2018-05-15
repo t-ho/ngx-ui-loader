@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, SimpleChange, OnDestroy } from '@angular/core';
 import { NgxProgressService } from './ngx-progress.service';
-import { SPINNER, SPINNER_TYPES, DEFAULT_CONFIG } from './ngx-progress.contants';
+import { SPINNER, SPINNER_TYPES } from './ngx-progress.contants';
 import { Observable, Subscription } from 'rxjs';
+import { NgxProgressConfig } from './ngx-progress-config';
 
 @Component({
   selector: 'ngx-progress',
@@ -38,20 +39,23 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
   foregroundClosingWatcher: Subscription;
   backgroundClosingWatcher: Subscription;
 
+  defaultConfig: NgxProgressConfig;
+
   constructor(
     private ngxProgressService: NgxProgressService) {
 
-    this.bgsColor = DEFAULT_CONFIG.bgsColor;
-    this.bgsOpacity = DEFAULT_CONFIG.bgsOpacity;
-    this.bgsSize = DEFAULT_CONFIG.bgsSize;
-    this.fgsColor = DEFAULT_CONFIG.fgsColor;
-    this.fgsSize = DEFAULT_CONFIG.fgsSize;
-    this.logoUrl = DEFAULT_CONFIG.logoUrl;
-    this.overlayColor = DEFAULT_CONFIG.overlayColor;
-    this.progressBarColor = DEFAULT_CONFIG.progressBarColor;
-    this.progressBarHeight = DEFAULT_CONFIG.progressBarHeight;
-    this.text = DEFAULT_CONFIG.text;
-    this.textColor = DEFAULT_CONFIG.textColor;
+    this.defaultConfig = this.ngxProgressService.getDefaultConfig();
+    this.bgsColor = this.defaultConfig.bgsColor;
+    this.bgsOpacity = this.defaultConfig.bgsOpacity;
+    this.bgsSize = this.defaultConfig.bgsSize;
+    this.fgsColor = this.defaultConfig.fgsColor;
+    this.fgsSize = this.defaultConfig.fgsSize;
+    this.logoUrl = this.defaultConfig.logoUrl;
+    this.overlayColor = this.defaultConfig.overlayColor;
+    this.progressBarColor = this.defaultConfig.progressBarColor;
+    this.progressBarHeight = this.defaultConfig.progressBarHeight;
+    this.text = this.defaultConfig.text;
+    this.textColor = this.defaultConfig.textColor;
   }
 
   ngOnInit() {
@@ -80,10 +84,10 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
 
   private initializeSpinners() {
     if (!this.fgsType || Object.keys(SPINNER_TYPES).findIndex((ele) => ele === this.fgsType) === -1) {
-      this.fgsType = DEFAULT_CONFIG.fgsType;
+      this.fgsType = this.defaultConfig.fgsType;
     }
     if (!this.bgsType || Object.keys(SPINNER_TYPES).findIndex((ele) => ele === this.bgsType) === -1) {
-      this.bgsType = DEFAULT_CONFIG.bgsType;
+      this.bgsType = this.defaultConfig.bgsType;
     }
     this.fgDivs = Array(SPINNER[this.fgsType].divs).fill(1);
     this.fgSpinnerClass = SPINNER[this.fgsType].class;
