@@ -1,6 +1,10 @@
 $spinnerColor: #00ACC1;
 $progressBarColor: #00ACC1;
 $overlayColor: rgba(40, 40, 40, 0.8);
+$spinnerSize: 60px;
+$logoSize: 96px;
+$loadingTextFontSize: 1.2em;
+$loadingTextColor: white;
 
 // ngx-progress-bar {{{
 .ngx-progress-bar {
@@ -81,8 +85,8 @@ $overlayColor: rgba(40, 40, 40, 0.8);
 
 .ngx-overlay > .ngx-foreground-spinner {
   position: absolute;
-  width: 60px;
-  height: 60px;
+  width: $spinnerSize;
+  height: $spinnerSize;
   top: 50%;
   left: 50%;
   margin: 0;
@@ -90,20 +94,32 @@ $overlayColor: rgba(40, 40, 40, 0.8);
   color: $spinnerColor;
 }
 
+.ngx-overlay > .ngx-loading-logo {
+  position: absolute;
+  top: calc(50% - 30px - 66px);
+  left: 50%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  width: $logoSize;
+  height: $logoSize;
+}
+
 .ngx-overlay > .ngx-loading-text {
   position: absolute;
-  top: 60%;
+  top: calc(50% + 30px + 36px);
   left: 50%;
   margin: 0;
   transform: translate(-50%, -50%);
   font-family: sans-serif;
-  font-weight: 100;
+  font-weight: 500;
+  font-size: $loadingTextFontSize;
+  color: $loadingTextColor;
 }
 
 .ngx-background-spinner {
   position: absolute;
-  width: 60px;
-  height: 60px;
+  width: $spinnerSize;
+  height: $spinnerSize;
   bottom: 30px;
   right: 30px;
   margin: 0;

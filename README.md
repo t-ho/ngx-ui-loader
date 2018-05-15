@@ -6,9 +6,9 @@ A customizable loader/spinner and progress bar for Angular 4, 5(tested) and 6+(t
 
 Live demo [here](https://ngx-progress-demo.stackblitz.io).
 
-Play with **ngx-gravatar** and **Angular 5** [here](https://stackblitz.com/edit/ngx-progress-demo) on stackblitz.
+Play with **ngx-progress** and **Angular 5** [here](https://stackblitz.com/edit/ngx-progress-demo) on stackblitz.
 
-Play with **ngx-gravatar** and **Angular 6** [here](https://stackblitz.com/edit/ngx-progress-demo-angular-6) on stackblitz.
+Play with **ngx-progress** and **Angular 6** [here](https://stackblitz.com/edit/ngx-progress-demo-angular-6) on stackblitz.
 
 ## Development server
 

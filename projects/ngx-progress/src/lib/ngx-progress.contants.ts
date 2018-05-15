@@ -64,12 +64,14 @@ export const SPINNER_TYPES = {
 export const DEFAULT_CONFIG: NgxProgressConfig = {
   bgColor: '#00ACC1',
   bgOpacity: 0.7,
-  bgSize: '60px',
+  bgSize: 60,
   bgSpinnerType: SPINNER_TYPES.rectangleBounce,
   fgColor: '#00ACC1',
-  fgSize: '60px',
+  fgSize: 60,
   fgSpinnerType: SPINNER_TYPES.rectangleBounce,
+  logoUrl: '',
   overlayColor: 'rgba(40, 40, 40, 0.8)',
+  text: '',
 };
 
 export const DEFAULT_ID = 'default';

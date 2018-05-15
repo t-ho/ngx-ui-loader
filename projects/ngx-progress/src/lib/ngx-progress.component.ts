@@ -10,14 +10,16 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
 
-  @Input() overlayColor: string;
-  @Input() fgSpinnerType: string;
-  @Input() fgSize: string;
-  @Input() fgColor: string;
-  @Input() bgSpinnerType: string;
-  @Input() bgSize: string;
   @Input() bgColor: string;
   @Input() bgOpacity: number;
+  @Input() bgSize: number;
+  @Input() bgSpinnerType: string;
+  @Input() fgColor: string;
+  @Input() fgSize: number;
+  @Input() fgSpinnerType: string;
+  @Input() logoUrl: string;
+  @Input() overlayColor: string;
+  @Input() text: string;
 
   fgDivs: number[];
   fgSpinnerClass: string;
@@ -33,13 +35,17 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
   foregroundClosingWatcher: Subscription;
   backgroundClosingWatcher: Subscription;
 
-  constructor(public ngxProgressService: NgxProgressService) {
-    this.overlayColor = DEFAULT_CONFIG.overlayColor;
-    this.fgSize = DEFAULT_CONFIG.fgSize;
-    this.fgColor = DEFAULT_CONFIG.fgColor;
-    this.bgSize = DEFAULT_CONFIG.bgSize;
+  constructor(
+    private ngxProgressService: NgxProgressService) {
+
     this.bgColor = DEFAULT_CONFIG.bgColor;
     this.bgOpacity = DEFAULT_CONFIG.bgOpacity;
+    this.bgSize = DEFAULT_CONFIG.bgSize;
+    this.fgColor = DEFAULT_CONFIG.fgColor;
+    this.fgSize = DEFAULT_CONFIG.fgSize;
+    this.logoUrl = DEFAULT_CONFIG.logoUrl;
+    this.overlayColor = DEFAULT_CONFIG.overlayColor;
+    this.text = DEFAULT_CONFIG.text;
   }
 
   ngOnInit() {
@@ -60,6 +66,7 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
   ngOnChanges(changes: SimpleChanges) {
     const fgSpinnerTypeChange: SimpleChange = changes.fgSpinnerType;
     const bgSpinnerTypeChange: SimpleChange = changes.bgSpinnerType;
+
     if (fgSpinnerTypeChange || bgSpinnerTypeChange) {
       this.initializeSpinners();
     }

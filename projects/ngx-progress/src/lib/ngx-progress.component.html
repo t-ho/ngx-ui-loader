@@ -6,13 +6,14 @@
   [style.background-color]="overlayColor"
   [class.progressing-foreground]="showForeground"
   [class.foreground-closing]="foregroundClosing">
+  <img *ngIf="logoUrl" class="ngx-loading-logo" [src]="logoUrl">
   <div class="ngx-foreground-spinner" [style.width]="fgSize"
     [style.height]="fgSize" [style.color]="fgColor">
     <div [class]="fgSpinnerClass">
       <div *ngFor="let div of fgDivs"></div>
     </div>
   </div>
-  <div class="ngx-loading-text"></div>
+  <div class="ngx-loading-text">{{text}}</div>
 </div>
 
 <div class="ngx-background-spinner"
