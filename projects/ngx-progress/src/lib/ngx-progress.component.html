@@ -1,4 +1,6 @@
 <div class="ngx-progress-bar"
+  [style.height.px]="progressBarHeight"
+  [style.color]="progressBarColor"
   [class.progressing-foreground]="showForeground"
   [class.foreground-closing]="foregroundClosing"></div>
 
@@ -7,20 +9,20 @@
   [class.progressing-foreground]="showForeground"
   [class.foreground-closing]="foregroundClosing">
   <img *ngIf="logoUrl" class="ngx-loading-logo" [src]="logoUrl">
-  <div class="ngx-foreground-spinner" [style.width]="fgSize"
-    [style.height]="fgSize" [style.color]="fgColor">
+  <div class="ngx-foreground-spinner" [style.width.px]="fgsSize"
+    [style.height.px]="fgsSize" [style.color]="fgsColor">
     <div [class]="fgSpinnerClass">
       <div *ngFor="let div of fgDivs"></div>
     </div>
   </div>
-  <div class="ngx-loading-text">{{text}}</div>
+  <div class="ngx-loading-text" [style.color]="textColor">{{text}}</div>
 </div>
 
 <div class="ngx-background-spinner"
   [class.progressing-background]="showBackground"
   [class.background-closing]="backgroundClosing"
-  [style.width]="bgSize" [style.height]="bgSize"
-  [style.color]="bgColor" [style.opacity]="bgOpacity">
+  [style.width.px]="bgsSize" [style.height.px]="bgsSize"
+  [style.color]="bgsColor" [style.opacity]="bgsOpacity">
   <div [class]="bgSpinnerClass">
     <div *ngFor="let div of bgDivs"></div>
   </div>

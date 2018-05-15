@@ -45,6 +45,10 @@ export const SPINNER = {
     divs: 4,
     class: 'sk-folding-cube'
   },
+  threeStrings: {
+    divs: 3,
+    class: 'sk-three-strings'
+  },
 };
 
 export const SPINNER_TYPES = {
@@ -59,19 +63,23 @@ export const SPINNER_TYPES = {
   cubeGrid: 'cubeGrid',
   fadingCircle: 'fadingCircle',
   foldingCube: 'foldingCube',
+  threeStrings: 'threeStrings',
 };
 
 export const DEFAULT_CONFIG: NgxProgressConfig = {
-  bgColor: '#00ACC1',
-  bgOpacity: 0.7,
-  bgSize: 60,
-  bgSpinnerType: SPINNER_TYPES.rectangleBounce,
-  fgColor: '#00ACC1',
-  fgSize: 60,
-  fgSpinnerType: SPINNER_TYPES.rectangleBounce,
+  bgsColor: '#00ACC1',
+  bgsOpacity: 0.7,
+  bgsSize: 60,
+  bgsType: SPINNER_TYPES.rectangleBounce,
+  fgsColor: '#00ACC1',
+  fgsSize: 60,
+  fgsType: SPINNER_TYPES.rectangleBounce,
   logoUrl: '',
   overlayColor: 'rgba(40, 40, 40, 0.8)',
+  progressBarColor: '#00ACC1',
+  progressBarHeight: 5,
   text: '',
+  textColor: '#FFFFFF',
 };
 
 export const DEFAULT_ID = 'default';

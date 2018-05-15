@@ -1,10 +1,11 @@
-$spinnerColor: #00ACC1;
-$progressBarColor: #00ACC1;
-$overlayColor: rgba(40, 40, 40, 0.8);
-$spinnerSize: 60px;
-$logoSize: 96px;
+$loadingTextColor: #FFFFFF;
 $loadingTextFontSize: 1.2em;
-$loadingTextColor: white;
+$logoSize: 96px;
+$overlayColor: rgba(40, 40, 40, 0.8);
+$progressBarColor: #00ACC1;
+$progressBarHeight: 5px;
+$spinnerColor: #00ACC1;
+$spinnerSize: 60px;
 
 // ngx-progress-bar {{{
 .ngx-progress-bar {
@@ -12,7 +13,7 @@ $loadingTextColor: white;
   top: 0;
   left: 0;
   width: 100%;
-  height: 5px;
+  height: $progressBarHeight;
   z-index: 99999 !important;
   display: none;
   color: $progressBarColor;
@@ -223,14 +224,13 @@ $loadingTextColor: white;
   width: 100%;
   height: 100%;
   text-align: center;
-  font-size: 10px;
 }
 
 .sk-rectangle-bounce > div {
   background-color: currentColor;
   height: 100%;
-  width: 7px;
-  margin: 0 3px 0 0;
+  width: 10%;
+  margin: 0 5% 0 0;
   display: inline-block;
   
   -webkit-animation: sk-rectangleBounce-stretchDelay 1.2s infinite ease-in-out;
@@ -279,12 +279,13 @@ $loadingTextColor: white;
   width: 100%;
   height: 100%;
   position: relative;
+  text-align: center;
 }
 
 .sk-wandering-cubes > div {
   background-color: currentColor;
-  width: 15px;
-  height: 15px;
+  width: 25%;
+  height: 25%;
   position: absolute;
   top: 0;
   left: 0;
@@ -299,25 +300,25 @@ $loadingTextColor: white;
 }
 
 @-webkit-keyframes sk-wanderingCubes-cubeMove {
-  25% { -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5) }
-  50% { -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg) }
-  75% { -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5) }
+  25% { -webkit-transform: translateX(290%) rotate(-90deg) scale(0.5) }
+  50% { -webkit-transform: translateX(290%) translateY(290%) rotate(-180deg) }
+  75% { -webkit-transform: translateX(0px) translateY(290%) rotate(-270deg) scale(0.5) }
   100% { -webkit-transform: rotate(-360deg) }
 }
 
 @keyframes sk-wanderingCubes-cubeMove {
   25% { 
-    transform: translateX(42px) rotate(-90deg) scale(0.5);
-    -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
+    transform: translateX(290%) rotate(-90deg) scale(0.5);
+    -webkit-transform: translateX(290%) rotate(-90deg) scale(0.5);
   } 50% { 
-    transform: translateX(42px) translateY(42px) rotate(-179deg);
-    -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
+    transform: translateX(290%) translateY(290%) rotate(-179deg);
+    -webkit-transform: translateX(290%) translateY(290%) rotate(-179deg);
   } 50.1% { 
-    transform: translateX(42px) translateY(42px) rotate(-180deg);
-    -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
+    transform: translateX(290%) translateY(290%) rotate(-180deg);
+    -webkit-transform: translateX(290%) translateY(290%) rotate(-180deg);
   } 75% { 
-    transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
-    -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+    transform: translateX(0px) translateY(290%) rotate(-270deg) scale(0.5);
+    -webkit-transform: translateX(0px) translateY(290%) rotate(-270deg) scale(0.5);
   } 100% { 
     transform: rotate(-360deg);
     -webkit-transform: rotate(-360deg);
@@ -879,3 +880,62 @@ $loadingTextColor: white;
   }
 }
 // sk-folding-cube }}}
+
+// sk-three-strings
+.sk-three-strings {
+  width: 100%;
+  height: 100%;
+}
+
+.sk-three-strings > div {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.sk-three-strings > div:nth-child(1) {
+  left: 0%;
+  top: 0%;
+  animation: sk-threeStrings-rotateOne 1s linear infinite;
+  border-bottom: 3px solid currentColor;
+}
+
+.sk-three-strings > div:nth-child(2) {
+  right: 0%;
+  top: 0%;
+  animation: sk-threeStrings-rotateTwo 1s linear infinite;
+  border-right: 3px solid currentColor;
+}
+
+.sk-three-strings > div:nth-child(3) {
+  right: 0%;
+  bottom: 0%;
+  animation: sk-threeStrings-rotateThree 1s linear infinite;
+  border-top: 3px solid currentColor;
+}
+
+@keyframes sk-threeStrings-rotateOne {
+  0% {
+    transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+  } 100% {
+    transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+  }
+}
+
+@keyframes sk-threeStrings-rotateTwo {
+  0% {
+    transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+  } 100% {
+    transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+  }
+}
+
+@keyframes sk-threeStrings-rotateThree {
+  0% {
+    transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+  } 100% {
+    transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+  }
+}

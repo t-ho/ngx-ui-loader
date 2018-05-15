@@ -10,16 +10,19 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
 
-  @Input() bgColor: string;
-  @Input() bgOpacity: number;
-  @Input() bgSize: number;
-  @Input() bgSpinnerType: string;
-  @Input() fgColor: string;
-  @Input() fgSize: number;
-  @Input() fgSpinnerType: string;
+  @Input() bgsColor: string;
+  @Input() bgsOpacity: number;
+  @Input() bgsSize: number;
+  @Input() bgsType: string;
+  @Input() fgsColor: string;
+  @Input() fgsSize: number;
+  @Input() fgsType: string;
   @Input() logoUrl: string;
   @Input() overlayColor: string;
+  @Input() progressBarColor: string;
+  @Input() progressBarHeight: number;
   @Input() text: string;
+  @Input() textColor: string;
 
   fgDivs: number[];
   fgSpinnerClass: string;
@@ -38,14 +41,17 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
   constructor(
     private ngxProgressService: NgxProgressService) {
 
-    this.bgColor = DEFAULT_CONFIG.bgColor;
-    this.bgOpacity = DEFAULT_CONFIG.bgOpacity;
-    this.bgSize = DEFAULT_CONFIG.bgSize;
-    this.fgColor = DEFAULT_CONFIG.fgColor;
-    this.fgSize = DEFAULT_CONFIG.fgSize;
+    this.bgsColor = DEFAULT_CONFIG.bgsColor;
+    this.bgsOpacity = DEFAULT_CONFIG.bgsOpacity;
+    this.bgsSize = DEFAULT_CONFIG.bgsSize;
+    this.fgsColor = DEFAULT_CONFIG.fgsColor;
+    this.fgsSize = DEFAULT_CONFIG.fgsSize;
     this.logoUrl = DEFAULT_CONFIG.logoUrl;
     this.overlayColor = DEFAULT_CONFIG.overlayColor;
+    this.progressBarColor = DEFAULT_CONFIG.progressBarColor;
+    this.progressBarHeight = DEFAULT_CONFIG.progressBarHeight;
     this.text = DEFAULT_CONFIG.text;
+    this.textColor = DEFAULT_CONFIG.textColor;
   }
 
   ngOnInit() {
@@ -64,25 +70,25 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const fgSpinnerTypeChange: SimpleChange = changes.fgSpinnerType;
-    const bgSpinnerTypeChange: SimpleChange = changes.bgSpinnerType;
+    const fgsTypeChange: SimpleChange = changes.fgsType;
+    const bgsTypeChange: SimpleChange = changes.bgsType;
 
-    if (fgSpinnerTypeChange || bgSpinnerTypeChange) {
+    if (fgsTypeChange || bgsTypeChange) {
       this.initializeSpinners();
     }
   }
 
   private initializeSpinners() {
-    if (!this.fgSpinnerType || Object.keys(SPINNER_TYPES).findIndex((ele) => ele === this.fgSpinnerType) === -1) {
-      this.fgSpinnerType = DEFAULT_CONFIG.fgSpinnerType;
+    if (!this.fgsType || Object.keys(SPINNER_TYPES).findIndex((ele) => ele === this.fgsType) === -1) {
+      this.fgsType = DEFAULT_CONFIG.fgsType;
     }
-    if (!this.bgSpinnerType || Object.keys(SPINNER_TYPES).findIndex((ele) => ele === this.bgSpinnerType) === -1) {
-      this.bgSpinnerType = DEFAULT_CONFIG.bgSpinnerType;
+    if (!this.bgsType || Object.keys(SPINNER_TYPES).findIndex((ele) => ele === this.bgsType) === -1) {
+      this.bgsType = DEFAULT_CONFIG.bgsType;
     }
-    this.fgDivs = Array(SPINNER[this.fgSpinnerType].divs).fill(1);
-    this.fgSpinnerClass = SPINNER[this.fgSpinnerType].class;
-    this.bgDivs = Array(SPINNER[this.bgSpinnerType].divs).fill(1);
-    this.bgSpinnerClass = SPINNER[this.bgSpinnerType].class;
+    this.fgDivs = Array(SPINNER[this.fgsType].divs).fill(1);
+    this.fgSpinnerClass = SPINNER[this.fgsType].class;
+    this.bgDivs = Array(SPINNER[this.bgsType].divs).fill(1);
+    this.bgSpinnerClass = SPINNER[this.bgsType].class;
   }
 
   ngOnDestroy() {

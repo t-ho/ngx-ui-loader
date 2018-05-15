@@ -1,12 +1,15 @@
 export interface NgxProgressConfig {
-  bgColor?: string;
-  bgOpacity?: number;
-  bgSize?: number;
-  bgSpinnerType?: string;
-  fgColor?: string;
-  fgSize?: number;
-  fgSpinnerType?: string;
+  bgsColor?: string;
+  bgsOpacity?: number;
+  bgsSize?: number;
+  bgsType?: string;
+  fgsColor?: string;
+  fgsSize?: number;
+  fgsType?: string;
   logoUrl?: string;
   overlayColor?: string;
+  progressBarHeight: number;
+  progressBarColor: string;
   text?: string;
+  textColor?: string;
 }
