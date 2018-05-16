@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, SimpleChange, OnDestroy } from '@angular/core';
 import { NgxProgressService } from './ngx-progress.service';
-import { SPINNER, SPINNER_TYPES } from './ngx-progress.contants';
+import { SPINNER_CONFIG, NGX_POSITION } from './ngx-progress.contants';
 import { Observable, Subscription } from 'rxjs';
 import { NgxProgressConfig } from './ngx-progress-config';
 
@@ -13,17 +13,23 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
 
   @Input() bgsColor: string;
   @Input() bgsOpacity: number;
+  @Input() bgsPosition: string;
   @Input() bgsSize: number;
   @Input() bgsType: string;
   @Input() fgsColor: string;
+  @Input() fgsPosition: string;
   @Input() fgsSize: number;
   @Input() fgsType: string;
+  @Input() logoPosition: string;
+  @Input() logoSize: number;
   @Input() logoUrl: string;
   @Input() overlayColor: string;
   @Input() progressBarColor: string;
+  @Input() progressBarDirection: string;
   @Input() progressBarHeight: number;
   @Input() text: string;
   @Input() textColor: string;
+  @Input() textPosition: string;
 
   fgDivs: number[];
   fgSpinnerClass: string;
@@ -40,60 +46,115 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
   backgroundClosingWatcher: Subscription;
 
   defaultConfig: NgxProgressConfig;
+  private initialized: boolean;
 
   constructor(
-    private ngxProgressService: NgxProgressService) {
+    private ngxService: NgxProgressService) {
 
-    this.defaultConfig = this.ngxProgressService.getDefaultConfig();
+    this.initialized = false;
+    this.defaultConfig = this.ngxService.getDefaultConfig();
+
     this.bgsColor = this.defaultConfig.bgsColor;
     this.bgsOpacity = this.defaultConfig.bgsOpacity;
+    this.bgsPosition = this.defaultConfig.bgsPosition;
     this.bgsSize = this.defaultConfig.bgsSize;
+    this.bgsType = this.defaultConfig.bgsType;
     this.fgsColor = this.defaultConfig.fgsColor;
+    this.fgsPosition = this.defaultConfig.fgsPosition;
     this.fgsSize = this.defaultConfig.fgsSize;
+    this.fgsType = this.defaultConfig.fgsType;
+    this.logoPosition = this.defaultConfig.logoPosition;
+    this.logoSize = this.defaultConfig.logoSize;
     this.logoUrl = this.defaultConfig.logoUrl;
     this.overlayColor = this.defaultConfig.overlayColor;
     this.progressBarColor = this.defaultConfig.progressBarColor;
+    this.progressBarDirection = this.defaultConfig.progressBarDirection;
     this.progressBarHeight = this.defaultConfig.progressBarHeight;
     this.text = this.defaultConfig.text;
     this.textColor = this.defaultConfig.textColor;
+    this.textPosition = this.defaultConfig.textPosition;
   }
 
   ngOnInit() {
     this.initializeSpinners();
-    this.showForegroundWatcher = this.ngxProgressService.showForeground
+    this.determinePositions();
+
+    this.showForegroundWatcher = this.ngxService.showForeground
       .subscribe(data => this.showForeground = data);
 
-    this.showBackgroundWatcher = this.ngxProgressService.showBackground
+    this.showBackgroundWatcher = this.ngxService.showBackground
       .subscribe(data => this.showBackground = data);
 
-    this.foregroundClosingWatcher = this.ngxProgressService.foregroundClosing
+    this.foregroundClosingWatcher = this.ngxService.foregroundClosing
       .subscribe(data => this.foregroundClosing = data);
 
-    this.backgroundClosingWatcher = this.ngxProgressService.backgroundClosing
+    this.backgroundClosingWatcher = this.ngxService.backgroundClosing
       .subscribe(data => this.backgroundClosing = data);
+    this.initialized = true;
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if (!this.initialized) {
+      return;
+    }
+
     const fgsTypeChange: SimpleChange = changes.fgsType;
     const bgsTypeChange: SimpleChange = changes.bgsType;
+    const fgsPositionChange: SimpleChange = changes.fgsPosition;
+    const bgsPositionChange: SimpleChange = changes.bgsPosition;
+    const logoPositionChange: SimpleChange = changes.logoPosition;
+    const textPositionChange: SimpleChange = changes.textPosition;
+    const progressBarDirectionChange: SimpleChange = changes.progressBarDirection;
 
     if (fgsTypeChange || bgsTypeChange) {
       this.initializeSpinners();
     }
+
+    if (fgsPositionChange || logoPositionChange || textPositionChange) {
+      this.determinePositions();
+    }
+
+    if (bgsPositionChange) {
+      this.bgsPosition = this.ngxService.validatePosition('bgsPosition', this.bgsPosition, this.defaultConfig.bgsPosition);
+    }
+
+    if (progressBarDirectionChange) {
+      this.progressBarDirection = this.ngxService.validateDirection('progressBarDirection',
+        this.progressBarDirection, this.defaultConfig.progressBarDirection);
+    }
   }
 
   private initializeSpinners() {
-    if (!this.fgsType || Object.keys(SPINNER_TYPES).findIndex((ele) => ele === this.fgsType) === -1) {
-      this.fgsType = this.defaultConfig.fgsType;
-    }
-    if (!this.bgsType || Object.keys(SPINNER_TYPES).findIndex((ele) => ele === this.bgsType) === -1) {
-      this.bgsType = this.defaultConfig.bgsType;
-    }
-    this.fgDivs = Array(SPINNER[this.fgsType].divs).fill(1);
-    this.fgSpinnerClass = SPINNER[this.fgsType].class;
-    this.bgDivs = Array(SPINNER[this.bgsType].divs).fill(1);
-    this.bgSpinnerClass = SPINNER[this.bgsType].class;
+    this.fgsType = this.ngxService.validateSpinnerType('fgsType', this.fgsType, this.defaultConfig.fgsType);
+    this.bgsType = this.ngxService.validateSpinnerType('bgsType', this.bgsType, this.defaultConfig.bgsType);
+
+    this.fgDivs = Array(SPINNER_CONFIG[this.fgsType].divs).fill(1);
+    this.fgSpinnerClass = SPINNER_CONFIG[this.fgsType].class;
+    this.bgDivs = Array(SPINNER_CONFIG[this.bgsType].divs).fill(1);
+    this.bgSpinnerClass = SPINNER_CONFIG[this.bgsType].class;
   }
+
+  private determinePositions() {
+    this.fgsPosition = this.ngxService.validatePosition('fgsPosition', this.fgsPosition, this.defaultConfig.fgsPosition);
+    this.logoPosition = this.ngxService.validatePosition('logoPosition', this.logoPosition, this.defaultConfig.logoPosition);
+    this.textPosition = this.ngxService.validatePosition('textPosition', this.textPosition, this.defaultConfig.textPosition);
+
+    if (this.fgsPosition === NGX_POSITION.centerCenter) {
+      if (this.logoUrl && this.logoPosition === NGX_POSITION.centerCenter) {
+        if (this.textPosition === NGX_POSITION.centerCenter) {
+          this.textPosition = 'ngx-loading-text-center-with-spinner';
+        }
+        this.logoPosition = 'ngx-loading-logo-center-with-spinner';
+      } else {
+        this.textPosition = 'ngx-loading-text-center-with-spinner';
+      }
+    } else {
+      if (this.logoUrl && this.logoPosition === NGX_POSITION.centerCenter && this.textPosition === NGX_POSITION.centerCenter) {
+        this.textPosition = 'ngx-loading-text-center-with-logo';
+      }
+    }
+  }
+
 
   ngOnDestroy() {
     if (this.showForegroundWatcher) {

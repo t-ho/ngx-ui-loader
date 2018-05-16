@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     setTimeout(() => {
       this.ngxProgressService.start('fore');
-    }, 5000);
+    }, 1000);
 
     this.ngxProgressService.startBackground();
 

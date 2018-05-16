@@ -26,6 +26,6 @@ export class NgxProgressModule {
           useValue: ngxProgressConfig
         }
       ]
-    }
+    };
   }
 }
