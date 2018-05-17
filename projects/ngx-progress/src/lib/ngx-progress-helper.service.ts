@@ -1,7 +1,7 @@
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { INTERVAL, DEFAULT_ID, DEFAULT_CONFIG, SPINNER_TYPES, NGX_POSITION, PROGRESS_BAR_DIRECTION } from './ngx-progress.contants';
+import { INTERVAL, DEFAULT_ID, DEFAULT_CONFIG, SPINNER_TYPES, NGX_POSITIONS, PB_DIRECTIONS } from './ngx-progress.contants';
 import { NGX_PROGRESS_CONFIG_TOKEN } from './ngx-progress-config.token';
 import { NgxProgressConfig } from './ngx-progress-config';
 
@@ -30,8 +30,8 @@ export class NgxProgressHelperService {
   constructor(@Optional() @Inject(NGX_PROGRESS_CONFIG_TOKEN) private config: NgxProgressConfig) {
 
     this.validSpinnerTypes = Object.keys(SPINNER_TYPES).map(key => SPINNER_TYPES[key]);
-    this.validPositions = Object.keys(NGX_POSITION).map(key => NGX_POSITION[key]);
-    this.validDirections = Object.keys(PROGRESS_BAR_DIRECTION).map(key => PROGRESS_BAR_DIRECTION[key]);
+    this.validPositions = Object.keys(NGX_POSITIONS).map(key => NGX_POSITIONS[key]);
+    this.validDirections = Object.keys(PB_DIRECTIONS).map(key => PB_DIRECTIONS[key]);
 
     this.defaultConfig = Object.assign({}, DEFAULT_CONFIG);
 

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NgxProgressService, SPINNER_TYPES, NGX_POSITION, PROGRESS_BAR_DIRECTION } from 'ngx-progress';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NgxProgressService, SPINNER_TYPES, NGX_POSITIONS, PB_DIRECTIONS } from 'ngx-progress';
 import { Subscription } from 'rxjs';
 
 const LOGO_URL = 'assets/angular.png';
@@ -9,7 +9,7 @@ const LOGO_URL = 'assets/angular.png';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnDestroy, OnInit {
   spinnerTypes: string[];
   positions: string[];
   directions: string[];
@@ -37,41 +37,41 @@ export class AppComponent implements OnInit {
   waitingForeground = {};
   waitingBackground = {};
 
-  onStopWatcher: Subscription;
   onStartWatcher: Subscription;
+  onStopWatcher: Subscription;
 
   constructor(private ngxProgressService: NgxProgressService) {
   }
 
   ngOnInit() {
     this.spinnerTypes = Object.keys(SPINNER_TYPES).map(key => SPINNER_TYPES[key]);
-    this.positions = Object.keys(NGX_POSITION).map(key => NGX_POSITION[key]);
-    this.directions = Object.keys(PROGRESS_BAR_DIRECTION).map(key => PROGRESS_BAR_DIRECTION[key]);
+    this.positions = Object.keys(NGX_POSITIONS).map(key => NGX_POSITIONS[key]);
+    this.directions = Object.keys(PB_DIRECTIONS).map(key => PB_DIRECTIONS[key]);
 
 
     this.bgsColor = '#00acc1';
     this.bgsOpacity = 0.5;
-    this.bgsPosition = NGX_POSITION.bottomRight;
+    this.bgsPosition = NGX_POSITIONS.bottomRight;
     this.bgsSize = 60;
     this.bgsType = SPINNER_TYPES.rectangleBounce;
 
     this.fgsColor = '#00acc1';
-    this.fgsPosition = NGX_POSITION.centerCenter;
+    this.fgsPosition = NGX_POSITIONS.centerCenter;
     this.fgsSize = 60;
     this.fgsType = SPINNER_TYPES.rectangleBounce;
 
-    this.logoPosition = NGX_POSITION.centerCenter;
+    this.logoPosition = NGX_POSITIONS.centerCenter;
     this.logoSize = 120;
     this.logoUrl = '';
 
     this.overlayColor = 'rgba(40, 40, 40, 0.8)';
     this.pbColor = '#00acc1';
-    this.pbDirection = PROGRESS_BAR_DIRECTION.leftToRight;
+    this.pbDirection = PB_DIRECTIONS.leftToRight;
     this.pbThickness = 5;
 
     this.text = '';
     this.textColor = '#ffffff';
-    this.textPosition = NGX_POSITION.centerCenter;
+    this.textPosition = NGX_POSITIONS.centerCenter;
 
     this.onStopWatcher = this.ngxProgressService.onStop
       .subscribe(data => {
@@ -131,6 +131,15 @@ export class AppComponent implements OnInit {
       this.ngxProgressService.startBackground('bg-2');
     } else {
       this.ngxProgressService.stopBackground('bg-2');
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.onStartWatcher) {
+      this.onStartWatcher.unsubscribe();
+    }
+    if (this.onStopWatcher) {
+      this.onStopWatcher.unsubscribe();
     }
   }
 }

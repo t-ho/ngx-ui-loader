@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, SimpleChange, OnDestroy } from '@angular/core';
 import { NgxProgressHelperService } from './ngx-progress-helper.service';
-import { SPINNER_CONFIG, NGX_POSITION } from './ngx-progress.contants';
+import { SPINNER_CONFIG, NGX_POSITIONS } from './ngx-progress.contants';
 import { Observable, Subscription } from 'rxjs';
 import { NgxProgressConfig } from './ngx-progress-config';
 
@@ -148,19 +148,19 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
 
     this.realLogoPosition = this.logoPosition;
     this.realTextPosition = this.textPosition;
-    if (this.fgsPosition === NGX_POSITION.centerCenter) {
-      if (this.logoUrl && this.logoPosition === NGX_POSITION.centerCenter) {
-        if (this.textPosition === NGX_POSITION.centerCenter) {
+    if (this.fgsPosition === NGX_POSITIONS.centerCenter) {
+      if (this.logoUrl && this.logoPosition === NGX_POSITIONS.centerCenter) {
+        if (this.textPosition === NGX_POSITIONS.centerCenter) {
           this.realTextPosition = 'ngx-loading-text-center-with-spinner';
         }
         this.realLogoPosition = 'ngx-loading-logo-center-with-spinner';
       } else {
-        if (this.textPosition === NGX_POSITION.centerCenter) {
+        if (this.textPosition === NGX_POSITIONS.centerCenter) {
           this.realTextPosition = 'ngx-loading-text-center-with-spinner';
         }
       }
     } else {
-      if (this.logoUrl && this.logoPosition === NGX_POSITION.centerCenter && this.textPosition === NGX_POSITION.centerCenter) {
+      if (this.logoUrl && this.logoPosition === NGX_POSITIONS.centerCenter && this.textPosition === NGX_POSITIONS.centerCenter) {
         this.realTextPosition = 'ngx-loading-text-center-with-logo';
       }
     }

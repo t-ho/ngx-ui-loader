@@ -1,7 +1,7 @@
 {
   "name": "ngx-progress",
-  "description": "A customizable loader/spinner and progress bar for Angular 4, 5(tested) and 6+(tested) applications - AoT compatible.",
-  "version": "0.0.1",
+  "description": "A fully customizable loader/spinner and progress bar for Angular 4, 5(tested) and 6+(tested) applications - AoT compatible.",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/t-ho/ngx-progress.git"

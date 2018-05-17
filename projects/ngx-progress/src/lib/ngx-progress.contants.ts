@@ -75,7 +75,7 @@ export const SPINNER_TYPES = {
 /**
  * Available postions
  */
-export const NGX_POSITION = {
+export const NGX_POSITIONS = {
   topLeft: 'top-left',
   topCenter: 'top-center',
   topRight: 'top-right',
@@ -90,7 +90,7 @@ export const NGX_POSITION = {
 /**
  * Progress bar directions
  */
-export const PROGRESS_BAR_DIRECTION = {
+export const PB_DIRECTIONS = {
   leftToRight: 'ltr',
   rightToLeft: 'rtl'
 };
@@ -101,23 +101,23 @@ export const PROGRESS_BAR_DIRECTION = {
 export const DEFAULT_CONFIG: NgxProgressConfig = {
   bgsColor: '#00ACC1',
   bgsOpacity: 0.5,
-  bgsPosition: NGX_POSITION.bottomRight,
+  bgsPosition: NGX_POSITIONS.bottomRight,
   bgsSize: 60,
   bgsType: SPINNER_TYPES.rectangleBounce,
   fgsColor: '#00ACC1',
-  fgsPosition: NGX_POSITION.centerCenter,
+  fgsPosition: NGX_POSITIONS.centerCenter,
   fgsSize: 60,
   fgsType: SPINNER_TYPES.rectangleBounce,
-  logoPosition: NGX_POSITION.centerCenter,
+  logoPosition: NGX_POSITIONS.centerCenter,
   logoSize: 120,
   logoUrl: '',
   overlayColor: 'rgba(40, 40, 40, 0.8)',
   pbColor: '#00ACC1',
-  pbDirection: PROGRESS_BAR_DIRECTION.leftToRight,
+  pbDirection: PB_DIRECTIONS.leftToRight,
   pbThickness: 5,
   text: '',
   textColor: '#FFFFFF',
-  textPosition: NGX_POSITION.centerCenter
+  textPosition: NGX_POSITIONS.centerCenter
 };
 
 /**
