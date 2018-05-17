@@ -9,8 +9,7 @@ $spinnerColor: #00ACC1;
 $spinnerSize: 60px;
 
 // ngx-progress-bar {{{
-.ngx-progress-bar-ltr, .ngx-progress-bar-rtl,
-.ngx-progress-bar-ltr-reverse, .ngx-progress-bar-rtl-reverse {
+.ngx-progress-bar-ltr, .ngx-progress-bar-rtl {
   position: fixed;
   top: 0;
   left: 0;
@@ -26,7 +25,7 @@ $spinnerSize: 60px;
 
   &.foreground-closing {
     opacity: 0 !important;
-    transition: opacity 0.7s ease-out 0.4s;
+    transition: opacity 0.5s ease-out 0.5s;
   }
 
   &::before, &::after {
@@ -109,7 +108,7 @@ $spinnerSize: 60px;
 
   &.foreground-closing {
     opacity: 0 !important;
-    transition: opacity 0.7s ease-out 0.4s;
+    transition: opacity 0.5s ease-out 0.5s;
   }
 }
 

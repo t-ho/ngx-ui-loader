@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, SimpleChange, OnDestroy } from '@angular/core';
-import { NgxProgressService } from './ngx-progress.service';
+import { NgxProgressHelperService } from './ngx-progress-helper.service';
 import { SPINNER_CONFIG, NGX_POSITION } from './ngx-progress.contants';
 import { Observable, Subscription } from 'rxjs';
 import { NgxProgressConfig } from './ngx-progress-config';
@@ -49,10 +49,10 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
   private initialized: boolean;
 
   constructor(
-    private ngxService: NgxProgressService) {
+    private helperService: NgxProgressHelperService) {
 
     this.initialized = false;
-    this.defaultConfig = this.ngxService.getDefaultConfig();
+    this.defaultConfig = this.helperService.getDefaultConfig();
 
     this.bgsColor = this.defaultConfig.bgsColor;
     this.bgsOpacity = this.defaultConfig.bgsOpacity;
@@ -79,16 +79,16 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
     this.initializeSpinners();
     this.determinePositions();
 
-    this.showForegroundWatcher = this.ngxService.showForeground
+    this.showForegroundWatcher = this.helperService.showForeground
       .subscribe(data => this.showForeground = data);
 
-    this.showBackgroundWatcher = this.ngxService.showBackground
+    this.showBackgroundWatcher = this.helperService.showBackground
       .subscribe(data => this.showBackground = data);
 
-    this.foregroundClosingWatcher = this.ngxService.foregroundClosing
+    this.foregroundClosingWatcher = this.helperService.foregroundClosing
       .subscribe(data => this.foregroundClosing = data);
 
-    this.backgroundClosingWatcher = this.ngxService.backgroundClosing
+    this.backgroundClosingWatcher = this.helperService.backgroundClosing
       .subscribe(data => this.backgroundClosing = data);
     this.initialized = true;
   }
@@ -115,18 +115,18 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
     }
 
     if (bgsPositionChange) {
-      this.bgsPosition = this.ngxService.validatePosition('bgsPosition', this.bgsPosition, this.defaultConfig.bgsPosition);
+      this.bgsPosition = this.helperService.validatePosition('bgsPosition', this.bgsPosition, this.defaultConfig.bgsPosition);
     }
 
     if (progressBarDirectionChange) {
-      this.progressBarDirection = this.ngxService.validateDirection('progressBarDirection',
+      this.progressBarDirection = this.helperService.validateDirection('progressBarDirection',
         this.progressBarDirection, this.defaultConfig.progressBarDirection);
     }
   }
 
   private initializeSpinners() {
-    this.fgsType = this.ngxService.validateSpinnerType('fgsType', this.fgsType, this.defaultConfig.fgsType);
-    this.bgsType = this.ngxService.validateSpinnerType('bgsType', this.bgsType, this.defaultConfig.bgsType);
+    this.fgsType = this.helperService.validateSpinnerType('fgsType', this.fgsType, this.defaultConfig.fgsType);
+    this.bgsType = this.helperService.validateSpinnerType('bgsType', this.bgsType, this.defaultConfig.bgsType);
 
     this.fgDivs = Array(SPINNER_CONFIG[this.fgsType].divs).fill(1);
     this.fgSpinnerClass = SPINNER_CONFIG[this.fgsType].class;
@@ -135,9 +135,9 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
   }
 
   private determinePositions() {
-    this.fgsPosition = this.ngxService.validatePosition('fgsPosition', this.fgsPosition, this.defaultConfig.fgsPosition);
-    this.logoPosition = this.ngxService.validatePosition('logoPosition', this.logoPosition, this.defaultConfig.logoPosition);
-    this.textPosition = this.ngxService.validatePosition('textPosition', this.textPosition, this.defaultConfig.textPosition);
+    this.fgsPosition = this.helperService.validatePosition('fgsPosition', this.fgsPosition, this.defaultConfig.fgsPosition);
+    this.logoPosition = this.helperService.validatePosition('logoPosition', this.logoPosition, this.defaultConfig.logoPosition);
+    this.textPosition = this.helperService.validatePosition('textPosition', this.textPosition, this.defaultConfig.textPosition);
 
     if (this.fgsPosition === NGX_POSITION.centerCenter) {
       if (this.logoUrl && this.logoPosition === NGX_POSITION.centerCenter) {

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { NgxProgressModule, NgxProgressConfig, SPINNER_TYPES, NGX_POSITION } from 'ngx-progress';
+import { NgxProgressModule, NgxProgressConfig, SPINNER_TYPES, NGX_POSITION, PROGRESS_BAR_DIRECTION } from 'ngx-progress';
 
 import { AppComponent } from './app.component';
 
@@ -17,7 +17,7 @@ const ngxProgressConfig: NgxProgressConfig = {
   fgsType: SPINNER_TYPES.chasingDots,
   logoUrl: 'assets/angular.png',
   progressBarColor: '#FF0000',
-  progressBarDirection: 'rtl',
+  progressBarDirection: PROGRESS_BAR_DIRECTION.leftToRight,
   progressBarHeight: 5,
   text: 'Welcome to ngx-progress',
   textColor: '#FFFFFF',

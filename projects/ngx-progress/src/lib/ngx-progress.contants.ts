@@ -1,5 +1,8 @@
 import { NgxProgressConfig } from './ngx-progress-config';
 
+/**
+ * The configuration of spinners
+ */
 export const SPINNER_CONFIG = {
   'rotating-plane': {
     divs: 1,
@@ -51,6 +54,9 @@ export const SPINNER_CONFIG = {
   },
 };
 
+/**
+ * Available spinner types
+ */
 export const SPINNER_TYPES = {
   rotatingPlane: 'rotating-plane',
   doubleBounce: 'double-bounce',
@@ -66,6 +72,9 @@ export const SPINNER_TYPES = {
   threeStrings: 'three-strings',
 };
 
+/**
+ * Available postions
+ */
 export const NGX_POSITION = {
   topLeft: 'top-left',
   topCenter: 'top-center',
@@ -78,14 +87,20 @@ export const NGX_POSITION = {
   bottomRight: 'bottom-right'
 };
 
+/**
+ * Progress bar directions
+ */
 export const PROGRESS_BAR_DIRECTION = {
   leftToRight: 'ltr',
   rightToLeft: 'rtl'
 };
 
+/**
+ * The default configuration of ngx-progress
+ */
 export const DEFAULT_CONFIG: NgxProgressConfig = {
   bgsColor: '#00ACC1',
-  bgsOpacity: 0.7,
+  bgsOpacity: 0.5,
   bgsPosition: NGX_POSITION.bottomRight,
   bgsSize: 60,
   bgsType: SPINNER_TYPES.rectangleBounce,
@@ -105,6 +120,12 @@ export const DEFAULT_CONFIG: NgxProgressConfig = {
   textPosition: NGX_POSITION.centerCenter
 };
 
+/**
+ * The default id of the loading
+ */
 export const DEFAULT_ID = 'default';
 
-export const INTERVAL = 1200;
+/**
+ * The time close out a loading
+ */
+export const INTERVAL = 1100;

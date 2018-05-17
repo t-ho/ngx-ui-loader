@@ -1,3 +1,6 @@
+/**
+ * The interface of ngx-progress configuration
+ */
 export interface NgxProgressConfig {
   bgsColor?: string;
   bgsOpacity?: number;

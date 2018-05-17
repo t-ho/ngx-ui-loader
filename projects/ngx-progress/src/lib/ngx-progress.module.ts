@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { NgxProgressService } from './ngx-progress.service';
+import { NgxProgressHelperService } from './ngx-progress-helper.service';
 import { NgxProgressComponent } from './ngx-progress.component';
 import { NGX_PROGRESS_CONFIG_TOKEN } from './ngx-progress-config.token';
 import { NgxProgressConfig } from './ngx-progress-config';
@@ -11,7 +12,8 @@ import { NgxProgressConfig } from './ngx-progress-config';
     CommonModule,
   ],
   providers: [
-    NgxProgressService
+    NgxProgressHelperService,
+    NgxProgressService,
   ],
   declarations: [NgxProgressComponent],
   exports: [NgxProgressComponent]
