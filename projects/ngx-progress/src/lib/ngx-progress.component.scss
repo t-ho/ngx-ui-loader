@@ -3,8 +3,8 @@ $loadingTextFontSize: 1.2em;
 $loadingTextFontWeight: 400;
 $logoSize: 120px;
 $overlayColor: rgba(40, 40, 40, 0.8);
-$progressBarColor: #00ACC1;
-$progressBarHeight: 5px;
+$pbColor: #00ACC1;
+$pbThickness: 5px;
 $spinnerColor: #00ACC1;
 $spinnerSize: 60px;
 
@@ -14,10 +14,10 @@ $spinnerSize: 60px;
   top: 0;
   left: 0;
   width: 100%;
-  height: $progressBarHeight;
+  height: $pbThickness;
   z-index: 99999 !important;
   display: none;
-  color: $progressBarColor;
+  color: $pbColor;
 
   &.progressing-foreground, &.foreground-closing {
     display: block;

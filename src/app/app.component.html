@@ -1,20 +1,198 @@
-<div style="text-align:center">
-  <h1>
-    {{ title }}
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-<ngx-progress></ngx-progress>
+<ngx-progress
+  [fgsColor]="fgsColor"
+  [fgsPosition]="fgsPosition"
+  [fgsSize]="fgsSize"
+  [fgsType]="fgsType"
+  [bgsColor]="bgsColor"
+  [bgsOpacity]="bgsOpacity"
+  [bgsPosition]="bgsPosition"
+  [bgsSize]="bgsSize"
+  [bgsType]="bgsType"
+  [logoPosition]="logoPosition"
+  [logoSize]="logoSize"
+  [logoUrl]="logoUrl"
+  [overlayColor]="overlayColor"
+  [pbColor]="pbColor"
+  [pbDirection]="pbDirection"
+  [pbThickness]="pbThickness"
+  [text]="text"
+  [textColor]="textColor"
+  [textPosition]="textPosition"></ngx-progress>
+<mat-toolbar color="primary">
+  <span>NGX-PROGRESS</span>
+  <span class="fill-space"></span>
+  <span>
+    <a mat-button href="https://github.com/t-ho/ngx-progress">Github</a>
+  </span>
+</mat-toolbar>
 
+<h2>NGX-PROGRESS</h2>
+<h3>A fully customizable loader/spinner for angular 5+ and 6+</h3>
+
+<div fxLayout="row" fxLayoutAlign="center" style="margin-top: 24px">
+  <div fxFlex="100" fxFlex.gt-md="70" fxLayout="row wrap" fxLayoutAlign="center">
+
+    <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="30" fxLayout="column" class="p-12">
+      <mat-list role="list">
+        <mat-list-item role="listitem">
+          <mat-slide-toggle (change)="fgSlideChange($event.checked)" [(checked)]="waitingForeground['default']">
+            {{waitingForeground['default'] ? 'stop' : 'start'}}() - automatically stop after 3s
+          </mat-slide-toggle>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <mat-slide-toggle (change)="fgSlideChange1($event.checked)" [(checked)]="waitingForeground['fg-1']">
+            {{waitingForeground['fg-1'] ? 'stop' : 'start'}}('fg-1') - automatically stop after 8s
+          </mat-slide-toggle>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <mat-slide-toggle (change)="bgSlideChange($event.checked)">
+            {{waitingBackground['default'] ? 'stop' : 'start'}}Background()
+          </mat-slide-toggle>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <mat-slide-toggle (change)="bgSlideChange2($event.checked)">
+            {{waitingBackground['bg-2'] ? 'stop' : 'start'}}Background('bg-2')
+          </mat-slide-toggle>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <div fxLayout="column">
+            <span class="place-holder">waitingForeground = </span>
+            <code>{{waitingForeground | json}}</code>
+          </div>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <div fxLayout="column">
+            <span class="place-holder">waitingBackground = </span>
+            <code>{{waitingBackground | json}}</code>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <!-- Foreground {{{-->
+    <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="35" fxLayout="column" class="p-12">
+      <mat-form-field>
+        <input [(colorPicker)]="fgsColor" matInput placeholder="Foreground Spinner Color (fgsColor)" [(ngModel)]="fgsColor">
+        <mat-icon matSuffix [style.color]="fgsColor" fontIcon="mdi-palette" fontSet="mdi"></mat-icon>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Foreground Spinner Type (fgsType)" [(value)]="fgsType">
+          <mat-option *ngFor="let type of spinnerTypes" [value]="type">
+            {{ type }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Foreground Spinner Position (fgsPosition)" [(value)]="fgsPosition">
+          <mat-option *ngFor="let position of positions" [value]="position">
+            {{ position }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div>
+        <span class="place-holder">Foreground Spinner Size (fgsSize)</span>
+        <mat-slider max="150" min="20" step="10" [thumbLabel]="true" [(ngModel)]="fgsSize"></mat-slider>
+      </div>
+
+      <div>
+        <span class="place-holder">Progress Bar Thickness (pbThickness)</span>
+        <mat-slider fxFlex="100" max="10" min="1" step="1" [thumbLabel]="true" [(ngModel)]="pbThickness"></mat-slider>
+      </div>
+
+      <mat-form-field>
+        <mat-select placeholder="Progress Bar Direction (pbDirection)" [(value)]="pbDirection">
+          <mat-option *ngFor="let direction of directions" [value]="direction">
+            {{ direction }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input [(colorPicker)]="overlayColor" cpOutputFormat="rgba" matInput placeholder="Overlay Color (overlayColor)" [(ngModel)]="overlayColor">
+        <mat-icon matSuffix [style.color]="overlayColor" fontIcon="mdi-palette" fontSet="mdi"></mat-icon>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Loading Text (text)" [(ngModel)]="text" autocomplete="off">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Loading Text Position (textPosition)" [(value)]="textPosition" [disabled]="!text">
+          <mat-option *ngFor="let position of positions" [value]="position">
+            {{ position }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input [(colorPicker)]="textColor" matInput placeholder="Loading Text Color (textColor)" [(ngModel)]="textColor" [disabled]="!text">
+        <mat-icon matSuffix [style.color]="textColor" fontIcon="mdi-palette" fontSet="mdi"></mat-icon>
+      </mat-form-field>
+
+    </div>
+    <!-- Foreground }}}-->
+
+    <!-- Background {{{-->
+    <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="35" fxLayout="column" class="p-12">
+      <mat-form-field>
+        <input [(colorPicker)]="bgsColor" matInput placeholder="Background Spinner Color (bgsColor)" [(ngModel)]="bgsColor">
+        <mat-icon matSuffix [style.color]="bgsColor" fontIcon="mdi-palette" fontSet="mdi"></mat-icon>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Background Spinner Type (bgsType)" [(value)]="bgsType">
+          <mat-option *ngFor="let type of spinnerTypes" [value]="type">
+            {{ type }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Background Spinner Position (bgsPosition)" [(value)]="bgsPosition">
+          <mat-option *ngFor="let position of positions" [value]="position">
+            {{ position }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div>
+        <span class="place-holder">Background Spinner Size (bgsSize)</span>
+        <mat-slider fxFlex="100" max="150" min="20" step="10" [thumbLabel]="true" [(ngModel)]="bgsSize"></mat-slider>
+      </div>
+
+      <div>
+        <span class="place-holder">Background Spinner Opacity (bgsOpacity)</span>
+        <mat-slider fxFlex="100" max="1" min="0.1" step="0.1" [thumbLabel]="true" [(ngModel)]="bgsOpacity"></mat-slider>
+      </div>
+
+      <mat-form-field>
+        <input [(colorPicker)]="pbColor" matInput placeholder="Progress Bar Color (pbColor)" [(ngModel)]="pbColor">
+        <mat-icon matSuffix [style.color]="pbColor" fontIcon="mdi-palette" fontSet="mdi"></mat-icon>
+      </mat-form-field>
+
+      <div style="margin-top: 21px; margin-bottom: 20px">
+        <mat-checkbox (change)="addLogo($event.checked)">Add logo</mat-checkbox>
+      </div>
+
+      <mat-form-field>
+        <input matInput placeholder="Logo (logoUrl)" [(ngModel)]="logoUrl" autocomplete="off" disabled>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Logo Position (logoPosition)" [(value)]="logoPosition" [disabled]="!logoUrl">
+          <mat-option *ngFor="let position of positions" [value]="position">
+            {{ position }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div>
+        <span class="place-holder">Logo size (logoSize)</span>
+        <mat-slider fxFlex="100" max="200" min="40" step="10" [thumbLabel]="true" [(ngModel)]="logoSize" [disabled]="!logoUrl"></mat-slider>
+      </div>
+    </div>
+    <!-- Background }}}-->
+  </div>
+</div>

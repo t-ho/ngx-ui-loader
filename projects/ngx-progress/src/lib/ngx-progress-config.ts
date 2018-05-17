@@ -15,9 +15,9 @@ export interface NgxProgressConfig {
   logoSize?: number;
   logoUrl?: string;
   overlayColor?: string;
-  progressBarColor?: string;
-  progressBarDirection?: string;
-  progressBarHeight?: number;
+  pbColor?: string;
+  pbDirection?: string;
+  pbThickness?: number;
   text?: string;
   textColor?: string;
   textPosition?: string;

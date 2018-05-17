@@ -24,9 +24,9 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
   @Input() logoSize: number;
   @Input() logoUrl: string;
   @Input() overlayColor: string;
-  @Input() progressBarColor: string;
-  @Input() progressBarDirection: string;
-  @Input() progressBarHeight: number;
+  @Input() pbColor: string;
+  @Input() pbDirection: string;
+  @Input() pbThickness: number;
   @Input() text: string;
   @Input() textColor: string;
   @Input() textPosition: string;
@@ -39,6 +39,9 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
   showBackground: boolean;
   foregroundClosing: boolean;
   backgroundClosing: boolean;
+
+  realTextPosition: string;
+  realLogoPosition: string;
 
   showForegroundWatcher: Subscription;
   showBackgroundWatcher: Subscription;
@@ -67,12 +70,14 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
     this.logoSize = this.defaultConfig.logoSize;
     this.logoUrl = this.defaultConfig.logoUrl;
     this.overlayColor = this.defaultConfig.overlayColor;
-    this.progressBarColor = this.defaultConfig.progressBarColor;
-    this.progressBarDirection = this.defaultConfig.progressBarDirection;
-    this.progressBarHeight = this.defaultConfig.progressBarHeight;
+    this.pbColor = this.defaultConfig.pbColor;
+    this.pbDirection = this.defaultConfig.pbDirection;
+    this.pbThickness = this.defaultConfig.pbThickness;
     this.text = this.defaultConfig.text;
     this.textColor = this.defaultConfig.textColor;
     this.textPosition = this.defaultConfig.textPosition;
+    this.realLogoPosition = this.logoPosition;
+    this.realTextPosition = this.textPosition;
   }
 
   ngOnInit() {
@@ -103,14 +108,16 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
     const fgsPositionChange: SimpleChange = changes.fgsPosition;
     const bgsPositionChange: SimpleChange = changes.bgsPosition;
     const logoPositionChange: SimpleChange = changes.logoPosition;
+    const logoUrlChange: SimpleChange = changes.logoUrl;
     const textPositionChange: SimpleChange = changes.textPosition;
-    const progressBarDirectionChange: SimpleChange = changes.progressBarDirection;
+    const textChange: SimpleChange = changes.text;
+    const progressBarDirectionChange: SimpleChange = changes.pbDirection;
 
     if (fgsTypeChange || bgsTypeChange) {
       this.initializeSpinners();
     }
 
-    if (fgsPositionChange || logoPositionChange || textPositionChange) {
+    if (fgsPositionChange || logoPositionChange || logoUrlChange || textChange || textPositionChange) {
       this.determinePositions();
     }
 
@@ -119,8 +126,8 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
     }
 
     if (progressBarDirectionChange) {
-      this.progressBarDirection = this.helperService.validateDirection('progressBarDirection',
-        this.progressBarDirection, this.defaultConfig.progressBarDirection);
+      this.pbDirection = this.helperService.validateDirection('pbDirection',
+        this.pbDirection, this.defaultConfig.pbDirection);
     }
   }
 
@@ -139,18 +146,22 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
     this.logoPosition = this.helperService.validatePosition('logoPosition', this.logoPosition, this.defaultConfig.logoPosition);
     this.textPosition = this.helperService.validatePosition('textPosition', this.textPosition, this.defaultConfig.textPosition);
 
+    this.realLogoPosition = this.logoPosition;
+    this.realTextPosition = this.textPosition;
     if (this.fgsPosition === NGX_POSITION.centerCenter) {
       if (this.logoUrl && this.logoPosition === NGX_POSITION.centerCenter) {
         if (this.textPosition === NGX_POSITION.centerCenter) {
-          this.textPosition = 'ngx-loading-text-center-with-spinner';
+          this.realTextPosition = 'ngx-loading-text-center-with-spinner';
         }
-        this.logoPosition = 'ngx-loading-logo-center-with-spinner';
+        this.realLogoPosition = 'ngx-loading-logo-center-with-spinner';
       } else {
-        this.textPosition = 'ngx-loading-text-center-with-spinner';
+        if (this.textPosition === NGX_POSITION.centerCenter) {
+          this.realTextPosition = 'ngx-loading-text-center-with-spinner';
+        }
       }
     } else {
       if (this.logoUrl && this.logoPosition === NGX_POSITION.centerCenter && this.textPosition === NGX_POSITION.centerCenter) {
-        this.textPosition = 'ngx-loading-text-center-with-logo';
+        this.realTextPosition = 'ngx-loading-text-center-with-logo';
       }
     }
   }

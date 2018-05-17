@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NgxProgressComponent } from './ngx-progress.component';
+import { NgxProgressHelperService } from './ngx-progress-helper.service';
 
 describe('NgxProgressComponent', () => {
   let component: NgxProgressComponent;
@@ -8,7 +9,10 @@ describe('NgxProgressComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NgxProgressComponent ]
+      declarations: [ NgxProgressComponent ],
+      providers: [
+        NgxProgressHelperService
+      ]
     })
     .compileComponents();
   }));

@@ -1,0 +1,24 @@
+.fill-space {
+  flex: 1 1 auto;
+}
+
+h2, h3 {
+  font-family: Roboto, "Heltical Neue", sans-serif;
+  text-align: center;
+}
+
+mat-slider {
+  width: 100%;
+}
+
+.place-holder {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 75%;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.p-12 {
+  padding: 12px;
+}

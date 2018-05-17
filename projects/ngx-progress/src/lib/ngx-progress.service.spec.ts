@@ -1,11 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { NgxProgressService } from './ngx-progress.service';
+import { NgxProgressHelperService } from './ngx-progress-helper.service';
 
 describe('NgxProgressService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [NgxProgressService]
+      providers: [
+        NgxProgressService,
+        NgxProgressHelperService
+      ]
     });
   });
 

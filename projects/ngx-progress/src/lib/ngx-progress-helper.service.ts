@@ -42,9 +42,9 @@ export class NgxProgressHelperService {
       if (this.config.bgsType) {
         this.config.bgsType = this.validateSpinnerType('bgsType', this.config.bgsType, DEFAULT_CONFIG.bgsType);
       }
-      if (this.config.progressBarDirection) {
-        this.config.progressBarDirection = this.validateDirection('progressBarDirection',
-          this.config.progressBarDirection, DEFAULT_CONFIG.progressBarDirection);
+      if (this.config.pbDirection) {
+        this.config.pbDirection = this.validateDirection('pbDirection',
+          this.config.pbDirection, DEFAULT_CONFIG.pbDirection);
       }
       if (this.config.fgsPosition) {
         this.config.fgsPosition = this.validatePosition('fgsPosition', this.config.fgsPosition, DEFAULT_CONFIG.fgsPosition);

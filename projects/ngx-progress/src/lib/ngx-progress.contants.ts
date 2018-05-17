@@ -112,9 +112,9 @@ export const DEFAULT_CONFIG: NgxProgressConfig = {
   logoSize: 120,
   logoUrl: '',
   overlayColor: 'rgba(40, 40, 40, 0.8)',
-  progressBarColor: '#00ACC1',
-  progressBarDirection: PROGRESS_BAR_DIRECTION.leftToRight,
-  progressBarHeight: 5,
+  pbColor: '#00ACC1',
+  pbDirection: PROGRESS_BAR_DIRECTION.leftToRight,
+  pbThickness: 5,
   text: '',
   textColor: '#FFFFFF',
   textPosition: NGX_POSITION.centerCenter
