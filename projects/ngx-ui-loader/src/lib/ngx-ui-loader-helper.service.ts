@@ -1,14 +1,14 @@
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { INTERVAL, DEFAULT_ID, DEFAULT_CONFIG, SPINNER_TYPES, NGX_POSITIONS, PB_DIRECTIONS } from './ngx-progress.contants';
-import { NGX_PROGRESS_CONFIG_TOKEN } from './ngx-progress-config.token';
-import { NgxProgressConfig } from './ngx-progress-config';
+import { INTERVAL, DEFAULT_ID, DEFAULT_CONFIG, SPINNER_TYPES, NGX_POSITIONS, PB_DIRECTIONS } from './ngx-ui-loader.contants';
+import { NGX_UI_LOADER_CONFIG_TOKEN } from './ngx-ui-loader-config.token';
+import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
 
 @Injectable()
-export class NgxProgressHelperService {
+export class NgxUiLoaderHelperService {
 
-  private defaultConfig: NgxProgressConfig;
+  private defaultConfig: NgxUiLoaderConfig;
   private waitingForeground: any;
   private waitingBackground: any;
   private fgTimeoutHandler: any;
@@ -27,7 +27,7 @@ export class NgxProgressHelperService {
   foregroundClosing: Observable<boolean>;
   backgroundClosing: Observable<boolean>;
 
-  constructor(@Optional() @Inject(NGX_PROGRESS_CONFIG_TOKEN) private config: NgxProgressConfig) {
+  constructor(@Optional() @Inject(NGX_UI_LOADER_CONFIG_TOKEN) private config: NgxUiLoaderConfig) {
 
     this.validSpinnerTypes = Object.keys(SPINNER_TYPES).map(key => SPINNER_TYPES[key]);
     this.validPositions = Object.keys(NGX_POSITIONS).map(key => NGX_POSITIONS[key]);
@@ -74,16 +74,16 @@ export class NgxProgressHelperService {
   }
 
   /**
-   * Get default progress configuration
+   * Get default loader configuration
    * @return default configuration object
    */
-  getDefaultConfig(): NgxProgressConfig {
-    return this.defaultConfig;
+  getDefaultConfig(): NgxUiLoaderConfig {
+    return Object.assign({}, this.defaultConfig);
   }
 
   /**
    * Get current status
-   * @return An object with waiting foreground and background
+   * @return An object with waiting foreground and background properties
    */
   getStatus() {
     return {
@@ -93,24 +93,24 @@ export class NgxProgressHelperService {
   }
 
   /**
-   * Determine whether the progress is active
-   * @return true if the progress is active
+   * Determine whether the loader is active
+   * @return true if the loader is active
    */
   private isActive() {
     return Object.keys(this.waitingForeground).length > 0 || Object.keys(this.waitingBackground).length > 0;
   }
 
   /**
-   * Check whether the queue has any waiting foreground progress
-   * @return true if at least one waiting foreground progress exists
+   * Check whether the queue has any waiting foreground loader
+   * @return true if at least one waiting foreground loader exists
    */
   private hasForeground() {
     return Object.keys(this.waitingForeground).length > 0;
   }
 
   /**
-   * Check whether the queue has any waiting background progress
-   * @return true if at least one waiting background progress exists
+   * Check whether the queue has any waiting background loader
+   * @return true if at least one waiting background loader exists
    */
   private hasBackground() {
     return Object.keys(this.waitingBackground).length > 0;
@@ -246,7 +246,7 @@ export class NgxProgressHelperService {
    */
   private validate(validValues: string[], inputName: string, value: string, defaultValue: string): string {
     if (validValues.findIndex(ele => ele === value) === -1) {
-      console.error(`[ngx-progress] - ${inputName} ("${value}") is invalid. `
+      console.error(`[ngx-ui-loader] - ${inputName} ("${value}") is invalid. `
         + `Default value "${defaultValue}" is used.`);
       return defaultValue;
     }

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 
-import { NgxProgressHelperService } from './ngx-progress-helper.service';
-import { NgxProgressConfig } from './ngx-progress-config';
+import { NgxUiLoaderHelperService } from './ngx-ui-loader-helper.service';
+import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
 
 @Injectable()
-export class NgxProgressService {
+export class NgxUiLoaderService {
 
   private _onStart: Subject<any>;
   private _onStop: Subject<any>;
@@ -25,7 +25,7 @@ export class NgxProgressService {
    */
   onStopAll: Observable<any>;
 
-  constructor(private helperService: NgxProgressHelperService) {
+  constructor(private helperService: NgxUiLoaderHelperService) {
     this._onStart = new Subject<any>();
     this.onStart = this._onStart.asObservable();
     this._onStop = new Subject<any>();
@@ -35,15 +35,15 @@ export class NgxProgressService {
   }
 
   /**
-   * Get default configuration of the ngx-progress
+   * Get default configuration of the ngx-ui-loader
    * @return default configuration object
    */
-  getDefaultConfig(): NgxProgressConfig {
+  getDefaultConfig(): NgxUiLoaderConfig {
     return this.helperService.getDefaultConfig();
   }
 
   /**
-   * Get ngx-progress status
+   * Get ngx-ui-loader status
    * @return a object with waiting foreground and background properties
    */
   getStatus(): any {

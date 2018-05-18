@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NgxProgressService, SPINNER_TYPES, NGX_POSITIONS, PB_DIRECTIONS } from 'ngx-progress';
+import { NgxUiLoaderService, NgxUiLoaderConfig, SPINNER_TYPES, NGX_POSITIONS, PB_DIRECTIONS } from 'ngx-ui-loader';
 import { Subscription } from 'rxjs';
 
 const LOGO_URL = 'assets/angular.png';
@@ -14,25 +14,7 @@ export class AppComponent implements OnDestroy, OnInit {
   positions: string[];
   directions: string[];
 
-  bgsColor: string;
-  bgsOpacity: number;
-  bgsPosition: string;
-  bgsSize: number;
-  bgsType: string;
-  fgsColor: string;
-  fgsPosition: string;
-  fgsSize: number;
-  fgsType: string;
-  logoPosition: string;
-  logoSize: number;
-  logoUrl: string;
-  overlayColor: string;
-  pbColor: string;
-  pbDirection: string;
-  pbThickness: number;
-  text: string;
-  textColor: string;
-  textPosition: string;
+  config: NgxUiLoaderConfig;
 
   waitingForeground = {};
   waitingBackground = {};
@@ -40,7 +22,7 @@ export class AppComponent implements OnDestroy, OnInit {
   onStartWatcher: Subscription;
   onStopWatcher: Subscription;
 
-  constructor(private ngxProgressService: NgxProgressService) {
+  constructor(private ngxUiLoaderService: NgxUiLoaderService) {
   }
 
   ngOnInit() {
@@ -48,41 +30,18 @@ export class AppComponent implements OnDestroy, OnInit {
     this.positions = Object.keys(NGX_POSITIONS).map(key => NGX_POSITIONS[key]);
     this.directions = Object.keys(PB_DIRECTIONS).map(key => PB_DIRECTIONS[key]);
 
+    this.config = this.ngxUiLoaderService.getDefaultConfig();
 
-    this.bgsColor = '#00acc1';
-    this.bgsOpacity = 0.5;
-    this.bgsPosition = NGX_POSITIONS.bottomRight;
-    this.bgsSize = 60;
-    this.bgsType = SPINNER_TYPES.rectangleBounce;
-
-    this.fgsColor = '#00acc1';
-    this.fgsPosition = NGX_POSITIONS.centerCenter;
-    this.fgsSize = 60;
-    this.fgsType = SPINNER_TYPES.rectangleBounce;
-
-    this.logoPosition = NGX_POSITIONS.centerCenter;
-    this.logoSize = 120;
-    this.logoUrl = '';
-
-    this.overlayColor = 'rgba(40, 40, 40, 0.8)';
-    this.pbColor = '#00acc1';
-    this.pbDirection = PB_DIRECTIONS.leftToRight;
-    this.pbThickness = 5;
-
-    this.text = '';
-    this.textColor = '#ffffff';
-    this.textPosition = NGX_POSITIONS.centerCenter;
-
-    this.onStopWatcher = this.ngxProgressService.onStop
+    this.onStopWatcher = this.ngxUiLoaderService.onStop
       .subscribe(data => {
-        const status = this.ngxProgressService.getStatus();
+        const status = this.ngxUiLoaderService.getStatus();
         this.waitingForeground = status.waitingForeground;
         this.waitingBackground = status.waitingBackground;
       });
 
-    this.onStartWatcher = this.ngxProgressService.onStart
+    this.onStartWatcher = this.ngxUiLoaderService.onStart
       .subscribe(data => {
-        const status = this.ngxProgressService.getStatus();
+        const status = this.ngxUiLoaderService.getStatus();
         this.waitingForeground = status.waitingForeground;
         this.waitingBackground = status.waitingBackground;
       });
@@ -90,44 +49,48 @@ export class AppComponent implements OnDestroy, OnInit {
 
   addLogo(checked) {
     if (checked) {
-      this.logoUrl = LOGO_URL;
+      this.config.logoUrl = LOGO_URL;
     } else {
-      this.logoUrl = '';
+      this.config.logoUrl = '';
     }
   }
 
   fgSlideChange(checked) {
     if (checked) {
-      this.ngxProgressService.start();
+      this.ngxUiLoaderService.start();
       setTimeout(() => {
-        this.ngxProgressService.stop();
+        this.ngxUiLoaderService.stop();
       }, 3000);
     }
   }
 
   fgSlideChange1(checked) {
     if (checked) {
-      this.ngxProgressService.start('fg-1');
+      this.ngxUiLoaderService.start('fg-1');
       setTimeout(() => {
-        this.ngxProgressService.stop('fg-1');
+        this.ngxUiLoaderService.stop('fg-1');
       }, 8000);
     }
   }
 
   bgSlideChange(checked) {
     if (checked) {
-      this.ngxProgressService.startBackground();
+      this.ngxUiLoaderService.startBackground();
     } else {
-      this.ngxProgressService.stopBackground();
+      this.ngxUiLoaderService.stopBackground();
     }
   }
 
   bgSlideChange2(checked) {
     if (checked) {
-      this.ngxProgressService.startBackground('bg-2');
+      this.ngxUiLoaderService.startBackground('bg-2');
     } else {
-      this.ngxProgressService.stopBackground('bg-2');
+      this.ngxUiLoaderService.stopBackground('bg-2');
     }
+  }
+
+  reset() {
+    this.config = this.ngxUiLoaderService.getDefaultConfig();
   }
 
   ngOnDestroy() {

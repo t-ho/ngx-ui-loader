@@ -1,10 +1,10 @@
 {
-  "name": "ngx-progress",
+  "name": "ngx-ui-loader",
   "description": "A fully customizable loader/spinner and progress bar for Angular 4, 5(tested) and 6+(tested) applications - AoT compatible.",
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/t-ho/ngx-progress.git"
+    "url": "https://github.com/t-ho/ngx-ui-loader.git"
   },
   "author": "t-ho <toan.hmt@gmail.com>",
   "license": "MIT",
@@ -22,7 +22,7 @@
     "Angular6",
     "ng",
     "ngx",
-    "ngx-progress",
+    "ngx-ui-loader",
     "ngx-loader",
     "loader",
     "loading",

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-progress-app": {
+    "ngx-ui-loader-app": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ngx-progress-app",
+            "outputPath": "dist/ngx-ui-loader-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -54,18 +54,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-progress-app:build"
+            "browserTarget": "ngx-ui-loader-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ngx-progress-app:build:production"
+              "browserTarget": "ngx-ui-loader-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-progress-app:build"
+            "browserTarget": "ngx-ui-loader-app:build"
           }
         },
         "test": {
@@ -99,7 +99,7 @@
         }
       }
     },
-    "ngx-progress-app-e2e": {
+    "ngx-ui-loader-app-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -107,7 +107,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ngx-progress-app:serve"
+            "devServerTarget": "ngx-ui-loader-app:serve"
           }
         },
         "lint": {
@@ -121,38 +121,38 @@
         }
       }
     },
-    "ngx-progress": {
-      "root": "projects/ngx-progress",
-      "sourceRoot": "projects/ngx-progress/src",
+    "ngx-ui-loader": {
+      "root": "projects/ngx-ui-loader",
+      "sourceRoot": "projects/ngx-ui-loader/src",
       "projectType": "library",
       "prefix": "ngx",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/ngx-progress/tsconfig.lib.json",
-            "project": "projects/ngx-progress/ng-package.json"
+            "tsConfig": "projects/ngx-ui-loader/tsconfig.lib.json",
+            "project": "projects/ngx-ui-loader/ng-package.json"
           },
           "configurations": {
             "production": {
-              "project": "projects/ngx-progress/ng-package.prod.json"
+              "project": "projects/ngx-ui-loader/ng-package.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ngx-progress/src/test.ts",
-            "tsConfig": "projects/ngx-progress/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-progress/karma.conf.js"
+            "main": "projects/ngx-ui-loader/src/test.ts",
+            "tsConfig": "projects/ngx-ui-loader/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-ui-loader/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/ngx-progress/tsconfig.lib.json",
-              "projects/ngx-progress/tsconfig.spec.json"
+              "projects/ngx-ui-loader/tsconfig.lib.json",
+              "projects/ngx-ui-loader/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -162,5 +162,5 @@
       }
     }
   },
-  "defaultProject": "ngx-progress-app"
+  "defaultProject": "ngx-ui-loader-app"
 }

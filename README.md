@@ -1,17 +1,15 @@
-[![npm version](https://badge.fury.io/js/ngx-progress.svg)](https://badge.fury.io/js/ngx-progress)
-[![npm](https://img.shields.io/npm/dt/ngx-progress.svg)](https://www.npmjs.com/package/ngx-progress)
-[![npm](https://img.shields.io/npm/dm/ngx-progress.svg)](https://www.npmjs.com/package/ngx-progress)
-[![npm](https://img.shields.io/npm/dw/ngx-progress.svg)](https://www.npmjs.com/package/ngx-progress)
-[![npm](https://img.shields.io/npm/l/ngx-progress.svg)](https://www.npmjs.com/package/ngx-progress)
+[![npm version](https://badge.fury.io/js/ngx-ui-loader.svg)](https://badge.fury.io/js/ngx-ui-loader)
+[![npm](https://img.shields.io/npm/dw/ngx-ui-loader.svg)](https://www.npmjs.com/package/ngx-ui-loader)
+[![npm](https://img.shields.io/npm/l/ngx-ui-loader.svg)](https://www.npmjs.com/package/ngx-ui-loader)
 
-# ngx-progress
+# ngx-ui-loader
 
 A fully customizable loader/spinner and progress bar for Angular 4, 5(tested) and 6+(tested) applications - AoT compatible.
 
 ### Features
 
-* Show foreground loading with progress bar
-* Show background loading with different id for different tasks
+* Show foreground loader with progress bar
+* Show background loader with different id for different tasks
 * There are 12 spinner types available
 * Be able to add logo, loading text
 * Be able to change position of spinners, logo and loading text
@@ -20,22 +18,22 @@ A fully customizable loader/spinner and progress bar for Angular 4, 5(tested) an
 
 ## Demo
 
-Live demo [here](https://ngx-progress-demo-angular-6.stackblitz.io).
+Live demo [here](https://ngx-ui-loader-demo.stackblitz.io).
 
-Play with **ngx-progress** [here](https://stackblitz.com/edit/ngx-progress-demo-angular-6) on stackblitz.
+Play with **ngx-ui-loader** [here](https://stackblitz.com/edit/ngx-ui-loader-demo) on stackblitz.
 
 ## Installation
 
-Install `ngx-progress` via NPM, using the command below.
+Install `ngx-ui-loader` via NPM, using the command below.
 
 ### NPM
 
 ```shell
-npm install --save ngx-progress
+npm install --save ngx-ui-loader
 ```
 ## Getting started
 
-Import the `NgxProgressModule` in your root application module `AppModule`:
+Import the `NgxUiLoaderModule` in your root application module `AppModule`:
 
 ```typescript
 
@@ -44,7 +42,7 @@ import { NgModule } from  '@angular/core';
 
 import { AppComponent } from './app.component';
 
-import { NgxProgressModule } from  'ngx-progress';
+import { NgxUiLoaderModule } from  'ngx-ui-loader';
 
 @NgModule({
   declarations: [
@@ -52,8 +50,8 @@ import { NgxProgressModule } from  'ngx-progress';
   ],
   imports: [
     BrowserModule,
-    // Import NgxProgressModule
-    NgxProgressModule,
+    // Import NgxUiLoaderModule
+    NgxUiLoaderModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
@@ -64,18 +62,18 @@ export class AppModule { }
 
 ## Usage
 
-After importing the `NgxProgressModule`, use `ngx-progress` component in your root app template:
+After importing the `NgxUiLoaderModule`, use `ngx-ui-loader` component in your root app template:
 
 ```html
-<ngx-progress></ngx-progress>
+<ngx-ui-loader></ngx-ui-loader>
 ```  
 
-Add `NgxProgressService` service wherever you want to use the `ngx-progress`:
+Add `NgxUiLoaderService` service wherever you want to use the `ngx-ui-loader`:
 
 
 ```typescript
 import { Component, OnInit } from '@angular/core';
-import { NgxProgressService } from 'ngx-progress'; // Import NgxProgressService
+import { NgxUiLoaderService } from 'ngx-ui-loader'; // Import NgxUiLoaderService
 
 @Component({
   selector: 'app-root',
@@ -84,7 +82,7 @@ import { NgxProgressService } from 'ngx-progress'; // Import NgxProgressService
 })
 export class AppComponent implements OnInit {
 
-  constructor(private ngxService: NgxProgressService) { }
+  constructor(private ngxService: NgxUiLoaderService) { }
 
   ngOnInit() {
     this.ngxService.start(); // start foreground loading with 'default' id
@@ -103,24 +101,24 @@ export class AppComponent implements OnInit {
 
 ```
 
-## NgxProgressService service
+## NgxUiLoaderService service
 
-* `NgxProgressService.start([id]='default')` Starts a foreground loader with progress bar. Users cannot interact with the page when the loader is showed.
-* `NgxProgressService.stop([id]='default')` Stops a foreground loader with progress bar.
-* `NgxProgressService.startBackground([id]='default')` Starts a background loader. Users can interact with the page when the loader is showed.
-* `NgxProgressService.stopBackground([id]='default')` Stops a background loader.
-* `NgxProgressService.getDefaultConfig()` Returns the default configuration object of `ngx-progress`.
-* `NgxProgressService.getStatus()` Returns an object including `waitingForeground` and `waitingBackground` properties.
-* `NgxProgressService.stopAll()` Stops all foreground and background loaders.
+* `NgxUiLoaderService.start([id]='default')` Starts a foreground loader with progress bar. Users cannot interact with the page when the loader is showed.
+* `NgxUiLoaderService.stop([id]='default')` Stops a foreground loader with progress bar.
+* `NgxUiLoaderService.startBackground([id]='default')` Starts a background loader. Users can interact with the page when the loader is showed.
+* `NgxUiLoaderService.stopBackground([id]='default')` Stops a background loader.
+* `NgxUiLoaderService.getDefaultConfig()` Returns the default configuration object of `ngx-ui-loader`.
+* `NgxUiLoaderService.getStatus()` Returns an object including `waitingForeground` and `waitingBackground` properties.
+* `NgxUiLoaderService.stopAll()` Stops all foreground and background loaders.
 
 ## Configuration
 
-You can configure `ngx-progress` in the template as below:
+You can configure `ngx-ui-loader` in the template as below:
 
-Import the constant `SPINNER_TYPES` from `ngx-progress` in your controller. Then in your template:
+Import the constant `SPINNER_TYPES` from `ngx-ui-loader` in your controller. Then in your template:
 
 ```html
-<ngx-progress fgsSize="75" [fgsType]="SPINNER_TYPES.wanderingCubes" ></ngx-progress>
+<ngx-ui-loader fgsSize="75" [fgsType]="SPINNER_TYPES.wanderingCubes" ></ngx-ui-loader>
 ```  
 
 Or you can override the default configuration via `forRoot()` method.
@@ -131,15 +129,15 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-import { NgxProgressModule, NgxProgressConfig, SPINNER_TYPES, NGX_POSITIONS, PB_DIRECTIONS } from 'ngx-progress';
+import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER_TYPES, NGX_POSITIONS, PB_DIRECTIONS } from 'ngx-ui-loader';
 
-const ngxProgressConfig: NgxProgressConfig = {
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: 'red',
   bgsPosition: NGX_POSITIONS.bottomCenter,
   bgsSize: 40,
   bgsType: SPINNER_TYPES.rectangleBounce,
-  pbDirection: PB_DIRECTIONS.leftToRight,
-  pbThickness: 5,
+  pbDirection: PB_DIRECTIONS.leftToRight, // progress bar direction
+  pbThickness: 5, // progress bar thickness
 };
 
 @NgModule({
@@ -148,8 +146,8 @@ const ngxProgressConfig: NgxProgressConfig = {
   ],
   imports: [
     BrowserModule,
-    // Import NgxProgressModule with custom configuration globally
-    NgxProgressModule.forRoot(ngxProgressConfig)
+    // Import NgxUiLoaderModule with custom configuration globally
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)
   ],
   providers: [],
   bootstrap: [AppComponent]

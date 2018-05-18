@@ -1,7 +1,7 @@
 /**
- * The interface of ngx-progress configuration
+ * The interface of ngx-ui-loader configuration
  */
-export interface NgxProgressConfig {
+export interface NgxUiLoaderConfig {
   bgsColor?: string;
   bgsOpacity?: number;
   bgsPosition?: string;

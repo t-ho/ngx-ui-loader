@@ -1,4 +1,4 @@
-import { NgxProgressConfig } from './ngx-progress-config';
+import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
 
 /**
  * The configuration of spinners
@@ -96,9 +96,9 @@ export const PB_DIRECTIONS = {
 };
 
 /**
- * The default configuration of ngx-progress
+ * The default configuration of ngx-ui-loader
  */
-export const DEFAULT_CONFIG: NgxProgressConfig = {
+export const DEFAULT_CONFIG: NgxUiLoaderConfig = {
   bgsColor: '#00ACC1',
   bgsOpacity: 0.5,
   bgsPosition: NGX_POSITIONS.bottomRight,

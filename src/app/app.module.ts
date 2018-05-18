@@ -8,12 +8,12 @@ import { MatToolbarModule, MatButtonModule, MatIconModule, MatInputModule,
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ColorPickerModule } from 'ngx-color-picker';
 
-import { NgxProgressModule, NgxProgressConfig, SPINNER_TYPES, NGX_POSITIONS, PB_DIRECTIONS } from 'ngx-progress';
+import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER_TYPES, NGX_POSITIONS, PB_DIRECTIONS } from 'ngx-ui-loader';
 
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 
-const ngxProgressConfig: NgxProgressConfig = {
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: '#OOACC1',
   // bgsOpacity: 0.5,
   // bgsPosition: NGX_POSITIONS.bottomCenter,
@@ -27,7 +27,7 @@ const ngxProgressConfig: NgxProgressConfig = {
   // pbColor: '#FF0000',
   // pbDirection: PB_DIRECTIONS.leftToRight,
   // pbThickness: 5,
-  // text: 'Welcome to ngx-progress',
+  // text: 'Welcome to ngx-ui-loader',
   // textColor: '#FFFFFF',
   // textPosition: NGX_POSITIONS.centerCenter
 };
@@ -52,7 +52,7 @@ const ngxProgressConfig: NgxProgressConfig = {
     MatCheckboxModule,
     MatListModule,
 
-    NgxProgressModule.forRoot(ngxProgressConfig),
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,15 +1,15 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, SimpleChange, OnDestroy } from '@angular/core';
-import { NgxProgressHelperService } from './ngx-progress-helper.service';
-import { SPINNER_CONFIG, NGX_POSITIONS } from './ngx-progress.contants';
+import { NgxUiLoaderHelperService } from './ngx-ui-loader-helper.service';
+import { SPINNER_CONFIG, NGX_POSITIONS } from './ngx-ui-loader.contants';
 import { Observable, Subscription } from 'rxjs';
-import { NgxProgressConfig } from './ngx-progress-config';
+import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
 
 @Component({
-  selector: 'ngx-progress',
-  templateUrl: './ngx-progress.component.html',
-  styleUrls: ['./ngx-progress.component.scss']
+  selector: 'ngx-ui-loader',
+  templateUrl: './ngx-ui-loader.component.html',
+  styleUrls: ['./ngx-ui-loader.component.scss']
 })
-export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
+export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
 
   @Input() bgsColor: string;
   @Input() bgsOpacity: number;
@@ -48,11 +48,11 @@ export class NgxProgressComponent implements OnChanges, OnDestroy, OnInit {
   foregroundClosingWatcher: Subscription;
   backgroundClosingWatcher: Subscription;
 
-  defaultConfig: NgxProgressConfig;
+  defaultConfig: NgxUiLoaderConfig;
   private initialized: boolean;
 
   constructor(
-    private helperService: NgxProgressHelperService) {
+    private helperService: NgxUiLoaderHelperService) {
 
     this.initialized = false;
     this.defaultConfig = this.helperService.getDefaultConfig();

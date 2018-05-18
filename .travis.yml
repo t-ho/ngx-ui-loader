@@ -19,5 +19,5 @@ before_script:
 
 script: 
   - ng lint
-  - ng build ngx-progress
+  - ng build ngx-ui-loader
   - ng build --prod

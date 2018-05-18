@@ -17,8 +17,8 @@
       "dom"
     ],
     "paths": {
-      "ngx-progress": [
-        "dist/ngx-progress"
+      "ngx-ui-loader": [
+        "dist/ngx-ui-loader"
       ]
     }
   }
