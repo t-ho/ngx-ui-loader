@@ -9,7 +9,7 @@
   [class.loading-foreground]="showForeground"
   [class.foreground-closing]="foregroundClosing">
   <img *ngIf="logoUrl" class="ngx-loading-logo"
-    [ngClass]="realLogoPosition" [src]="logoUrl"
+    [ngClass]="realLogoPosition" [src]="trustedLogoUrl"
     [style.width.px]="logoSize" [style.height.px]="logoSize">
   <div class="ngx-foreground-spinner"
     [ngClass]="fgsPosition" [style.color]="fgsColor"

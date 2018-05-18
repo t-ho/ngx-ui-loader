@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, SimpleChange, OnDestroy } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { NgxUiLoaderHelperService } from './ngx-ui-loader-helper.service';
 import { SPINNER_CONFIG, NGX_POSITIONS } from './ngx-ui-loader.contants';
 import { Observable, Subscription } from 'rxjs';
@@ -42,6 +43,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
 
   realTextPosition: string;
   realLogoPosition: string;
+  trustedLogoUrl: any;
 
   showForegroundWatcher: Subscription;
   showBackgroundWatcher: Subscription;
@@ -52,6 +54,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   private initialized: boolean;
 
   constructor(
+    private domSanitizer: DomSanitizer,
     private helperService: NgxUiLoaderHelperService) {
 
     this.initialized = false;
@@ -83,6 +86,8 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   ngOnInit() {
     this.initializeSpinners();
     this.determinePositions();
+
+    this.trustedLogoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.logoUrl);
 
     this.showForegroundWatcher = this.helperService.showForeground
       .subscribe(data => this.showForeground = data);
@@ -119,6 +124,10 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
 
     if (fgsPositionChange || logoPositionChange || logoUrlChange || textChange || textPositionChange) {
       this.determinePositions();
+    }
+
+    if (logoUrlChange) {
+      this.trustedLogoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.logoUrl);
     }
 
     if (bgsPositionChange) {
