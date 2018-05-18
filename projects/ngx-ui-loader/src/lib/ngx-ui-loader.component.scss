@@ -209,7 +209,7 @@ $spinnerSize: 60px;
 }
 
 .ngx-overlay > .ngx-foreground-spinner {
-  position: absolute;
+  position: fixed;
   width: $spinnerSize;
   height: $spinnerSize;
   margin: 0;
@@ -217,14 +217,14 @@ $spinnerSize: 60px;
 }
 
 .ngx-overlay > .ngx-loading-logo {
-  position: absolute;
+  position: fixed;
   margin: 0;
   width: $logoSize;
   height: $logoSize;
 }
 
 .ngx-overlay > .ngx-loading-text {
-  position: absolute;
+  position: fixed;
   margin: 0;
   font-family: sans-serif;
   font-weight: $loadingTextFontWeight;
@@ -320,32 +320,6 @@ $spinnerSize: 60px;
   right: 30px;
 }
 
-.ngx-loading-text-center-with-logo {
-  position: fixed;
-  top: calc(50% + 60px + 36px);
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-}
-
-.ngx-loading-text-center-with-spinner {
-  position: fixed;
-  top: calc(50% + 30px + 36px);
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-}
-
-.ngx-loading-logo-center-with-spinner {
-  position: fixed;
-  top: calc(50% - 30px - 84px);
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-}
 // Utility classes }}}
 
 // sk-rotating-plane {{{

@@ -21,6 +21,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   @Input() fgsPosition: string;
   @Input() fgsSize: number;
   @Input() fgsType: string;
+  @Input() gap: number;
   @Input() logoPosition: string;
   @Input() logoSize: number;
   @Input() logoUrl: string;
@@ -41,9 +42,10 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   foregroundClosing: boolean;
   backgroundClosing: boolean;
 
-  realTextPosition: string;
-  realLogoPosition: string;
   trustedLogoUrl: any;
+  logoTop: any;
+  spinnerTop: any;
+  textTop: any;
 
   showForegroundWatcher: Subscription;
   showBackgroundWatcher: Subscription;
@@ -69,6 +71,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.fgsPosition = this.defaultConfig.fgsPosition;
     this.fgsSize = this.defaultConfig.fgsSize;
     this.fgsType = this.defaultConfig.fgsType;
+    this.gap = this.defaultConfig.gap;
     this.logoPosition = this.defaultConfig.logoPosition;
     this.logoSize = this.defaultConfig.logoSize;
     this.logoUrl = this.defaultConfig.logoUrl;
@@ -79,8 +82,6 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.text = this.defaultConfig.text;
     this.textColor = this.defaultConfig.textColor;
     this.textPosition = this.defaultConfig.textPosition;
-    this.realLogoPosition = this.logoPosition;
-    this.realTextPosition = this.textPosition;
   }
 
   ngOnInit() {
@@ -110,21 +111,15 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
 
     const fgsTypeChange: SimpleChange = changes.fgsType;
     const bgsTypeChange: SimpleChange = changes.bgsType;
-    const fgsPositionChange: SimpleChange = changes.fgsPosition;
     const bgsPositionChange: SimpleChange = changes.bgsPosition;
-    const logoPositionChange: SimpleChange = changes.logoPosition;
     const logoUrlChange: SimpleChange = changes.logoUrl;
-    const textPositionChange: SimpleChange = changes.textPosition;
-    const textChange: SimpleChange = changes.text;
     const progressBarDirectionChange: SimpleChange = changes.pbDirection;
 
     if (fgsTypeChange || bgsTypeChange) {
       this.initializeSpinners();
     }
 
-    if (fgsPositionChange || logoPositionChange || logoUrlChange || textChange || textPositionChange) {
-      this.determinePositions();
-    }
+    this.determinePositions();
 
     if (logoUrlChange) {
       this.trustedLogoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.logoUrl);
@@ -155,22 +150,59 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.logoPosition = this.helperService.validatePosition('logoPosition', this.logoPosition, this.defaultConfig.logoPosition);
     this.textPosition = this.helperService.validatePosition('textPosition', this.textPosition, this.defaultConfig.textPosition);
 
-    this.realLogoPosition = this.logoPosition;
-    this.realTextPosition = this.textPosition;
+    this.logoTop = 'initial';
+    this.spinnerTop = 'initial';
+    this.textTop = 'initial';
+    const textSize = 24;
+
+    if (this.logoPosition.startsWith('center')) {
+      this.logoTop = '50%';
+    } else if (this.logoPosition.startsWith('top')) {
+      this.logoTop = '30px';
+    }
+
+    if (this.fgsPosition.startsWith('center')) {
+      this.spinnerTop = '50%';
+    } else if (this.fgsPosition.startsWith('top')) {
+      this.spinnerTop = '30px';
+    }
+
+    if (this.textPosition.startsWith('center')) {
+      this.textTop = '50%';
+    } else if (this.textPosition.startsWith('top')) {
+      this.textTop = '30px';
+    }
+
     if (this.fgsPosition === NGX_POSITIONS.centerCenter) {
       if (this.logoUrl && this.logoPosition === NGX_POSITIONS.centerCenter) {
-        if (this.textPosition === NGX_POSITIONS.centerCenter) {
-          this.realTextPosition = 'ngx-loading-text-center-with-spinner';
+        if (this.text && this.textPosition === NGX_POSITIONS.centerCenter) { // logo, spinner and text
+          this.logoTop = this.domSanitizer
+            .bypassSecurityTrustStyle(`calc(50% - ${this.fgsSize / 2}px - ${textSize / 2}px - ${this.gap}px)`);
+          this.spinnerTop = this.domSanitizer
+            .bypassSecurityTrustStyle(`calc(50% + ${this.logoSize / 2}px - ${textSize / 2}px)`);
+          this.textTop = this.domSanitizer
+            .bypassSecurityTrustStyle(`calc(50% + ${this.logoSize / 2}px + ${this.gap}px + ${this.fgsSize / 2}px)`);
+        } else { // logo and spinner
+          this.logoTop = this.domSanitizer
+            .bypassSecurityTrustStyle(`calc(50% - ${this.fgsSize / 2}px - ${this.gap / 2}px)`);
+          this.spinnerTop = this.domSanitizer
+            .bypassSecurityTrustStyle(`calc(50% + ${this.logoSize / 2}px + ${this.gap / 2}px)`);
         }
-        this.realLogoPosition = 'ngx-loading-logo-center-with-spinner';
       } else {
-        if (this.textPosition === NGX_POSITIONS.centerCenter) {
-          this.realTextPosition = 'ngx-loading-text-center-with-spinner';
+        if (this.text && this.textPosition === NGX_POSITIONS.centerCenter) { // spinner and text
+          this.spinnerTop = this.domSanitizer
+            .bypassSecurityTrustStyle(`calc(50% - ${textSize / 2}px - ${this.gap / 2}px)`);
+          this.textTop = this.domSanitizer
+            .bypassSecurityTrustStyle(`calc(50% + ${this.fgsSize / 2}px + ${this.gap / 2}px)`);
         }
       }
     } else {
-      if (this.logoUrl && this.logoPosition === NGX_POSITIONS.centerCenter && this.textPosition === NGX_POSITIONS.centerCenter) {
-        this.realTextPosition = 'ngx-loading-text-center-with-logo';
+      if (this.logoUrl && this.logoPosition === NGX_POSITIONS.centerCenter
+        && this.text && this.textPosition === NGX_POSITIONS.centerCenter) { // logo and text
+        this.logoTop = this.domSanitizer
+          .bypassSecurityTrustStyle(`calc(50% - ${textSize / 2}px - ${this.gap / 2}px)`);
+        this.textTop = this.domSanitizer
+          .bypassSecurityTrustStyle(`calc(50% + ${this.logoSize / 2}px + ${this.gap / 2}px)`);
       }
     }
   }

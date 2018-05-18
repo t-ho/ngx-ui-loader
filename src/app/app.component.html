@@ -8,6 +8,7 @@
   [bgsPosition]="config.bgsPosition"
   [bgsSize]="config.bgsSize"
   [bgsType]="config.bgsType"
+  [gap]="config.gap"
   [logoPosition]="config.logoPosition"
   [logoSize]="config.logoSize"
   [logoUrl]="config.logoUrl"
@@ -193,13 +194,14 @@
         <mat-icon matSuffix [style.color]="config.pbColor" fontIcon="mdi-palette" fontSet="mdi"></mat-icon>
       </mat-form-field>
 
+      <div>
+        <span class="place-holder">Gap between logo, spinner and text (gap)</span>
+        <mat-slider fxFlex="100" max="150" min="10" step="1" [thumbLabel]="true" [(ngModel)]="config.gap"></mat-slider>
+      </div>
+
       <div style="margin-top: 21px; margin-bottom: 20px">
         <mat-checkbox (change)="addLogo($event.checked)" [checked]="config.logoUrl">Add logo</mat-checkbox>
       </div>
-
-      <mat-form-field>
-        <input matInput placeholder="Logo (logoUrl)" [(ngModel)]="config.logoUrl" autocomplete="off" disabled>
-      </mat-form-field>
 
       <mat-form-field>
         <mat-select placeholder="Logo Position (logoPosition)" [(value)]="config.logoPosition" [disabled]="!config.logoUrl">

@@ -1,28 +1,46 @@
+<!-- Progress bar {{{ -->
 <div [ngClass]="'ngx-ui-loader-bar-' + pbDirection"
   [style.height.px]="pbThickness"
   [style.color]="pbColor"
   [class.loading-foreground]="showForeground"
   [class.foreground-closing]="foregroundClosing"></div>
+<!-- Progress bar }}} -->
 
+<!-- Foreground container {{{ -->
 <div class="ngx-overlay"
   [style.background-color]="overlayColor"
   [class.loading-foreground]="showForeground"
   [class.foreground-closing]="foregroundClosing">
+
+  <!-- Logo {{{ -->
   <img *ngIf="logoUrl" class="ngx-loading-logo"
-    [ngClass]="realLogoPosition" [src]="trustedLogoUrl"
-    [style.width.px]="logoSize" [style.height.px]="logoSize">
+    [ngClass]="logoPosition" [src]="trustedLogoUrl"
+    [style.width.px]="logoSize" [style.height.px]="logoSize"
+    [style.top]="logoTop">
+  <!-- Logo }}} -->
+
+  <!-- Foreground spinner {{{ -->
   <div class="ngx-foreground-spinner"
     [ngClass]="fgsPosition" [style.color]="fgsColor"
-    [style.width.px]="fgsSize" [style.height.px]="fgsSize">
+    [style.width.px]="fgsSize" [style.height.px]="fgsSize"
+    [style.top]="spinnerTop">
     <div [class]="fgSpinnerClass">
       <div *ngFor="let div of fgDivs"></div>
     </div>
   </div>
-  <div class="ngx-loading-text"
-    [ngClass]="realTextPosition"
-    [style.color]="textColor">{{text}}</div>
-</div>
+  <!-- Foreground spinner }}} -->
 
+  <!-- Loading text {{{ -->
+  <div class="ngx-loading-text"
+    [ngClass]="textPosition"
+    [style.top]="textTop"
+    [style.color]="textColor">{{text}}</div>
+  <!-- Loading text }}} -->
+
+</div>
+<!-- Foreground container }}} -->
+
+<!-- Background spinner {{{ -->
 <div class="ngx-background-spinner"
   [ngClass]="bgsPosition"
   [class.loading-background]="showBackground"
@@ -33,3 +51,4 @@
     <div *ngFor="let div of bgDivs"></div>
   </div>
 </div>
+<!-- Background spinner }}} -->

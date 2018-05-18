@@ -108,6 +108,7 @@ export const DEFAULT_CONFIG: NgxUiLoaderConfig = {
   fgsPosition: NGX_POSITIONS.centerCenter,
   fgsSize: 60,
   fgsType: SPINNER_TYPES.rectangleBounce,
+  gap: 24,
   logoPosition: NGX_POSITIONS.centerCenter,
   logoSize: 120,
   logoUrl: '',

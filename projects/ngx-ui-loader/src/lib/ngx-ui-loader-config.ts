@@ -11,6 +11,7 @@ export interface NgxUiLoaderConfig {
   fgsPosition?: string;
   fgsSize?: number;
   fgsType?: string;
+  gap?: number;
   logoPosition?: string;
   logoSize?: number;
   logoUrl?: string;

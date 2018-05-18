@@ -169,6 +169,7 @@ export class AppModule { }
 | `fgsPosition`    | *string*  | optional | `center-center`   | Foreground spinner position. All available positions can be accessed via `NGX_POSITIONS`  |
 | `fgsSize`        | *number*  | optional | `60`              | Foreground spinner size.                                                                  |
 | `fgsType`        | *string*  | optional | `rectangle-bounce`| Foreground spinner type. All available types can be accessed via `SPINNER_TYPES`          |
+| `gap`            | *number*  | optional | `24`              | The gap between logo, foreground spinner and text when their position are `center-center` |
 | `logoPosition`   | *string*  | optional | `center-center`   | Logo position. All available positions can be accessed via `NGX_POSITIONS`                |
 | `logoSize`       | *number*  | optional | `120`             | Logo size (px)                                                                            |
 | `logoUrl`        | *string*  | optional | (*empty string*)  | Logo url                                                                                  |
