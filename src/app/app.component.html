@@ -19,22 +19,37 @@
   [textColor]="config.textColor"
   [textPosition]="config.textPosition"></ngx-ui-loader>
 <mat-toolbar color="primary">
-  <span>NGX-UI-LOADER</span>
+  <span>
+    <a mat-button href="https://www.npmjs.com/package/ngx-ui-loader" target="_blank">
+      <mat-icon fontIcon="mdi-angular" fontSet="mdi" class="mdi-24px"></mat-icon>NGX-UI-LOADER
+    </a>
+  </span>
   <span class="fill-space"></span>
   <span>
-    <a mat-button href="https://github.com/t-ho/ngx-ui-loader">
+    <a mat-button href="https://github.com/t-ho/ngx-ui-loader" target="_blank">
       <mat-icon fontIcon="mdi-github-circle" fontSet="mdi" class="mdi-24px"></mat-icon>Github
     </a>
   </span>
 </mat-toolbar>
 
 <h2>NGX-UI-LOADER</h2>
+<div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="8px">
+  <a href="https://www.npmjs.com/package/ngx-ui-loader" target="_blank">
+    <img src="https://badge.fury.io/js/ngx-ui-loader.svg" alt="npm version" height="18">
+  </a>
+  <a href="https://travis-ci.org/t-ho/ngx-ui-loader" target="_blank">
+    <img src="https://travis-ci.org/t-ho/ngx-ui-loader.svg?branch=master" alt="npm version" height="18">
+  </a>
+  <a href="https://www.npmjs.com/package/ngx-ui-loader" target="_blank">
+    <img src="https://img.shields.io/npm/l/ngx-ui-loader.svg" alt="npm version" height="18">
+  </a>
+</div>
 <h3>A fully customizable loader/spinner for angular 5+ and 6+</h3>
 
-<div fxLayout="row" fxLayoutAlign="center" style="margin-top: 24px">
-  <div fxFlex="100" fxFlex.gt-md="70" fxLayout="row wrap" fxLayoutAlign="center">
+<div fxLayout="row" fxLayoutAlign="center" style="margin-top: 12px">
+  <div fxFlex="100" fxFlex.lg="90" fxFlex.gt-lg="70" fxLayout="row wrap" fxLayoutAlign="center">
 
-    <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="30" fxLayout="column" class="p-12">
+    <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="36" fxLayout="column" class="p-12">
       <mat-list role="list">
         <mat-list-item role="listitem">
           <mat-slide-toggle (change)="fgSlideChange($event.checked)" [(checked)]="waitingForeground['default']">
@@ -75,7 +90,7 @@
       </div>
     </div>
     <!-- Foreground {{{-->
-    <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="35" fxLayout="column" class="p-12">
+    <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="32" fxLayout="column" class="p-12">
       <mat-form-field>
         <input [(colorPicker)]="config.fgsColor" matInput placeholder="Foreground Spinner Color (fgsColor)" [(ngModel)]="config.fgsColor">
         <mat-icon matSuffix [style.color]="config.fgsColor" fontIcon="mdi-palette" fontSet="mdi"></mat-icon>
@@ -141,7 +156,7 @@
     <!-- Foreground }}}-->
 
     <!-- Background {{{-->
-    <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="35" fxLayout="column" class="p-12">
+    <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="32" fxLayout="column" class="p-12">
       <mat-form-field>
         <input [(colorPicker)]="config.bgsColor" matInput placeholder="Background Spinner Color (bgsColor)" [(ngModel)]="config.bgsColor">
         <mat-icon matSuffix [style.color]="config.bgsColor" fontIcon="mdi-palette" fontSet="mdi"></mat-icon>

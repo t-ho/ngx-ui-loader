@@ -233,7 +233,7 @@ $spinnerSize: 60px;
 }
 
 .ngx-background-spinner {
-  position: absolute;
+  position: fixed;
   width: $spinnerSize;
   height: $spinnerSize;
   margin: 0;
@@ -252,13 +252,13 @@ $spinnerSize: 60px;
 
 // Utility classes {{{
 .top-left {
-  position: absolute;
+  position: fixed;
   top: 30px;
   left: 30px;
 }
 
 .top-center {
-  position: absolute;
+  position: fixed;
   top: 30px;
   left: 50%;
   -webkit-transform: translateX(-50%);
@@ -267,13 +267,13 @@ $spinnerSize: 60px;
 }
 
 .top-right {
-  position: absolute;
+  position: fixed;
   top: 30px;
   right: 30px;
 }
 
 .center-left {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 30px;
   -webkit-transform: translateY(-50%);
@@ -282,7 +282,7 @@ $spinnerSize: 60px;
 }
 
 .center-center {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
@@ -291,7 +291,7 @@ $spinnerSize: 60px;
 }
 
 .center-right {
-  position: absolute;
+  position: fixed;
   top: 50%;
   right: 30px;
   -webkit-transform: translateY(-50%);
@@ -300,13 +300,13 @@ $spinnerSize: 60px;
 }
 
 .bottom-left {
-  position: absolute;
+  position: fixed;
   bottom: 30px;
   left: 30px;
 }
 
 .bottom-center {
-  position: absolute;
+  position: fixed;
   bottom: 30px;
   left: 50%;
   -webkit-transform: translateX(-50%);
@@ -315,13 +315,13 @@ $spinnerSize: 60px;
 }
 
 .bottom-right {
-  position: absolute;
+  position: fixed;
   bottom: 30px;
   right: 30px;
 }
 
 .ngx-loading-text-center-with-logo {
-  position: absolute;
+  position: fixed;
   top: calc(50% + 60px + 36px);
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
@@ -330,7 +330,7 @@ $spinnerSize: 60px;
 }
 
 .ngx-loading-text-center-with-spinner {
-  position: absolute;
+  position: fixed;
   top: calc(50% + 30px + 36px);
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
@@ -339,7 +339,7 @@ $spinnerSize: 60px;
 }
 
 .ngx-loading-logo-center-with-spinner {
-  position: absolute;
+  position: fixed;
   top: calc(50% - 30px - 84px);
   left: 50%;
   -webkit-transform: translate(-50%, -50%);

@@ -1,4 +1,5 @@
 [![npm version](https://badge.fury.io/js/ngx-ui-loader.svg)](https://badge.fury.io/js/ngx-ui-loader)
+[![Build Status](https://travis-ci.org/t-ho/ngx-ui-loader.svg?branch=master)](https://travis-ci.org/t-ho/ngx-ui-loader)
 [![npm](https://img.shields.io/npm/dw/ngx-ui-loader.svg)](https://www.npmjs.com/package/ngx-ui-loader)
 [![npm](https://img.shields.io/npm/l/ngx-ui-loader.svg)](https://www.npmjs.com/package/ngx-ui-loader)
 
@@ -10,7 +11,6 @@ A fully customizable loader/spinner and progress bar for Angular 4, 5(tested) an
 
 * Show foreground loader with progress bar
 * Show background loader with different id for different tasks
-* There are 12 spinner types available
 * Be able to add logo, loading text
 * Be able to change position of spinners, logo and loading text
 * Be able to change color and size of spinners and progress bar
