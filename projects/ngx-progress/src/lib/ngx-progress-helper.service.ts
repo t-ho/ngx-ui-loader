@@ -83,12 +83,12 @@ export class NgxProgressHelperService {
 
   /**
    * Get current status
-   * @return An object with foreground and background waiting queues
+   * @return An object with waiting foreground and background
    */
   getStatus() {
     return {
-      foregroundQueue: Object.keys(this.waitingForeground),
-      backgroundQueue: Object.keys(this.waitingForeground)
+      waitingForeground: this.waitingForeground,
+      waitingBackground: this.waitingBackground
     };
   }
 

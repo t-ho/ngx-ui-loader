@@ -75,20 +75,16 @@ export class AppComponent implements OnDestroy, OnInit {
 
     this.onStopWatcher = this.ngxProgressService.onStop
       .subscribe(data => {
-        if (data.isForeground) {
-          this.waitingForeground[data.id] = false;
-        } else {
-          this.waitingBackground[data.id] = false;
-        }
+        const status = this.ngxProgressService.getStatus();
+        this.waitingForeground = status.waitingForeground;
+        this.waitingBackground = status.waitingBackground;
       });
 
     this.onStartWatcher = this.ngxProgressService.onStart
       .subscribe(data => {
-        if (data.isForeground) {
-          this.waitingForeground[data.id] = true;
-        } else {
-          this.waitingBackground[data.id] = true;
-        }
+        const status = this.ngxProgressService.getStatus();
+        this.waitingForeground = status.waitingForeground;
+        this.waitingBackground = status.waitingBackground;
       });
   }
 

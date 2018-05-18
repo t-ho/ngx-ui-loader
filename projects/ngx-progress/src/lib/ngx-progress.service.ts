@@ -44,7 +44,7 @@ export class NgxProgressService {
 
   /**
    * Get ngx-progress status
-   * @return a object with waiting foreground and background arrays
+   * @return a object with waiting foreground and background properties
    */
   getStatus(): any {
     return this.helperService.getStatus();

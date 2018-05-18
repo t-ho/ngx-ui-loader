@@ -22,9 +22,7 @@ A fully customizable loader/spinner and progress bar for Angular 4, 5(tested) an
 
 Live demo [here](https://ngx-progress-demo-angular-6.stackblitz.io).
 
-Play with **ngx-progress** and **Angular 5** [here](https://stackblitz.com/edit/ngx-progress-demo) on stackblitz.
-
-Play with **ngx-progress** and **Angular 6** [here](https://stackblitz.com/edit/ngx-progress-demo-angular-6) on stackblitz.
+Play with **ngx-progress** [here](https://stackblitz.com/edit/ngx-progress-demo-angular-6) on stackblitz.
 
 ## Installation
 
@@ -176,7 +174,7 @@ export class AppModule { }
 | `logoPosition`   | *string*  | optional | `center-center`   | Logo position. All available positions can be accessed via `NGX_POSITIONS`                |
 | `logoSize`       | *number*  | optional | `120`             | Logo size (px)                                                                            |
 | `logoUrl`        | *string*  | optional | (*empty string*)  | Logo url                                                                                  |
-| `overlayColor`   | *string*  | optional | `rgba(40,40,40,.8`| Overlay background color                                                                  |
+| `overlayColor`   | *string*  | optional | `rgba(40,40,40,.8)`| Overlay background color                                                                  |
 | `pbColor`        | *string*  | optional | `#00ACC1`         | Progress bar color                                                                        |
 | `pbDirection`    | *string*  | optional | `ltr`             | Progress bar direction. All directions type can be accessed via `PB_DIRECTIONS`           |
 | `pbThickness`    | *number*  | optional | `5`               | Progress bar thickness                                                                    |
