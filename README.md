@@ -7,7 +7,7 @@
 
 An all-in-one and fully customizable loader/spinner for Angular 5+ (5+ and 6+ are tested) applications. It supports foreground, background spinner/loader and indicative progress bar.
 
-[![ngx-ui-loader-demo](https://j.gifs.com/jq98XB.gif)](https://ngx-ui-loader-demo.stackblitz.io)
+[![ngx-ui-loader-demo](https://j.gifs.com/gL9k9r.gif)](https://ngx-ui-loader-demo.stackblitz.io)
 
 ### Features
 
