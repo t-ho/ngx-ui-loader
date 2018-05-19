@@ -50,8 +50,8 @@
 <div fxLayout="row" fxLayoutAlign="center" style="margin-top: 12px">
   <div fxFlex="100" fxFlex.lg="90" fxFlex.gt-lg="70" fxLayout="row wrap" fxLayoutAlign="center">
 
-    <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="36" fxLayout="column" class="p-12">
-      <mat-list role="list">
+    <div fxFlex="100" fxFlex.gt-md="36" fxLayout="column" fxLayout.sm="row" fxLayout.md="row" class="p-12">
+      <mat-list role="list" fxFlex.sm="50" fxFlex.md="50" class="mat-elevation-z4">
         <mat-list-item role="listitem">
           <mat-slide-toggle (change)="fgSlideChange($event.checked)" [(checked)]="waitingForeground['default']">
             {{waitingForeground['default'] ? 'stop' : 'start'}}() - automatically stop after 3s
@@ -85,7 +85,7 @@
           </div>
         </mat-list-item>
       </mat-list>
-      <div fxLayout="column" class="config-info">
+      <div fxLayout="column" fxFlex.sm="50" fxFlex.md="50" class="config-info">
         <span class="place-holder">ngx-ui-loader-configuration = </span>
         <pre><code>{{config | json}}</code></pre>
       </div>

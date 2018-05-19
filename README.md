@@ -5,15 +5,17 @@
 
 # ngx-ui-loader
 
-A fully customizable loader/spinner and progress bar for Angular 4, 5(tested) and 6+(tested) applications - AoT compatible.
+An all-in-one and fully customizable loader/spinner for Angular 5+ (5+ and 6+ are tested) applications. It supports foreground, background spinner/loader and indicative progress bar.
+
+[![ngx-ui-loader-demo](https://j.gifs.com/jq98XB.gif)](https://ngx-ui-loader-demo.stackblitz.io)
 
 ### Features
 
 * Show foreground loader with progress bar
 * Show background loader with different id for different tasks
 * Be able to add logo, loading text
-* Be able to change position of spinners, logo and loading text
-* Be able to change color and size of spinners and progress bar
+* Be able to change position of spinners, logo and loading text. NOTE: When they are all set to `center-center`, the gap between them are adjusted via `gap` properties. Other position types are is overlap. E.g. If the position of foreground spinner and logo are set to `bottom-center`, they are overlap each other.
+* Be able to change color and size of logo, spinners and progress bar
 * Be able to change the direction of progress bar
 
 ## Demo
@@ -165,18 +167,22 @@ export class AppModule { }
 | `bgsPosition`    | *string*  | optional | `bottom-right`    | Background spinner postion. All available positions can be accessed via `NGX_POSITIONS`   |
 | `bgsSize`        | *number*  | optional | `60`              | Background spinner size.                                                                  |
 | `bgsType`        | *string*  | optional | `rectangle-bounce`| Background spinner type. All available types can be accessed via `SPINNER_TYPES`          |
+|                  |           |          |                   |                                                                                           |
 | `fgsColor`       | *string*  | optional | `#00ACC1`         | Foreground spinner color                                                                  |
 | `fgsPosition`    | *string*  | optional | `center-center`   | Foreground spinner position. All available positions can be accessed via `NGX_POSITIONS`  |
 | `fgsSize`        | *number*  | optional | `60`              | Foreground spinner size.                                                                  |
 | `fgsType`        | *string*  | optional | `rectangle-bounce`| Foreground spinner type. All available types can be accessed via `SPINNER_TYPES`          |
-| `gap`            | *number*  | optional | `24`              | The gap between logo, foreground spinner and text when their position are `center-center` |
+| `gap`            | *number*  | optional | `24`              | The gap between logo, foreground spinner and text when their positions are `center-center`|
+| `overlayColor`   | *string*  | optional | `rgba(40,40,40,.8)`| Overlay background color                                                                 |
+|                  |           |          |                   |                                                                                           |
 | `logoPosition`   | *string*  | optional | `center-center`   | Logo position. All available positions can be accessed via `NGX_POSITIONS`                |
 | `logoSize`       | *number*  | optional | `120`             | Logo size (px)                                                                            |
 | `logoUrl`        | *string*  | optional | (*empty string*)  | Logo url                                                                                  |
-| `overlayColor`   | *string*  | optional | `rgba(40,40,40,.8)`| Overlay background color                                                                  |
+|                  |           |          |                   |                                                                                           |
 | `pbColor`        | *string*  | optional | `#00ACC1`         | Progress bar color                                                                        |
 | `pbDirection`    | *string*  | optional | `ltr`             | Progress bar direction. All directions type can be accessed via `PB_DIRECTIONS`           |
 | `pbThickness`    | *number*  | optional | `5`               | Progress bar thickness                                                                    |
+|                  |           |          |                   |                                                                                           |
 | `text`           | *string*  | optional | (*empty string*)  | Loading text                                                                              |
 | `textColor`      | *string*  | optional | `#FFFFFF`         | Loading text color                                                                        |
 | `textPosition`   | *string*  | optional | `center-center`   | Loading text position. All available positions can be accessed via `NGX_POSITIONS`        ||
