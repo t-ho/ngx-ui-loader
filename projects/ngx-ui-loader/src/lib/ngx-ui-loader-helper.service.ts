@@ -129,6 +129,9 @@ export class NgxUiLoaderHelperService {
     const foregroundRunning = this.hasForeground();
 
     if (foreground) {
+      if (this.waitingForeground[id]) {
+        return { id: id, isForeground: foreground };
+      }
       this.waitingForeground[id] = true;
       if (!foregroundRunning) {
         const backgroundRunning = this.hasBackground();
@@ -139,6 +142,9 @@ export class NgxUiLoaderHelperService {
         this._showForeground.next(true);
       }
     } else { // foreground == false
+      if (this.waitingBackground[id]) {
+        return { id: id, isForeground: foreground };
+      }
       this.waitingBackground[id] = true;
       if (!foregroundRunning) {
         this._showBackground.next(true);

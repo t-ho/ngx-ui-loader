@@ -4,33 +4,21 @@ import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
  * The configuration of spinners
  */
 export const SPINNER_CONFIG = {
-  'rotating-plane': {
-    divs: 1,
-    class: 'sk-rotating-plane'
+  'ball-scale-multiple': {
+    divs: 3,
+    class: 'sk-ball-scale-multiple'
   },
-  'double-bounce': {
-    divs: 2,
-    class: 'sk-double-bounce'
+  'ball-spin': {
+    divs: 8,
+    class: 'sk-ball-spin'
   },
-  'rectangle-bounce': {
-    divs: 5,
-    class: 'sk-rectangle-bounce'
-  },
-  'wandering-cubes': {
-    divs: 2,
-    class: 'sk-wandering-cubes'
-  },
-  'pulse':  {
-    divs: 1,
-    class: 'sk-pulse'
+  'ball-spin-clockwise': {
+    divs: 8,
+    class: 'sk-ball-spin-clockwise'
   },
   'chasing-dots': {
     divs: 2,
     class: 'sk-chasing-dots'
-  },
-  'three-bounce': {
-    divs: 3,
-    class: 'sk-three-bounce'
   },
   'circle': {
     divs: 12,
@@ -40,6 +28,10 @@ export const SPINNER_CONFIG = {
     divs: 9,
     class: 'sk-cube-grid'
   },
+  'double-bounce': {
+    divs: 2,
+    class: 'sk-double-bounce'
+  },
   'fading-circle': {
     divs: 12,
     class: 'sk-fading-circle'
@@ -48,9 +40,41 @@ export const SPINNER_CONFIG = {
     divs: 4,
     class: 'sk-folding-cube'
   },
+  'pulse':  {
+    divs: 1,
+    class: 'sk-pulse'
+  },
+  'rectangle-bounce': {
+    divs: 5,
+    class: 'sk-rectangle-bounce'
+  },
+  'rectangle-bounce-party': {
+    divs: 5,
+    class: 'sk-rectangle-bounce-party'
+  },
+  'rectangle-bounce-pulse-out': {
+    divs: 5,
+    class: 'sk-rectangle-bounce-pulse-out'
+  },
+  'rectangle-bounce-pulse-out-rapid': {
+    divs: 5,
+    class: 'sk-rectangle-bounce-pulse-out-rapid'
+  },
+  'rotating-plane': {
+    divs: 1,
+    class: 'sk-rotating-plane'
+  },
+  'three-bounce': {
+    divs: 3,
+    class: 'sk-three-bounce'
+  },
   'three-strings': {
     divs: 3,
     class: 'sk-three-strings'
+  },
+  'wandering-cubes': {
+    divs: 2,
+    class: 'sk-wandering-cubes'
   },
 };
 
@@ -58,33 +82,39 @@ export const SPINNER_CONFIG = {
  * Available spinner types
  */
 export const SPINNER_TYPES = {
-  rotatingPlane: 'rotating-plane',
-  doubleBounce: 'double-bounce',
-  rectangleBounce: 'rectangle-bounce',
-  wanderingCubes: 'wandering-cubes',
-  pulse: 'pulse',
+  ballScaleMultiple: 'ball-scale-multiple',
+  ballSpin: 'ball-spin',
+  ballSpinClockwise: 'ball-spin-clockwise',
   chasingDots: 'chasing-dots',
-  threeBounce: 'three-bounce',
   circle: 'circle',
   cubeGrid: 'cube-grid',
+  doubleBounce: 'double-bounce',
   fadingCircle: 'fading-circle',
   foldingCube: 'folding-cube',
+  pulse: 'pulse',
+  rectangleBounce: 'rectangle-bounce',
+  rectangleBounceParty: 'rectangle-bounce-party',
+  rectangleBouncePulseOut: 'rectangle-bounce-pulse-out',
+  rectangleBouncePulseOutRapid: 'rectangle-bounce-pulse-out-rapid',
+  rotatingPlane: 'rotating-plane',
+  threeBounce: 'three-bounce',
   threeStrings: 'three-strings',
+  wanderingCubes: 'wandering-cubes',
 };
 
 /**
  * Available postions
  */
 export const NGX_POSITIONS = {
-  topLeft: 'top-left',
-  topCenter: 'top-center',
-  topRight: 'top-right',
-  centerLeft: 'center-left',
-  centerCenter: 'center-center',
-  centerRight: 'center-right',
-  bottomLeft: 'bottom-left',
   bottomCenter: 'bottom-center',
-  bottomRight: 'bottom-right'
+  bottomLeft: 'bottom-left',
+  bottomRight: 'bottom-right',
+  centerCenter: 'center-center',
+  centerLeft: 'center-left',
+  centerRight: 'center-right',
+  topCenter: 'top-center',
+  topLeft: 'top-left',
+  topRight: 'top-right',
 };
 
 /**

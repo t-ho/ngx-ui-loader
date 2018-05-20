@@ -189,8 +189,9 @@ export class AppModule { }
 
 ## Credits
 
-* Tobias Ahlin for his spinkit
-* Matt Carter for his AngularJS `angular-ui-loader`
+* Tobias Ahlin - [CSS spinkit](https://github.com/tobiasahlin/SpinKit)
+* Daniel Cardoso - [Load awesome](https://github.com/danielcardoso/load-awesome)
+* Matt Carter - AngularJS `angular-ui-loader`
 
 ## License
 
