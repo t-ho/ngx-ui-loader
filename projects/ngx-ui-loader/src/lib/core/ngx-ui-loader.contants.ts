@@ -148,7 +148,8 @@ export const DEFAULT_CONFIG: NgxUiLoaderConfig = {
   pbThickness: 5,
   text: '',
   textColor: '#FFFFFF',
-  textPosition: NGX_POSITIONS.centerCenter
+  textPosition: NGX_POSITIONS.centerCenter,
+  threshold: 500
 };
 
 /**

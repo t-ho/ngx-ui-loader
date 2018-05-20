@@ -58,6 +58,9 @@ export class NgxUiLoaderHelperService {
       if (this.config.textPosition) {
         this.config.textPosition = this.validatePosition('textPosition', this.config.textPosition, DEFAULT_CONFIG.textPosition);
       }
+      if (this.config.threshold && this.config.threshold <= 0) {
+        this.config.threshold = DEFAULT_CONFIG.threshold;
+      }
       this.defaultConfig = { ...this.defaultConfig, ...this.config };
     }
 
@@ -129,10 +132,7 @@ export class NgxUiLoaderHelperService {
     const foregroundRunning = this.hasForeground();
 
     if (foreground) {
-      if (this.waitingForeground[id]) {
-        return { id: id, isForeground: foreground };
-      }
-      this.waitingForeground[id] = true;
+      this.waitingForeground[id] = Date.now();
       if (!foregroundRunning) {
         const backgroundRunning = this.hasBackground();
         if (backgroundRunning) {
@@ -142,10 +142,7 @@ export class NgxUiLoaderHelperService {
         this._showForeground.next(true);
       }
     } else { // foreground == false
-      if (this.waitingBackground[id]) {
-        return { id: id, isForeground: foreground };
-      }
-      this.waitingBackground[id] = true;
+      this.waitingBackground[id] = Date.now();
       if (!foregroundRunning) {
         this._showBackground.next(true);
       }
@@ -154,37 +151,30 @@ export class NgxUiLoaderHelperService {
   }
 
   /**
-   * Stop a loading with specific id
+   * Stop a foreground loading with specific id
    * @param id the optional id to stop. If not provided, 'default' is used.
-   * @param foreground If true, stop foreground loading. Otherwise, stop background loading.
+   * @return
    */
-  stop(id?: string, foreground?: boolean): Object {
+  stop(id?: string): Object {
+    const now = Date.now();
     id = id ? id : DEFAULT_ID;
-    foreground = typeof foreground === 'boolean' ? foreground : true;
 
-    if (foreground) {
-      if (this.waitingForeground[id]) {
-        delete this.waitingForeground[id];
-      } else {
-        return { id: id, isForeground: foreground, isSuccess: false, stopAll: false };
+    if (this.waitingForeground[id]) {
+      if (this.waitingForeground[id] + this.defaultConfig.threshold > now) {
+        setTimeout(() => {
+          this.stop(id);
+        }, this.waitingForeground[id] + this.defaultConfig.threshold - Date.now());
+        return { id: id, isForeground: true, isSuccess: false, stopAll: false };
       }
+      delete this.waitingForeground[id];
     } else {
-      if (this.waitingBackground[id]) {
-        delete this.waitingBackground[id];
-      } else {
-        return { id: id, isForeground: foreground, isSuccess: false, stopAll: false };
-      }
+      return { id: id, isForeground: true, isSuccess: false, stopAll: false };
     }
 
     if (!this.isActive()) {
-      if (foreground) {
-        this.foregroundCloseout();
-        this._showForeground.next(false);
-      } else {
-        this.backgroundCloseout();
-        this._showBackground.next(false);
-      }
-      return { id: id, isForeground: foreground, isSuccess: true, stopAll: true };
+      this.foregroundCloseout();
+      this._showForeground.next(false);
+      return { id: id, isForeground: true, isSuccess: true, stopAll: true };
     }
 
     if (!this.hasForeground()) {
@@ -192,7 +182,37 @@ export class NgxUiLoaderHelperService {
       this._showForeground.next(false);
       this._showBackground.next(true);
     }
-    return { id: id, isForeground: foreground, isSuccess: true, stopAll: false };
+    return { id: id, isForeground: true, isSuccess: true, stopAll: false };
+  }
+
+  /**
+   * Stop a background loading with specific id
+   * @param id the optional id to stop. If not provided, 'default' is used.
+   * @return
+   */
+  stopBackground(id?: string): Object {
+    const now = Date.now();
+    id = id ? id : DEFAULT_ID;
+
+    if (this.waitingBackground[id]) {
+      if (this.waitingBackground[id] + this.defaultConfig.threshold > now) {
+        setTimeout(() => {
+          this.stopBackground(id);
+        }, this.waitingBackground[id] + this.defaultConfig.threshold - Date.now());
+        return { id: id, isForeground: false, isSuccess: false, stopAll: false };
+      }
+      delete this.waitingBackground[id];
+    } else {
+      return { id: id, isForeground: false, isSuccess: false, stopAll: false };
+    }
+
+    if (!this.isActive()) {
+      this.backgroundCloseout();
+      this._showBackground.next(false);
+      return { id: id, isForeground: false, isSuccess: true, stopAll: true };
+    }
+
+    return { id: id, isForeground: false, isSuccess: true, stopAll: false };
   }
 
   /**

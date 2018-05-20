@@ -234,6 +234,7 @@ $spinnerSize: 60px;
 
 .ngx-background-spinner {
   position: fixed;
+  z-index: 99999 !important;
   width: $spinnerSize;
   height: $spinnerSize;
   margin: 0;

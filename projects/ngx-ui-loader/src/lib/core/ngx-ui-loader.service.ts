@@ -96,8 +96,7 @@ export class NgxUiLoaderService {
    * @param foreground
    */
   private _start(id?: string, foreground?: boolean) {
-    const result = this.helperService.start(id, foreground);
-    this._onStart.next(result);
+    this._onStart.next(this.helperService.start(id, foreground));
   }
 
   /**
@@ -106,7 +105,12 @@ export class NgxUiLoaderService {
    * @param foreground
    */
   private _stop(id?: string, foreground?: boolean) {
-    const result: any = this.helperService.stop(id, foreground);
+    let result: any;
+    if (foreground) {
+      result = this.helperService.stop(id);
+    } else {
+      result = this.helperService.stopBackground(id);
+    }
     if (result.isSuccess) {
       this._onStop.next({ id: result.id, isForeground: result.isForeground });
       if (result.stopAll) {

@@ -68,7 +68,7 @@ After importing the `NgxUiLoaderModule`, use `ngx-ui-loader` component in your r
 
 ```html
 <ngx-ui-loader></ngx-ui-loader>
-```  
+```
 
 Add `NgxUiLoaderService` service wherever you want to use the `ngx-ui-loader`:
 
@@ -120,8 +120,8 @@ You can configure `ngx-ui-loader` in the template as below:
 Import the constant `SPINNER_TYPES` from `ngx-ui-loader` in your controller. Then in your template:
 
 ```html
-<ngx-ui-loader fgsSize="75" [fgsType]="SPINNER_TYPES.wanderingCubes" ></ngx-ui-loader>
-```  
+<ngx-ui-loader fgsSize="75" [fgsType]="SPINNER_TYPES.wanderingCubes"></ngx-ui-loader>
+```
 
 Or you can override the default configuration via `forRoot()` method.
 
@@ -160,32 +160,100 @@ export class AppModule { }
 
 ## Input Options
 
-|   Attribute   |      Type      | Required  | Default |                                              Description                   											|
-| ------------- | ----------------- | ---------- | ---------- | ----------------------------------------------------------------------------------------- |
-| `bgsColor`       | *string*  | optional | `#00ACC1`         | Background spinner color                                                         	        |
-| `bgsOpacity`     | *number*  | optional | `0.5`             | Background spinner opacity                                                                | 
-| `bgsPosition`    | *string*  | optional | `bottom-right`    | Background spinner postion. All available positions can be accessed via `NGX_POSITIONS`   |
-| `bgsSize`        | *number*  | optional | `60`              | Background spinner size.                                                                  |
-| `bgsType`        | *string*  | optional | `rectangle-bounce`| Background spinner type. All available types can be accessed via `SPINNER_TYPES`          |
-|                  |           |          |                   |                                                                                           |
-| `fgsColor`       | *string*  | optional | `#00ACC1`         | Foreground spinner color                                                                  |
-| `fgsPosition`    | *string*  | optional | `center-center`   | Foreground spinner position. All available positions can be accessed via `NGX_POSITIONS`  |
-| `fgsSize`        | *number*  | optional | `60`              | Foreground spinner size.                                                                  |
-| `fgsType`        | *string*  | optional | `rectangle-bounce`| Foreground spinner type. All available types can be accessed via `SPINNER_TYPES`          |
-| `gap`            | *number*  | optional | `24`              | The gap between logo, foreground spinner and text when their positions are `center-center`|
-| `overlayColor`   | *string*  | optional | `rgba(40,40,40,.8)`| Overlay background color                                                                 |
-|                  |           |          |                   |                                                                                           |
-| `logoPosition`   | *string*  | optional | `center-center`   | Logo position. All available positions can be accessed via `NGX_POSITIONS`                |
-| `logoSize`       | *number*  | optional | `120`             | Logo size (px)                                                                            |
-| `logoUrl`        | *string*  | optional | (*empty string*)  | Logo url                                                                                  |
-|                  |           |          |                   |                                                                                           |
-| `pbColor`        | *string*  | optional | `#00ACC1`         | Progress bar color                                                                        |
-| `pbDirection`    | *string*  | optional | `ltr`             | Progress bar direction. All directions type can be accessed via `PB_DIRECTIONS`           |
-| `pbThickness`    | *number*  | optional | `5`               | Progress bar thickness                                                                    |
-|                  |           |          |                   |                                                                                           |
-| `text`           | *string*  | optional | (*empty string*)  | Loading text                                                                              |
-| `textColor`      | *string*  | optional | `#FFFFFF`         | Loading text color                                                                        |
-| `textPosition`   | *string*  | optional | `center-center`   | Loading text position. All available positions can be accessed via `NGX_POSITIONS`        ||
+|   Attribute      |  Type     | Required |     Default        |                                       Description                                               |
+| ---------------- | --------- | -------- | ------------------ | ----------------------------------------------------------------------------------------------- |
+| `bgsColor`       | *string*  | optional | `#00ACC1`          | Background spinner color                                                                        |
+| `bgsOpacity`     | *number*  | optional | `0.5`              | Background spinner opacity                                                                      |
+| `bgsPosition`    | *string*  | optional | `bottom-right`     | Background spinner postion. All available positions can be accessed via `NGX_POSITIONS`         |
+| `bgsSize`        | *number*  | optional | `60`               | Background spinner size.                                                                        |
+| `bgsType`        | *string*  | optional | `rectangle-bounce` | Background spinner type. All available types can be accessed via `SPINNER_TYPES`                |
+|                  |           |          |                    |                                                                                                 |
+| `fgsColor`       | *string*  | optional | `#00ACC1`          | Foreground spinner color                                                                        |
+| `fgsPosition`    | *string*  | optional | `center-center`    | Foreground spinner position. All available positions can be accessed via `NGX_POSITIONS`        |
+| `fgsSize`        | *number*  | optional | `60`               | Foreground spinner size.                                                                        |
+| `fgsType`        | *string*  | optional | `rectangle-bounce` | Foreground spinner type. All available types can be accessed via `SPINNER_TYPES`                |
+|                  |           |          |                    |                                                                                                 |
+| `logoPosition`   | *string*  | optional | `center-center`    | Logo position. All available positions can be accessed via `NGX_POSITIONS`                      |
+| `logoSize`       | *number*  | optional | `120`              | Logo size (px)                                                                                  |
+| `logoUrl`        | *string*  | optional | (*empty string*)   | Logo url                                                                                        |
+|                  |           |          |                    |                                                                                                 |
+| `pbColor`        | *string*  | optional | `#00ACC1`          | Progress bar color                                                                              |
+| `pbDirection`    | *string*  | optional | `ltr`              | Progress bar direction. All directions type can be accessed via `PB_DIRECTIONS`                 |
+| `pbThickness`    | *number*  | optional | `5`                | Progress bar thickness                                                                          |
+|                  |           |          |                    |                                                                                                 |
+| `text`           | *string*  | optional | (*empty string*)   | Loading text                                                                                    |
+| `textColor`      | *string*  | optional | `#FFFFFF`          | Loading text color                                                                              |
+| `textPosition`   | *string*  | optional | `center-center`    | Loading text position. All available positions can be accessed via `NGX_POSITIONS`              |
+|                  |           |          |                    |                                                                                                 |
+| `gap`            | *number*  | optional | `24`               | The gap between logo, foreground spinner and text when their positions are `center-center`      |
+| `overlayColor`   | *string*  | optional | `rgba(40,40,40,.8)`| Overlay background color                                                                        |
+| `threshold`      | *number*  | optional | `500`              | The time a loader must be showed at least before it can be stopped. It must be >= 1 millisecond. **NOTE: `threshold` is only configured via forRoot() method.**||
+
+## Automatically show loader for router events
+
+If you want the loader to start automatically for navigating between your app routes:
+
+```typescript
+
+import { BrowserModule } from  '@angular/platform-browser';
+import { NgModule } from  '@angular/core';
+
+import { AppComponent } from './app.component';
+
+import { NgxUiLoaderModule, NgxUiLoaderRouterModule } from  'ngx-ui-loader';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+  ],
+  imports: [
+    BrowserModule,
+    NgxUiLoaderModule, // import NgxUiLoaderModule
+    NgxUiLoaderRouterModule, // import NgxUiLoaderRouterModule. By default, it will show foreground loader.
+    // If you need to show background spinner, do as follow:
+    // NgxUiLoaderRouterModule.forRoot({ showForeground: false })
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+```
+
+NOTE: And in you root app template, do not forget to include `ngx-ui-loader` component:
+
+```html
+<ngx-ui-loader></ngx-ui-loader>
+```
+
+## Changelog
+
+### v.1.1.0
+**Features**
+* Show loader automatically when navigating between app routes
+* Add more spinner types
+
+**Bugs Fixed**
+* Set z-index of background spinner to 99999
+
+### v.1.0.2
+* Update example app and README.md
+
+### v.1.0.1
+**Bugs fixed**
+* Position of background spinner is not fixed when scrolling
+* Unsafe Base64 logo url
+* Logo, foreground spinner and loading text are centered correctly and can set the gap between them via gap input
+
+### v.1.0.0
+**Features**
+* Show foreground loader with progress bar
+* Show background loader with different id for different tasks
+* There are 12 spinner types available
+* Be able to add logo, loading text
+* Be able to change position of spinners, logo and loading text
+* Be able to change color and size of spinners and progress bar
+* Be able to change the direction of progress bar
 
 ## Credits
 

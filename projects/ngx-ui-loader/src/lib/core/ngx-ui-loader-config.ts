@@ -22,4 +22,5 @@ export interface NgxUiLoaderConfig {
   text?: string;
   textColor?: string;
   textPosition?: string;
+  threshold?: number;
 }
