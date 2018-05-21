@@ -9,6 +9,10 @@ An all-in-one and fully customizable loader/spinner for Angular 5+ (5+ and 6+ ar
 
 [![ngx-ui-loader-demo](https://j.gifs.com/gL9k9r.gif)](https://ngx-ui-loader-demo.stackblitz.io)
 
+Available spinners:
+
+[![ngx-ui-loader-spinners](https://j.gifs.com/L8VWkp.gif)](https://ngx-ui-loader-demo.stackblitz.io/spinners)
+
 ### Features
 
 * Show foreground loader with progress bar
@@ -228,10 +232,15 @@ NOTE: And in you root app template, do not forget to include `ngx-ui-loader` com
 
 ## Changelog
 
+### v.1.1.1
+* Bugs fixed
+
+
 ### v.1.1.0
 **Features**
 * Show loader automatically when navigating between app routes
 * Add more spinner types
+* Be able to set a threshold
 
 **Bugs Fixed**
 * Set z-index of background spinner to 99999

@@ -335,7 +335,7 @@ $spinnerSize: 60px;
 .sk-ball-scale-multiple {
   display: block;
   font-size: 0;
-  color: $spinnerColor;
+  color: currentColor;
 }
 
 .sk-ball-scale-multiple > div {

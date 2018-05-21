@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 import { MatToolbarModule, MatButtonModule, MatIconModule, MatInputModule,
          MatSelectModule, MatSlideToggleModule, MatSliderModule,
@@ -8,10 +9,13 @@ import { MatToolbarModule, MatButtonModule, MatIconModule, MatInputModule,
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ColorPickerModule } from 'ngx-color-picker';
 
-import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER_TYPES, NGX_POSITIONS, PB_DIRECTIONS } from 'ngx-ui-loader';
+import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER_TYPES, NGX_POSITIONS, PB_DIRECTIONS, NgxUiLoaderRouterModule } from 'ngx-ui-loader';
 
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
+import { SpinnerDemoComponent } from './spinner-demo.component';
+import { NgxUiLoaderDemoComponent } from './ngx-ui-loader-demo.component';
+import { NgxUiLoaderDemoService } from './ngx-ui-loader-demo.service';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: '#OOACC1',
@@ -32,9 +36,22 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // textPosition: NGX_POSITIONS.centerCenter
 };
 
+const routes: Routes = [
+  {
+    path: 'spinners',
+    component: SpinnerDemoComponent
+  },
+  {
+    path: '',
+    component: NgxUiLoaderDemoComponent
+  }
+];
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SpinnerDemoComponent,
+    NgxUiLoaderDemoComponent
   ],
   imports: [
     BrowserModule,
@@ -51,10 +68,12 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatSliderModule,
     MatCheckboxModule,
     MatListModule,
+    RouterModule.forRoot(routes),
 
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    NgxUiLoaderRouterModule // import this module for showing loader automatically when navigating between app routes
   ],
-  providers: [],
+  providers: [NgxUiLoaderDemoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
