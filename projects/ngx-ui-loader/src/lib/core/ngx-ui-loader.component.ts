@@ -55,6 +55,11 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   defaultConfig: NgxUiLoaderConfig;
   private initialized: boolean;
 
+  /**
+   * Constructor
+   * @param domSanitizer
+   * @param helperService
+   */
   constructor(
     private domSanitizer: DomSanitizer,
     private helperService: NgxUiLoaderHelperService) {
@@ -84,6 +89,9 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.textPosition = this.defaultConfig.textPosition;
   }
 
+  /**
+   * On init event
+   */
   ngOnInit() {
     this.initializeSpinners();
     this.determinePositions();
@@ -104,6 +112,10 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.initialized = true;
   }
 
+  /**
+   * On changes event
+   * @param changes
+   */
   ngOnChanges(changes: SimpleChanges) {
     if (!this.initialized) {
       return;
@@ -135,6 +147,9 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     }
   }
 
+  /**
+   * Initialize spinners
+   */
   private initializeSpinners() {
     this.fgsType = this.helperService.validateSpinnerType('fgsType', this.fgsType, this.defaultConfig.fgsType);
     this.bgsType = this.helperService.validateSpinnerType('bgsType', this.bgsType, this.defaultConfig.bgsType);
@@ -145,6 +160,9 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.bgSpinnerClass = SPINNER_CONFIG[this.bgsType].class;
   }
 
+  /**
+   * Determine the positions of spinner, logo and text
+   */
   private determinePositions() {
     this.fgsPosition = this.helperService.validatePosition('fgsPosition', this.fgsPosition, this.defaultConfig.fgsPosition);
     this.logoPosition = this.helperService.validatePosition('logoPosition', this.logoPosition, this.defaultConfig.logoPosition);
@@ -208,6 +226,9 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   }
 
 
+  /**
+   * On destroy event
+   */
   ngOnDestroy() {
     if (this.showForegroundWatcher) {
       this.showForegroundWatcher.unsubscribe();

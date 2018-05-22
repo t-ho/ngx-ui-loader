@@ -16,6 +16,14 @@ export const SPINNER_CONFIG = {
     divs: 8,
     class: 'sk-ball-spin-clockwise'
   },
+  'ball-spin-clockwise-fade-rotating': {
+    divs: 8,
+    class: 'sk-ball-spin-clockwise-fade-rotating'
+  },
+  'ball-spin-fade-rotating': {
+    divs: 8,
+    class: 'sk-ball-spin-fade-rotating'
+  },
   'chasing-dots': {
     divs: 2,
     class: 'sk-chasing-dots'
@@ -64,6 +72,14 @@ export const SPINNER_CONFIG = {
     divs: 1,
     class: 'sk-rotating-plane'
   },
+  'square-jelly-box': {
+    divs: 2,
+    class: 'sk-square-jelly-box'
+  },
+  'square-loader': {
+    divs: 1,
+    class: 'sk-square-loader'
+  },
   'three-bounce': {
     divs: 3,
     class: 'sk-three-bounce'
@@ -85,6 +101,8 @@ export const SPINNER_TYPES = {
   ballScaleMultiple: 'ball-scale-multiple',
   ballSpin: 'ball-spin',
   ballSpinClockwise: 'ball-spin-clockwise',
+  ballSpinClockwiseFadeRotating: 'ball-spin-clockwise-fade-rotating',
+  ballSpinFadeRotating: 'ball-spin-fade-rotating',
   chasingDots: 'chasing-dots',
   circle: 'circle',
   cubeGrid: 'cube-grid',
@@ -97,6 +115,8 @@ export const SPINNER_TYPES = {
   rectangleBouncePulseOut: 'rectangle-bounce-pulse-out',
   rectangleBouncePulseOutRapid: 'rectangle-bounce-pulse-out-rapid',
   rotatingPlane: 'rotating-plane',
+  squareJellyBox: 'square-jelly-box',
+  squareLoader: 'square-loader',
   threeBounce: 'three-bounce',
   threeStrings: 'three-strings',
   wanderingCubes: 'wandering-cubes',

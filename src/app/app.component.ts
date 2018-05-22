@@ -9,6 +9,10 @@ import { NgxUiLoaderDemoService } from './ngx-ui-loader-demo.service';
 })
 export class AppComponent {
 
+  /**
+   * Constructor
+   * @param demoService
+   */
   constructor(public demoService: NgxUiLoaderDemoService) {
   }
 }

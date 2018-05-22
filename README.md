@@ -11,7 +11,7 @@ An all-in-one and fully customizable loader/spinner for Angular 5+ (5+ and 6+ ar
 
 Available spinners:
 
-[![ngx-ui-loader-spinners](https://j.gifs.com/L8VWkp.gif)](https://ngx-ui-loader-demo.stackblitz.io/spinners)
+[![ngx-ui-loader-spinners](https://j.gifs.com/G5VxP7.gif)](https://ngx-ui-loader-demo.stackblitz.io/spinners)
 
 ### Features
 
@@ -22,13 +22,30 @@ Available spinners:
 * Be able to change color and size of logo, spinners and progress bar
 * Be able to change the direction of progress bar
 
-## Demo
+## Table Of Contents
+- [Demo](#demo)
+- [Installation](#installation)
+- [Getting Started](#getting_started)
+- [Usage](#usage)
+- [API - NgxUiLoaderService](#api_service)
+- [Custom Configuration](#configuration)
+- [Input options](#input_options)
+- [Automatically show loader for router events](#router_events)
+- [Changelog](#changelog)
+- [Credits](#credits)
+- [License](#license)
+
+
+<a name="demo"></a>
+
+## Demo <a name="demo"></a>
 
 Live demo [here](https://ngx-ui-loader-demo.stackblitz.io).
 
 Play with **ngx-ui-loader** [here](https://stackblitz.com/edit/ngx-ui-loader-demo) on stackblitz.
 
-## Installation
+
+## Installation <a name="installation"></a>
 
 Install `ngx-ui-loader` via NPM, using the command below.
 
@@ -37,7 +54,11 @@ Install `ngx-ui-loader` via NPM, using the command below.
 ```shell
 npm install --save ngx-ui-loader
 ```
-## Getting started
+
+
+<a name="getting_started"></a>
+
+## Getting started <a name="getting_started"></a>
 
 Import the `NgxUiLoaderModule` in your root application module `AppModule`:
 
@@ -66,7 +87,10 @@ export class AppModule { }
 
 ```
 
-## Usage
+
+<a name="usage"></a>
+
+## Usage <a name="usage"></a>
 
 After importing the `NgxUiLoaderModule`, use `ngx-ui-loader` component in your root app template:
 
@@ -107,7 +131,9 @@ export class AppComponent implements OnInit {
 
 ```
 
-## NgxUiLoaderService service
+<a name="api_service"></a>
+
+## API - NgxUiLoaderService <a name="api_service"></a>
 
 * `NgxUiLoaderService.start([id]='default')` Starts a foreground loader with progress bar. Users cannot interact with the page when the loader is showed.
 * `NgxUiLoaderService.stop([id]='default')` Stops a foreground loader with progress bar.
@@ -117,7 +143,10 @@ export class AppComponent implements OnInit {
 * `NgxUiLoaderService.getStatus()` Returns an object including `waitingForeground` and `waitingBackground` properties.
 * `NgxUiLoaderService.stopAll()` Stops all foreground and background loaders.
 
-## Configuration
+
+<a name="configuration"></a>
+
+## Custom Configuration <a name="configuration"></a>
 
 You can configure `ngx-ui-loader` in the template as below:
 
@@ -162,7 +191,9 @@ export class AppModule { }
 
 ```
 
-## Input Options
+<a name="input_options"></a>
+
+## Input Options <a name="input_options"></a>
 
 |   Attribute      |  Type     | Required |     Default        |                                       Description                                               |
 | ---------------- | --------- | -------- | ------------------ | ----------------------------------------------------------------------------------------------- |
@@ -193,7 +224,10 @@ export class AppModule { }
 | `overlayColor`   | *string*  | optional | `rgba(40,40,40,.8)`| Overlay background color                                                                        |
 | `threshold`      | *number*  | optional | `500`              | The time a loader must be showed at least before it can be stopped. It must be >= 1 millisecond. **NOTE: `threshold` is only configured via forRoot() method.**||
 
-## Automatically show loader for router events
+
+<a name="router_events"></a>
+
+## Automatically show loader for router events <a name="router_events"></a>
 
 If you want the loader to start automatically for navigating between your app routes:
 
@@ -230,7 +264,14 @@ NOTE: And in you root app template, do not forget to include `ngx-ui-loader` com
 <ngx-ui-loader></ngx-ui-loader>
 ```
 
-## Changelog
+
+<a name="changelog"></a>
+
+## Changelog <a name="changelog"></a>
+
+### v.1.1.2
+* Add more spinner types (total 22 spinners)
+* Bugs fixed: Background spinner (if active) should be showed after the foreground spinner is closed out.
 
 ### v.1.1.1
 * Bugs fixed
@@ -264,13 +305,19 @@ NOTE: And in you root app template, do not forget to include `ngx-ui-loader` com
 * Be able to change color and size of spinners and progress bar
 * Be able to change the direction of progress bar
 
-## Credits
+
+<a name="credits"></a>
+
+## Credits <a name="credits"></a>
 
 * Tobias Ahlin - [CSS spinkit](https://github.com/tobiasahlin/SpinKit)
 * Daniel Cardoso - [Load awesome](https://github.com/danielcardoso/load-awesome)
 * Matt Carter - AngularJS `angular-ui-loader`
 
-## License
+
+<a name="license"></a>
+
+## License <a name="license"></a>
 
 MIT &copy; [t-ho](mailto:toan.hmt@gmail.com)
 

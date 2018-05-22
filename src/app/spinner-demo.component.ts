@@ -11,6 +11,9 @@ export class SpinnerDemoComponent implements OnInit {
   constructor() {
   }
 
+  /**
+   * On init
+   */
   ngOnInit() {
     this.spinners = Object.keys(SPINNER_CONFIG).map(key => {
       return {

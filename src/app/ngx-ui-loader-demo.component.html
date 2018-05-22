@@ -14,12 +14,12 @@
           </mat-slide-toggle>
         </mat-list-item>
         <mat-list-item role="listitem">
-          <mat-slide-toggle (change)="bgSlideChange($event.checked)">
+          <mat-slide-toggle (change)="bgSlideChange($event.checked)" [(checked)]="waitingBackground['default']">
             {{waitingBackground['default'] ? 'stop' : 'start'}}Background()
           </mat-slide-toggle>
         </mat-list-item>
         <mat-list-item role="listitem">
-          <mat-slide-toggle (change)="bgSlideChange2($event.checked)">
+          <mat-slide-toggle (change)="bgSlideChange2($event.checked)" [(checked)]="waitingBackground['bg-2']">
             {{waitingBackground['bg-2'] ? 'stop' : 'start'}}Background('bg-2')
           </mat-slide-toggle>
         </mat-list-item>

@@ -19,6 +19,11 @@ import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
   exports: [NgxUiLoaderComponent]
 })
 export class NgxUiLoaderModule {
+  /**
+   * forRoot
+   * @param ngxUiLoaderConfig
+   * @returns A module with its provider dependencies
+   */
   static forRoot(ngxUiLoaderConfig: NgxUiLoaderConfig): ModuleWithProviders {
     return {
       ngModule: NgxUiLoaderModule,

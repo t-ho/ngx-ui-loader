@@ -25,6 +25,10 @@ export class NgxUiLoaderService {
    */
   onStopAll: Observable<any>;
 
+  /**
+   * Constructor
+   * @param helperService
+   */
   constructor(private helperService: NgxUiLoaderHelperService) {
     this._onStart = new Subject<any>();
     this.onStart = this._onStart.asObservable();
@@ -36,7 +40,7 @@ export class NgxUiLoaderService {
 
   /**
    * Get default configuration of the ngx-ui-loader
-   * @return default configuration object
+   * @returns default configuration object
    */
   getDefaultConfig(): NgxUiLoaderConfig {
     return this.helperService.getDefaultConfig();
@@ -44,7 +48,7 @@ export class NgxUiLoaderService {
 
   /**
    * Get ngx-ui-loader status
-   * @return a object with waiting foreground and background properties
+   * @returns a object with waiting foreground and background properties
    */
   getStatus(): any {
     return this.helperService.getStatus();

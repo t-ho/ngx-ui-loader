@@ -21,30 +21,49 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
   onStartWatcher: Subscription;
   onStopWatcher: Subscription;
 
+  /**
+   * Constructor
+   * @param ngxUiLoaderService
+   * @param demoService
+   */
   constructor(private ngxUiLoaderService: NgxUiLoaderService,
     public demoService: NgxUiLoaderDemoService) {
   }
 
+  /**
+   * On init
+   */
   ngOnInit() {
     this.spinnerTypes = Object.keys(SPINNER_TYPES).map(key => SPINNER_TYPES[key]);
     this.positions = Object.keys(NGX_POSITIONS).map(key => NGX_POSITIONS[key]);
     this.directions = Object.keys(PB_DIRECTIONS).map(key => PB_DIRECTIONS[key]);
 
+    this.getStatus();
+
     this.onStopWatcher = this.ngxUiLoaderService.onStop
       .subscribe(data => {
-        const status = this.ngxUiLoaderService.getStatus();
-        this.waitingForeground = status.waitingForeground;
-        this.waitingBackground = status.waitingBackground;
+        this.getStatus();
       });
 
     this.onStartWatcher = this.ngxUiLoaderService.onStart
       .subscribe(data => {
-        const status = this.ngxUiLoaderService.getStatus();
-        this.waitingForeground = status.waitingForeground;
-        this.waitingBackground = status.waitingBackground;
+        this.getStatus();
       });
   }
 
+  /**
+   * Get current status
+   */
+  getStatus() {
+    const status = this.ngxUiLoaderService.getStatus();
+    this.waitingForeground = status.waitingForeground;
+    this.waitingBackground = status.waitingBackground;
+  }
+
+  /**
+   * Add logo url
+   * @param checked
+   */
   addLogo(checked) {
     if (checked) {
       this.demoService.config.logoUrl = LOGO_URL;
@@ -53,6 +72,10 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
     }
   }
 
+  /**
+   * On foreground slide changed
+   * @param checked
+   */
   fgSlideChange(checked) {
     if (checked) {
       this.ngxUiLoaderService.start();
@@ -62,6 +85,10 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
     }
   }
 
+  /**
+   * On foreground slide changed
+   * @param checked
+   */
   fgSlideChange1(checked) {
     if (checked) {
       this.ngxUiLoaderService.start('fg-1');
@@ -71,6 +98,10 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
     }
   }
 
+  /**
+   * On background slide changed
+   * @param checked
+   */
   bgSlideChange(checked) {
     if (checked) {
       this.ngxUiLoaderService.startBackground();
@@ -79,6 +110,10 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
     }
   }
 
+  /**
+   * On background slide changed
+   * @param checked
+   */
   bgSlideChange2(checked) {
     if (checked) {
       this.ngxUiLoaderService.startBackground('bg-2');
@@ -87,10 +122,16 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
     }
   }
 
+  /**
+   * Reset the form
+   */
   reset() {
     this.demoService.config = this.ngxUiLoaderService.getDefaultConfig();
   }
 
+  /**
+   * On destroy
+   */
   ngOnDestroy() {
     if (this.onStartWatcher) {
       this.onStartWatcher.unsubscribe();

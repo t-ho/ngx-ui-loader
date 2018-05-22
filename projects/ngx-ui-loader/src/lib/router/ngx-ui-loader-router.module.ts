@@ -8,6 +8,11 @@ import { NGX_UI_LOADER_ROUTER_CONFIG_TOKEN } from './ngx-ui-loader-router-config
 @NgModule({})
 export class NgxUiLoaderRouterModule {
 
+  /**
+   * forRoot
+   * @param routerConfig Configuration
+   * @returns A module with its provider dependencies
+   */
   static forRoot(routerConfig: NgxUiLoaderRouterConfig): ModuleWithProviders {
     return {
       ngModule: NgxUiLoaderRouterModule,

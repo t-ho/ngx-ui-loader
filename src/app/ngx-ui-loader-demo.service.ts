@@ -5,6 +5,10 @@ import { NgxUiLoaderConfig, NgxUiLoaderService } from 'ngx-ui-loader';
 export class NgxUiLoaderDemoService {
   config: NgxUiLoaderConfig;
 
+  /**
+   * Constructor
+   * @param ngxUiLoaderService
+   */
   constructor(private ngxUiLoaderService: NgxUiLoaderService) {
     this.config = this.ngxUiLoaderService.getDefaultConfig();
   }

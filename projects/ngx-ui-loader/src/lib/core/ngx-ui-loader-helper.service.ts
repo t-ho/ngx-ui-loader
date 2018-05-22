@@ -27,6 +27,10 @@ export class NgxUiLoaderHelperService {
   foregroundClosing: Observable<boolean>;
   backgroundClosing: Observable<boolean>;
 
+  /**
+   * Constructor
+   * @param config
+   */
   constructor(@Optional() @Inject(NGX_UI_LOADER_CONFIG_TOKEN) private config: NgxUiLoaderConfig) {
 
     this.validSpinnerTypes = Object.keys(SPINNER_TYPES).map(key => SPINNER_TYPES[key]);
@@ -78,7 +82,7 @@ export class NgxUiLoaderHelperService {
 
   /**
    * Get default loader configuration
-   * @return default configuration object
+   * @returns default configuration object
    */
   getDefaultConfig(): NgxUiLoaderConfig {
     return Object.assign({}, this.defaultConfig);
@@ -86,7 +90,7 @@ export class NgxUiLoaderHelperService {
 
   /**
    * Get current status
-   * @return An object with waiting foreground and background properties
+   * @returns An object with waiting foreground and background properties
    */
   getStatus() {
     return {
@@ -97,7 +101,7 @@ export class NgxUiLoaderHelperService {
 
   /**
    * Determine whether the loader is active
-   * @return true if the loader is active
+   * @returns true if the loader is active
    */
   private isActive() {
     return Object.keys(this.waitingForeground).length > 0 || Object.keys(this.waitingBackground).length > 0;
@@ -105,7 +109,7 @@ export class NgxUiLoaderHelperService {
 
   /**
    * Check whether the queue has any waiting foreground loader
-   * @return true if at least one waiting foreground loader exists
+   * @returns true if at least one waiting foreground loader exists
    */
   private hasForeground() {
     return Object.keys(this.waitingForeground).length > 0;
@@ -113,7 +117,7 @@ export class NgxUiLoaderHelperService {
 
   /**
    * Check whether the queue has any waiting background loader
-   * @return true if at least one waiting background loader exists
+   * @returns true if at least one waiting background loader exists
    */
   private hasBackground() {
     return Object.keys(this.waitingBackground).length > 0;
@@ -153,7 +157,7 @@ export class NgxUiLoaderHelperService {
   /**
    * Stop a foreground loading with specific id
    * @param id the optional id to stop. If not provided, 'default' is used.
-   * @return
+   * @returns Object
    */
   stop(id?: string): Object {
     const now = Date.now();
@@ -180,7 +184,10 @@ export class NgxUiLoaderHelperService {
     if (!this.hasForeground()) {
       this.foregroundCloseout();
       this._showForeground.next(false);
-      this._showBackground.next(true);
+      // Show background spinner after the foreground is closed out
+      setTimeout(() => {
+        this._showBackground.next(true);
+      }, 500);
     }
     return { id: id, isForeground: true, isSuccess: true, stopAll: false };
   }
@@ -188,7 +195,7 @@ export class NgxUiLoaderHelperService {
   /**
    * Stop a background loading with specific id
    * @param id the optional id to stop. If not provided, 'default' is used.
-   * @return
+   * @returns Object
    */
   stopBackground(id?: string): Object {
     const now = Date.now();
@@ -220,7 +227,7 @@ export class NgxUiLoaderHelperService {
    * @param inputName The name of the input property
    * @param value The spinner type to verify
    * @param defaultValue The default spinner type
-   * @return a valid spinner type
+   * @returns a valid spinner type
    */
   validateSpinnerType(inputName: string, value: string, defaultValue: string) {
     return this.validate(this.validSpinnerTypes, inputName, value, defaultValue);
@@ -231,7 +238,7 @@ export class NgxUiLoaderHelperService {
    * @param inputName The name of the input property
    * @param value The position value to verify
    * @param defaultValue the default position
-   * @return a valid position
+   * @returns a valid position
    */
   validatePosition(inputName: string, value: string, defaultValue: string) {
     return this.validate(this.validPositions, inputName, value, defaultValue);
@@ -242,7 +249,7 @@ export class NgxUiLoaderHelperService {
    * @param inputName the name of the input property
    * @param value the direction to verify
    * @param defaultValue the default direction
-   * @return a valid direction
+   * @returns a valid direction
    */
   validateDirection(inputName: string, value: string, defaultValue: string) {
     return this.validate(this.validDirections, inputName, value, defaultValue);
