@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { MatToolbarModule, MatButtonModule, MatIconModule, MatInputModule,
          MatSelectModule, MatSlideToggleModule, MatSliderModule,
@@ -9,7 +10,8 @@ import { MatToolbarModule, MatButtonModule, MatIconModule, MatInputModule,
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ColorPickerModule } from 'ngx-color-picker';
 
-import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER_TYPES, NGX_POSITIONS, PB_DIRECTIONS, NgxUiLoaderRouterModule } from 'ngx-ui-loader';
+import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER_TYPES, NGX_POSITIONS,
+  PB_DIRECTIONS, NgxUiLoaderRouterModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
 
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
@@ -69,9 +71,11 @@ const routes: Routes = [
     MatCheckboxModule,
     MatListModule,
     RouterModule.forRoot(routes),
+    HttpClientModule,
 
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-    NgxUiLoaderRouterModule // import this module for showing loader automatically when navigating between app routes
+    NgxUiLoaderRouterModule, // import this module for showing loader automatically when navigating between app routes
+    NgxUiLoaderHttpModule,
   ],
   providers: [NgxUiLoaderDemoService],
   bootstrap: [AppComponent]

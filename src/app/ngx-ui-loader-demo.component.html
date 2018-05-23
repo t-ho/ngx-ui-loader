@@ -170,6 +170,7 @@
     <div fxFlex="100" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="24px">
       <a mat-raised-button color="accent" [routerLink]="'/spinners'">Available Spinners</a>
       <button mat-raised-button color="primary" (click)="reset()">Reset Configuration</button>
+      <button mat-raised-button (click)="getPhotos()" [disabled]="disabled">Http request with loader</button>
     </div>
     <!-- Background }}}-->
   </div>

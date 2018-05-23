@@ -26,16 +26,16 @@ export class NgxUiLoaderRouterModule {
   }
 
   constructor(
-    @Optional() @Inject(NGX_UI_LOADER_ROUTER_CONFIG_TOKEN) defaultConfig: NgxUiLoaderRouterConfig,
+    @Optional() @Inject(NGX_UI_LOADER_ROUTER_CONFIG_TOKEN) config: NgxUiLoaderRouterConfig,
     router: Router,
     ngxUiLoaderService: NgxUiLoaderService) {
 
-    let config: NgxUiLoaderRouterConfig = {
+    let defaultConfig: NgxUiLoaderRouterConfig = {
       showForeground: true
     };
 
-    if (defaultConfig) {
-      config = Object.assign(config, defaultConfig);
+    if (config) {
+      defaultConfig = Object.assign(defaultConfig, config);
     }
 
     router.events

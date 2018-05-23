@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgxUiLoaderService, NgxUiLoaderConfig, SPINNER_TYPES, NGX_POSITIONS, PB_DIRECTIONS } from 'ngx-ui-loader';
 import { Subscription } from 'rxjs';
 import { NgxUiLoaderDemoService } from './ngx-ui-loader-demo.service';
+import { HttpClient } from '@angular/common/http';
 
 const LOGO_URL = 'assets/angular.png';
 
@@ -21,13 +22,16 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
   onStartWatcher: Subscription;
   onStopWatcher: Subscription;
 
+  disabled: boolean;
+
   /**
    * Constructor
    * @param ngxUiLoaderService
    * @param demoService
    */
   constructor(private ngxUiLoaderService: NgxUiLoaderService,
-    public demoService: NgxUiLoaderDemoService) {
+    public demoService: NgxUiLoaderDemoService,
+    private http: HttpClient) {
   }
 
   /**
@@ -37,6 +41,8 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
     this.spinnerTypes = Object.keys(SPINNER_TYPES).map(key => SPINNER_TYPES[key]);
     this.positions = Object.keys(NGX_POSITIONS).map(key => NGX_POSITIONS[key]);
     this.directions = Object.keys(PB_DIRECTIONS).map(key => PB_DIRECTIONS[key]);
+
+    this.disabled = false;
 
     this.getStatus();
 
@@ -127,6 +133,16 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
    */
   reset() {
     this.demoService.config = this.ngxUiLoaderService.getDefaultConfig();
+  }
+
+  getPhotos() {
+    this.disabled = true;
+    this.http.get('https://jsonplaceholder.typicode.com/photos').subscribe(res => {
+      console.log(res);
+      setTimeout(() => {
+        this.disabled = false;
+      }, 1100);
+    });
   }
 
   /**

@@ -31,6 +31,7 @@ Available spinners:
 - [Custom Configuration](#configuration)
 - [Input options](#input_options)
 - [Automatically show loader for router events](#router_events)
+- [Automatically show loader for http requests](#http_requests)
 - [Changelog](#changelog)
 - [Credits](#credits)
 - [License](#license)
@@ -38,7 +39,7 @@ Available spinners:
 
 <a name="demo"></a>
 
-## Demo <a name="demo"></a>
+## Demo
 
 Live demo [here](https://ngx-ui-loader-demo.stackblitz.io).
 
@@ -59,7 +60,7 @@ npm install --save ngx-ui-loader
 
 <a name="getting_started"></a>
 
-## Getting started <a name="getting_started"></a>
+## Getting started
 
 Import the `NgxUiLoaderModule` in your root application module `AppModule`:
 
@@ -91,7 +92,7 @@ export class AppModule { }
 
 <a name="usage"></a>
 
-## Usage <a name="usage"></a>
+## Usage
 
 After importing the `NgxUiLoaderModule`, use `ngx-ui-loader` component in your root app template:
 
@@ -134,7 +135,7 @@ export class AppComponent implements OnInit {
 
 <a name="api_service"></a>
 
-## API - NgxUiLoaderService <a name="api_service"></a>
+## API - NgxUiLoaderService
 
 * `NgxUiLoaderService.start([id]='default')` Starts a foreground loader with progress bar. Users cannot interact with the page when the loader is showed.
 * `NgxUiLoaderService.stop([id]='default')` Stops a foreground loader with progress bar.
@@ -147,7 +148,7 @@ export class AppComponent implements OnInit {
 
 <a name="configuration"></a>
 
-## Custom Configuration <a name="configuration"></a>
+## Custom Configuration
 
 You can configure `ngx-ui-loader` in the template as below:
 
@@ -194,7 +195,7 @@ export class AppModule { }
 
 <a name="input_options"></a>
 
-## Input Options <a name="input_options"></a>
+## Input Options
 
 |   Attribute      |  Type     | Required |     Default        |                                       Description                                               |
 | ---------------- | --------- | -------- | ------------------ | ----------------------------------------------------------------------------------------------- |
@@ -228,7 +229,7 @@ export class AppModule { }
 
 <a name="router_events"></a>
 
-## Automatically show loader for router events <a name="router_events"></a>
+## Automatically show loader for router events
 
 If you want the loader to start automatically for navigating between your app routes:
 
@@ -259,6 +260,41 @@ export class AppModule { }
 
 ```
 
+<a name="http_requests"></a>
+
+## Automatically show loader for Http requests
+
+If you want the loader to start automatically for http requests:
+
+```typescript
+
+import { BrowserModule } from  '@angular/platform-browser';
+import { NgModule } from  '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+
+import { AppComponent } from './app.component';
+
+import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from  'ngx-ui-loader';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    NgxUiLoaderModule, // import NgxUiLoaderModule
+    NgxUiLoaderHttpModule, // import NgxUiLoaderHttpModule. By default, it will show background loader.
+    // If you need to show foreground spinner, do as follow:
+    // NgxUiLoaderHttpModule.forRoot({ showForeground: true })
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+```
+
 NOTE: And in you root app template, do not forget to include `ngx-ui-loader` component:
 
 ```html
@@ -268,7 +304,10 @@ NOTE: And in you root app template, do not forget to include `ngx-ui-loader` com
 
 <a name="changelog"></a>
 
-## Changelog <a name="changelog"></a>
+## Changelog
+
+### v.1.1.5
+* Be able to show loader automatically for http requests - Http interceptor
 
 ### v.1.1.2
 * Add more spinner types (total 22 spinners)
@@ -309,7 +348,7 @@ NOTE: And in you root app template, do not forget to include `ngx-ui-loader` com
 
 <a name="credits"></a>
 
-## Credits <a name="credits"></a>
+## Credits
 
 * Tobias Ahlin - [CSS spinkit](https://github.com/tobiasahlin/SpinKit)
 * Daniel Cardoso - [Load awesome](https://github.com/danielcardoso/load-awesome)
@@ -318,7 +357,7 @@ NOTE: And in you root app template, do not forget to include `ngx-ui-loader` com
 
 <a name="license"></a>
 
-## License <a name="license"></a>
+## License
 
 MIT &copy; [t-ho](mailto:toan.hmt@gmail.com)
 
