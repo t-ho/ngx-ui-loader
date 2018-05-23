@@ -41,7 +41,7 @@ export class NgxUiLoaderRouterModule {
     router.events
       .subscribe(event => {
         if (event instanceof NavigationStart) {
-          if (config.showForeground) {
+          if (defaultConfig.showForeground) {
             ngxUiLoaderService.start('$_router-loader');
           } else {
             ngxUiLoaderService.startBackground('$_router-loader');
@@ -49,7 +49,7 @@ export class NgxUiLoaderRouterModule {
         }
 
         if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
-          if (config.showForeground) {
+          if (defaultConfig.showForeground) {
             ngxUiLoaderService.stop('$_router-loader');
           } else {
             ngxUiLoaderService.stopBackground('$_router-loader');
