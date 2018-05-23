@@ -44,8 +44,9 @@ Live demo [here](https://ngx-ui-loader-demo.stackblitz.io).
 
 Play with **ngx-ui-loader** [here](https://stackblitz.com/edit/ngx-ui-loader-demo) on stackblitz.
 
+<a name="installation"></a>
 
-## Installation <a name="installation"></a>
+## Installation
 
 Install `ngx-ui-loader` via NPM, using the command below.
 
