@@ -111,7 +111,10 @@ export class NgxUiLoaderHelperService {
    * Check whether the queue has any waiting foreground loader
    * @returns true if at least one waiting foreground loader exists
    */
-  private hasForeground() {
+  hasForeground(id?: string) {
+    if (id) {
+      return this.waitingForeground[id] ? true : false;
+    }
     return Object.keys(this.waitingForeground).length > 0;
   }
 
@@ -119,7 +122,10 @@ export class NgxUiLoaderHelperService {
    * Check whether the queue has any waiting background loader
    * @returns true if at least one waiting background loader exists
    */
-  private hasBackground() {
+  hasBackground(id?: string) {
+    if (id) {
+      return this.waitingForeground[id] ? true : false;
+    }
     return Object.keys(this.waitingBackground).length > 0;
   }
 
@@ -186,7 +192,9 @@ export class NgxUiLoaderHelperService {
       this._showForeground.next(false);
       // Show background spinner after the foreground is closed out
       setTimeout(() => {
-        this._showBackground.next(true);
+        if (this.hasBackground()) {
+          this._showBackground.next(true);
+        }
       }, 500);
     }
     return { id: id, isForeground: true, isSuccess: true, stopAll: false };

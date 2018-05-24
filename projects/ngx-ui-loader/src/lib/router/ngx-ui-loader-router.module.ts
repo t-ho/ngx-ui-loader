@@ -4,6 +4,7 @@ import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Rout
 import { NgxUiLoaderService } from '../core/ngx-ui-loader.service';
 import { NgxUiLoaderRouterConfig } from './ngx-ui-loader-router-config';
 import { NGX_UI_LOADER_ROUTER_CONFIG_TOKEN } from './ngx-ui-loader-router-config.token';
+import { ROUTER_LOADER_ID } from './ngx-ui-loader-router.constants';
 
 @NgModule({})
 export class NgxUiLoaderRouterModule {
@@ -25,6 +26,13 @@ export class NgxUiLoaderRouterModule {
     };
   }
 
+  /**
+   * Constructor
+   *
+   * @param config
+   * @param router
+   * @param ngxUiLoaderService
+   */
   constructor(
     @Optional() @Inject(NGX_UI_LOADER_ROUTER_CONFIG_TOKEN) config: NgxUiLoaderRouterConfig,
     router: Router,
@@ -42,17 +50,17 @@ export class NgxUiLoaderRouterModule {
       .subscribe(event => {
         if (event instanceof NavigationStart) {
           if (defaultConfig.showForeground) {
-            ngxUiLoaderService.start('$_router-loader');
+            ngxUiLoaderService.start(ROUTER_LOADER_ID);
           } else {
-            ngxUiLoaderService.startBackground('$_router-loader');
+            ngxUiLoaderService.startBackground(ROUTER_LOADER_ID);
           }
         }
 
         if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
           if (defaultConfig.showForeground) {
-            ngxUiLoaderService.stop('$_router-loader');
+            ngxUiLoaderService.stop(ROUTER_LOADER_ID);
           } else {
-            ngxUiLoaderService.stopBackground('$_router-loader');
+            ngxUiLoaderService.stopBackground(ROUTER_LOADER_ID);
           }
         }
       });
