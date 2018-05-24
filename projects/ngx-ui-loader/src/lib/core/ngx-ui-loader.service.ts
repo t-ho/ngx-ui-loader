@@ -75,7 +75,7 @@ export class NgxUiLoaderService {
    * @param id The optional id to stop. If not provided, 'default' is used.
    */
   stop(id?: string) {
-    this._stop(id, true);
+    this._stopHelper(this.helperService.stop(id));
   }
 
   /**
@@ -83,7 +83,7 @@ export class NgxUiLoaderService {
    * @param id The optional id to stop. If not provided, 'default' is used.
    */
   stopBackground(id?: string) {
-    this._stop(id, false);
+    this._stopHelper(this.helperService.stopBackground(id));
   }
 
   /**
@@ -92,6 +92,22 @@ export class NgxUiLoaderService {
   stopAll() {
     this.helperService.stopAll();
     this._onStopAll.next({ stopAll: true });
+  }
+
+  /**
+   * Check whether the foreground ID exists or not
+   * @param id foreground ID
+   */
+  hasForeground(id: string) {
+    return this.helperService.hasForeground(id);
+  }
+
+  /**
+   * Check whether the background ID exists or not
+   * @param id background ID
+   */
+  hasBackground(id: string) {
+    return this.helperService.hasBackground(id);
   }
 
   /**
@@ -104,17 +120,10 @@ export class NgxUiLoaderService {
   }
 
   /**
-   * Helper
-   * @param id
-   * @param foreground
+   * Stop Helper
+   * @param result object is returned from the stop() or stopBackground() function of NgxUiLoderHelperService
    */
-  private _stop(id?: string, foreground?: boolean) {
-    let result: any;
-    if (foreground) {
-      result = this.helperService.stop(id);
-    } else {
-      result = this.helperService.stopBackground(id);
-    }
+  private _stopHelper(result: any) {
     if (result.isSuccess) {
       this._onStop.next({ id: result.id, isForeground: result.isForeground });
       if (result.stopAll) {
