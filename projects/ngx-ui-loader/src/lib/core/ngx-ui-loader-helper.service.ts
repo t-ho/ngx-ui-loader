@@ -114,7 +114,7 @@ export class NgxUiLoaderHelperService {
   hasForeground(id?: string) {
     if (id) {
       return this.waitingForeground[id] ? true : false;
-    } 
+    }
     return Object.keys(this.waitingForeground).length > 0;
   }
 
@@ -125,7 +125,7 @@ export class NgxUiLoaderHelperService {
   hasBackground(id?: string) {
     if (id) {
       return this.waitingForeground[id] ? true : false;
-    } 
+    }
     return Object.keys(this.waitingBackground).length > 0;
   }
 

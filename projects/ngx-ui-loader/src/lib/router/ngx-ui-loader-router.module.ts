@@ -28,7 +28,7 @@ export class NgxUiLoaderRouterModule {
 
   /**
    * Constructor
-   *  
+   *
    * @param config
    * @param router
    * @param ngxUiLoaderService
