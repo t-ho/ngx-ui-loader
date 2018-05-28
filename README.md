@@ -318,6 +318,10 @@ NOTE: And in you root app template, do not forget to include `ngx-ui-loader` com
 
 ## Changelog
 
+### v.1.1.8
+* Http interceptor - Can configure to not show loader for some API urls.
+* Npm packages - version bump.
+
 ### v.1.1.5
 * Be able to show loader automatically for http requests - Http interceptor
 
