@@ -1,7 +1,7 @@
 {
   "name": "ngx-ui-loader",
   "description": "An all-in-one and fully customizable loader/spinner for Angular 5+ (5+ and 6+ are tested) applications. It supports foreground, background spinner/loader and indicative progress bar.",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "repository": {
     "type": "git",
     "url": "https://github.com/t-ho/ngx-ui-loader.git"
@@ -15,13 +15,6 @@
     "@angular/core": ">=4.4.0"
   },
   "keywords": [
-    "Angular",
-    "Angular 5",
-    "Angular5",
-    "Angular 6",
-    "Angular 6",
-    "Angular6",
-    "ng",
     "ngx",
     "ngx-ui-loader",
     "ngx-loader",
@@ -30,6 +23,7 @@
     "spinner",
     "ngx-loading",
     "ngx-spinner",
+    "progressbar",
     "progress bar",
     "loader AoT compatible",
     "Angular 5 loader",
@@ -43,7 +37,6 @@
     "Angular loader",
     "Angular loading",
     "Angular spinner",
-    "Angular progress bar",
-    "AoT"
+    "Angular progress bar"
   ]
 }

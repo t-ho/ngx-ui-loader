@@ -22,11 +22,21 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
     };
 
     if (config) {
-      Object.assign(this.defaultConfig, config);
+      if (config.exclude) {
+        config.exclude = config.exclude.map(url => url.toLowerCase());
+      }
+      this.defaultConfig = { ...this.defaultConfig, ...config };
     }
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (this.defaultConfig.exclude) {
+      // do not show the loader for api url in the `exclude` list
+      if (this.defaultConfig.exclude.findIndex(url => req.url.toLowerCase().startsWith(url)) !== -1) {
+        return next.handle(req);
+      }
+    }
+
     this.count++;
     if (this.defaultConfig.showForeground) {
       if (!this.ngxUiLoaderService.hasForeground(HTTP_LOADER_ID)) {
