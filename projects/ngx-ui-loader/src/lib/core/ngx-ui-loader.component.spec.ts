@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NgxUiLoaderComponent } from './ngx-ui-loader.component';
-import { NgxUiLoaderHelperService } from './ngx-ui-loader-helper.service';
+import { NgxUiLoaderService } from './ngx-ui-loader.service';
 
 describe('NgxUiLoaderComponent', () => {
   let component: NgxUiLoaderComponent;
@@ -11,7 +11,7 @@ describe('NgxUiLoaderComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ NgxUiLoaderComponent ],
       providers: [
-        NgxUiLoaderHelperService
+        NgxUiLoaderService
       ]
     })
     .compileComponents();

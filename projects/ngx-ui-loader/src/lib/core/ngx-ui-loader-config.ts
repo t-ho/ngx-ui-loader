@@ -1,26 +1,28 @@
+import { DirectionType, PositionType, SpinnerType } from './ngx-ui-loader.types';
+
 /**
  * The interface of ngx-ui-loader configuration
  */
 export interface NgxUiLoaderConfig {
   bgsColor?: string;
   bgsOpacity?: number;
-  bgsPosition?: string;
+  bgsPosition?: PositionType;
   bgsSize?: number;
-  bgsType?: string;
+  bgsType?: SpinnerType;
   fgsColor?: string;
-  fgsPosition?: string;
+  fgsPosition?: PositionType;
   fgsSize?: number;
-  fgsType?: string;
+  fgsType?: SpinnerType;
   gap?: number;
-  logoPosition?: string;
+  logoPosition?: PositionType;
   logoSize?: number;
   logoUrl?: string;
   overlayColor?: string;
   pbColor?: string;
-  pbDirection?: string;
+  pbDirection?: DirectionType;
   pbThickness?: number;
   text?: string;
   textColor?: string;
-  textPosition?: string;
+  textPosition?: PositionType;
   threshold?: number;
 }

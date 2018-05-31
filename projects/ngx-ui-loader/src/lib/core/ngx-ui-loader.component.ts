@@ -1,9 +1,12 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, SimpleChange, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NgxUiLoaderHelperService } from './ngx-ui-loader-helper.service';
-import { SPINNER_CONFIG, NGX_POSITIONS } from './ngx-ui-loader.contants';
+import { NgxUiLoaderService } from './ngx-ui-loader.service';
+import { SPINNER_CONFIG } from './ngx-ui-loader.contants';
+import { NGX_POSITIONS } from './ngx-ui-loader.enums';
 import { Observable, Subscription } from 'rxjs';
 import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
+import { DirectionType, PositionType, SpinnerType } from './ngx-ui-loader.types';
+import { SPINNER_TYPES } from './ngx-ui-loader.enums';
 
 @Component({
   selector: 'ngx-ui-loader',
@@ -14,24 +17,24 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
 
   @Input() bgsColor: string;
   @Input() bgsOpacity: number;
-  @Input() bgsPosition: string;
+  @Input() bgsPosition: PositionType;
   @Input() bgsSize: number;
-  @Input() bgsType: string;
+  @Input() bgsType: SpinnerType;
   @Input() fgsColor: string;
-  @Input() fgsPosition: string;
+  @Input() fgsPosition: PositionType;
   @Input() fgsSize: number;
-  @Input() fgsType: string;
+  @Input() fgsType: SpinnerType;
   @Input() gap: number;
-  @Input() logoPosition: string;
+  @Input() logoPosition: PositionType;
   @Input() logoSize: number;
   @Input() logoUrl: string;
   @Input() overlayColor: string;
   @Input() pbColor: string;
-  @Input() pbDirection: string;
+  @Input() pbDirection: DirectionType;
   @Input() pbThickness: number;
   @Input() text: string;
   @Input() textColor: string;
-  @Input() textPosition: string;
+  @Input() textPosition: PositionType;
 
   fgDivs: number[];
   fgSpinnerClass: string;
@@ -58,14 +61,14 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   /**
    * Constructor
    * @param domSanitizer
-   * @param helperService
+   * @param ngxService
    */
   constructor(
     private domSanitizer: DomSanitizer,
-    private helperService: NgxUiLoaderHelperService) {
+    private ngxService: NgxUiLoaderService) {
 
     this.initialized = false;
-    this.defaultConfig = this.helperService.getDefaultConfig();
+    this.defaultConfig = this.ngxService.getDefaultConfig();
 
     this.bgsColor = this.defaultConfig.bgsColor;
     this.bgsOpacity = this.defaultConfig.bgsOpacity;
@@ -98,16 +101,16 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
 
     this.trustedLogoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.logoUrl);
 
-    this.showForegroundWatcher = this.helperService.showForeground
+    this.showForegroundWatcher = this.ngxService.showForeground
       .subscribe(data => this.showForeground = data);
 
-    this.showBackgroundWatcher = this.helperService.showBackground
+    this.showBackgroundWatcher = this.ngxService.showBackground
       .subscribe(data => this.showBackground = data);
 
-    this.foregroundClosingWatcher = this.helperService.foregroundClosing
+    this.foregroundClosingWatcher = this.ngxService.foregroundClosing
       .subscribe(data => this.foregroundClosing = data);
 
-    this.backgroundClosingWatcher = this.helperService.backgroundClosing
+    this.backgroundClosingWatcher = this.ngxService.backgroundClosing
       .subscribe(data => this.backgroundClosing = data);
     this.initialized = true;
   }
@@ -123,9 +126,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
 
     const fgsTypeChange: SimpleChange = changes.fgsType;
     const bgsTypeChange: SimpleChange = changes.bgsType;
-    const bgsPositionChange: SimpleChange = changes.bgsPosition;
     const logoUrlChange: SimpleChange = changes.logoUrl;
-    const progressBarDirectionChange: SimpleChange = changes.pbDirection;
 
     if (fgsTypeChange || bgsTypeChange) {
       this.initializeSpinners();
@@ -136,24 +137,12 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     if (logoUrlChange) {
       this.trustedLogoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.logoUrl);
     }
-
-    if (bgsPositionChange) {
-      this.bgsPosition = this.helperService.validatePosition('bgsPosition', this.bgsPosition, this.defaultConfig.bgsPosition);
-    }
-
-    if (progressBarDirectionChange) {
-      this.pbDirection = this.helperService.validateDirection('pbDirection',
-        this.pbDirection, this.defaultConfig.pbDirection);
-    }
   }
 
   /**
    * Initialize spinners
    */
   private initializeSpinners() {
-    this.fgsType = this.helperService.validateSpinnerType('fgsType', this.fgsType, this.defaultConfig.fgsType);
-    this.bgsType = this.helperService.validateSpinnerType('bgsType', this.bgsType, this.defaultConfig.bgsType);
-
     this.fgDivs = Array(SPINNER_CONFIG[this.fgsType].divs).fill(1);
     this.fgSpinnerClass = SPINNER_CONFIG[this.fgsType].class;
     this.bgDivs = Array(SPINNER_CONFIG[this.bgsType].divs).fill(1);
@@ -164,10 +153,6 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
    * Determine the positions of spinner, logo and text
    */
   private determinePositions() {
-    this.fgsPosition = this.helperService.validatePosition('fgsPosition', this.fgsPosition, this.defaultConfig.fgsPosition);
-    this.logoPosition = this.helperService.validatePosition('logoPosition', this.logoPosition, this.defaultConfig.logoPosition);
-    this.textPosition = this.helperService.validatePosition('textPosition', this.textPosition, this.defaultConfig.textPosition);
-
     this.logoTop = 'initial';
     this.spinnerTop = 'initial';
     this.textTop = 'initial';
@@ -224,7 +209,6 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
       }
     }
   }
-
 
   /**
    * On destroy event

@@ -1,15 +1,46 @@
-import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Inject, Injectable, Optional } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
-import { NgxUiLoaderHelperService } from './ngx-ui-loader-helper.service';
+import { DEFAULT_ID, DEFAULT_CONFIG, INTERVAL } from './ngx-ui-loader.contants';
+import { NGX_UI_LOADER_CONFIG_TOKEN } from './ngx-ui-loader-config.token';
 import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
 
 @Injectable()
 export class NgxUiLoaderService {
 
+  private defaultConfig: NgxUiLoaderConfig;
+  private waitingForeground: any;
+  private waitingBackground: any;
+
+  private _showForeground: BehaviorSubject<boolean>;
+  private _showBackground: BehaviorSubject<boolean>;
+  private _foregroundClosing: BehaviorSubject<boolean>;
+  private _backgroundClosing: BehaviorSubject<boolean>;
+
+  /**
+   * For internal use
+   */
+  showForeground: Observable<boolean>;
+
+  /**
+   * For internal use
+   */
+  showBackground: Observable<boolean>;
+
+  /**
+   * For internal use
+   */
+  foregroundClosing: Observable<boolean>;
+
+  /**
+   * For internal use
+   */
+  backgroundClosing: Observable<boolean>;
+
   private _onStart: Subject<any>;
   private _onStop: Subject<any>;
   private _onStopAll: Subject<any>;
+
   /**
    * Emit when a loading is started
    */
@@ -27,9 +58,30 @@ export class NgxUiLoaderService {
 
   /**
    * Constructor
-   * @param helperService
+   * @param config
    */
-  constructor(private helperService: NgxUiLoaderHelperService) {
+  constructor(@Optional() @Inject(NGX_UI_LOADER_CONFIG_TOKEN) private config: NgxUiLoaderConfig) {
+
+    this.defaultConfig = { ...DEFAULT_CONFIG };
+
+    if (this.config) {
+      if (this.config.threshold && this.config.threshold <= 0) {
+        this.config.threshold = DEFAULT_CONFIG.threshold;
+      }
+      this.defaultConfig = { ...this.defaultConfig, ...this.config };
+    }
+
+    this.waitingForeground = {};
+    this.waitingBackground = {};
+    this._showForeground = new BehaviorSubject<boolean>(false);
+    this.showForeground = this._showForeground.asObservable();
+    this._showBackground = new BehaviorSubject<boolean>(false);
+    this.showBackground = this._showBackground.asObservable();
+    this._foregroundClosing = new BehaviorSubject<boolean>(false);
+    this.foregroundClosing = this._foregroundClosing.asObservable();
+    this._backgroundClosing = new BehaviorSubject<boolean>(false);
+    this.backgroundClosing = this._backgroundClosing.asObservable();
+
     this._onStart = new Subject<any>();
     this.onStart = this._onStart.asObservable();
     this._onStop = new Subject<any>();
@@ -39,97 +91,191 @@ export class NgxUiLoaderService {
   }
 
   /**
-   * Get default configuration of the ngx-ui-loader
+   * Get default loader configuration
    * @returns default configuration object
    */
   getDefaultConfig(): NgxUiLoaderConfig {
-    return this.helperService.getDefaultConfig();
+    return { ...this.defaultConfig };
   }
 
   /**
-   * Get ngx-ui-loader status
-   * @returns a object with waiting foreground and background properties
+   * Get current status
+   * @returns An object with waiting foreground and background properties
    */
-  getStatus(): any {
-    return this.helperService.getStatus();
+  getStatus() {
+    return {
+      waitingForeground: { ...this.waitingForeground },
+      waitingBackground: { ...this.waitingBackground }
+    };
   }
 
   /**
-   * Start a foreground loading with specific id
-   * @param id The optional id to start. The default value is 'default' if not provided.
+   * Determine whether the loader is active
+   * @returns true if the loader is active
    */
-  start(id?: string) {
-    this._start(id, true);
+  private isActive() {
+    return Object.keys(this.waitingForeground).length > 0 || Object.keys(this.waitingBackground).length > 0;
   }
 
   /**
-   * Start a background loading with specific id
-   * @param id The optional id to start. The default value is 'default' if not provided.
+   * Check whether the queue has any waiting foreground loader
+   * @returns true if at least one waiting foreground loader exists
    */
-  startBackground(id?: string) {
-    this._start(id, false);
+  hasForeground(id?: string) {
+    if (id) {
+      return this.waitingForeground[id] ? true : false;
+    }
+    return Object.keys(this.waitingForeground).length > 0;
   }
 
   /**
-   * Stop a foreground loading with specific id.
-   * @param id The optional id to stop. If not provided, 'default' is used.
+   * Check whether the queue has any waiting background loader
+   * @returns true if at least one waiting background loader exists
    */
-  stop(id?: string) {
-    this._stopHelper(this.helperService.stop(id));
+  hasBackground(id?: string) {
+    if (id) {
+      return this.waitingForeground[id] ? true : false;
+    }
+    return Object.keys(this.waitingBackground).length > 0;
   }
 
   /**
-   * Stop a background loading with specific id.
-   * @param id The optional id to stop. If not provided, 'default' is used.
+   * Start the foreground loading with a specified id.
+   * The loading is only closed off when all IDs are called with stop() method.
+   * @param id the optional id of the loading. id is set to 'default' by default.
    */
-  stopBackground(id?: string) {
-    this._stopHelper(this.helperService.stopBackground(id));
+  start(id: string = DEFAULT_ID) {
+    const foregroundRunning = this.hasForeground();
+
+    this.waitingForeground[id] = Date.now();
+    if (!foregroundRunning) {
+      if (this.hasBackground()) {
+        this.backgroundCloseout();
+        this._showBackground.next(false);
+      }
+      this._showForeground.next(true);
+    }
+    this._onStart.next({ id: id, isForeground: true });
   }
 
   /**
-   * Stop all foreground and background loadings
+   * Start the background loading with a specified id.
+   * The loading is only closed off when all IDs are called with stopBackground() method.
+   * @param id the optional id of the loading. id is set to 'default' by default.
+   */
+  startBackground(id: string = DEFAULT_ID) {
+    this.waitingBackground[id] = Date.now();
+    if (!this.hasForeground()) {
+      this._showBackground.next(true);
+    }
+    this._onStart.next({ id: id, isForeground: false });
+  }
+
+  /**
+   * Stop a foreground loading with specific id
+   * @param id the optional id to stop. If not provided, 'default' is used.
+   * @returns Object
+   */
+  stop(id: string = DEFAULT_ID) {
+    const now = Date.now();
+
+    if (this.waitingForeground[id]) {
+      if (this.waitingForeground[id] + this.defaultConfig.threshold > now) {
+        setTimeout(() => {
+          this.stop(id);
+        }, this.waitingForeground[id] + this.defaultConfig.threshold - Date.now());
+        return;
+      }
+      delete this.waitingForeground[id];
+    } else {
+      return;
+    }
+
+    if (!this.isActive()) {
+      this.foregroundCloseout();
+      this._showForeground.next(false);
+      this._onStop.next({ id: id, isForeground: true });
+      this._onStopAll.next({ stopAll: true });
+      return;
+    }
+
+    if (!this.hasForeground()) {
+      this.foregroundCloseout();
+      this._showForeground.next(false);
+      // Show background spinner after the foreground is closed out
+      setTimeout(() => {
+        if (this.hasBackground()) {
+          this._showBackground.next(true);
+        }
+      }, 500);
+    }
+    this._onStop.next({ id: id, isForeground: true });
+  }
+
+  /**
+   * Stop a background loading with specific id
+   * @param id the optional id to stop. If not provided, 'default' is used.
+   * @returns Object
+   */
+  stopBackground(id: string = DEFAULT_ID) {
+    const now = Date.now();
+
+    if (this.waitingBackground[id]) {
+      if (this.waitingBackground[id] + this.defaultConfig.threshold > now) {
+        setTimeout(() => {
+          this.stopBackground(id);
+        }, this.waitingBackground[id] + this.defaultConfig.threshold - Date.now());
+        return;
+      }
+      delete this.waitingBackground[id];
+    } else {
+      return;
+    }
+
+    if (!this.isActive()) {
+      this.backgroundCloseout();
+      this._showBackground.next(false);
+      this._onStop.next({ id: id, isForeground: false });
+      this._onStopAll.next({ stopAll: true });
+      return;
+    }
+
+    this._onStop.next({ id: id, isForeground: false });
+  }
+
+  /**
+   * Stop all the loadings including foreground and background
    */
   stopAll() {
-    this.helperService.stopAll();
+    if (this.hasForeground()) {
+      this.foregroundCloseout();
+      this._showForeground.next(false);
+    } else if (this.hasBackground()) {
+      this.backgroundCloseout();
+      this._showBackground.next(false);
+    }
+    this.waitingForeground = {};
+    this.waitingBackground = {};
     this._onStopAll.next({ stopAll: true });
   }
 
   /**
-   * Check whether the foreground ID exists or not
-   * @param id foreground ID
+   * Manage to close foreground loading
    */
-  hasForeground(id: string) {
-    return this.helperService.hasForeground(id);
+  private foregroundCloseout() {
+    this._foregroundClosing.next(true);
+    setTimeout(() => {
+      this._foregroundClosing.next(false);
+    }, INTERVAL);
   }
 
   /**
-   * Check whether the background ID exists or not
-   * @param id background ID
+   * Manage to close background loading
    */
-  hasBackground(id: string) {
-    return this.helperService.hasBackground(id);
+  private backgroundCloseout() {
+    this._backgroundClosing.next(true);
+    setTimeout(() => {
+      this._backgroundClosing.next(false);
+    }, INTERVAL);
   }
-
-  /**
-   * Helper
-   * @param id
-   * @param foreground
-   */
-  private _start(id?: string, foreground?: boolean) {
-    this._onStart.next(this.helperService.start(id, foreground));
-  }
-
-  /**
-   * Stop Helper
-   * @param result object is returned from the stop() or stopBackground() function of NgxUiLoderHelperService
-   */
-  private _stopHelper(result: any) {
-    if (result.isSuccess) {
-      this._onStop.next({ id: result.id, isForeground: result.isForeground });
-      if (result.stopAll) {
-        this._onStopAll.next({ stopAll: true });
-      }
-    }
-  }
-
 }
