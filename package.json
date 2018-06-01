@@ -1,6 +1,6 @@
 {
   "name": "ngx-ui-loader-app",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

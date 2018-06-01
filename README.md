@@ -42,9 +42,11 @@ Available spinners:
 
 ## Demo
 
-Live demo [here](https://ngx-ui-loader-demo.stackblitz.io).
+Live demo [here](https://ngx-ui-loader.stackblitz.io).
 
-Play with **ngx-ui-loader** [here](https://stackblitz.com/edit/ngx-ui-loader-demo) on stackblitz.
+Play with **ngx-ui-loader** [here](https://stackblitz.com/edit/ngx-ui-loader) on stackblitz.
+
+If you like it, please [star on Github](https://github.com/t-ho/ngx-ui-loader).
 
 <a name="installation"></a>
 
@@ -55,9 +57,14 @@ Install `ngx-ui-loader` via NPM, using the command below.
 ### NPM
 
 ```shell
-npm install --save ngx-ui-loader
+$ npm install --save ngx-ui-loader
 ```
 
+### Or Yarn
+
+```shell
+$ yarn add ngx-ui-loader
+```
 
 <a name="getting_started"></a>
 
@@ -318,41 +325,36 @@ NOTE: And in you root app template, do not forget to include `ngx-ui-loader` com
 
 ## Changelog
 
-### v.1.1.8
+**v.1.1.8**
 * Http interceptor - Can configure to not show loader for some API urls.
 * Npm packages - version bump.
 
-### v.1.1.5
+**v.1.1.5**
 * Be able to show loader automatically for http requests - Http interceptor
 
-### v.1.1.2
+**v.1.1.2**
 * Add more spinner types (total 22 spinners)
-* Bugs fixed: Background spinner (if active) should be showed after the foreground spinner is closed out.
+* BugFix: Background spinner (if active) should be showed after the foreground spinner is closed out.
 
-### v.1.1.1
+**v.1.1.1**
 * Bugs fixed
 
 
-### v.1.1.0
-**Features**
+**v.1.1.0**
 * Show loader automatically when navigating between app routes
 * Add more spinner types
 * Be able to set a threshold
+* BugFix: Set z-index of background spinner to 99997
 
-**Bugs Fixed**
-* Set z-index of background spinner to 99999
+**v.1.0.2**
+* Update example app and README
 
-### v.1.0.2
-* Update example app and README.md
+**v.1.0.1**
+* BugFix: Position of background spinner is not fixed when scrolling
+* BugFix: Unsafe Base64 logo url
+* BugFix: Logo, foreground spinner and loading text are centered correctly and can set the gap between them via gap input
 
-### v.1.0.1
-**Bugs fixed**
-* Position of background spinner is not fixed when scrolling
-* Unsafe Base64 logo url
-* Logo, foreground spinner and loading text are centered correctly and can set the gap between them via gap input
-
-### v.1.0.0
-**Features**
+**v.1.0.0**
 * Show foreground loader with progress bar
 * Show background loader with different id for different tasks
 * There are 12 spinner types available

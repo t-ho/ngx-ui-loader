@@ -167,7 +167,7 @@
         <mat-slider fxFlex="100" max="200" min="40" step="10" [thumbLabel]="true" [(ngModel)]="demoService.config.logoSize" [disabled]="!demoService.config.logoUrl"></mat-slider>
       </div>
     </div>
-    <div fxFlex="100" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="24px">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="24px">
       <a mat-raised-button color="accent" [routerLink]="'/spinners'">Available Spinners</a>
       <button mat-raised-button color="primary" (click)="reset()">Reset Configuration</button>
       <button mat-raised-button (click)="getPhotos()" [disabled]="disabled">Http request with loader</button>
