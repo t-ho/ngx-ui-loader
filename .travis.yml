@@ -20,4 +20,5 @@ before_script:
 script: 
   - ng lint
   - ng build ngx-ui-loader
+  - ng test
   - ng build --prod
