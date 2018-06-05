@@ -17,30 +17,43 @@ Available spinners:
 ### Features
 
 * Show foreground loader with progress bar
+* The page content can be blurred/frosted while showing foreground loader. See [NgxUiLoaderBlurred](#ngxuiloaderblurred_directive) directive for more details
 * Show background loader with different id for different tasks
 * Be able to add logo, loading text
 * Be able to change position of spinners, logo and loading text. NOTE: When they are all set to `center-center`, the gap between them are adjusted via `gap` properties. Other position types are ignored. E.g. If the position of foreground spinner and logo are set to `bottom-center`, they will overlap each other.
 * Be able to change color and size of logo, spinners and progress bar
 * Be able to change the direction of progress bar
+* Automatically show loader for router events. See [NgxUiLoaderRouterModule](#router_events) for more details
+* Automatically show loader for http requests. See [NgxUiLoaderHttpModule](#http_requests) for more details
 
 ## Table Of Contents
-- [Demo](#demo)
-- [Installation](#installation)
-- [Getting Started](#getting_started)
-- [Usage](#usage)
-- [API - NgxUiLoaderService](#api_service)
-- [Custom Configuration](#configuration)
-- [Input options](#input_options)
-- [Automatically show loader for router events](#router_events)
-- [Automatically show loader for http requests](#http_requests)
-- [Changelog](#changelog)
-- [Credits](#credits)
-- [License](#license)
-
+1. [Demo](#demo)
+2. [Getting Started](#getting_started)  
+  2.1 [Install](#install)  
+  2.2 [Import `NgxUiLoaderModule`](#import_ngxuiloadermodule)  
+  2.3 [Include `ngx-ui-loader` component ](#include_ngxuiloadercomponent)  
+  2.4 [Use `NgxUiLoaderService` service](#use_ngxuiloaderservice_service)  
+3. [API - NgxUiLoaderService](#api_ngxuiloaderservice)
+4. [Attributes of NgxUiLoaderComponent](#attributes_of_ngxuiloadercomponent)
+5. [NgxUiLoaderBlurred directive](#ngxuiloaderblurred_directive)  
+  5.1 [Usage](#ngxuiloaderblurred_directive_usage)  
+  5.2 [Attributes](#ngxuiloaderblurred_directive_attributes)  
+6. [Custom configuration for NgxUiLoaderModule](#custom_configuration_for_ngxuiloadermodule)  
+  6.1 [Usage](#custom_configuration_for_ngxuiloadermodule_usage)  
+  6.2 [Parameters of `forRoot()` method](#custom_configuration_for_ngxuiloadermodule_parameters)  
+7. [Automatically show loader for router events](#router_events)  
+  7.1 [Usage](#router_events_usage)  
+  7.2 [Parameters of `forRoot()` method](#router_events_parameters)  
+8. [Automatically show loader for http requests](#http_requests)  
+  8.1 [Usage](#http_requests_usage)  
+  8.2 [Parameters of `forRoot()` method](#http_requests_parameters)  
+9. [Changelog](#changelog)
+10. [Credits](#credits)
+11. [License](#license)
 
 <a name="demo"></a>
 
-## Demo
+## 1. Demo
 
 Live demo [here](https://ngx-ui-loader.stackblitz.io).
 
@@ -48,27 +61,31 @@ Play with **ngx-ui-loader** [here](https://stackblitz.com/edit/ngx-ui-loader) on
 
 If you like it, please [star on Github](https://github.com/t-ho/ngx-ui-loader).
 
-<a name="installation"></a>
+<a name="getting_started"></a>
 
-## Installation
+## 2. Getting started
+
+<a name="install"></a>
+
+### 2.1 Install
 
 Install `ngx-ui-loader` via NPM, using the command below.
 
-### NPM
+#### NPM
 
 ```shell
 $ npm install --save ngx-ui-loader
 ```
 
-### Or Yarn
+#### Or Yarn
 
 ```shell
 $ yarn add ngx-ui-loader
 ```
 
-<a name="getting_started"></a>
+<a name="import_ngxuiloadermodule"></a>
 
-## Getting started
+### 2.2 Import `NgxUiLoaderModule`
 
 Import the `NgxUiLoaderModule` in your root application module `AppModule`:
 
@@ -98,9 +115,9 @@ export class AppModule { }
 ```
 
 
-<a name="usage"></a>
+<a name="include_ngxuiloadercomponent"></a>
 
-## Usage
+### 2.3 Include `ngx-ui-loader` component
 
 After importing the `NgxUiLoaderModule`, use `ngx-ui-loader` component in your root app template:
 
@@ -108,8 +125,13 @@ After importing the `NgxUiLoaderModule`, use `ngx-ui-loader` component in your r
 <ngx-ui-loader></ngx-ui-loader>
 ```
 
-Add `NgxUiLoaderService` service wherever you want to use the `ngx-ui-loader`:
+See [Attributes of NgxUiLoaderComponent](#attributes_of_ngxuiloadercomponent) for more details about attributes.
 
+<a name="use_ngxuiloaderservice_service"></a>
+
+### 2.4 Use `NgxUiLoaderService` service
+
+Add `NgxUiLoaderService` service wherever you want to use the `ngx-ui-loader`:
 
 ```typescript
 import { Component, OnInit } from '@angular/core';
@@ -141,9 +163,11 @@ export class AppComponent implements OnInit {
 
 ```
 
-<a name="api_service"></a>
+See [API - NgxUiLoaderService](#api_ngxuiloaderservice) for more details.
 
-## API - NgxUiLoaderService
+<a name="api_ngxuiloaderservice"></a>
+
+## 3. API - NgxUiLoaderService
 
 * `NgxUiLoaderService.start([id]='default')` Starts a foreground loader with progress bar. Users cannot interact with the page when the loader is showed.
 * `NgxUiLoaderService.stop([id]='default')` Stops a foreground loader with progress bar.
@@ -153,10 +177,9 @@ export class AppComponent implements OnInit {
 * `NgxUiLoaderService.getStatus()` Returns an object including `waitingForeground` and `waitingBackground` properties.
 * `NgxUiLoaderService.stopAll()` Stops all foreground and background loaders.
 
+<a name="attributes_of_ngxuiloadercomponent"></a>
 
-<a name="configuration"></a>
-
-## Custom Configuration
+## 4. Attributes of NgxUiLoaderComponent
 
 You can configure `ngx-ui-loader` in the template as below:
 
@@ -166,7 +189,72 @@ Import the constant `SPINNER_TYPES` from `ngx-ui-loader` in your controller. The
 <ngx-ui-loader fgsSize="75" [fgsType]="SPINNER_TYPES.wanderingCubes"></ngx-ui-loader>
 ```
 
-Or you can override the default configuration via `forRoot()` method.
+All attributes are listed below:
+
+|   Attribute      |  Type     | Required |     Default        |                                       Description                                               |
+| ---------------- | --------- | -------- | ------------------ | ----------------------------------------------------------------------------------------------- |
+| `bgsColor`       | *string*  | optional | `#00ACC1`          | Background spinner color                                                                        |
+| `bgsOpacity`     | *number*  | optional | `0.5`              | Background spinner opacity                                                                      |
+| `bgsPosition`    | *string*  | optional | `bottom-right`     | Background spinner postion. All available positions can be accessed via `NGX_POSITIONS`         |
+| `bgsSize`        | *number*  | optional | `60`               | Background spinner size.                                                                        |
+| `bgsType`        | *string*  | optional | `rectangle-bounce` | Background spinner type. All available types can be accessed via `SPINNER_TYPES`                |
+|                  |           |          |                    |                                                                                                 |
+| `fgsColor`       | *string*  | optional | `#00ACC1`          | Foreground spinner color                                                                        |
+| `fgsPosition`    | *string*  | optional | `center-center`    | Foreground spinner position. All available positions can be accessed via `NGX_POSITIONS`        |
+| `fgsSize`        | *number*  | optional | `60`               | Foreground spinner size.                                                                        |
+| `fgsType`        | *string*  | optional | `rectangle-bounce` | Foreground spinner type. All available types can be accessed via `SPINNER_TYPES`                |
+|                  |           |          |                    |                                                                                                 |
+| `logoPosition`   | *string*  | optional | `center-center`    | Logo position. All available positions can be accessed via `NGX_POSITIONS`                      |
+| `logoSize`       | *number*  | optional | `120`              | Logo size (px)                                                                                  |
+| `logoUrl`        | *string*  | optional | (*empty string*)   | Logo url                                                                                        |
+|                  |           |          |                    |                                                                                                 |
+| `pbColor`        | *string*  | optional | `#00ACC1`          | Progress bar color                                                                              |
+| `pbDirection`    | *string*  | optional | `ltr`              | Progress bar direction. All directions type can be accessed via `PB_DIRECTIONS`                 |
+| `pbThickness`    | *number*  | optional | `5`                | Progress bar thickness                                                                          |
+|                  |           |          |                    |                                                                                                 |
+| `text`           | *string*  | optional | (*empty string*)   | Loading text                                                                                    |
+| `textColor`      | *string*  | optional | `#FFFFFF`          | Loading text color                                                                              |
+| `textPosition`   | *string*  | optional | `center-center`    | Loading text position. All available positions can be accessed via `NGX_POSITIONS`              |
+|                  |           |          |                    |                                                                                                 |
+| `gap`            | *number*  | optional | `24`               | The gap between logo, foreground spinner and text when their positions are `center-center`      |
+| `overlayColor`   | *string*  | optional | `rgba(40,40,40,.8)`| Overlay background color                                                                        |
+
+
+<a name="ngxuiloaderblurred_directive"></a>
+
+## 5. NgxUiLoaderBlurred directive
+
+<a name="ngxuiloaderblurred_directive_usage"></a>
+
+### 5.1 Usage
+
+If you want your page content is blurred/frosted while showing foreground loader, use ngxUiLoaderBlurred directive in your root template as follow:
+
+```html
+<div ngxUiLoaderBlurred blur="10">
+  <!-- This page content will be blurred/frosted when foreground loader is showed -->
+</div>
+<ngx-ui-loader></ngx-ui-loader>
+```
+
+<a name="ngxuiloaderblurred_directive_attributes"></a>
+
+### 5.2 Attributes:
+
+|   Attribute      |  Type     | Required |     Default        |                                       Description                                               |
+| ---------------- | --------- | -------- | ------------------ | ----------------------------------------------------------------------------------------------- |
+| `blur`           | *number*  | optional | `5`                | Blur the page content while showing foreground loader.                                          |
+
+
+<a name="custom_configuration_for_ngxuiloadermodule"></a>
+
+## 6. Custom configuration for NgxUiLoaderModule
+
+<a name="custom_configuration_for_ngxuiloadermodule_usage"></a>
+
+### 6.1 Usage
+
+You can override the default configuration via `forRoot()` method.
 
 ```typescript
 import { BrowserModule } from '@angular/platform-browser';
@@ -201,11 +289,11 @@ export class AppModule { }
 
 ```
 
-<a name="input_options"></a>
+<a name="custom_configuration_for_ngxuiloadermodule_parameters"></a>
 
-## Input Options
+### 6.2 Parameters of `forRoot()` method
 
-|   Attribute      |  Type     | Required |     Default        |                                       Description                                               |
+|   Parameter      |  Type     | Required |     Default        |                                       Description                                               |
 | ---------------- | --------- | -------- | ------------------ | ----------------------------------------------------------------------------------------------- |
 | `bgsColor`       | *string*  | optional | `#00ACC1`          | Background spinner color                                                                        |
 | `bgsOpacity`     | *number*  | optional | `0.5`              | Background spinner opacity                                                                      |
@@ -230,14 +318,19 @@ export class AppModule { }
 | `textColor`      | *string*  | optional | `#FFFFFF`          | Loading text color                                                                              |
 | `textPosition`   | *string*  | optional | `center-center`    | Loading text position. All available positions can be accessed via `NGX_POSITIONS`              |
 |                  |           |          |                    |                                                                                                 |
+| `blur`           | *number*  | optional | `5`                | Blur the page content while showing foreground loader. Only applied when using [ngxUiLoaderBlurred](#ngxuiloaderblurred_directive) directive.                     |
 | `gap`            | *number*  | optional | `24`               | The gap between logo, foreground spinner and text when their positions are `center-center`      |
 | `overlayColor`   | *string*  | optional | `rgba(40,40,40,.8)`| Overlay background color                                                                        |
-| `threshold`      | *number*  | optional | `500`              | The time a loader must be showed at least before it can be stopped. It must be >= 1 millisecond. **NOTE: `threshold` is only configured via forRoot() method.**||
+| `threshold`      | *number*  | optional | `500`              | The time a loader must be showed at least before it can be stopped. It must be >= 1 millisecond.|
 
 
 <a name="router_events"></a>
 
-## Automatically show loader for router events
+## 7. Automatically show loader for router events
+
+<a name="router_events_usage"></a>
+
+### 7.1 Usage
 
 If you want the loader to start automatically for navigating between your app routes:
 
@@ -268,9 +361,21 @@ export class AppModule { }
 
 ```
 
+<a name="router_events_usage"></a>
+
+### 7.2 Parameters of `forRoot()` method
+
+|   Parameter      |  Type     | Required |     Default        |                                       Description                                               |
+| ---------------- | --------- | -------- | ------------------ | ----------------------------------------------------------------------------------------------- |
+| `showForeground` | *boolean* | optional | `true`             | If `true`, foreground loader is showed. Otherwise, background loader is showed.                 |
+
 <a name="http_requests"></a>
 
-## Automatically show loader for Http requests
+## 8. Automatically show loader for Http requests
+
+<a name="http_requests_usage"></a>
+
+### 8.1 Usage
 
 If you want the loader to start automatically for http requests:
 
@@ -314,16 +419,19 @@ or if you don't want to show loader for urls which start with `/api/auth`, do as
 NgxUiLoaderHttpModule.forRoot({ exclude: ['/api/auth'] });
 ```
 
+<a name="http_requests_parameters"></a>
 
-NOTE: And in you root app template, do not forget to include `ngx-ui-loader` component:
+### 8.2 Parameters of `forRoot()` method
 
-```html
-<ngx-ui-loader></ngx-ui-loader>
-```
+
+|   Parameter      |  Type     | Required |     Default        |                                       Description                                               |
+| ---------------- | --------- | -------- | ------------------ | ----------------------------------------------------------------------------------------------- |
+| `exclude`        | *string[]*| optional | `null`             | An array of API urls. The loader is not showed when making request to these API urls.           |
+| `showForeground` | *boolean* | optional | `false`            | If `true`, foreground loader is showed. Otherwise, background loader is showed.                 |
 
 <a name="changelog"></a>
 
-## Changelog
+## 9. Changelog
 
 **v.1.1.8**
 * Http interceptor - Can configure to not show loader for some API urls.
@@ -366,7 +474,7 @@ NOTE: And in you root app template, do not forget to include `ngx-ui-loader` com
 
 <a name="credits"></a>
 
-## Credits
+## 10. Credits
 
 * Tobias Ahlin - [CSS spinkit](https://github.com/tobiasahlin/SpinKit)
 * Daniel Cardoso - [Load awesome](https://github.com/danielcardoso/load-awesome)
@@ -375,7 +483,7 @@ NOTE: And in you root app template, do not forget to include `ngx-ui-loader` com
 
 <a name="license"></a>
 
-## License
+## 11. License
 
 MIT &copy; [t-ho](mailto:toan.hmt@gmail.com)
 
