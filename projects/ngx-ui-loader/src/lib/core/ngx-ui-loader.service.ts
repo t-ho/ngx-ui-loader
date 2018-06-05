@@ -21,21 +21,25 @@ export class NgxUiLoaderService {
 
   /**
    * For internal use
+   * @docs-private
    */
   showForeground: Observable<boolean>;
 
   /**
    * For internal use
+   * @docs-private
    */
   showBackground: Observable<boolean>;
 
   /**
    * For internal use
+   * @docs-private
    */
   foregroundClosing: Observable<boolean>;
 
   /**
    * For internal use
+   * @docs-private
    */
   backgroundClosing: Observable<boolean>;
 

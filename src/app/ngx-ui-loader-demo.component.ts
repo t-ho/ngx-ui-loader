@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NgxUiLoaderService, NgxUiLoaderConfig, SPINNER_TYPES, NGX_POSITIONS, PB_DIRECTIONS } from 'ngx-ui-loader';
+import { NgxUiLoaderService, NgxUiLoaderConfig, SPINNER, POSITION, PB_DIRECTION } from 'ngx-ui-loader';
 import { Subscription } from 'rxjs';
 import { NgxUiLoaderDemoService } from './ngx-ui-loader-demo.service';
 import { HttpClient } from '@angular/common/http';
@@ -38,9 +38,9 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
    * On init
    */
   ngOnInit() {
-    this.spinnerTypes = Object.keys(SPINNER_TYPES).map(key => SPINNER_TYPES[key]);
-    this.positions = Object.keys(NGX_POSITIONS).map(key => NGX_POSITIONS[key]);
-    this.directions = Object.keys(PB_DIRECTIONS).map(key => PB_DIRECTIONS[key]);
+    this.spinnerTypes = Object.keys(SPINNER).map(key => SPINNER[key]);
+    this.positions = Object.keys(POSITION).map(key => POSITION[key]);
+    this.directions = Object.keys(PB_DIRECTION).map(key => PB_DIRECTION[key]);
 
     this.disabled = false;
 

@@ -1,5 +1,5 @@
 import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
-import { NGX_POSITIONS, PB_DIRECTIONS, SPINNER_TYPES } from './ngx-ui-loader.enums';
+import { POSITION, PB_DIRECTION, SPINNER } from './ngx-ui-loader.enums';
 
 /**
  * The configuration of spinners
@@ -101,25 +101,25 @@ export const SPINNER_CONFIG = {
 export const DEFAULT_CONFIG: NgxUiLoaderConfig = {
   bgsColor: '#00ACC1',
   bgsOpacity: 0.5,
-  bgsPosition: NGX_POSITIONS.bottomRight,
+  bgsPosition: POSITION.bottomRight,
   bgsSize: 60,
-  bgsType: SPINNER_TYPES.rectangleBounce,
+  bgsType: SPINNER.rectangleBounce,
   blur: 5,
   fgsColor: '#00ACC1',
-  fgsPosition: NGX_POSITIONS.centerCenter,
+  fgsPosition: POSITION.centerCenter,
   fgsSize: 60,
-  fgsType: SPINNER_TYPES.rectangleBounce,
+  fgsType: SPINNER.rectangleBounce,
   gap: 24,
-  logoPosition: NGX_POSITIONS.centerCenter,
+  logoPosition: POSITION.centerCenter,
   logoSize: 120,
   logoUrl: '',
   overlayColor: 'rgba(40, 40, 40, 0.8)',
   pbColor: '#00ACC1',
-  pbDirection: PB_DIRECTIONS.leftToRight,
+  pbDirection: PB_DIRECTION.leftToRight,
   pbThickness: 5,
   text: '',
   textColor: '#FFFFFF',
-  textPosition: NGX_POSITIONS.centerCenter,
+  textPosition: POSITION.centerCenter,
   threshold: 500
 };
 

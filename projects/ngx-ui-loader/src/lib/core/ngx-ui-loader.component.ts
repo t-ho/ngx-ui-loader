@@ -4,7 +4,7 @@ import { NgxUiLoaderService } from './ngx-ui-loader.service';
 import { Observable, Subscription } from 'rxjs';
 import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
 import { DirectionType, PositionType, SpinnerType } from './ngx-ui-loader.types';
-import { NGX_POSITIONS, PB_DIRECTIONS, SPINNER_TYPES } from './ngx-ui-loader.enums';
+import { POSITION, PB_DIRECTION, SPINNER } from './ngx-ui-loader.enums';
 import { SPINNER_CONFIG } from './ngx-ui-loader.contants';
 import { coerceNumber } from './coercion';
 
@@ -99,11 +99,11 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.initializeSpinners();
     this.determinePositions();
 
-    this.bgsPosition = <PositionType>this.validate('bgsPosition', this.bgsPosition, NGX_POSITIONS, this.defaultConfig.bgsPosition);
+    this.bgsPosition = <PositionType>this.validate('bgsPosition', this.bgsPosition, POSITION, this.defaultConfig.bgsPosition);
 
     this.trustedLogoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.logoUrl);
 
-    this.pbDirection = <DirectionType>this.validate('pbDirection', this.pbDirection, PB_DIRECTIONS, this.defaultConfig.pbDirection);
+    this.pbDirection = <DirectionType>this.validate('pbDirection', this.pbDirection, PB_DIRECTION, this.defaultConfig.pbDirection);
 
     this.showForegroundWatcher = this.ngxService.showForeground
       .subscribe(data => this.showForeground = data);
@@ -141,7 +141,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.determinePositions();
 
     if (bgsPositionChange) {
-      this.bgsPosition = <PositionType>this.validate('bgsPosition', this.bgsPosition, NGX_POSITIONS, this.defaultConfig.bgsPosition);
+      this.bgsPosition = <PositionType>this.validate('bgsPosition', this.bgsPosition, POSITION, this.defaultConfig.bgsPosition);
     }
 
     if (logoUrlChange) {
@@ -149,7 +149,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     }
 
     if (pbDirectionChange) {
-      this.pbDirection = <DirectionType>this.validate('pbDirection', this.pbDirection, PB_DIRECTIONS, this.defaultConfig.pbDirection);
+      this.pbDirection = <DirectionType>this.validate('pbDirection', this.pbDirection, PB_DIRECTION, this.defaultConfig.pbDirection);
     }
   }
 
@@ -157,8 +157,8 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
    * Initialize spinners
    */
   private initializeSpinners() {
-    this.fgsType = <SpinnerType>this.validate('fgsType', this.fgsType, SPINNER_TYPES, this.defaultConfig.fgsType);
-    this.bgsType = <SpinnerType>this.validate('bgsType', this.bgsType, SPINNER_TYPES, this.defaultConfig.bgsType);
+    this.fgsType = <SpinnerType>this.validate('fgsType', this.fgsType, SPINNER, this.defaultConfig.fgsType);
+    this.bgsType = <SpinnerType>this.validate('bgsType', this.bgsType, SPINNER, this.defaultConfig.bgsType);
 
     this.fgDivs = Array(SPINNER_CONFIG[this.fgsType].divs).fill(1);
     this.fgSpinnerClass = SPINNER_CONFIG[this.fgsType].class;
@@ -170,9 +170,9 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
    * Determine the positions of spinner, logo and text
    */
   private determinePositions() {
-    this.fgsPosition = <PositionType>this.validate('fgsPosition', this.fgsPosition, NGX_POSITIONS, this.defaultConfig.fgsPosition);
-    this.logoPosition = <PositionType>this.validate('logoPosition', this.logoPosition, NGX_POSITIONS, this.defaultConfig.logoPosition);
-    this.textPosition = <PositionType>this.validate('textPosition', this.textPosition, NGX_POSITIONS, this.defaultConfig.textPosition);
+    this.fgsPosition = <PositionType>this.validate('fgsPosition', this.fgsPosition, POSITION, this.defaultConfig.fgsPosition);
+    this.logoPosition = <PositionType>this.validate('logoPosition', this.logoPosition, POSITION, this.defaultConfig.logoPosition);
+    this.textPosition = <PositionType>this.validate('textPosition', this.textPosition, POSITION, this.defaultConfig.textPosition);
     this.gap = coerceNumber(this.gap, this.defaultConfig.gap);
 
     this.logoTop = 'initial';
@@ -198,9 +198,9 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
       this.textTop = '30px';
     }
 
-    if (this.fgsPosition === NGX_POSITIONS.centerCenter) {
-      if (this.logoUrl && this.logoPosition === NGX_POSITIONS.centerCenter) {
-        if (this.text && this.textPosition === NGX_POSITIONS.centerCenter) { // logo, spinner and text
+    if (this.fgsPosition === POSITION.centerCenter) {
+      if (this.logoUrl && this.logoPosition === POSITION.centerCenter) {
+        if (this.text && this.textPosition === POSITION.centerCenter) { // logo, spinner and text
           this.logoTop = this.domSanitizer
             .bypassSecurityTrustStyle(`calc(50% - ${this.fgsSize / 2}px - ${textSize / 2}px - ${this.gap}px)`);
           this.spinnerTop = this.domSanitizer
@@ -214,7 +214,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
             .bypassSecurityTrustStyle(`calc(50% + ${this.logoSize / 2}px + ${this.gap / 2}px)`);
         }
       } else {
-        if (this.text && this.textPosition === NGX_POSITIONS.centerCenter) { // spinner and text
+        if (this.text && this.textPosition === POSITION.centerCenter) { // spinner and text
           this.spinnerTop = this.domSanitizer
             .bypassSecurityTrustStyle(`calc(50% - ${textSize / 2}px - ${this.gap / 2}px)`);
           this.textTop = this.domSanitizer
@@ -222,8 +222,8 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
         }
       }
     } else {
-      if (this.logoUrl && this.logoPosition === NGX_POSITIONS.centerCenter
-        && this.text && this.textPosition === NGX_POSITIONS.centerCenter) { // logo and text
+      if (this.logoUrl && this.logoPosition === POSITION.centerCenter
+        && this.text && this.textPosition === POSITION.centerCenter) { // logo and text
         this.logoTop = this.domSanitizer
           .bypassSecurityTrustStyle(`calc(50% - ${textSize / 2}px - ${this.gap / 2}px)`);
         this.textTop = this.domSanitizer
