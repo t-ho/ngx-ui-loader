@@ -104,6 +104,7 @@ export const DEFAULT_CONFIG: NgxUiLoaderConfig = {
   bgsPosition: NGX_POSITIONS.bottomRight,
   bgsSize: 60,
   bgsType: SPINNER_TYPES.rectangleBounce,
+  blur: 5,
   fgsColor: '#00ACC1',
   fgsPosition: NGX_POSITIONS.centerCenter,
   fgsSize: 60,
@@ -126,8 +127,3 @@ export const DEFAULT_CONFIG: NgxUiLoaderConfig = {
  * The default id of the loading
  */
 export const DEFAULT_ID = 'default';
-
-/**
- * The time close out a loading
- */
-export const INTERVAL = 1100;

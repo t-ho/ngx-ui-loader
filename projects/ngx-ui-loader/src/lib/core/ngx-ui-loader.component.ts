@@ -6,6 +6,7 @@ import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
 import { DirectionType, PositionType, SpinnerType } from './ngx-ui-loader.types';
 import { NGX_POSITIONS, PB_DIRECTIONS, SPINNER_TYPES } from './ngx-ui-loader.enums';
 import { SPINNER_CONFIG } from './ngx-ui-loader.contants';
+import { coerceNumber } from './coercion';
 
 @Component({
   selector: 'ngx-ui-loader',
@@ -172,7 +173,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.fgsPosition = <PositionType>this.validate('fgsPosition', this.fgsPosition, NGX_POSITIONS, this.defaultConfig.fgsPosition);
     this.logoPosition = <PositionType>this.validate('logoPosition', this.logoPosition, NGX_POSITIONS, this.defaultConfig.logoPosition);
     this.textPosition = <PositionType>this.validate('textPosition', this.textPosition, NGX_POSITIONS, this.defaultConfig.textPosition);
-    this.gap = !isNaN(parseFloat(this.gap as any)) && !isNaN(Number(this.gap)) ? Number(this.gap) : 24;
+    this.gap = coerceNumber(this.gap, this.defaultConfig.gap);
 
     this.logoTop = 'initial';
     this.spinnerTop = 'initial';

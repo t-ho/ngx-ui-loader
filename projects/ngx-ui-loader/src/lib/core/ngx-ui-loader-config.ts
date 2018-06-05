@@ -8,6 +8,7 @@ export interface NgxUiLoaderConfig {
   bgsOpacity?: number;
   bgsPosition?: PositionType;
   bgsSize?: number;
+  blur?: number;
   bgsType?: SpinnerType;
   fgsColor?: string;
   fgsPosition?: PositionType;

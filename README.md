@@ -19,7 +19,7 @@ Available spinners:
 * Show foreground loader with progress bar
 * Show background loader with different id for different tasks
 * Be able to add logo, loading text
-* Be able to change position of spinners, logo and loading text. NOTE: When they are all set to `center-center`, the gap between them are adjusted via `gap` properties. Other position types are is overlap. E.g. If the position of foreground spinner and logo are set to `bottom-center`, they are overlap each other.
+* Be able to change position of spinners, logo and loading text. NOTE: When they are all set to `center-center`, the gap between them are adjusted via `gap` properties. Other position types are ignored. E.g. If the position of foreground spinner and logo are set to `bottom-center`, they will overlap each other.
 * Be able to change color and size of logo, spinners and progress bar
 * Be able to change the direction of progress bar
 
