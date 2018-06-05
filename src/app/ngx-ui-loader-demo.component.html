@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="center" style="margin-top: 12px">
+<div fxLayout="row" fxLayoutAlign="center" style="margin: 12px 0">
   <div fxFlex="100" fxFlex.lg="90" fxFlex.gt-lg="70" fxLayout="row wrap" fxLayoutAlign="center">
 
     <div fxFlex="100" fxFlex.gt-md="36" fxLayout="column" fxLayout.sm="row" fxLayout.md="row" class="p-12">
@@ -91,18 +91,23 @@
         <input matInput placeholder="Loading Text (text)" [(ngModel)]="demoService.config.text" autocomplete="off">
       </mat-form-field>
 
-      <mat-form-field>
-        <mat-select placeholder="Loading Text Position (textPosition)" [(value)]="demoService.config.textPosition" [disabled]="!demoService.config.text">
+      <mat-form-field *ngIf="demoService.config.text">
+        <mat-select placeholder="Loading Text Position (textPosition)" [(value)]="demoService.config.textPosition">
           <mat-option *ngFor="let position of positions" [value]="position">
             {{ position }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field>
-        <input [(colorPicker)]="demoService.config.textColor" matInput placeholder="Loading Text Color (textColor)" [(ngModel)]="demoService.config.textColor" [disabled]="!demoService.config.text">
+      <mat-form-field *ngIf="demoService.config.text">
+        <input [(colorPicker)]="demoService.config.textColor" matInput placeholder="Loading Text Color (textColor)" [(ngModel)]="demoService.config.textColor">
         <mat-icon matSuffix [style.color]="demoService.config.textColor" fontIcon="mdi-palette" fontSet="mdi"></mat-icon>
       </mat-form-field>
+
+      <div>
+        <span class="place-holder">Blur the page while foreground loading (blur)</span>
+        <mat-slider max="15" min="0" step="1" [thumbLabel]="true" [(ngModel)]="demoService.config.blur"></mat-slider>
+      </div>
 
     </div>
     <!-- Foreground }}}-->
@@ -154,17 +159,17 @@
         <mat-checkbox (change)="addLogo($event.checked)" [checked]="demoService.config.logoUrl">Add logo</mat-checkbox>
       </div>
 
-      <mat-form-field>
-        <mat-select placeholder="Logo Position (logoPosition)" [(value)]="demoService.config.logoPosition" [disabled]="!demoService.config.logoUrl">
+      <mat-form-field *ngIf="demoService.config.logoUrl">
+        <mat-select placeholder="Logo Position (logoPosition)" [(value)]="demoService.config.logoPosition">
           <mat-option *ngFor="let position of positions" [value]="position">
             {{ position }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
-      <div>
+      <div *ngIf="demoService.config.logoUrl">
         <span class="place-holder">Logo size (logoSize)</span>
-        <mat-slider fxFlex="100" max="200" min="40" step="10" [thumbLabel]="true" [(ngModel)]="demoService.config.logoSize" [disabled]="!demoService.config.logoUrl"></mat-slider>
+        <mat-slider fxFlex="100" max="200" min="40" step="10" [thumbLabel]="true" [(ngModel)]="demoService.config.logoSize"></mat-slider>
       </div>
     </div>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="24px">

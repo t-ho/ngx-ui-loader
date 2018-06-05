@@ -1,16 +1,18 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
-import { DEFAULT_ID, DEFAULT_CONFIG, INTERVAL } from './ngx-ui-loader.contants';
+import { DEFAULT_ID, DEFAULT_CONFIG } from './ngx-ui-loader.contants';
 import { NGX_UI_LOADER_CONFIG_TOKEN } from './ngx-ui-loader-config.token';
 import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
+
+const DELAY = 1100;
 
 @Injectable()
 export class NgxUiLoaderService {
 
-  private defaultConfig: NgxUiLoaderConfig;
-  private waitingForeground: any;
-  private waitingBackground: any;
+  private _defaultConfig: NgxUiLoaderConfig;
+  private _waitingForeground: {};
+  private _waitingBackground: {};
 
   private _showForeground: BehaviorSubject<boolean>;
   private _showBackground: BehaviorSubject<boolean>;
@@ -19,21 +21,25 @@ export class NgxUiLoaderService {
 
   /**
    * For internal use
+   * @docs-private
    */
   showForeground: Observable<boolean>;
 
   /**
    * For internal use
+   * @docs-private
    */
   showBackground: Observable<boolean>;
 
   /**
    * For internal use
+   * @docs-private
    */
   foregroundClosing: Observable<boolean>;
 
   /**
    * For internal use
+   * @docs-private
    */
   backgroundClosing: Observable<boolean>;
 
@@ -62,17 +68,17 @@ export class NgxUiLoaderService {
    */
   constructor(@Optional() @Inject(NGX_UI_LOADER_CONFIG_TOKEN) private config: NgxUiLoaderConfig) {
 
-    this.defaultConfig = { ...DEFAULT_CONFIG };
+    this._defaultConfig = { ...DEFAULT_CONFIG };
 
     if (this.config) {
       if (this.config.threshold && this.config.threshold <= 0) {
         this.config.threshold = DEFAULT_CONFIG.threshold;
       }
-      this.defaultConfig = { ...this.defaultConfig, ...this.config };
+      this._defaultConfig = { ...this._defaultConfig, ...this.config };
     }
 
-    this.waitingForeground = {};
-    this.waitingBackground = {};
+    this._waitingForeground = {};
+    this._waitingBackground = {};
     this._showForeground = new BehaviorSubject<boolean>(false);
     this.showForeground = this._showForeground.asObservable();
     this._showBackground = new BehaviorSubject<boolean>(false);
@@ -95,7 +101,7 @@ export class NgxUiLoaderService {
    * @returns default configuration object
    */
   getDefaultConfig(): NgxUiLoaderConfig {
-    return { ...this.defaultConfig };
+    return { ...this._defaultConfig };
   }
 
   /**
@@ -104,8 +110,8 @@ export class NgxUiLoaderService {
    */
   getStatus() {
     return {
-      waitingForeground: { ...this.waitingForeground },
-      waitingBackground: { ...this.waitingBackground }
+      waitingForeground: { ...this._waitingForeground },
+      waitingBackground: { ...this._waitingBackground }
     };
   }
 
@@ -114,7 +120,7 @@ export class NgxUiLoaderService {
    * @returns true if the loader is active
    */
   private isActive() {
-    return Object.keys(this.waitingForeground).length > 0 || Object.keys(this.waitingBackground).length > 0;
+    return Object.keys(this._waitingForeground).length > 0 || Object.keys(this._waitingBackground).length > 0;
   }
 
   /**
@@ -123,9 +129,9 @@ export class NgxUiLoaderService {
    */
   hasForeground(id?: string) {
     if (id) {
-      return this.waitingForeground[id] ? true : false;
+      return this._waitingForeground[id] ? true : false;
     }
-    return Object.keys(this.waitingForeground).length > 0;
+    return Object.keys(this._waitingForeground).length > 0;
   }
 
   /**
@@ -134,9 +140,9 @@ export class NgxUiLoaderService {
    */
   hasBackground(id?: string) {
     if (id) {
-      return this.waitingForeground[id] ? true : false;
+      return this._waitingForeground[id] ? true : false;
     }
-    return Object.keys(this.waitingBackground).length > 0;
+    return Object.keys(this._waitingBackground).length > 0;
   }
 
   /**
@@ -147,7 +153,7 @@ export class NgxUiLoaderService {
   start(id: string = DEFAULT_ID) {
     const foregroundRunning = this.hasForeground();
 
-    this.waitingForeground[id] = Date.now();
+    this._waitingForeground[id] = Date.now();
     if (!foregroundRunning) {
       if (this.hasBackground()) {
         this.backgroundCloseout();
@@ -164,7 +170,7 @@ export class NgxUiLoaderService {
    * @param id the optional id of the loading. id is set to 'default' by default.
    */
   startBackground(id: string = DEFAULT_ID) {
-    this.waitingBackground[id] = Date.now();
+    this._waitingBackground[id] = Date.now();
     if (!this.hasForeground()) {
       this._showBackground.next(true);
     }
@@ -179,14 +185,14 @@ export class NgxUiLoaderService {
   stop(id: string = DEFAULT_ID) {
     const now = Date.now();
 
-    if (this.waitingForeground[id]) {
-      if (this.waitingForeground[id] + this.defaultConfig.threshold > now) {
+    if (this._waitingForeground[id]) {
+      if (this._waitingForeground[id] + this._defaultConfig.threshold > now) {
         setTimeout(() => {
           this.stop(id);
-        }, this.waitingForeground[id] + this.defaultConfig.threshold - Date.now());
+        }, this._waitingForeground[id] + this._defaultConfig.threshold - Date.now());
         return;
       }
-      delete this.waitingForeground[id];
+      delete this._waitingForeground[id];
     } else {
       return;
     }
@@ -220,14 +226,14 @@ export class NgxUiLoaderService {
   stopBackground(id: string = DEFAULT_ID) {
     const now = Date.now();
 
-    if (this.waitingBackground[id]) {
-      if (this.waitingBackground[id] + this.defaultConfig.threshold > now) {
+    if (this._waitingBackground[id]) {
+      if (this._waitingBackground[id] + this._defaultConfig.threshold > now) {
         setTimeout(() => {
           this.stopBackground(id);
-        }, this.waitingBackground[id] + this.defaultConfig.threshold - Date.now());
+        }, this._waitingBackground[id] + this._defaultConfig.threshold - Date.now());
         return;
       }
-      delete this.waitingBackground[id];
+      delete this._waitingBackground[id];
     } else {
       return;
     }
@@ -254,8 +260,8 @@ export class NgxUiLoaderService {
       this.backgroundCloseout();
       this._showBackground.next(false);
     }
-    this.waitingForeground = {};
-    this.waitingBackground = {};
+    this._waitingForeground = {};
+    this._waitingBackground = {};
     this._onStopAll.next({ stopAll: true });
   }
 
@@ -266,7 +272,7 @@ export class NgxUiLoaderService {
     this._foregroundClosing.next(true);
     setTimeout(() => {
       this._foregroundClosing.next(false);
-    }, INTERVAL);
+    }, DELAY);
   }
 
   /**
@@ -276,6 +282,6 @@ export class NgxUiLoaderService {
     this._backgroundClosing.next(true);
     setTimeout(() => {
       this._backgroundClosing.next(false);
-    }, INTERVAL);
+    }, DELAY);
   }
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
 import { NgxUiLoaderComponent } from './ngx-ui-loader.component';
+import { NgxUiLoaderBlurredDirective } from './ngx-ui-loader-blurred.directive';
 import { NGX_UI_LOADER_CONFIG_TOKEN } from './ngx-ui-loader-config.token';
 import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
 
@@ -13,8 +14,14 @@ import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
   providers: [
     NgxUiLoaderService,
   ],
-  declarations: [NgxUiLoaderComponent],
-  exports: [NgxUiLoaderComponent]
+  declarations: [
+    NgxUiLoaderComponent,
+    NgxUiLoaderBlurredDirective,
+  ],
+  exports: [
+    NgxUiLoaderComponent,
+    NgxUiLoaderBlurredDirective,
+  ]
 })
 export class NgxUiLoaderModule {
   /**

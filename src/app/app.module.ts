@@ -10,8 +10,8 @@ import { MatToolbarModule, MatButtonModule, MatIconModule, MatInputModule,
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ColorPickerModule } from 'ngx-color-picker';
 
-import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER_TYPES, NGX_POSITIONS,
-  PB_DIRECTIONS, NgxUiLoaderRouterModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
+import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER, POSITION,
+  PB_DIRECTION, NgxUiLoaderRouterModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
 
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
@@ -22,20 +22,20 @@ import { NgxUiLoaderDemoService } from './ngx-ui-loader-demo.service';
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: '#OOACC1',
   // bgsOpacity: 0.5,
-  // bgsPosition: NGX_POSITIONS.bottomCenter,
+  // bgsPosition: POSITION.bottomCenter,
   // bgsSize: 60,
-  // bgsType: SPINNER_TYPES.rectangleBounce,
+  // bgsType: SPINNER.rectangleBounce,
   // fgsColor: '#00ACC1',
-  // fgsPosition: NGX_POSITIONS.centerCenter,
+  // fgsPosition: POSITION.centerCenter,
   // fgsSize: 60,
-  // fgsType: SPINNER_TYPES.chasingDots,
+  // fgsType: SPINNER.chasingDots,
   // logoUrl: 'assets/angular.png',
   // pbColor: '#FF0000',
-  // pbDirection: PB_DIRECTIONS.leftToRight,
+  // pbDirection: PB_DIRECTION.leftToRight,
   // pbThickness: 5,
   // text: 'Welcome to ngx-ui-loader',
   // textColor: '#FFFFFF',
-  // textPosition: NGX_POSITIONS.centerCenter
+  // textPosition: POSITION.centerCenter
 };
 
 const routes: Routes = [
