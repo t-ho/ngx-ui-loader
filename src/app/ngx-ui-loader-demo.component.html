@@ -71,7 +71,7 @@
 
       <div>
         <span class="place-holder">Progress Bar Thickness (pbThickness)</span>
-        <mat-slider fxFlex="100" max="10" min="1" step="1" [thumbLabel]="true" [(ngModel)]="demoService.config.pbThickness"></mat-slider>
+        <mat-slider max="10" min="1" step="1" [thumbLabel]="true" [(ngModel)]="demoService.config.pbThickness"></mat-slider>
       </div>
 
       <mat-form-field>
@@ -152,7 +152,7 @@
 
       <div>
         <span class="place-holder">Gap between logo, spinner and text (gap)</span>
-        <mat-slider fxFlex="100" max="150" min="10" step="1" [thumbLabel]="true" [(ngModel)]="demoService.config.gap"></mat-slider>
+        <mat-slider max="150" min="10" step="1" [thumbLabel]="true" [(ngModel)]="demoService.config.gap"></mat-slider>
       </div>
 
       <div style="margin-top: 21px; margin-bottom: 20px">
@@ -169,13 +169,13 @@
 
       <div *ngIf="demoService.config.logoUrl">
         <span class="place-holder">Logo size (logoSize)</span>
-        <mat-slider fxFlex="100" max="200" min="40" step="10" [thumbLabel]="true" [(ngModel)]="demoService.config.logoSize"></mat-slider>
+        <mat-slider max="200" min="40" step="10" [thumbLabel]="true" [(ngModel)]="demoService.config.logoSize"></mat-slider>
       </div>
     </div>
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="24px">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
       <a mat-raised-button color="accent" [routerLink]="'/spinners'">Available Spinners</a>
       <button mat-raised-button color="primary" (click)="reset()">Reset Configuration</button>
-      <button mat-raised-button (click)="getPhotos()" [disabled]="disabled">Http request with loader</button>
+      <button mat-raised-button (click)="getDownloadStats()" [disabled]="disabled">Http request with loader</button>
     </div>
     <!-- Background }}}-->
   </div>

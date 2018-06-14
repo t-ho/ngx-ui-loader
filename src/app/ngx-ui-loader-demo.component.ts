@@ -135,9 +135,9 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
     this.demoService.config = this.ngxUiLoaderService.getDefaultConfig();
   }
 
-  getPhotos() {
+  getDownloadStats() {
     this.disabled = true;
-    this.http.get('https://jsonplaceholder.typicode.com/photos').subscribe(res => {
+    this.http.get('https://api.npmjs.org/downloads/range/last-year/ngx-ui-loader').subscribe(res => {
       console.log(res);
       setTimeout(() => {
         this.disabled = false;

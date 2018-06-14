@@ -8,8 +8,8 @@ $pbThickness: 5px;
 $spinnerColor: #00ACC1;
 $spinnerSize: 60px;
 
-// ngx-ui-loader-bar {{{
-.ngx-ui-loader-bar-ltr, .ngx-ui-loader-bar-rtl {
+// ngx-progress-bar {{{
+.ngx-progress-bar {
   position: fixed;
   top: 0;
   left: 0;
@@ -39,7 +39,7 @@ $spinnerSize: 60px;
   }
 }
 
-.ngx-ui-loader-bar-ltr {
+.ngx-progress-bar-ltr {
   &::before {
     -webkit-transform: translate3d(-100vw, 0, 0);
         -ms-transform: translate3d(-100vw, 0, 0);
@@ -55,7 +55,7 @@ $spinnerSize: 60px;
   }
 }
 
-.ngx-ui-loader-bar-rtl {
+.ngx-progress-bar-rtl {
   &::before {
     -webkit-transform: translate3d(100vw, 0, 0);
         -ms-transform: translate3d(100vw, 0, 0);
@@ -71,7 +71,7 @@ $spinnerSize: 60px;
   }
 }
 
-.foreground-closing.ngx-ui-loader-bar-ltr::before  {
+.foreground-closing.ngx-progress-bar-ltr::before  {
   -webkit-animation: progressBar-slide-complete-ltr 1s ease-out 0s 1;
           animation: progressBar-slide-complete-ltr 1s ease-out 0s 1;
   -webkit-transform: translate3d(0, 0, 0);
@@ -79,7 +79,7 @@ $spinnerSize: 60px;
           transform: translate3d(0, 0, 0);
 }
 
-.foreground-closing.ngx-ui-loader-bar-rtl::before  {
+.foreground-closing.ngx-progress-bar-rtl::before  {
   -webkit-animation: progressBar-slide-complete-rtl 1s ease-out 0s 1;
           animation: progressBar-slide-complete-rtl 1s ease-out 0s 1;
   -webkit-transform: translate3d(0, 0, 0);
@@ -186,7 +186,7 @@ $spinnerSize: 60px;
             transform: translate3d(0, 0, 0);
   }
 }
-// ngx-ui-loader-bar }}}
+// ngx-progress-bar }}}
 
 .ngx-overlay {
   position: fixed;

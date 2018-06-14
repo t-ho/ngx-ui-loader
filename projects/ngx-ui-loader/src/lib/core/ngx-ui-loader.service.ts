@@ -116,18 +116,12 @@ export class NgxUiLoaderService {
   }
 
   /**
-   * Determine whether the loader is active
-   * @returns true if the loader is active
+   * Check whether the queue has a waiting foreground loader with the given id.
+   * If no `id` specified, it will check whether the queue has any waiting foreground loader.
+   * @param id the optional id
+   * @returns boolean
    */
-  private isActive() {
-    return Object.keys(this._waitingForeground).length > 0 || Object.keys(this._waitingBackground).length > 0;
-  }
-
-  /**
-   * Check whether the queue has any waiting foreground loader
-   * @returns true if at least one waiting foreground loader exists
-   */
-  hasForeground(id?: string) {
+  hasForeground(id?: string): boolean {
     if (id) {
       return this._waitingForeground[id] ? true : false;
     }
@@ -135,12 +129,14 @@ export class NgxUiLoaderService {
   }
 
   /**
-   * Check whether the queue has any waiting background loader
-   * @returns true if at least one waiting background loader exists
+   * Check whether the queue has a waiting background loader with the given id.
+   * If no `id` specified, it will check whether the queue has any waiting background loader.
+   * @param id the optional id
+   * @returns boolean
    */
-  hasBackground(id?: string) {
+  hasBackground(id?: string): boolean {
     if (id) {
-      return this._waitingForeground[id] ? true : false;
+      return this._waitingBackground[id] ? true : false;
     }
     return Object.keys(this._waitingBackground).length > 0;
   }
@@ -189,7 +185,7 @@ export class NgxUiLoaderService {
       if (this._waitingForeground[id] + this._defaultConfig.threshold > now) {
         setTimeout(() => {
           this.stop(id);
-        }, this._waitingForeground[id] + this._defaultConfig.threshold - Date.now());
+        }, this._waitingForeground[id] + this._defaultConfig.threshold - now);
         return;
       }
       delete this._waitingForeground[id];
@@ -230,7 +226,7 @@ export class NgxUiLoaderService {
       if (this._waitingBackground[id] + this._defaultConfig.threshold > now) {
         setTimeout(() => {
           this.stopBackground(id);
-        }, this._waitingBackground[id] + this._defaultConfig.threshold - Date.now());
+        }, this._waitingBackground[id] + this._defaultConfig.threshold - now);
         return;
       }
       delete this._waitingBackground[id];
@@ -263,6 +259,14 @@ export class NgxUiLoaderService {
     this._waitingForeground = {};
     this._waitingBackground = {};
     this._onStopAll.next({ stopAll: true });
+  }
+
+  /**
+   * Determine whether the loader is active
+   * @returns true if the loader is active
+   */
+  private isActive() {
+    return Object.keys(this._waitingForeground).length > 0 || Object.keys(this._waitingBackground).length > 0;
   }
 
   /**

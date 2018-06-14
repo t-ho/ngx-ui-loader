@@ -14,11 +14,13 @@ before_script:
  - sh -e /etc/init.d/xvfb start
  - sudo apt-get update
  - sudo apt-get install -y libappindicator1 fonts-liberation
+ - npm install -g codecov
  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
  - sudo dpkg -i google-chrome*.deb
 
 script: 
   - ng lint
   - ng build ngx-ui-loader
-  - ng test
+  - ng test ngx-ui-loader --code-coverage
+  - codecov
   - ng build --prod

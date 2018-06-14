@@ -37,8 +37,10 @@ export class NgxUiLoaderBlurredDirective implements OnDestroy {
           this.renderer.setStyle(this.elementRef.nativeElement, 'filter', filterValue);
         } else {
           setTimeout(() => {
-            this.renderer.setStyle(this.elementRef.nativeElement, '-webkit-filter', 'none');
-            this.renderer.setStyle(this.elementRef.nativeElement, 'filter', 'none');
+            if (!ngxUiLoaderService.hasForeground()) {
+              this.renderer.setStyle(this.elementRef.nativeElement, '-webkit-filter', 'none');
+              this.renderer.setStyle(this.elementRef.nativeElement, 'filter', 'none');
+            }
           }, DELAY);
         }
       });

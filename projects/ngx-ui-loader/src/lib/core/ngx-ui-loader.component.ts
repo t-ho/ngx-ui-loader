@@ -56,7 +56,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   backgroundClosingWatcher: Subscription;
 
   defaultConfig: NgxUiLoaderConfig;
-  private initialized: boolean;
+  initialized: boolean;
 
   /**
    * Constructor
