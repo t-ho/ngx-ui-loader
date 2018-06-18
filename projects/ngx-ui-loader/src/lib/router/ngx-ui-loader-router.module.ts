@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders, Inject, Optional } from '@angular/core';
+import { NgModule, ModuleWithProviders, Inject, Optional, SkipSelf } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 
 import { NgxUiLoaderService } from '../core/ngx-ui-loader.service';
@@ -29,14 +29,20 @@ export class NgxUiLoaderRouterModule {
   /**
    * Constructor
    *
+   * @param parentModule
    * @param config
    * @param router
    * @param ngxUiLoaderService
    */
   constructor(
+    @Optional() @SkipSelf() parentModule: NgxUiLoaderRouterModule,
     @Optional() @Inject(NGX_UI_LOADER_ROUTER_CONFIG_TOKEN) config: NgxUiLoaderRouterConfig,
     router: Router,
     ngxUiLoaderService: NgxUiLoaderService) {
+
+    if (parentModule) {
+      throw new Error('[ngx-ui-loader] - NgxUiLoaderRouterModule is already loaded. It should be imported in the root `AppModule` only!');
+    }
 
     let defaultConfig: NgxUiLoaderRouterConfig = {
       showForeground: true

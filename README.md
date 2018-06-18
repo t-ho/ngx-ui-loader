@@ -4,7 +4,6 @@
 [![David](https://img.shields.io/david/t-ho/ngx-ui-loader.svg)](https://github.com/t-ho/ngx-ui-loader)
 [![npm](https://img.shields.io/npm/dt/ngx-ui-loader.svg)](https://www.npmjs.com/package/ngx-ui-loader)
 [![npm](https://img.shields.io/badge/dynamic/json.svg?label=downloads&url=https%3A%2F%2Fapi.npmjs.org%2Fdownloads%2Fpoint%2Flast-week%2Fngx-ui-loader&query=%24.downloads&colorB=bightgreen&suffix=%2Fweek)](https://www.npmjs.com/package/ngx-ui-loader)
-[![npm](https://img.shields.io/badge/dynamic/json.svg?label=last%20day&url=https%3A%2F%2Fapi.npmjs.org%2Fdownloads%2Frange%2Flast-week%2Fngx-ui-loader&query=%24.downloads%5B5%5D.downloads&colorB=brightgreen&suffix=%20downloads)](https://www.npmjs.com/package/ngx-ui-loader)
 [![](https://data.jsdelivr.com/v1/package/npm/ngx-ui-loader/badge?style=rounded)](https://www.jsdelivr.com/package/npm/ngx-ui-loader)
 [![npm](https://img.shields.io/npm/l/ngx-ui-loader.svg)](https://www.npmjs.com/package/ngx-ui-loader)
 
@@ -336,7 +335,7 @@ export class AppModule { }
 
 ### 7.1 Usage
 
-If you want the loader to start automatically for navigating between your app routes:
+If you want the loader to start automatically for navigating between your app routes, in your root `AppModule`, do as follow:
 
 ```typescript
 
@@ -381,7 +380,7 @@ export class AppModule { }
 
 ### 8.1 Usage
 
-If you want the loader to start automatically for http requests:
+If you want the loader to start automatically for http requests, in your root `AppModule`, do as follow:
 
 ```typescript
 
@@ -399,7 +398,7 @@ import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from  'ngx-ui-loader';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
+    HttpClientModule, // import HttpClientModule
     NgxUiLoaderModule, // import NgxUiLoaderModule
     NgxUiLoaderHttpModule, // import NgxUiLoaderHttpModule. By default, it will show background loader.
     // If you need to show foreground spinner, do as follow:

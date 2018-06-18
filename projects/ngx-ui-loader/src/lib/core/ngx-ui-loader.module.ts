@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
@@ -24,6 +24,17 @@ import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
   ]
 })
 export class NgxUiLoaderModule {
+
+  /**
+   * Contructor
+   * @param parentModule optional
+   */
+  constructor(@Optional() @SkipSelf() parentModule: NgxUiLoaderModule) {
+    if (parentModule) {
+      throw new Error('[ngx-ui-loader] - NgxUiLoaderModule is already loaded. It should be imported in the root `AppModule` only!');
+    }
+  }
+
   /**
    * forRoot
    * @param ngxUiLoaderConfig

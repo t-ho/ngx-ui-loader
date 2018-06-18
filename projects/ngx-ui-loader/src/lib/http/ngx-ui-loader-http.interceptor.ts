@@ -13,7 +13,12 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
   private count: number;
   private defaultConfig: NgxUiLoaderHttpConfig;
 
-  constructor(@Inject(NGX_UI_LOADER_HTTP_CONFIG_TOKEN) @Optional() config: NgxUiLoaderHttpConfig,
+  /**
+   * Constructor
+   * @param config
+   * @param ngxUiLoaderService
+   */
+  constructor(@Optional() @Inject(NGX_UI_LOADER_HTTP_CONFIG_TOKEN) config: NgxUiLoaderHttpConfig,
     private ngxUiLoaderService: NgxUiLoaderService) {
 
     this.count = 0;

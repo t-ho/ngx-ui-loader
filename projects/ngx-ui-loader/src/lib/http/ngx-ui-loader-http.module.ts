@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { NgxUiLoaderHttpInterceptor } from './ngx-ui-loader-http.interceptor';
@@ -15,6 +15,16 @@ import { NGX_UI_LOADER_HTTP_CONFIG_TOKEN } from './ngx-ui-loader-http-config.tok
   ],
 })
 export class NgxUiLoaderHttpModule {
+
+  /**
+   * Constructor
+   * @param parentModule optional
+   */
+  constructor(@Optional() @SkipSelf() parentModule: NgxUiLoaderHttpModule) {
+    if (parentModule) {
+      throw new Error('[ngx-ui-loader] - NgxUiLoaderHttpModule is already loaded. It should be imported in the root `AppModule` only!');
+    }
+  }
 
   /**
    * forRoot
