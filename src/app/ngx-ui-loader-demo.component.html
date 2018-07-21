@@ -70,43 +70,39 @@
       </div>
 
       <div>
-        <span class="place-holder">Progress Bar Thickness (pbThickness)</span>
-        <mat-slider max="10" min="1" step="1" [thumbLabel]="true" [(ngModel)]="demoService.config.pbThickness"></mat-slider>
+        <span class="place-holder">Blur the page while foreground loading (blur)</span>
+        <mat-slider max="15" min="0" step="1" [thumbLabel]="true" [(ngModel)]="demoService.config.blur"></mat-slider>
       </div>
-
-      <mat-form-field>
-        <mat-select placeholder="Progress Bar Direction (pbDirection)" [(value)]="demoService.config.pbDirection">
-          <mat-option *ngFor="let direction of directions" [value]="direction">
-            {{ direction }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
 
       <mat-form-field>
         <input [(colorPicker)]="demoService.config.overlayColor" cpOutputFormat="rgba" matInput placeholder="Overlay Color (overlayColor)" [(ngModel)]="demoService.config.overlayColor">
         <mat-icon matSuffix [style.color]="demoService.config.overlayColor" fontIcon="mdi-palette" fontSet="mdi"></mat-icon>
       </mat-form-field>
 
-      <mat-form-field>
-        <input matInput placeholder="Loading Text (text)" [(ngModel)]="demoService.config.text" autocomplete="off">
+      <div style="margin-top: 21px; margin-bottom: 20px">
+        <mat-checkbox (change)="toggleProgressBar($event.checked)" [checked]="demoService.config.hasProgressBar">Has progress bar</mat-checkbox>
+      </div>
+
+      <mat-form-field *ngIf="demoService.config.hasProgressBar">
+        <input [(colorPicker)]="demoService.config.pbColor" matInput placeholder="Progress Bar Color (pbColor)" [(ngModel)]="demoService.config.pbColor">
+        <mat-icon matSuffix [style.color]="demoService.config.pbColor" fontIcon="mdi-palette" fontSet="mdi"></mat-icon>
       </mat-form-field>
 
-      <mat-form-field *ngIf="demoService.config.text">
-        <mat-select placeholder="Loading Text Position (textPosition)" [(value)]="demoService.config.textPosition">
+      <div style="margin-top: 21px; margin-bottom: 20px">
+        <mat-checkbox (change)="addLogo($event.checked)" [checked]="demoService.config.logoUrl">Add logo</mat-checkbox>
+      </div>
+
+      <mat-form-field *ngIf="demoService.config.logoUrl">
+        <mat-select placeholder="Logo Position (logoPosition)" [(value)]="demoService.config.logoPosition">
           <mat-option *ngFor="let position of positions" [value]="position">
             {{ position }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field *ngIf="demoService.config.text">
-        <input [(colorPicker)]="demoService.config.textColor" matInput placeholder="Loading Text Color (textColor)" [(ngModel)]="demoService.config.textColor">
-        <mat-icon matSuffix [style.color]="demoService.config.textColor" fontIcon="mdi-palette" fontSet="mdi"></mat-icon>
-      </mat-form-field>
-
-      <div>
-        <span class="place-holder">Blur the page while foreground loading (blur)</span>
-        <mat-slider max="15" min="0" step="1" [thumbLabel]="true" [(ngModel)]="demoService.config.blur"></mat-slider>
+      <div *ngIf="demoService.config.logoUrl">
+        <span class="place-holder">Logo size (logoSize)</span>
+        <mat-slider max="200" min="40" step="10" [thumbLabel]="true" [(ngModel)]="demoService.config.logoSize"></mat-slider>
       </div>
 
     </div>
@@ -145,32 +141,40 @@
         <mat-slider max="1" min="0.1" step="0.1" [thumbLabel]="true" [(ngModel)]="demoService.config.bgsOpacity"></mat-slider>
       </div>
 
-      <mat-form-field>
-        <input [(colorPicker)]="demoService.config.pbColor" matInput placeholder="Progress Bar Color (pbColor)" [(ngModel)]="demoService.config.pbColor">
-        <mat-icon matSuffix [style.color]="demoService.config.pbColor" fontIcon="mdi-palette" fontSet="mdi"></mat-icon>
-      </mat-form-field>
-
       <div>
         <span class="place-holder">Gap between logo, spinner and text (gap)</span>
         <mat-slider max="150" min="10" step="1" [thumbLabel]="true" [(ngModel)]="demoService.config.gap"></mat-slider>
       </div>
 
-      <div style="margin-top: 21px; margin-bottom: 20px">
-        <mat-checkbox (change)="addLogo($event.checked)" [checked]="demoService.config.logoUrl">Add logo</mat-checkbox>
+      <div *ngIf="demoService.config.hasProgressBar">
+        <span class="place-holder">Progress Bar Thickness (pbThickness)</span>
+        <mat-slider max="10" min="1" step="1" [thumbLabel]="true" [(ngModel)]="demoService.config.pbThickness"></mat-slider>
       </div>
 
-      <mat-form-field *ngIf="demoService.config.logoUrl">
-        <mat-select placeholder="Logo Position (logoPosition)" [(value)]="demoService.config.logoPosition">
+      <mat-form-field *ngIf="demoService.config.hasProgressBar">
+        <mat-select placeholder="Progress Bar Direction (pbDirection)" [(value)]="demoService.config.pbDirection">
+          <mat-option *ngFor="let direction of directions" [value]="direction">
+            {{ direction }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Loading Text (text)" [(ngModel)]="demoService.config.text" autocomplete="off">
+      </mat-form-field>
+
+      <mat-form-field *ngIf="demoService.config.text">
+        <mat-select placeholder="Loading Text Position (textPosition)" [(value)]="demoService.config.textPosition">
           <mat-option *ngFor="let position of positions" [value]="position">
             {{ position }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
-      <div *ngIf="demoService.config.logoUrl">
-        <span class="place-holder">Logo size (logoSize)</span>
-        <mat-slider max="200" min="40" step="10" [thumbLabel]="true" [(ngModel)]="demoService.config.logoSize"></mat-slider>
-      </div>
+      <mat-form-field *ngIf="demoService.config.text">
+        <input [(colorPicker)]="demoService.config.textColor" matInput placeholder="Loading Text Color (textColor)" [(ngModel)]="demoService.config.textColor">
+        <mat-icon matSuffix [style.color]="demoService.config.textColor" fontIcon="mdi-palette" fontSet="mdi"></mat-icon>
+      </mat-form-field>
     </div>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
       <a mat-raised-button color="accent" [routerLink]="'/spinners'">Available Spinners</a>

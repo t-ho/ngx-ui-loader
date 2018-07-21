@@ -22,6 +22,7 @@ export interface NgxUiLoaderConfig {
   pbColor?: string;
   pbDirection?: DirectionType;
   pbThickness?: number;
+  hasProgressBar?: boolean;
   text?: string;
   textColor?: string;
   textPosition?: PositionType;

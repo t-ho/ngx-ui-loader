@@ -79,6 +79,14 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
   }
 
   /**
+   * Add logo url
+   * @param checked
+   */
+  toggleProgressBar(checked) {
+    this.demoService.config.hasProgressBar = checked;
+  }
+
+  /**
    * On foreground slide changed
    * @param checked
    */

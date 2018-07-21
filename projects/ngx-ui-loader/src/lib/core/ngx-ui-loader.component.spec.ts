@@ -148,6 +148,13 @@ describe('NgxUiLoaderComponent', () => {
     expect(textEl.style.color).toEqual('pink');
   });
 
+  it('should remove the progress bar', () => {
+    component.hasProgressBar = false;
+    fixture.detectChanges();
+    progressBarEl = ngxUiLoaderEl.querySelector('.ngx-progress-bar');
+    expect(progressBarEl).toBeNull();
+  });
+
   it('#determinePosition - spinner, logo and text are center-center', () => {
     component.fgsPosition = POSITION.centerCenter;
     component.logoPosition = POSITION.centerCenter;

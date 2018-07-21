@@ -1,5 +1,6 @@
 <!-- Progress bar {{{ -->
-<div class="ngx-progress-bar"
+<div *ngIf="hasProgressBar"
+  class="ngx-progress-bar"
   [ngClass]="'ngx-progress-bar-' + pbDirection"
   [style.height.px]="pbThickness"
   [style.color]="pbColor"

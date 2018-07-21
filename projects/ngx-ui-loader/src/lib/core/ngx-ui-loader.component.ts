@@ -32,6 +32,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   @Input() pbColor: string;
   @Input() pbDirection: DirectionType;
   @Input() pbThickness: number;
+  @Input() hasProgressBar: boolean;
   @Input() text: string;
   @Input() textColor: string;
   @Input() textPosition: PositionType;
@@ -87,6 +88,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.pbColor = this.defaultConfig.pbColor;
     this.pbDirection = this.defaultConfig.pbDirection;
     this.pbThickness = this.defaultConfig.pbThickness;
+    this.hasProgressBar = this.defaultConfig.hasProgressBar;
     this.text = this.defaultConfig.text;
     this.textColor = this.defaultConfig.textColor;
     this.textPosition = this.defaultConfig.textPosition;
