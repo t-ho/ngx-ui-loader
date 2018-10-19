@@ -59,6 +59,8 @@ Available spinners:
 
 Live demo [here](https://ngx-ui-loader.stackblitz.io).
 
+Minimal setup [here](https://stackblitz.com/edit/ngx-ui-loader-minimal-setup) on stackblitz.
+
 Play with **ngx-ui-loader** [here](https://stackblitz.com/edit/ngx-ui-loader) on stackblitz.
 
 If you like it, please [star on Github](https://github.com/t-ho/ngx-ui-loader).
