@@ -8,7 +8,7 @@
 
 # ngx-ui-loader
 
-An all-in-one and fully customizable loader/spinner for Angular 5+ and Angular 6+ applications. It supports foreground, background spinner/loader and indicative progress bar.
+An all-in-one and fully customizable loader/spinner for Angular 5, 6 and 7+ applications. It supports foreground, background spinner/loader and indicative progress bar.
 
 [![ngx-ui-loader-demo](https://j.gifs.com/gL9k9r.gif)](https://ngx-ui-loader-demo.stackblitz.io)
 
@@ -85,6 +85,12 @@ $ npm install --save ngx-ui-loader
 
 ```shell
 $ yarn add ngx-ui-loader
+```
+
+##### * For Angular 4 and 5, please use ngx-ui-loader version 1.2.x
+
+```shell
+$ npm install --save ngx-ui-loader@1.2.5
 ```
 
 <a name="import_ngxuiloadermodule"></a>
@@ -438,6 +444,16 @@ NgxUiLoaderHttpModule.forRoot({ exclude: ['/api/auth'] });
 <a name="changelog"></a>
 
 ## 9. Changelog
+
+**v.7.0.0**
+* Update README
+
+**v.2.0.0**
+* Update dependencies
+* Update README
+
+**v.1.2.5**
+* Be able to hide progress bar
 
 **v.1.2.0**
 * Add NgxUiLoaderBlurred directive for blurring the page content while the foreground loading is showed. See [NgxUiLoaderBlurred](#ngxuiloaderblurred_directive)

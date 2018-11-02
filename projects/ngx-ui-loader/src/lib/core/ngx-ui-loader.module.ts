@@ -11,9 +11,6 @@ import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
   imports: [
     CommonModule,
   ],
-  providers: [
-    NgxUiLoaderService,
-  ],
   declarations: [
     NgxUiLoaderComponent,
     NgxUiLoaderBlurredDirective,

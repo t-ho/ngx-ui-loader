@@ -7,7 +7,9 @@ import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
 
 const DELAY = 1100;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class NgxUiLoaderService {
 
   private _defaultConfig: NgxUiLoaderConfig;
