@@ -423,13 +423,15 @@ export class AppModule { }
 
 If you wish to not show loader for some specific API urls, you can pass an array of these urls (case-insensitive) to `forRoot()` method as below:
 ```typescript
-NgxUiLoaderHttpModule.forRoot({ exclude: ['/api/not/show/loader', '/api/logout'] });
+NgxUiLoaderHttpModule.forRoot({ exclude: ['/api/not/show/loader', '/api/logout', 'https://external-domain.com/api/not/to/show'] });
 ```
 
-or if you don't want to show loader for urls which start with `/api/auth`, do as follow:
+or if you don't want to show loader for urls which start with `/api/auth` or `https://external-domain.com/api/auth`, do as follow:
 
 ```typescript
 NgxUiLoaderHttpModule.forRoot({ exclude: ['/api/auth'] });
+// Or
+NgxUiLoaderHttpModule.forRoot({ exclude: ['https://external-domain.com/api/auth'] });
 ```
 
 <a name="http_requests_parameters"></a>
