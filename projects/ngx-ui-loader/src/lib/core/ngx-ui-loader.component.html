@@ -1,6 +1,7 @@
 <!-- Progress bar {{{ -->
 <div *ngIf="hasProgressBar"
   class="ngx-progress-bar"
+  [class.ngx-position-absolute]="!isFullViewPort"
   [ngClass]="'ngx-progress-bar-' + pbDirection"
   [style.height.px]="pbThickness"
   [style.color]="pbColor"
@@ -10,6 +11,7 @@
 
 <!-- Foreground container {{{ -->
 <div class="ngx-overlay"
+  [class.ngx-position-absolute]="!isFullViewPort"
   [style.background-color]="overlayColor"
   [class.loading-foreground]="showForeground"
   [class.foreground-closing]="foregroundClosing">
@@ -44,6 +46,7 @@
 
 <!-- Background spinner {{{ -->
 <div class="ngx-background-spinner"
+  [class.ngx-position-absolute]="!isFullViewPort"
   [ngClass]="bgsPosition"
   [class.loading-background]="showBackground"
   [class.background-closing]="backgroundClosing"

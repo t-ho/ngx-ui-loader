@@ -118,40 +118,40 @@ export class NgxUiLoaderService {
   }
 
   /**
-   * Check whether the queue has a waiting foreground loader with the given id.
-   * If no `id` specified, it will check whether the queue has any waiting foreground loader.
-   * @param id the optional id
+   * Check whether the queue has a waiting foreground loader with the given taskId.
+   * If no `taskId` specified, it will check whether the queue has any waiting foreground loader.
+   * @param taskId the optional task Id
    * @returns boolean
    */
-  hasForeground(id?: string): boolean {
-    if (id) {
-      return this._waitingForeground[id] ? true : false;
+  hasForeground(taskId?: string): boolean {
+    if (taskId) {
+      return this._waitingForeground[taskId] ? true : false;
     }
     return Object.keys(this._waitingForeground).length > 0;
   }
 
   /**
-   * Check whether the queue has a waiting background loader with the given id.
-   * If no `id` specified, it will check whether the queue has any waiting background loader.
-   * @param id the optional id
+   * Check whether the queue has a waiting background loader with the given taskId.
+   * If no `taskId` specified, it will check whether the queue has any waiting background loader.
+   * @param taskId the optional task Id
    * @returns boolean
    */
-  hasBackground(id?: string): boolean {
-    if (id) {
-      return this._waitingBackground[id] ? true : false;
+  hasBackground(taskId?: string): boolean {
+    if (taskId) {
+      return this._waitingBackground[taskId] ? true : false;
     }
     return Object.keys(this._waitingBackground).length > 0;
   }
 
   /**
-   * Start the foreground loading with a specified id.
+   * Start the foreground loading with a specified taskId.
    * The loading is only closed off when all IDs are called with stop() method.
-   * @param id the optional id of the loading. id is set to 'default' by default.
+   * @param taskId the optional task Id of the loading. taskId is set to 'default' by default.
    */
-  start(id: string = DEFAULT_ID) {
+  start(taskId: string = DEFAULT_ID) {
     const foregroundRunning = this.hasForeground();
 
-    this._waitingForeground[id] = Date.now();
+    this._waitingForeground[taskId] = Date.now();
     if (!foregroundRunning) {
       if (this.hasBackground()) {
         this.backgroundCloseout();
@@ -159,38 +159,38 @@ export class NgxUiLoaderService {
       }
       this._showForeground.next(true);
     }
-    this._onStart.next({ id: id, isForeground: true });
+    this._onStart.next({ taskId: taskId, isForeground: true });
   }
 
   /**
-   * Start the background loading with a specified id.
+   * Start the background loading with a specified taskId.
    * The loading is only closed off when all IDs are called with stopBackground() method.
-   * @param id the optional id of the loading. id is set to 'default' by default.
+   * @param taskId the optional task Id of the loading. taskId is set to 'default' by default.
    */
-  startBackground(id: string = DEFAULT_ID) {
-    this._waitingBackground[id] = Date.now();
+  startBackground(taskId: string = DEFAULT_ID) {
+    this._waitingBackground[taskId] = Date.now();
     if (!this.hasForeground()) {
       this._showBackground.next(true);
     }
-    this._onStart.next({ id: id, isForeground: false });
+    this._onStart.next({ taskId: taskId, isForeground: false });
   }
 
   /**
-   * Stop a foreground loading with specific id
-   * @param id the optional id to stop. If not provided, 'default' is used.
+   * Stop a foreground loading with specific taskId
+   * @param taskId the optional task Id to stop. If not provided, 'default' is used.
    * @returns Object
    */
-  stop(id: string = DEFAULT_ID) {
+  stop(taskId: string = DEFAULT_ID) {
     const now = Date.now();
 
-    if (this._waitingForeground[id]) {
-      if (this._waitingForeground[id] + this._defaultConfig.threshold > now) {
+    if (this._waitingForeground[taskId]) {
+      if (this._waitingForeground[taskId] + this._defaultConfig.threshold > now) {
         setTimeout(() => {
-          this.stop(id);
-        }, this._waitingForeground[id] + this._defaultConfig.threshold - now);
+          this.stop(taskId);
+        }, this._waitingForeground[taskId] + this._defaultConfig.threshold - now);
         return;
       }
-      delete this._waitingForeground[id];
+      delete this._waitingForeground[taskId];
     } else {
       return;
     }
@@ -198,7 +198,7 @@ export class NgxUiLoaderService {
     if (!this.isActive()) {
       this.foregroundCloseout();
       this._showForeground.next(false);
-      this._onStop.next({ id: id, isForeground: true });
+      this._onStop.next({ taskId: taskId, isForeground: true });
       this._onStopAll.next({ stopAll: true });
       return;
     }
@@ -213,25 +213,25 @@ export class NgxUiLoaderService {
         }
       }, 500);
     }
-    this._onStop.next({ id: id, isForeground: true });
+    this._onStop.next({ taskId: taskId, isForeground: true });
   }
 
   /**
-   * Stop a background loading with specific id
-   * @param id the optional id to stop. If not provided, 'default' is used.
+   * Stop a background loading with specific taskId
+   * @param taskId the optional task Id to stop. If not provided, 'default' is used.
    * @returns Object
    */
-  stopBackground(id: string = DEFAULT_ID) {
+  stopBackground(taskId: string = DEFAULT_ID) {
     const now = Date.now();
 
-    if (this._waitingBackground[id]) {
-      if (this._waitingBackground[id] + this._defaultConfig.threshold > now) {
+    if (this._waitingBackground[taskId]) {
+      if (this._waitingBackground[taskId] + this._defaultConfig.threshold > now) {
         setTimeout(() => {
-          this.stopBackground(id);
-        }, this._waitingBackground[id] + this._defaultConfig.threshold - now);
+          this.stopBackground(taskId);
+        }, this._waitingBackground[taskId] + this._defaultConfig.threshold - now);
         return;
       }
-      delete this._waitingBackground[id];
+      delete this._waitingBackground[taskId];
     } else {
       return;
     }
@@ -239,12 +239,12 @@ export class NgxUiLoaderService {
     if (!this.isActive()) {
       this.backgroundCloseout();
       this._showBackground.next(false);
-      this._onStop.next({ id: id, isForeground: false });
+      this._onStop.next({ taskId: taskId, isForeground: false });
       this._onStopAll.next({ stopAll: true });
       return;
     }
 
-    this._onStop.next({ id: id, isForeground: false });
+    this._onStop.next({ taskId: taskId, isForeground: false });
   }
 
   /**

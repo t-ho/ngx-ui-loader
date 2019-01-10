@@ -96,7 +96,7 @@ describe('NgxUiLoaderService', () => {
 
   it(`#start() - 1 - (no foreground and background id in the queue) should work correctly`, () => {
     loaderService.onStart.subscribe((data) => {
-      expect(data).toEqual({ id: 'default', isForeground: true });
+      expect(data).toEqual({ taskId: 'default', isForeground: true });
     });
     loaderService.start();
     expect(loaderService.hasForeground('default')).toEqual(true);
@@ -108,7 +108,7 @@ describe('NgxUiLoaderService', () => {
   it(`#start() - 2 - (no foreground and 1 background id in the queue) should work correctly`, () => {
     loaderService.startBackground();
     loaderService.onStart.subscribe((data) => {
-      expect(data).toEqual({ id: 'default', isForeground: true });
+      expect(data).toEqual({ taskId: 'default', isForeground: true });
     });
     loaderService.start();
 
@@ -127,25 +127,25 @@ describe('NgxUiLoaderService', () => {
     });
   });
 
-  it(`#start('test-id') - 1 - (no foreground and background id in the queue) should work correctly`, () => {
+  it(`#start('task-01') - 1 - (no foreground and background id in the queue) should work correctly`, () => {
     loaderService.onStart.subscribe((data) => {
-      expect(data).toEqual({ id: 'test-id', isForeground: true });
+      expect(data).toEqual({ taskId: 'task-01', isForeground: true });
     });
-    loaderService.start('test-id');
-    expect(loaderService.hasForeground('test-id')).toEqual(true);
+    loaderService.start('task-01');
+    expect(loaderService.hasForeground('task-01')).toEqual(true);
     loaderService.showForeground.subscribe((data) => {
       expect(data).toEqual(true);
     });
   });
 
-  it(`#start('test-id') - 2 - (no foreground and 1 background id in the queue) should work correctly`, () => {
+  it(`#start('task-01') - 2 - (no foreground and 1 background id in the queue) should work correctly`, () => {
     loaderService.startBackground();
     loaderService.onStart.subscribe((data) => {
-      expect(data).toEqual({ id: 'test-id', isForeground: true });
+      expect(data).toEqual({ taskId: 'task-01', isForeground: true });
     });
-    loaderService.start('test-id');
+    loaderService.start('task-01');
 
-    expect(loaderService.hasForeground('test-id')).toEqual(true);
+    expect(loaderService.hasForeground('task-01')).toEqual(true);
 
     loaderService.showBackground.subscribe((data) => {
       expect(data).toEqual(false);
@@ -162,7 +162,7 @@ describe('NgxUiLoaderService', () => {
 
   it(`#startBackground() - 1 - (no foreground id in the queue) should work correctly`, () => {
     loaderService.onStart.subscribe((data) => {
-      expect(data).toEqual({ id: 'default', isForeground: false });
+      expect(data).toEqual({ taskId: 'default', isForeground: false });
     });
     loaderService.startBackground();
     expect(loaderService.hasBackground('default')).toEqual(true);
@@ -174,30 +174,30 @@ describe('NgxUiLoaderService', () => {
   it(`#startBackground() - 2 - (has 1 foreground id in the queue) should work correctly`, () => {
     loaderService.start();
     loaderService.onStart.subscribe((data) => {
-      expect(data).toEqual({ id: 'default', isForeground: false });
+      expect(data).toEqual({ taskId: 'default', isForeground: false });
     });
     loaderService.startBackground();
     expect(loaderService.hasBackground('default')).toEqual(true);
   });
 
-  it(`#startBackground('test-id') - 1 - (no foreground id in the queue) should work correctly`, () => {
+  it(`#startBackground('task-01') - 1 - (no foreground id in the queue) should work correctly`, () => {
     loaderService.onStart.subscribe((data) => {
-      expect(data).toEqual({ id: 'test-id', isForeground: false });
+      expect(data).toEqual({ taskId: 'task-01', isForeground: false });
     });
-    loaderService.startBackground('test-id');
-    expect(loaderService.hasBackground('test-id')).toEqual(true);
+    loaderService.startBackground('task-01');
+    expect(loaderService.hasBackground('task-01')).toEqual(true);
     loaderService.showBackground.subscribe((data) => {
       expect(data).toEqual(true);
     });
   });
 
-  it(`#startBackground('test-id') - 2 - (has 1 foreground id in the queue) should work correctly`, () => {
+  it(`#startBackground('task-01') - 2 - (has 1 foreground id in the queue) should work correctly`, () => {
     loaderService.start();
     loaderService.onStart.subscribe((data) => {
-      expect(data).toEqual({ id: 'test-id', isForeground: false });
+      expect(data).toEqual({ taskId: 'task-01', isForeground: false });
     });
-    loaderService.startBackground('test-id');
-    expect(loaderService.hasBackground('test-id')).toEqual(true);
+    loaderService.startBackground('task-01');
+    expect(loaderService.hasBackground('task-01')).toEqual(true);
   });
 
   it(`#stop() - 1 - not exist id`, () => {
@@ -209,7 +209,7 @@ describe('NgxUiLoaderService', () => {
   it(`#stop() - 2 - should work correctly`, fakeAsync(() => {
     loaderService.start();
     loaderService.onStop.subscribe(data => {
-      expect(data).toEqual({ id: 'default', isForeground: true });
+      expect(data).toEqual({ taskId: 'default', isForeground: true });
     });
     loaderService.onStopAll.subscribe(data => {
       expect(data).toEqual({ stopAll: true });
@@ -232,7 +232,7 @@ describe('NgxUiLoaderService', () => {
     loaderService.startBackground(); // has background
     loaderService.start();
     loaderService.onStop.subscribe(data => {
-      expect(data).toEqual({ id: 'default', isForeground: true });
+      expect(data).toEqual({ taskId: 'default', isForeground: true });
     });
     setTimeout(() => {
       loaderService.stop();
@@ -257,7 +257,7 @@ describe('NgxUiLoaderService', () => {
   it(`#stopBackground() - 2 - should work correctly`, fakeAsync(() => {
     loaderService.startBackground();
     loaderService.onStop.subscribe(data => {
-      expect(data).toEqual({ id: 'default', isForeground: false });
+      expect(data).toEqual({ taskId: 'default', isForeground: false });
     });
     loaderService.onStopAll.subscribe(data => {
       expect(data).toEqual({ stopAll: true });
@@ -281,7 +281,7 @@ describe('NgxUiLoaderService', () => {
     loaderService.startBackground();
     setTimeout(() => {
       loaderService.onStop.subscribe(data => {
-        expect(data).toEqual({ id: 'default', isForeground: false });
+        expect(data).toEqual({ taskId: 'default', isForeground: false });
       });
       loaderService.stopBackground();
     }, THRESHOLD - 1);

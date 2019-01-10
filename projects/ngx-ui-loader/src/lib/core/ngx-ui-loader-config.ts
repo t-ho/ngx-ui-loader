@@ -18,6 +18,7 @@ export interface NgxUiLoaderConfig {
   logoPosition?: PositionType;
   logoSize?: number;
   logoUrl?: string;
+  isFullViewPort?: boolean;
   overlayColor?: string;
   pbColor?: string;
   pbDirection?: DirectionType;

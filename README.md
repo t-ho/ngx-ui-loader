@@ -220,7 +220,7 @@ All attributes are listed below:
 | `logoUrl`        | *string*  | optional | (*empty string*)   | Logo url                                                                                        |
 |                  |           |          |                    |                                                                                                 |
 | `pbColor`        | *string*  | optional | `#00ACC1`          | Progress bar color                                                                              |
-| `pbDirection`    | *string*  | optional | `ltr`              | Progress bar direction. All directions type can be accessed via `PB_DIRECTION`                  |
+| `pbDirection`    | *string*  | optional | `ltr`              | Progress bar direction. All direction types can be accessed via `PB_DIRECTION`                  |
 | `pbThickness`    | *number*  | optional | `3`                | Progress bar thickness                                                                          |
 | `hasProgressBar` | *boolean* | optional | `true`             | Show the progress bar while loading foreground                                                  |
 |                  |           |          |                    |                                                                                                 |
@@ -323,7 +323,7 @@ export class AppModule { }
 | `logoUrl`        | *string*  | optional | (*empty string*)   | Logo url                                                                                        |
 |                  |           |          |                    |                                                                                                 |
 | `pbColor`        | *string*  | optional | `#00ACC1`          | Progress bar color                                                                              |
-| `pbDirection`    | *string*  | optional | `ltr`              | Progress bar direction. All directions type can be accessed via `PB_DIRECTION`                  |
+| `pbDirection`    | *string*  | optional | `ltr`              | Progress bar direction. All direction types can be accessed via `PB_DIRECTION`                  |
 | `pbThickness`    | *number*  | optional | `3`                | Progress bar thickness                                                                          |
 | `hasProgressBar` | *boolean* | optional | `true`             | Show the progress bar while loading foreground                                                  |
 |                  |           |          |                    |                                                                                                 |

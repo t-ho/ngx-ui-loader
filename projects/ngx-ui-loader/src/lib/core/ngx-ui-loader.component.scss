@@ -41,33 +41,33 @@ $spinnerSize: 60px;
 
 .ngx-progress-bar-ltr {
   &::before {
-    -webkit-transform: translate3d(-100vw, 0, 0);
-        -ms-transform: translate3d(-100vw, 0, 0);
-            transform: translate3d(-100vw, 0, 0);
+    -webkit-transform: translate3d(-100%, 0, 0);
+        -ms-transform: translate3d(-100%, 0, 0);
+            transform: translate3d(-100%, 0, 0);
   }
 
   &::after {
     -webkit-animation: progressBar-slide-ltr 20s ease-out 0s 1 normal;
             animation: progressBar-slide-ltr 20s ease-out 0s 1 normal;
-    -webkit-transform: translate3d(-5vw, 0, 0);
-        -ms-transform: translate3d(-5vw, 0, 0);
-            transform: translate3d(-5vw, 0, 0);
+    -webkit-transform: translate3d(-5%, 0, 0);
+        -ms-transform: translate3d(-5%, 0, 0);
+            transform: translate3d(-5%, 0, 0);
   }
 }
 
 .ngx-progress-bar-rtl {
   &::before {
-    -webkit-transform: translate3d(100vw, 0, 0);
-        -ms-transform: translate3d(100vw, 0, 0);
-            transform: translate3d(100vw, 0, 0);
+    -webkit-transform: translate3d(100%, 0, 0);
+        -ms-transform: translate3d(100%, 0, 0);
+            transform: translate3d(100%, 0, 0);
   }
 
   &::after {
     -webkit-animation: progressBar-slide-rtl 20s ease-out 0s 1 normal;
             animation: progressBar-slide-rtl 20s ease-out 0s 1 normal;
-    -webkit-transform: translate3d(5vw, 0, 0);
-        -ms-transform: translate3d(5vw, 0, 0);
-            transform: translate3d(5vw, 0, 0);
+    -webkit-transform: translate3d(5%, 0, 0);
+        -ms-transform: translate3d(5%, 0, 0);
+            transform: translate3d(5%, 0, 0);
   }
 }
 
@@ -89,59 +89,59 @@ $spinnerSize: 60px;
 
 @-webkit-keyframes progressBar-slide-ltr {
   from {
-    -webkit-transform: translate3d(-100vw, 0, 0); 
-        -ms-transform: translate3d(-100vw, 0, 0); 
-            transform: translate3d(-100vw, 0, 0); 
+    -webkit-transform: translate3d(-100%, 0, 0); 
+        -ms-transform: translate3d(-100%, 0, 0); 
+            transform: translate3d(-100%, 0, 0); 
   }
   to {
-    -webkit-transform: translate3d(-5vw, 0, 0);
-        -ms-transform: translate3d(-5vw, 0, 0);
-            transform: translate3d(-5vw, 0, 0);
+    -webkit-transform: translate3d(-5%, 0, 0);
+        -ms-transform: translate3d(-5%, 0, 0);
+            transform: translate3d(-5%, 0, 0);
   }
 }
 @keyframes progressBar-slide-ltr {
   from {
-    -webkit-transform: translate3d(-100vw, 0, 0); 
-        -ms-transform: translate3d(-100vw, 0, 0); 
-            transform: translate3d(-100vw, 0, 0); 
+    -webkit-transform: translate3d(-100%, 0, 0); 
+        -ms-transform: translate3d(-100%, 0, 0); 
+            transform: translate3d(-100%, 0, 0); 
   }
   to {
-    -webkit-transform: translate3d(-5vw, 0, 0);
-        -ms-transform: translate3d(-5vw, 0, 0);
-            transform: translate3d(-5vw, 0, 0);
+    -webkit-transform: translate3d(-5%, 0, 0);
+        -ms-transform: translate3d(-5%, 0, 0);
+            transform: translate3d(-5%, 0, 0);
   }
 }
 
 @-webkit-keyframes progressBar-slide-rtl {
   from {
-    -webkit-transform: translate3d(100vw, 0, 0);
-        -ms-transform: translate3d(100vw, 0, 0);
-            transform: translate3d(100vw, 0, 0);
+    -webkit-transform: translate3d(100%, 0, 0);
+        -ms-transform: translate3d(100%, 0, 0);
+            transform: translate3d(100%, 0, 0);
   }
   to {
-    -webkit-transform: translate3d(5vw, 0, 0);
-        -ms-transform: translate3d(5vw, 0, 0);
-            transform: translate3d(5vw, 0, 0);
+    -webkit-transform: translate3d(5%, 0, 0);
+        -ms-transform: translate3d(5%, 0, 0);
+            transform: translate3d(5%, 0, 0);
   }
 }
 @keyframes progressBar-slide-rtl {
   from {
-    -webkit-transform: translate3d(100vw, 0, 0);
-        -ms-transform: translate3d(100vw, 0, 0);
-            transform: translate3d(100vw, 0, 0);
+    -webkit-transform: translate3d(100%, 0, 0);
+        -ms-transform: translate3d(100%, 0, 0);
+            transform: translate3d(100%, 0, 0);
   }
   to {
-    -webkit-transform: translate3d(5vw, 0, 0);
-        -ms-transform: translate3d(5vw, 0, 0);
-            transform: translate3d(5vw, 0, 0);
+    -webkit-transform: translate3d(5%, 0, 0);
+        -ms-transform: translate3d(5%, 0, 0);
+            transform: translate3d(5%, 0, 0);
   }
 }
 
 @-webkit-keyframes progressBar-slide-complete-ltr {
   0% {
-    -webkit-transform: translate3d(-75vw, 0, 0);
-        -ms-transform: translate3d(-75vw, 0, 0);
-            transform: translate3d(-75vw, 0, 0);
+    -webkit-transform: translate3d(-75%, 0, 0);
+        -ms-transform: translate3d(-75%, 0, 0);
+            transform: translate3d(-75%, 0, 0);
   }
   50% {
     -webkit-transform: translate3d(0, 0, 0);
@@ -151,9 +151,9 @@ $spinnerSize: 60px;
 }
 @keyframes progressBar-slide-complete-ltr {
   0% {
-    -webkit-transform: translate3d(-75vw, 0, 0);
-        -ms-transform: translate3d(-75vw, 0, 0);
-            transform: translate3d(-75vw, 0, 0);
+    -webkit-transform: translate3d(-75%, 0, 0);
+        -ms-transform: translate3d(-75%, 0, 0);
+            transform: translate3d(-75%, 0, 0);
   }
   50% {
     -webkit-transform: translate3d(0, 0, 0);
@@ -164,9 +164,9 @@ $spinnerSize: 60px;
 
 @-webkit-keyframes progressBar-slide-complete-rtl {
   0% {
-    -webkit-transform: translate3d(75vw, 0, 0);
-        -ms-transform: translate3d(75vw, 0, 0);
-            transform: translate3d(75vw, 0, 0);
+    -webkit-transform: translate3d(75%, 0, 0);
+        -ms-transform: translate3d(75%, 0, 0);
+            transform: translate3d(75%, 0, 0);
   }
   50% {
     -webkit-transform: translate3d(0, 0, 0);
@@ -176,9 +176,9 @@ $spinnerSize: 60px;
 }
 @keyframes progressBar-slide-complete-rtl {
   0% {
-    -webkit-transform: translate3d(75vw, 0, 0);
-        -ms-transform: translate3d(75vw, 0, 0);
-            transform: translate3d(75vw, 0, 0);
+    -webkit-transform: translate3d(75%, 0, 0);
+        -ms-transform: translate3d(75%, 0, 0);
+            transform: translate3d(75%, 0, 0);
   }
   50% {
     -webkit-transform: translate3d(0, 0, 0);
@@ -206,30 +206,30 @@ $spinnerSize: 60px;
     opacity: 0 !important;
     transition: opacity 0.5s ease-out 0.5s;
   }
-}
 
-.ngx-overlay > .ngx-foreground-spinner {
-  position: fixed;
-  width: $spinnerSize;
-  height: $spinnerSize;
-  margin: 0;
-  color: $spinnerColor;
-}
+  & > .ngx-foreground-spinner {
+    position: fixed;
+    width: $spinnerSize;
+    height: $spinnerSize;
+    margin: 0;
+    color: $spinnerColor;
+  }
 
-.ngx-overlay > .ngx-loading-logo {
-  position: fixed;
-  margin: 0;
-  width: $logoSize;
-  height: $logoSize;
-}
+  & > .ngx-loading-logo {
+    position: fixed;
+    margin: 0;
+    width: $logoSize;
+    height: $logoSize;
+  }
 
-.ngx-overlay > .ngx-loading-text {
-  position: fixed;
-  margin: 0;
-  font-family: sans-serif;
-  font-weight: $loadingTextFontWeight;
-  font-size: $loadingTextFontSize;
-  color: $loadingTextColor;
+  & > .ngx-loading-text {
+    position: fixed;
+    margin: 0;
+    font-family: sans-serif;
+    font-weight: $loadingTextFontWeight;
+    font-size: $loadingTextFontSize;
+    color: $loadingTextColor;
+  }
 }
 
 .ngx-background-spinner {
@@ -241,6 +241,7 @@ $spinnerSize: 60px;
   color: $spinnerColor;
   opacity: 0.6;
   display: none;
+
   &.loading-background, &.background-closing {
     display: block;
   }
@@ -251,15 +252,23 @@ $spinnerSize: 60px;
   }
 }
 
+.ngx-position-absolute {
+  position: absolute !important;
+
+  & > .ngx-foreground-spinner,
+  & > .ngx-loading-logo,
+  & > .ngx-loading-text {
+    position: absolute !important;
+  }
+}
+
 // Utility classes {{{
 .top-left {
-  position: fixed;
   top: 30px;
   left: 30px;
 }
 
 .top-center {
-  position: fixed;
   top: 30px;
   left: 50%;
   -webkit-transform: translateX(-50%);
@@ -268,13 +277,11 @@ $spinnerSize: 60px;
 }
 
 .top-right {
-  position: fixed;
   top: 30px;
   right: 30px;
 }
 
 .center-left {
-  position: fixed;
   top: 50%;
   left: 30px;
   -webkit-transform: translateY(-50%);
@@ -283,7 +290,6 @@ $spinnerSize: 60px;
 }
 
 .center-center {
-  position: fixed;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
@@ -292,7 +298,6 @@ $spinnerSize: 60px;
 }
 
 .center-right {
-  position: fixed;
   top: 50%;
   right: 30px;
   -webkit-transform: translateY(-50%);
@@ -301,13 +306,11 @@ $spinnerSize: 60px;
 }
 
 .bottom-left {
-  position: fixed;
   bottom: 30px;
   left: 30px;
 }
 
 .bottom-center {
-  position: fixed;
   bottom: 30px;
   left: 50%;
   -webkit-transform: translateX(-50%);
@@ -316,7 +319,6 @@ $spinnerSize: 60px;
 }
 
 .bottom-right {
-  position: fixed;
   bottom: 30px;
   right: 30px;
 }

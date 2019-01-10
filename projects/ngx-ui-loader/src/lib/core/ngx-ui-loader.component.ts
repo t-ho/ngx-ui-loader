@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, SimpleChange, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
 import { DirectionType, PositionType, SpinnerType } from './ngx-ui-loader.types';
 import { POSITION, PB_DIRECTION, SPINNER } from './ngx-ui-loader.enums';
@@ -28,6 +28,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   @Input() logoPosition: PositionType;
   @Input() logoSize: number;
   @Input() logoUrl: string;
+  @Input() isFullViewPort: boolean;
   @Input() overlayColor: string;
   @Input() pbColor: string;
   @Input() pbDirection: DirectionType;
@@ -84,6 +85,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.logoPosition = this.defaultConfig.logoPosition;
     this.logoSize = this.defaultConfig.logoSize;
     this.logoUrl = this.defaultConfig.logoUrl;
+    this.isFullViewPort = this.defaultConfig.isFullViewPort;
     this.overlayColor = this.defaultConfig.overlayColor;
     this.pbColor = this.defaultConfig.pbColor;
     this.pbDirection = this.defaultConfig.pbDirection;
