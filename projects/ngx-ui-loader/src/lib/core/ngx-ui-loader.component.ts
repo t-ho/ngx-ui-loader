@@ -2,11 +2,13 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges, SimpleChange, OnDes
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
 import { Subscription } from 'rxjs';
+
 import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
 import { DirectionType, PositionType, SpinnerType } from './ngx-ui-loader.types';
 import { POSITION, PB_DIRECTION, SPINNER } from './ngx-ui-loader.enums';
 import { SPINNER_CONFIG } from './ngx-ui-loader.contants';
 import { coerceNumber } from './coercion';
+import { ShowEvent } from './ngx-ui-loader.interfaces';
 
 @Component({
   selector: 'ngx-ui-loader',
@@ -25,6 +27,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   @Input() fgsSize: number;
   @Input() fgsType: SpinnerType;
   @Input() gap: number;
+  @Input() loaderId: string;
   @Input() logoPosition: PositionType;
   @Input() logoSize: number;
   @Input() logoUrl: string;
@@ -82,6 +85,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.fgsSize = this.defaultConfig.fgsSize;
     this.fgsType = this.defaultConfig.fgsType;
     this.gap = this.defaultConfig.gap;
+    this.loaderId = this.defaultConfig.loaderId;
     this.logoPosition = this.defaultConfig.logoPosition;
     this.logoSize = this.defaultConfig.logoSize;
     this.logoUrl = this.defaultConfig.logoUrl;
@@ -101,6 +105,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
    */
   ngOnInit() {
     this.initializeSpinners();
+    this.ngxService.initLoaderData(this.loaderId, this.isFullViewPort);
     this.determinePositions();
 
     this.bgsPosition = <PositionType>this.validate('bgsPosition', this.bgsPosition, POSITION, this.defaultConfig.bgsPosition);
@@ -109,17 +114,33 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
 
     this.pbDirection = <DirectionType>this.validate('pbDirection', this.pbDirection, PB_DIRECTION, this.defaultConfig.pbDirection);
 
-    this.showForegroundWatcher = this.ngxService.showForeground
-      .subscribe(data => this.showForeground = data);
+    this.showForegroundWatcher = this.ngxService.showForeground$
+      .subscribe(data => {
+        if (data.loaderId === this.loaderId) {
+          this.showForeground = data.isShow;
+        }
+      });
 
-    this.showBackgroundWatcher = this.ngxService.showBackground
-      .subscribe(data => this.showBackground = data);
+    this.showBackgroundWatcher = this.ngxService.showBackground$
+      .subscribe(data => {
+        if (data.loaderId === this.loaderId) {
+          this.showBackground = data.isShow;
+        }
+      });
 
-    this.foregroundClosingWatcher = this.ngxService.foregroundClosing
-      .subscribe(data => this.foregroundClosing = data);
+    this.foregroundClosingWatcher = this.ngxService.foregroundClosing$
+      .subscribe(data => {
+        if (data.loaderId === this.loaderId) {
+          this.foregroundClosing = data.isShow;
+        }
+      });
 
-    this.backgroundClosingWatcher = this.ngxService.backgroundClosing
-      .subscribe(data => this.backgroundClosing = data);
+    this.backgroundClosingWatcher = this.ngxService.backgroundClosing$
+      .subscribe(data => {
+        if (data.loaderId === this.loaderId) {
+          this.backgroundClosing = data.isShow;
+        }
+      });
     this.initialized = true;
   }
 
@@ -135,11 +156,22 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     const bgsTypeChange: SimpleChange = changes.bgsType;
     const bgsPositionChange: SimpleChange = changes.bgsPosition;
     const fgsTypeChange: SimpleChange = changes.fgsType;
+    const loaderIdChange: SimpleChange = changes.loaderId;
     const logoUrlChange: SimpleChange = changes.logoUrl;
+    const isFullViewPortChange: SimpleChange = changes.isFullViewPort;
     const pbDirectionChange: SimpleChange = changes.pbDirection;
 
     if (fgsTypeChange || bgsTypeChange) {
       this.initializeSpinners();
+    }
+
+    if (loaderIdChange) {
+      this.ngxService.destroyLoaderData(loaderIdChange.previousValue);
+      this.ngxService.initLoaderData(this.loaderId, this.isFullViewPort);
+    }
+
+    if (isFullViewPortChange) {
+      this.ngxService.updateLoaderData(this.loaderId, this.isFullViewPort);
     }
 
     this.determinePositions();
@@ -160,7 +192,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   /**
    * Initialize spinners
    */
-  private initializeSpinners() {
+  private initializeSpinners(): void {
     this.fgsType = <SpinnerType>this.validate('fgsType', this.fgsType, SPINNER, this.defaultConfig.fgsType);
     this.bgsType = <SpinnerType>this.validate('bgsType', this.bgsType, SPINNER, this.defaultConfig.bgsType);
 
@@ -173,7 +205,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   /**
    * Determine the positions of spinner, logo and text
    */
-  private determinePositions() {
+  private determinePositions(): void {
     this.fgsPosition = <PositionType>this.validate('fgsPosition', this.fgsPosition, POSITION, this.defaultConfig.fgsPosition);
     this.logoPosition = <PositionType>this.validate('logoPosition', this.logoPosition, POSITION, this.defaultConfig.logoPosition);
     this.textPosition = <PositionType>this.validate('textPosition', this.textPosition, POSITION, this.defaultConfig.textPosition);
@@ -236,7 +268,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     }
   }
 
-  private validate(inputName: string, value: string, validTypeObj: {}, fallbackValue: string) {
+  private validate(inputName: string, value: string, validTypeObj: {}, fallbackValue: string): string {
     if (Object.keys(validTypeObj).map(k => validTypeObj[k]).findIndex(v => v === value) === -1) {
       console.error(`[ngx-ui-loader] - ${inputName} ("${value}") is invalid. `
         + `Default value "${fallbackValue}" is used.`);
@@ -249,6 +281,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
    * On destroy event
    */
   ngOnDestroy() {
+    this.ngxService.destroyLoaderData(this.loaderId);
     if (this.showForegroundWatcher) {
       this.showForegroundWatcher.unsubscribe();
     }

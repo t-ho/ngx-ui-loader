@@ -1,10 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NgxUiLoaderService, NgxUiLoaderConfig, SPINNER, POSITION, PB_DIRECTION } from 'ngx-ui-loader';
+import { NgxUiLoaderService, SPINNER, POSITION, PB_DIRECTION } from 'ngx-ui-loader';
 import { Subscription } from 'rxjs';
 import { NgxUiLoaderDemoService } from './ngx-ui-loader-demo.service';
 import { HttpClient } from '@angular/common/http';
 
 const LOGO_URL = 'assets/angular.png';
+const DEFAULT_TASK_ID = 'default';
+const DEFAULT_LOADER_ID = 'default';
+const TASK_ID_01 = 'task-01';
+const TASK_ID_02 = 'task-02';
 
 @Component({
   selector: 'app-ngx-ui-loader-demo',
@@ -16,13 +20,17 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
   positions: string[];
   directions: string[];
 
-  waitingForeground = {};
-  waitingBackground = {};
+  waitingForeground = {}; // waitingForeground of default loader (loaderId == DEFAULT_LOADER_ID)
+  waitingBackground = {}; // waitingBackground of default loader (loaderId == DEFAULT_LOADER_ID)
 
   onStartWatcher: Subscription;
   onStopWatcher: Subscription;
 
   disabled: boolean;
+
+  defaultTaskId = DEFAULT_TASK_ID;
+  taskId01 = TASK_ID_01;
+  taskId02 = TASK_ID_02;
 
   /**
    * Constructor
@@ -46,12 +54,12 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
 
     this.getStatus();
 
-    this.onStopWatcher = this.ngxUiLoaderService.onStop
+    this.onStopWatcher = this.ngxUiLoaderService.onStop$
       .subscribe(data => {
         this.getStatus();
       });
 
-    this.onStartWatcher = this.ngxUiLoaderService.onStart
+    this.onStartWatcher = this.ngxUiLoaderService.onStart$
       .subscribe(data => {
         this.getStatus();
       });
@@ -61,9 +69,9 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
    * Get current status
    */
   getStatus() {
-    const status = this.ngxUiLoaderService.getStatus();
-    this.waitingForeground = status.waitingForeground;
-    this.waitingBackground = status.waitingBackground;
+    const defaultLoader = this.ngxUiLoaderService.getLoader(DEFAULT_LOADER_ID);
+    this.waitingForeground = { ...defaultLoader.foreground };
+    this.waitingBackground = { ...defaultLoader.background };
   }
 
   /**
@@ -105,9 +113,9 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
    */
   fgSlideChange1(checked) {
     if (checked) {
-      this.ngxUiLoaderService.start('fg-1');
+      this.ngxUiLoaderService.start(TASK_ID_01);
       setTimeout(() => {
-        this.ngxUiLoaderService.stop('fg-1');
+        this.ngxUiLoaderService.stop(TASK_ID_01);
       }, 8000);
     }
   }
@@ -130,9 +138,9 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
    */
   bgSlideChange2(checked) {
     if (checked) {
-      this.ngxUiLoaderService.startBackground('bg-2');
+      this.ngxUiLoaderService.startBackground(TASK_ID_02);
     } else {
-      this.ngxUiLoaderService.stopBackground('bg-2');
+      this.ngxUiLoaderService.stopBackground(TASK_ID_02);
     }
   }
 

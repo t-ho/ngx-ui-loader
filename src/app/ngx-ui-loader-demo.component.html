@@ -4,23 +4,23 @@
     <div fxFlex="100" fxFlex.gt-md="36" fxLayout="column" fxLayout.sm="row" fxLayout.md="row" class="p-12">
       <mat-list role="list" fxFlex.sm="50" fxFlex.md="50" class="mat-elevation-z4">
         <mat-list-item role="listitem">
-          <mat-slide-toggle (change)="fgSlideChange($event.checked)" [(checked)]="waitingForeground['default']">
-            {{waitingForeground['default'] ? 'stop' : 'start'}}() - automatically stop after 3s
+          <mat-slide-toggle (change)="fgSlideChange($event.checked)" [(checked)]="waitingForeground[defaultTaskId]">
+            {{waitingForeground[defaultTaskId] ? 'stop' : 'start'}}() - automatically stop after 3s
           </mat-slide-toggle>
         </mat-list-item>
         <mat-list-item role="listitem">
-          <mat-slide-toggle (change)="fgSlideChange1($event.checked)" [(checked)]="waitingForeground['fg-1']">
-            {{waitingForeground['fg-1'] ? 'stop' : 'start'}}('fg-1') - automatically stop after 8s
+          <mat-slide-toggle (change)="fgSlideChange1($event.checked)" [(checked)]="waitingForeground[taskId01]">
+            {{waitingForeground[taskId01] ? 'stop' : 'start'}}('task-01') - automatically stop after 8s
           </mat-slide-toggle>
         </mat-list-item>
         <mat-list-item role="listitem">
-          <mat-slide-toggle (change)="bgSlideChange($event.checked)" [(checked)]="waitingBackground['default']">
-            {{waitingBackground['default'] ? 'stop' : 'start'}}Background()
+          <mat-slide-toggle (change)="bgSlideChange($event.checked)" [(checked)]="waitingBackground[defaultTaskId]">
+            {{waitingBackground[defaultTaskId] ? 'stop' : 'start'}}Background()
           </mat-slide-toggle>
         </mat-list-item>
         <mat-list-item role="listitem">
-          <mat-slide-toggle (change)="bgSlideChange2($event.checked)" [(checked)]="waitingBackground['bg-2']">
-            {{waitingBackground['bg-2'] ? 'stop' : 'start'}}Background('bg-2')
+          <mat-slide-toggle (change)="bgSlideChange2($event.checked)" [(checked)]="waitingBackground[taskId02]">
+            {{waitingBackground[taskId02] ? 'stop' : 'start'}}Background('task-02')
           </mat-slide-toggle>
         </mat-list-item>
         <mat-list-item role="listitem">

@@ -23,16 +23,6 @@ import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
 export class NgxUiLoaderModule {
 
   /**
-   * Contructor
-   * @param parentModule optional
-   */
-  constructor(@Optional() @SkipSelf() parentModule: NgxUiLoaderModule) {
-    if (parentModule) {
-      throw new Error('[ngx-ui-loader] - NgxUiLoaderModule is already loaded. It should be imported in the root `AppModule` only!');
-    }
-  }
-
-  /**
    * forRoot
    * @param ngxUiLoaderConfig
    * @returns A module with its provider dependencies

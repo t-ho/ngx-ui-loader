@@ -1,24 +1,25 @@
 import { Directive, ElementRef, Input, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
+
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
 import { coerceNumber } from './coercion';
-
-const DELAY = 500;
+import { WAITING_FOR_OVERLAY_DISAPPEAR } from './ngx-ui-loader.contants';
 
 @Directive({ selector: '[ngxUiLoaderBlurred]' })
 export class NgxUiLoaderBlurredDirective implements OnDestroy {
 
-  private _blur: number;
-  private _filterValue: string;
+  private blurNumber: number;
 
   @Input()
   get blur(): number {
-    return this._blur;
+    return this.blurNumber;
   }
 
   set blur(value: number) {
-    this._blur = coerceNumber(value, this.ngxUiLoaderService.getDefaultConfig().blur);
+    this.blurNumber = coerceNumber(value, this.ngxUiLoaderService.getDefaultConfig().blur);
   }
+
+  @Input() loaderId: string;
 
   showForegroundWatcher: Subscription;
 
@@ -27,21 +28,24 @@ export class NgxUiLoaderBlurredDirective implements OnDestroy {
     private renderer: Renderer2,
     private ngxUiLoaderService: NgxUiLoaderService
   ) {
-    this._blur = this.ngxUiLoaderService.getDefaultConfig().blur;
+    this.blurNumber = this.ngxUiLoaderService.getDefaultConfig().blur;
+    this.loaderId = this.ngxUiLoaderService.getDefaultConfig().loaderId;
 
-    this.showForegroundWatcher = this.ngxUiLoaderService.showForeground
-      .subscribe(showForeground => {
-        if (showForeground) {
-          const filterValue = `blur(${this._blur}px)`;
-          this.renderer.setStyle(this.elementRef.nativeElement, '-webkit-filter', filterValue);
-          this.renderer.setStyle(this.elementRef.nativeElement, 'filter', filterValue);
-        } else {
-          setTimeout(() => {
-            if (!ngxUiLoaderService.hasForeground()) {
-              this.renderer.setStyle(this.elementRef.nativeElement, '-webkit-filter', 'none');
-              this.renderer.setStyle(this.elementRef.nativeElement, 'filter', 'none');
-            }
-          }, DELAY);
+    this.showForegroundWatcher = this.ngxUiLoaderService.showForeground$
+      .subscribe(data => {
+        if (data.loaderId === this.loaderId) {
+          if (data.isShow) {
+            const filterValue = `blur(${this.blurNumber}px)`;
+            this.renderer.setStyle(this.elementRef.nativeElement, '-webkit-filter', filterValue);
+            this.renderer.setStyle(this.elementRef.nativeElement, 'filter', filterValue);
+          } else {
+            setTimeout(() => {
+              if (!ngxUiLoaderService.hasForeground(data.loaderId)) {
+                this.renderer.setStyle(this.elementRef.nativeElement, '-webkit-filter', 'none');
+                this.renderer.setStyle(this.elementRef.nativeElement, 'filter', 'none');
+              }
+            }, WAITING_FOR_OVERLAY_DISAPPEAR);
+          }
         }
       });
 

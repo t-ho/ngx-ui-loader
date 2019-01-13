@@ -15,6 +15,7 @@ export interface NgxUiLoaderConfig {
   fgsSize?: number;
   fgsType?: SpinnerType;
   gap?: number;
+  loaderId?: string;
   logoPosition?: PositionType;
   logoSize?: number;
   logoUrl?: string;
