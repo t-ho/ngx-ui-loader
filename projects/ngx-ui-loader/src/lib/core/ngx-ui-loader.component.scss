@@ -260,6 +260,22 @@ $spinnerSize: 60px;
   & > .ngx-loading-text {
     position: absolute !important;
   }
+
+  &.ngx-progress-bar {
+    z-index: 99996 !important;
+  }
+
+  &.ngx-overlay {
+    z-index: 99995 !important;
+  }
+
+  &.ngx-background-spinner {
+    z-index: 99994 !important;
+  }
+
+  & .sk-square-jelly-box > div:nth-child(1) {
+    z-index: 99994 !important;
+  }
 }
 
 // Utility classes {{{
