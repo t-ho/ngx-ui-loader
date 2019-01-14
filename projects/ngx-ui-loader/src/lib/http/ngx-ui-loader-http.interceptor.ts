@@ -2,6 +2,7 @@ import { Injectable, Inject, Optional } from '@angular/core';
 import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+
 import { NgxUiLoaderService } from '../core/ngx-ui-loader.service';
 import { NGX_UI_LOADER_HTTP_CONFIG_TOKEN } from './ngx-ui-loader-http-config.token';
 import { NgxUiLoaderHttpConfig } from './ngx-ui-loader-http-config';
@@ -23,6 +24,7 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
 
     this.count = 0;
     this.defaultConfig = {
+      loaderId: this.ngxUiLoaderService.getDefaultConfig().loaderId,
       showForeground: false
     };
 
@@ -44,12 +46,12 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
 
     this.count++;
     if (this.defaultConfig.showForeground) {
-      if (!this.ngxUiLoaderService.hasForeground(HTTP_LOADER_ID)) {
-        this.ngxUiLoaderService.start(HTTP_LOADER_ID);
+      if (!this.ngxUiLoaderService.hasForeground(this.defaultConfig.loaderId, HTTP_LOADER_ID)) {
+        this.ngxUiLoaderService.startLoader(this.defaultConfig.loaderId, HTTP_LOADER_ID);
       }
     } else {
-      if (!this.ngxUiLoaderService.hasBackground(HTTP_LOADER_ID)) {
-        this.ngxUiLoaderService.startBackground(HTTP_LOADER_ID);
+      if (!this.ngxUiLoaderService.hasBackground(this.defaultConfig.loaderId, HTTP_LOADER_ID)) {
+        this.ngxUiLoaderService.startBackgroundLoader(this.defaultConfig.loaderId, HTTP_LOADER_ID);
       }
     }
 
@@ -57,9 +59,9 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
       this.count--;
       if (this.count === 0) {
         if (this.defaultConfig.showForeground) {
-          this.ngxUiLoaderService.stop(HTTP_LOADER_ID);
+          this.ngxUiLoaderService.stopLoader(this.defaultConfig.loaderId, HTTP_LOADER_ID);
         } else {
-          this.ngxUiLoaderService.stopBackground(HTTP_LOADER_ID);
+          this.ngxUiLoaderService.stopBackgroundLoader(this.defaultConfig.loaderId, HTTP_LOADER_ID);
         }
       }
     }));
