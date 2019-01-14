@@ -45,28 +45,29 @@ export class NgxUiLoaderRouterModule {
     }
 
     let defaultConfig: NgxUiLoaderRouterConfig = {
+      loaderId: ngxUiLoaderService.getDefaultConfig().loaderId,
       showForeground: true
     };
 
     if (config) {
-      defaultConfig = Object.assign(defaultConfig, config);
+      defaultConfig = { ...defaultConfig, ...config };
     }
 
     router.events
       .subscribe(event => {
         if (event instanceof NavigationStart) {
           if (defaultConfig.showForeground) {
-            ngxUiLoaderService.start(ROUTER_LOADER_ID);
+            ngxUiLoaderService.startLoader(defaultConfig.loaderId, ROUTER_LOADER_ID);
           } else {
-            ngxUiLoaderService.startBackground(ROUTER_LOADER_ID);
+            ngxUiLoaderService.startBackgroundLoader(defaultConfig.loaderId, ROUTER_LOADER_ID);
           }
         }
 
         if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
           if (defaultConfig.showForeground) {
-            ngxUiLoaderService.stop(ROUTER_LOADER_ID);
+            ngxUiLoaderService.stopLoader(defaultConfig.loaderId, ROUTER_LOADER_ID);
           } else {
-            ngxUiLoaderService.stopBackground(ROUTER_LOADER_ID);
+            ngxUiLoaderService.stopBackgroundLoader(defaultConfig.loaderId, ROUTER_LOADER_ID);
           }
         }
       });

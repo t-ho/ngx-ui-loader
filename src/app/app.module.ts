@@ -74,7 +74,7 @@ const routes: Routes = [
     HttpClientModule,
 
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-    // NgxUiLoaderRouterModule, // import this module for showing loader automatically when navigating between app routes
+    NgxUiLoaderRouterModule, // import this module for showing loader automatically when navigating between app routes
     NgxUiLoaderHttpModule,
   ],
   providers: [NgxUiLoaderDemoService],
