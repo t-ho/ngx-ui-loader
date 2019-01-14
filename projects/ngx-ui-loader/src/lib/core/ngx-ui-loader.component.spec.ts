@@ -14,7 +14,7 @@ const DEFAULT_TASK_ID = 'default';
 const DELAY_CLOSING = 1100;
 const DELAY_OPENNING_BG_AFTER_CLOSING_FG = 500;
 const FOREGROUND_CLOSING_CLASS = 'foreground-closing';
-const FULL_VIEW_PORT = true;
+const IS_MASTER = true;
 const LOADER_ID_01 = 'loader-id-01';
 const LOADING_BACKGROUND_CLASS = 'loading-background';
 const LOADING_FOREGROUND_CLASS = 'loading-foreground';
@@ -79,7 +79,7 @@ describe('NgxUiLoaderComponent', () => {
         loaderId: DEFAULT_LOADER_ID,
         background: {},
         foreground: {},
-        isFullViewPort: true
+        isMaster: true
       }
     });
   });
@@ -91,18 +91,19 @@ describe('NgxUiLoaderComponent', () => {
     component.foregroundClosingWatcher = null;
     component.ngOnDestroy();
     expect(loaderService.getLoaders()).toEqual({});
+    loaderService.initLoaderData(DEFAULT_LOADER_ID, IS_MASTER); // prevent throwing error when clean up component.
   });
 
-  it(`should not have ${NGX_POSITION_ABSOLUTE_CLASS} class if isFullViewPort == true`, () => {
-    component.isFullViewPort = true;
+  it(`should not have ${NGX_POSITION_ABSOLUTE_CLASS} class if isMaster == true`, () => {
+    component.isMaster = true;
     fixture.detectChanges();
     expect(progressBarEl.className).not.toMatch(NGX_POSITION_ABSOLUTE_CLASS);
     expect(fgContainerEl.className).not.toMatch(NGX_POSITION_ABSOLUTE_CLASS);
     expect(fgContainerEl.className).not.toMatch(NGX_POSITION_ABSOLUTE_CLASS);
   });
 
-  it(`should not have ${NGX_POSITION_ABSOLUTE_CLASS} class if isFullViewPort == false`, () => {
-    component.isFullViewPort = false;
+  it(`should not have ${NGX_POSITION_ABSOLUTE_CLASS} class if isMaster == false`, () => {
+    component.isMaster = false;
     fixture.detectChanges();
     expect(progressBarEl.className).toMatch(NGX_POSITION_ABSOLUTE_CLASS);
     expect(fgContainerEl.className).toMatch(NGX_POSITION_ABSOLUTE_CLASS);
@@ -120,15 +121,15 @@ describe('NgxUiLoaderComponent', () => {
         loaderId: LOADER_ID_01,
         background: {},
         foreground: {},
-        isFullViewPort: true
+        isMaster: true
       }
     });
   });
 
-  it('should change isFullViewPort', () => {
-    component.isFullViewPort = false;
+  it('should change isMaster', () => {
+    component.isMaster = false;
     component.ngOnChanges({
-      isFullViewPort: new SimpleChange(true, component.isFullViewPort, true)
+      isMaster: new SimpleChange(true, component.isMaster, true)
     });
     fixture.detectChanges();
     expect(loaderService.getLoaders()).toEqual({
@@ -136,7 +137,7 @@ describe('NgxUiLoaderComponent', () => {
         loaderId: DEFAULT_LOADER_ID,
         background: {},
         foreground: {},
-        isFullViewPort: false
+        isMaster: false
       }
     });
   });
@@ -511,7 +512,7 @@ describe('NgxUiLoaderComponent', () => {
   }));
 
   it(`startLoader('${LOADER_ID_01}') - 11 - should not show foreground loading`, () => {
-    loaderService.initLoaderData(LOADER_ID_01, FULL_VIEW_PORT);
+    loaderService.initLoaderData(LOADER_ID_01, !IS_MASTER);
     loaderService.startLoader(LOADER_ID_01);
     fixture.detectChanges();
     expect(progressBarEl.className).not.toMatch(LOADING_FOREGROUND_CLASS);
@@ -519,7 +520,7 @@ describe('NgxUiLoaderComponent', () => {
   });
 
   it(`stopLoader('${LOADER_ID_01}') - 12 - should not stop foreground loading`, fakeAsync(() => {
-    loaderService.initLoaderData(LOADER_ID_01, FULL_VIEW_PORT);
+    loaderService.initLoaderData(LOADER_ID_01, !IS_MASTER);
     loaderService.startLoader(LOADER_ID_01);
     loaderService.start();
     fixture.detectChanges();
@@ -540,14 +541,14 @@ describe('NgxUiLoaderComponent', () => {
   }));
 
   it(`startBackgroundLoader('${LOADER_ID_01}') - 13 - should not show background loading`, () => {
-    loaderService.initLoaderData(LOADER_ID_01, FULL_VIEW_PORT);
+    loaderService.initLoaderData(LOADER_ID_01, !IS_MASTER);
     loaderService.startBackgroundLoader(LOADER_ID_01);
     fixture.detectChanges();
     expect(bgSpinnerEl.className).not.toMatch(LOADING_BACKGROUND_CLASS);
   });
 
   it(`stopBackgroundLoader('${LOADER_ID_01}') - 14 - should not stop background loading`, fakeAsync(() => {
-    loaderService.initLoaderData(LOADER_ID_01, FULL_VIEW_PORT);
+    loaderService.initLoaderData(LOADER_ID_01, !IS_MASTER);
     loaderService.startBackgroundLoader(LOADER_ID_01);
     loaderService.startBackground();
     fixture.detectChanges();

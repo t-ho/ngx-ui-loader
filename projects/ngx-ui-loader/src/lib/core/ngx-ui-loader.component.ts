@@ -31,7 +31,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   @Input() logoPosition: PositionType;
   @Input() logoSize: number;
   @Input() logoUrl: string;
-  @Input() isFullViewPort: boolean;
+  @Input() isMaster: boolean;
   @Input() overlayColor: string;
   @Input() pbColor: string;
   @Input() pbDirection: DirectionType;
@@ -89,7 +89,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.logoPosition = this.defaultConfig.logoPosition;
     this.logoSize = this.defaultConfig.logoSize;
     this.logoUrl = this.defaultConfig.logoUrl;
-    this.isFullViewPort = this.defaultConfig.isFullViewPort;
+    this.isMaster = this.defaultConfig.isMaster;
     this.overlayColor = this.defaultConfig.overlayColor;
     this.pbColor = this.defaultConfig.pbColor;
     this.pbDirection = this.defaultConfig.pbDirection;
@@ -105,7 +105,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
    */
   ngOnInit() {
     this.initializeSpinners();
-    this.ngxService.initLoaderData(this.loaderId, this.isFullViewPort);
+    this.ngxService.initLoaderData(this.loaderId, this.isMaster);
     this.determinePositions();
 
     this.bgsPosition = <PositionType>this.validate('bgsPosition', this.bgsPosition, POSITION, this.defaultConfig.bgsPosition);
@@ -158,7 +158,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     const fgsTypeChange: SimpleChange = changes.fgsType;
     const loaderIdChange: SimpleChange = changes.loaderId;
     const logoUrlChange: SimpleChange = changes.logoUrl;
-    const isFullViewPortChange: SimpleChange = changes.isFullViewPort;
+    const isMasterChange: SimpleChange = changes.isMaster;
     const pbDirectionChange: SimpleChange = changes.pbDirection;
 
     if (fgsTypeChange || bgsTypeChange) {
@@ -166,12 +166,11 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     }
 
     if (loaderIdChange) {
-      this.ngxService.destroyLoaderData(loaderIdChange.previousValue);
-      this.ngxService.initLoaderData(this.loaderId, this.isFullViewPort);
+      this.ngxService.updateLoaderId(loaderIdChange.previousValue, this.loaderId);
     }
 
-    if (isFullViewPortChange) {
-      this.ngxService.updateLoaderData(this.loaderId, this.isFullViewPort);
+    if (isMasterChange) {
+      this.ngxService.updateMasterStatus(this.loaderId, this.isMaster);
     }
 
     this.determinePositions();

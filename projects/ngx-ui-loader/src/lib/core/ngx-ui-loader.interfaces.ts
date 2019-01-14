@@ -6,7 +6,7 @@ export interface Loader {
   loaderId: string;
   foreground: Task;
   background: Task;
-  isFullViewPort: boolean;
+  isMaster: boolean;
 }
 
 export interface Loaders {

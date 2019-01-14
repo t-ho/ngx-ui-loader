@@ -129,7 +129,7 @@ export const DEFAULT_CONFIG: NgxUiLoaderConfig = {
   logoPosition: POSITION.centerCenter,
   logoSize: 120,
   logoUrl: '',
-  isFullViewPort: true,
+  isMaster: true,
   overlayColor: 'rgba(40, 40, 40, 0.8)',
   pbColor: '#00ACC1',
   pbDirection: PB_DIRECTION.leftToRight,
