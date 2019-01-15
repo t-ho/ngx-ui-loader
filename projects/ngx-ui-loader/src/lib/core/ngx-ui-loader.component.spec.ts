@@ -205,6 +205,7 @@ describe('NgxUiLoaderComponent', () => {
     component.fgsSize = 70;
     component.gap = 30;
     component.logoSize = 140;
+    component.overlayBorderRadius = '120px';
     component.overlayColor = 'white';
     component.pbColor = 'teal';
     component.pbThickness = 8;
@@ -222,6 +223,7 @@ describe('NgxUiLoaderComponent', () => {
     expect(fgSpinnerEl.style.width).toBe('70px');
     expect(fgSpinnerEl.style.height).toBe('70px');
     expect(fgSpinnerEl.style.top).toBe('calc((50% - 12px) - 15px)'); // gap
+    expect(fgContainerEl.style.borderRadius).toBe('120px');
     expect(fgContainerEl.style.backgroundColor).toBe('white');
     expect(progressBarEl.style.color).toBe('teal');
     expect(progressBarEl.style.height).toBe('8px');

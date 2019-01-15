@@ -20,6 +20,7 @@ export interface NgxUiLoaderConfig {
   logoSize?: number;
   logoUrl?: string;
   isMaster?: boolean;
+  overlayBorderRadius?: string;
   overlayColor?: string;
   pbColor?: string;
   pbDirection?: DirectionType;

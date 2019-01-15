@@ -202,34 +202,35 @@ Import the constant `SPINNER` from `ngx-ui-loader` in your controller. Then in y
 
 All attributes are listed below:
 
-|   Attribute      |  Type     | Required |     Default        |                                       Description                                               |
-| ---------------- | --------- | -------- | ------------------ | ----------------------------------------------------------------------------------------------- |
-| `bgsColor`       | *string*  | optional | `#00ACC1`          | Background spinner color                                                                        |
-| `bgsOpacity`     | *number*  | optional | `0.5`              | Background spinner opacity                                                                      |
-| `bgsPosition`    | *string*  | optional | `bottom-right`     | Background spinner postion. All available positions can be accessed via `POSITION`              |
-| `bgsSize`        | *number*  | optional | `60`               | Background spinner size.                                                                        |
-| `bgsType`        | *string*  | optional | `rectangle-bounce` | Background spinner type. All available types can be accessed via `SPINNER`                      |
-|                  |           |          |                    |                                                                                                 |
-| `fgsColor`       | *string*  | optional | `#00ACC1`          | Foreground spinner color                                                                        |
-| `fgsPosition`    | *string*  | optional | `center-center`    | Foreground spinner position. All available positions can be accessed via `POSITION`             |
-| `fgsSize`        | *number*  | optional | `60`               | Foreground spinner size.                                                                        |
-| `fgsType`        | *string*  | optional | `rectangle-bounce` | Foreground spinner type. All available types can be accessed via `SPINNER`                      |
-|                  |           |          |                    |                                                                                                 |
-| `logoPosition`   | *string*  | optional | `center-center`    | Logo position. All available positions can be accessed via `POSITION`                           |
-| `logoSize`       | *number*  | optional | `120`              | Logo size (px)                                                                                  |
-| `logoUrl`        | *string*  | optional | (*empty string*)   | Logo url                                                                                        |
-|                  |           |          |                    |                                                                                                 |
-| `pbColor`        | *string*  | optional | `#00ACC1`          | Progress bar color                                                                              |
-| `pbDirection`    | *string*  | optional | `ltr`              | Progress bar direction. All direction types can be accessed via `PB_DIRECTION`                  |
-| `pbThickness`    | *number*  | optional | `3`                | Progress bar thickness                                                                          |
-| `hasProgressBar` | *boolean* | optional | `true`             | Show the progress bar while loading foreground                                                  |
-|                  |           |          |                    |                                                                                                 |
-| `text`           | *string*  | optional | (*empty string*)   | Loading text                                                                                    |
-| `textColor`      | *string*  | optional | `#FFFFFF`          | Loading text color                                                                              |
-| `textPosition`   | *string*  | optional | `center-center`    | Loading text position. All available positions can be accessed via `POSITION`                   |
-|                  |           |          |                    |                                                                                                 |
-| `gap`            | *number*  | optional | `24`               | The gap between logo, foreground spinner and text when their positions are `center-center`      |
-| `overlayColor`   | *string*  | optional | `rgba(40,40,40,.8)`| Overlay background color                                                                        |
+|   Attribute          |  Type     | Required |     Default        |                                       Description                                               |
+| -------------------- | --------- | -------- | ------------------ | ----------------------------------------------------------------------------------------------- |
+| `bgsColor`           | *string*  | optional | `#00ACC1`          | Background spinner color                                                                        |
+| `bgsOpacity`         | *number*  | optional | `0.5`              | Background spinner opacity                                                                      |
+| `bgsPosition`        | *string*  | optional | `bottom-right`     | Background spinner postion. All available positions can be accessed via `POSITION`              |
+| `bgsSize`            | *number*  | optional | `60`               | Background spinner size.                                                                        |
+| `bgsType`            | *string*  | optional | `rectangle-bounce` | Background spinner type. All available types can be accessed via `SPINNER`                      |
+|                      |           |          |                    |                                                                                                 |
+| `fgsColor`           | *string*  | optional | `#00ACC1`          | Foreground spinner color                                                                        |
+| `fgsPosition`        | *string*  | optional | `center-center`    | Foreground spinner position. All available positions can be accessed via `POSITION`             |
+| `fgsSize`            | *number*  | optional | `60`               | Foreground spinner size.                                                                        |
+| `fgsType`            | *string*  | optional | `rectangle-bounce` | Foreground spinner type. All available types can be accessed via `SPINNER`                      |
+|                      |           |          |                    |                                                                                                 |
+| `logoPosition`       | *string*  | optional | `center-center`    | Logo position. All available positions can be accessed via `POSITION`                           |
+| `logoSize`           | *number*  | optional | `120`              | Logo size (px)                                                                                  |
+| `logoUrl`            | *string*  | optional | (*empty string*)   | Logo url                                                                                        |
+|                      |           |          |                    |                                                                                                 |
+| `pbColor`            | *string*  | optional | `#00ACC1`          | Progress bar color                                                                              |
+| `pbDirection`        | *string*  | optional | `ltr`              | Progress bar direction. All direction types can be accessed via `PB_DIRECTION`                  |
+| `pbThickness`        | *number*  | optional | `3`                | Progress bar thickness                                                                          |
+| `hasProgressBar`     | *boolean* | optional | `true`             | Show the progress bar while loading foreground                                                  |
+|                      |           |          |                    |                                                                                                 |
+| `text`               | *string*  | optional | (*empty string*)   | Loading text                                                                                    |
+| `textColor`          | *string*  | optional | `#FFFFFF`          | Loading text color                                                                              |
+| `textPosition`       | *string*  | optional | `center-center`    | Loading text position. All available positions can be accessed via `POSITION`                   |
+|                      |           |          |                    |                                                                                                 |
+| `gap`                | *number*  | optional | `24`               | The gap between logo, foreground spinner and text when their positions are `center-center`      |
+| `overlayBorderRadius`| *string*  | optional | `0`                | Overlay border radius                                                                           |
+| `overlayColor`       | *string*  | optional | `rgba(40,40,40,.8)`| Overlay background color                                                                        |
 
 
 <a name="ngxuiloaderblurred_directive"></a>
@@ -305,36 +306,37 @@ export class AppModule { }
 
 ### 6.2 Parameters of `forRoot()` method
 
-|   Parameter      |  Type     | Required |     Default        |                                       Description                                               |
-| ---------------- | --------- | -------- | ------------------ | ----------------------------------------------------------------------------------------------- |
-| `bgsColor`       | *string*  | optional | `#00ACC1`          | Background spinner color                                                                        |
-| `bgsOpacity`     | *number*  | optional | `0.5`              | Background spinner opacity                                                                      |
-| `bgsPosition`    | *string*  | optional | `bottom-right`     | Background spinner postion. All available positions can be accessed via `POSITION`              |
-| `bgsSize`        | *number*  | optional | `60`               | Background spinner size.                                                                        |
-| `bgsType`        | *string*  | optional | `rectangle-bounce` | Background spinner type. All available types can be accessed via `SPINNER`                      |
-|                  |           |          |                    |                                                                                                 |
-| `fgsColor`       | *string*  | optional | `#00ACC1`          | Foreground spinner color                                                                        |
-| `fgsPosition`    | *string*  | optional | `center-center`    | Foreground spinner position. All available positions can be accessed via `POSITION`             |
-| `fgsSize`        | *number*  | optional | `60`               | Foreground spinner size.                                                                        |
-| `fgsType`        | *string*  | optional | `rectangle-bounce` | Foreground spinner type. All available types can be accessed via `SPINNER`                      |
-|                  |           |          |                    |                                                                                                 |
-| `logoPosition`   | *string*  | optional | `center-center`    | Logo position. All available positions can be accessed via `POSITION`                           |
-| `logoSize`       | *number*  | optional | `120`              | Logo size (px)                                                                                  |
-| `logoUrl`        | *string*  | optional | (*empty string*)   | Logo url                                                                                        |
-|                  |           |          |                    |                                                                                                 |
-| `pbColor`        | *string*  | optional | `#00ACC1`          | Progress bar color                                                                              |
-| `pbDirection`    | *string*  | optional | `ltr`              | Progress bar direction. All direction types can be accessed via `PB_DIRECTION`                  |
-| `pbThickness`    | *number*  | optional | `3`                | Progress bar thickness                                                                          |
-| `hasProgressBar` | *boolean* | optional | `true`             | Show the progress bar while loading foreground                                                  |
-|                  |           |          |                    |                                                                                                 |
-| `text`           | *string*  | optional | (*empty string*)   | Loading text                                                                                    |
-| `textColor`      | *string*  | optional | `#FFFFFF`          | Loading text color                                                                              |
-| `textPosition`   | *string*  | optional | `center-center`    | Loading text position. All available positions can be accessed via `POSITION`                   |
-|                  |           |          |                    |                                                                                                 |
-| `blur`           | *number*  | optional | `5`                | Blur the page content while showing foreground loader. Only applied when using [ngxUiLoaderBlurred](#ngxuiloaderblurred_directive) directive.                     |
-| `gap`            | *number*  | optional | `24`               | The gap between logo, foreground spinner and text when their positions are `center-center`      |
-| `overlayColor`   | *string*  | optional | `rgba(40,40,40,.8)`| Overlay background color                                                                        |
-| `threshold`      | *number*  | optional | `500`              | The time a loader must be showed at least before it can be stopped. It must be >= 1 millisecond.|
+|   Parameter          |  Type     | Required |     Default        |                                       Description                                               |
+| -------------------- | --------- | -------- | ------------------ | ----------------------------------------------------------------------------------------------- |
+| `bgsColor`           | *string*  | optional | `#00ACC1`          | Background spinner color                                                                        |
+| `bgsOpacity`         | *number*  | optional | `0.5`              | Background spinner opacity                                                                      |
+| `bgsPosition`        | *string*  | optional | `bottom-right`     | Background spinner postion. All available positions can be accessed via `POSITION`              |
+| `bgsSize`            | *number*  | optional | `60`               | Background spinner size.                                                                        |
+| `bgsType`            | *string*  | optional | `rectangle-bounce` | Background spinner type. All available types can be accessed via `SPINNER`                      |
+|                      |           |          |                    |                                                                                                 |
+| `fgsColor`           | *string*  | optional | `#00ACC1`          | Foreground spinner color                                                                        |
+| `fgsPosition`        | *string*  | optional | `center-center`    | Foreground spinner position. All available positions can be accessed via `POSITION`             |
+| `fgsSize`            | *number*  | optional | `60`               | Foreground spinner size.                                                                        |
+| `fgsType`            | *string*  | optional | `rectangle-bounce` | Foreground spinner type. All available types can be accessed via `SPINNER`                      |
+|                      |           |          |                    |                                                                                                 |
+| `logoPosition`       | *string*  | optional | `center-center`    | Logo position. All available positions can be accessed via `POSITION`                           |
+| `logoSize`           | *number*  | optional | `120`              | Logo size (px)                                                                                  |
+| `logoUrl`            | *string*  | optional | (*empty string*)   | Logo url                                                                                        |
+|                      |           |          |                    |                                                                                                 |
+| `pbColor`            | *string*  | optional | `#00ACC1`          | Progress bar color                                                                              |
+| `pbDirection`        | *string*  | optional | `ltr`              | Progress bar direction. All direction types can be accessed via `PB_DIRECTION`                  |
+| `pbThickness`        | *number*  | optional | `3`                | Progress bar thickness                                                                          |
+| `hasProgressBar`     | *boolean* | optional | `true`             | Show the progress bar while loading foreground                                                  |
+|                      |           |          |                    |                                                                                                 |
+| `text`               | *string*  | optional | (*empty string*)   | Loading text                                                                                    |
+| `textColor`          | *string*  | optional | `#FFFFFF`          | Loading text color                                                                              |
+| `textPosition`       | *string*  | optional | `center-center`    | Loading text position. All available positions can be accessed via `POSITION`                   |
+|                      |           |          |                    |                                                                                                 |
+| `blur`               | *number*  | optional | `5`                | Blur the page content while showing foreground loader. Only applied when using [ngxUiLoaderBlurred](#ngxuiloaderblurred_directive) directive.                     |
+| `gap`                | *number*  | optional | `24`               | The gap between logo, foreground spinner and text when their positions are `center-center`      |
+| `overlayBorderRadius`| *string*  | optional | `0`                | Overlay border radius                                                                           |
+| `overlayColor`       | *string*  | optional | `rgba(40,40,40,.8)`| Overlay background color                                                                        |
+| `threshold`          | *number*  | optional | `500`              | The time a loader must be showed at least before it can be stopped. It must be >= 1 millisecond.|
 
 
 <a name="router_events"></a>

@@ -32,6 +32,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   @Input() logoSize: number;
   @Input() logoUrl: string;
   @Input() isMaster: boolean;
+  @Input() overlayBorderRadius: string;
   @Input() overlayColor: string;
   @Input() pbColor: string;
   @Input() pbDirection: DirectionType;
@@ -90,6 +91,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.logoSize = this.defaultConfig.logoSize;
     this.logoUrl = this.defaultConfig.logoUrl;
     this.isMaster = this.defaultConfig.isMaster;
+    this.overlayBorderRadius =  this.defaultConfig.overlayBorderRadius;
     this.overlayColor = this.defaultConfig.overlayColor;
     this.pbColor = this.defaultConfig.pbColor;
     this.pbDirection = this.defaultConfig.pbDirection;
