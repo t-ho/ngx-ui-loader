@@ -1,0 +1,39 @@
+  <mat-list role="list" fxFlex="100" *ngIf="loader">
+    <h3><code>loaderId = "{{loader.loaderId}}"</code> and <code>isMaster = {{loader.isMaster}}</code></h3>
+    <mat-list-item role="listitem">
+      <mat-slide-toggle (change)="fgSlideChange($event.checked, 3000)"
+          [(checked)]="loader.foreground['default']">
+        {{loader.foreground['default'] ? 'stop' : 'start'}}{{loader.isMaster ? '()' : 'Loader("' + loader.loaderId +'")'}} - 3 seconds
+      </mat-slide-toggle>
+    </mat-list-item>
+    <mat-list-item role="listitem">
+      <mat-slide-toggle (change)="fgSlideChange($event.checked, 15000, 'task-01')"
+          [(checked)]="loader.foreground['task-01']">
+        {{loader.foreground['task-01'] ? 'stop' : 'start'}}{{loader.isMaster ? '("task-01")' : 'Loader("' + loader.loaderId + '", "task-01")'}} - 15 seconds
+      </mat-slide-toggle>
+    </mat-list-item>
+    <mat-list-item role="listitem">
+      <mat-slide-toggle (change)="bgSlideChange($event.checked, 3000)"
+          [(checked)]="loader.background['default']">
+        {{loader.background['default'] ? 'stop' : 'start'}}Background{{loader.isMaster ? '()' : 'Loader("' + loader.loaderId + '")'}}
+      </mat-slide-toggle>
+    </mat-list-item>
+    <mat-list-item role="listitem">
+      <mat-slide-toggle (change)="bgSlideChange($event.checked, 15000, 'task-02')"
+          [(checked)]="loader.background['task-02']">
+        {{loader.background['task-02'] ? 'stop' : 'start'}}Background{{loader.isMaster ? '("task-02")' : 'Loader("' + loader.loaderId + '", "task-02")'}}
+      </mat-slide-toggle>
+    </mat-list-item>
+    <mat-list-item role="listitem">
+      <div fxLayout="column">
+        <span class="place-holder">fgTasks = </span>
+        <code>{{loader.foreground | json}}</code>
+      </div>
+    </mat-list-item>
+    <mat-list-item role="listitem">
+      <div fxLayout="column">
+        <span class="place-holder">bgTasks = </span>
+        <code>{{loader.background | json}}</code>
+      </div>
+    </mat-list-item>
+  <mat-list>

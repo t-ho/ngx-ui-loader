@@ -16,8 +16,10 @@ import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER, POSITION,
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { SpinnerDemoComponent } from './spinner-demo.component';
+import { MultiLoaderDemoComponent } from './multi-loader-demo.component';
 import { NgxUiLoaderDemoComponent } from './ngx-ui-loader-demo.component';
 import { NgxUiLoaderDemoService } from './ngx-ui-loader-demo.service';
+import { NgxUiLoaderControllerComponent } from './ngx-ui-loader-controller.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: '#OOACC1',
@@ -44,6 +46,10 @@ const routes: Routes = [
     component: SpinnerDemoComponent
   },
   {
+    path: 'multiloader',
+    component: MultiLoaderDemoComponent
+  },
+  {
     path: '',
     component: NgxUiLoaderDemoComponent
   }
@@ -53,7 +59,9 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     SpinnerDemoComponent,
-    NgxUiLoaderDemoComponent
+    MultiLoaderDemoComponent,
+    NgxUiLoaderDemoComponent,
+    NgxUiLoaderControllerComponent
   ],
   imports: [
     BrowserModule,
