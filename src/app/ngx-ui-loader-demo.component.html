@@ -2,40 +2,9 @@
   <div fxFlex="100" fxFlex.lg="90" fxFlex.gt-lg="70" fxLayout="row wrap" fxLayoutAlign="center">
 
     <div fxFlex="100" fxFlex.gt-md="36" fxLayout="column" fxLayout.sm="row" fxLayout.md="row" class="p-12">
-      <mat-list role="list" fxFlex.sm="50" fxFlex.md="50" class="mat-elevation-z4">
-        <mat-list-item role="listitem">
-          <mat-slide-toggle (change)="fgSlideChange($event.checked)" [(checked)]="waitingForeground['default']">
-            {{waitingForeground['default'] ? 'stop' : 'start'}}() - automatically stop after 3s
-          </mat-slide-toggle>
-        </mat-list-item>
-        <mat-list-item role="listitem">
-          <mat-slide-toggle (change)="fgSlideChange1($event.checked)" [(checked)]="waitingForeground['fg-1']">
-            {{waitingForeground['fg-1'] ? 'stop' : 'start'}}('fg-1') - automatically stop after 8s
-          </mat-slide-toggle>
-        </mat-list-item>
-        <mat-list-item role="listitem">
-          <mat-slide-toggle (change)="bgSlideChange($event.checked)" [(checked)]="waitingBackground['default']">
-            {{waitingBackground['default'] ? 'stop' : 'start'}}Background()
-          </mat-slide-toggle>
-        </mat-list-item>
-        <mat-list-item role="listitem">
-          <mat-slide-toggle (change)="bgSlideChange2($event.checked)" [(checked)]="waitingBackground['bg-2']">
-            {{waitingBackground['bg-2'] ? 'stop' : 'start'}}Background('bg-2')
-          </mat-slide-toggle>
-        </mat-list-item>
-        <mat-list-item role="listitem">
-          <div fxLayout="column">
-            <span class="place-holder">waitingForeground = </span>
-            <code>{{waitingForeground | json}}</code>
-          </div>
-        </mat-list-item>
-        <mat-list-item role="listitem">
-          <div fxLayout="column">
-            <span class="place-holder">waitingBackground = </span>
-            <code>{{waitingBackground | json}}</code>
-          </div>
-        </mat-list-item>
-      </mat-list>
+      <div fxFlex.sm="50" fxFlex.md="50" class="mat-elevation-z4">
+        <app-ngx-ui-loader-controller [loader]="loader"></app-ngx-ui-loader-controller>
+      </div>
       <div fxLayout="column" fxFlex.sm="50" fxFlex.md="50" class="config-info">
         <span class="place-holder">ngx-ui-loader-configuration = </span>
         <pre><code>{{demoService.config | json}}</code></pre>
@@ -89,7 +58,7 @@
       </mat-form-field>
 
       <div style="margin-top: 21px; margin-bottom: 20px">
-        <mat-checkbox (change)="addLogo($event.checked)" [checked]="demoService.config.logoUrl">Add logo</mat-checkbox>
+        <mat-checkbox (change)="addLogo($event.checked)">Add logo</mat-checkbox>
       </div>
 
       <mat-form-field *ngIf="demoService.config.logoUrl">
@@ -175,12 +144,15 @@
         <input [(colorPicker)]="demoService.config.textColor" matInput placeholder="Loading Text Color (textColor)" [(ngModel)]="demoService.config.textColor">
         <mat-icon matSuffix [style.color]="demoService.config.textColor" fontIcon="mdi-palette" fontSet="mdi"></mat-icon>
       </mat-form-field>
-    </div>
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
-      <a mat-raised-button color="accent" [routerLink]="'/spinners'">Available Spinners</a>
-      <button mat-raised-button color="primary" (click)="reset()">Reset Configuration</button>
-      <button mat-raised-button (click)="getDownloadStats()" [disabled]="disabled">Http request with loader</button>
+
     </div>
     <!-- Background }}}-->
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center">
+      <button mat-raised-button color="accent" (click)="reset()">Reset Configuration</button>
+      <a mat-raised-button color="primary" [routerLink]="'/multiloader'">Multiple Loaders</a>
+      <button mat-raised-button color="accent" (click)="getDownloadStats()" [disabled]="disabled">Http request with loader</button>
+      <a mat-raised-button color="primary" [routerLink]="'/spinners'">Available Spinners</a>
+      <a mat-raised-button color="accent" href="https://github.com/t-ho/ngx-ui-loader" target="_blank"><mat-icon fontIcon="mdi-star" fontSet="mdi" class="mdi-24px"></mat-icon>Star on Github</a>
+    </div>
   </div>
 </div>

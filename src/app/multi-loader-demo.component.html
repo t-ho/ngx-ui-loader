@@ -1,0 +1,26 @@
+<div fxLayout="row wrap" fxLayoutAlign="center" style="margin-top: 12px">
+  <div fxFlex="100" fxFlex.gt-xs="1200" fxLayout="row wrap" fxLayoutAlign="center start">
+    <div fxFlex.xs="90" fxFlex.sm="70" fxFlex="40" class="container mat-elevation-z4 master">
+      <app-ngx-ui-loader-controller [loader]="loaders['default']"></app-ngx-ui-loader-controller>
+    </div>
+    <div fxFlex.xs="90" fxFlex.sm="70" fxFlex="40" class="container">
+      <div fxLayout="column" class="info">
+        <span><code>loaders = </code></span>
+        <pre><code>{{loaders | json}}</code></pre>
+      </div>
+    </div>
+    <div *ngFor="let d of data" fxFlex.xs="90" fxFlex.sm="70" fxFlex="40" class="container mat-elevation-z4">
+      <div fxFlex="100" *ngIf="loaders[d.loaderId]" [loaderId]="d.loaderId" ngxUiLoaderBlurred>
+        <app-ngx-ui-loader-controller [loader]="loaders[d.loaderId]"></app-ngx-ui-loader-controller>
+      </div>
+      <ngx-ui-loader
+        [loaderId]="d.loaderId"
+        [isMaster]="false"
+        [fgsType]="d.spinnerType"
+        [bgsType]="d.spinnerType"></ngx-ui-loader>
+    </div>
+  </div>
+  <div fxFlex="100" fxLayout="row" fxLayoutAlign="center" style="margin-top: 24px; margin-bottom: 24px">
+    <a mat-raised-button color="primary" [routerLink]="'/'">Back</a>
+  </div>
+</div>

@@ -1,68 +1,71 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
-import { DEFAULT_ID, DEFAULT_CONFIG } from './ngx-ui-loader.contants';
+import { CLOSING_TIME, DEFAULT_TASK_ID, DEFAULT_CONFIG, WAITING_FOR_OVERLAY_DISAPPEAR } from './ngx-ui-loader.contants';
 import { NGX_UI_LOADER_CONFIG_TOKEN } from './ngx-ui-loader-config.token';
 import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
-
-const DELAY = 1100;
+import { Loaders, Loader, ShowEvent, StartStopEvent, StopAllEvent, Task } from './ngx-ui-loader.interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NgxUiLoaderService {
 
-  private _defaultConfig: NgxUiLoaderConfig;
-  private _waitingForeground: {};
-  private _waitingBackground: {};
-
-  private _showForeground: BehaviorSubject<boolean>;
-  private _showBackground: BehaviorSubject<boolean>;
-  private _foregroundClosing: BehaviorSubject<boolean>;
-  private _backgroundClosing: BehaviorSubject<boolean>;
+  // Public properties
 
   /**
-   * For internal use
+   * For internal use only. It may be changed in the future.
    * @docs-private
    */
-  showForeground: Observable<boolean>;
+  backgroundClosing$: Observable<ShowEvent>;
 
   /**
-   * For internal use
+   * For internal use only. It may be changed in the future.
    * @docs-private
    */
-  showBackground: Observable<boolean>;
+  foregroundClosing$: Observable<ShowEvent>;
 
   /**
-   * For internal use
+   * For internal use only. It may be changed in the future.
    * @docs-private
    */
-  foregroundClosing: Observable<boolean>;
+  onStart$: Observable<StartStopEvent>;
 
   /**
-   * For internal use
+   * For internal use only. It may be changed in the future.
    * @docs-private
    */
-  backgroundClosing: Observable<boolean>;
-
-  private _onStart: Subject<any>;
-  private _onStop: Subject<any>;
-  private _onStopAll: Subject<any>;
+  onStop$: Observable<StartStopEvent>;
 
   /**
-   * Emit when a loading is started
+   * For internal use only. It may be changed in the future.
+   * @docs-private
    */
-  onStart: Observable<any>;
+  onStopAll$: Observable<StopAllEvent>;
 
   /**
-   * Emit when a loading is stopped
+   * For internal use only. It may be changed in the future.
+   * @docs-private
    */
-  onStop: Observable<any>;
+  showBackground$: Observable<ShowEvent>;
 
   /**
-   * Emit when all loadings are stopped
+   * For internal use only. It may be changed in the future.
+   * @docs-private
    */
-  onStopAll: Observable<any>;
+  showForeground$: Observable<ShowEvent>;
+
+  // Private properties
+  private bgClosing: BehaviorSubject<ShowEvent>;
+  private defaultConfig: NgxUiLoaderConfig;
+  private fgClosing: BehaviorSubject<ShowEvent>;
+  private loaders: Loaders;
+  private masterLoaderId: string;
+  private onStart: Subject<StartStopEvent>;
+  private onStop: Subject<StartStopEvent>;
+  private onStopAll: Subject<StopAllEvent>;
+  private showBackground: BehaviorSubject<ShowEvent>;
+  private showForeground: BehaviorSubject<ShowEvent>;
 
   /**
    * Constructor
@@ -70,32 +73,102 @@ export class NgxUiLoaderService {
    */
   constructor(@Optional() @Inject(NGX_UI_LOADER_CONFIG_TOKEN) private config: NgxUiLoaderConfig) {
 
-    this._defaultConfig = { ...DEFAULT_CONFIG };
+    this.defaultConfig = { ...DEFAULT_CONFIG };
 
     if (this.config) {
       if (this.config.threshold && this.config.threshold <= 0) {
         this.config.threshold = DEFAULT_CONFIG.threshold;
       }
-      this._defaultConfig = { ...this._defaultConfig, ...this.config };
+      this.defaultConfig = { ...this.defaultConfig, ...this.config };
     }
 
-    this._waitingForeground = {};
-    this._waitingBackground = {};
-    this._showForeground = new BehaviorSubject<boolean>(false);
-    this.showForeground = this._showForeground.asObservable();
-    this._showBackground = new BehaviorSubject<boolean>(false);
-    this.showBackground = this._showBackground.asObservable();
-    this._foregroundClosing = new BehaviorSubject<boolean>(false);
-    this.foregroundClosing = this._foregroundClosing.asObservable();
-    this._backgroundClosing = new BehaviorSubject<boolean>(false);
-    this.backgroundClosing = this._backgroundClosing.asObservable();
+    this.loaders = {};
+    this.masterLoaderId = undefined;
+    this.showForeground = new BehaviorSubject<ShowEvent>({ loaderId: this.defaultConfig.loaderId, isShow: false });
+    this.showForeground$ = this.showForeground.asObservable();
+    this.showBackground = new BehaviorSubject<ShowEvent>({ loaderId: this.defaultConfig.loaderId, isShow: false });
+    this.showBackground$ = this.showBackground.asObservable();
+    this.fgClosing = new BehaviorSubject<ShowEvent>({ loaderId: this.defaultConfig.loaderId, isShow: false });
+    this.foregroundClosing$ = this.fgClosing.asObservable();
+    this.bgClosing = new BehaviorSubject<ShowEvent>({ loaderId: this.defaultConfig.loaderId, isShow: false });
+    this.backgroundClosing$ = this.bgClosing.asObservable();
 
-    this._onStart = new Subject<any>();
-    this.onStart = this._onStart.asObservable();
-    this._onStop = new Subject<any>();
-    this.onStop = this._onStop.asObservable();
-    this._onStopAll = new Subject<any>();
-    this.onStopAll = this._onStopAll.asObservable();
+    this.onStart = new Subject<StartStopEvent>();
+    this.onStart$ = this.onStart.asObservable();
+    this.onStop = new Subject<StartStopEvent>();
+    this.onStop$ = this.onStop.asObservable();
+    this.onStopAll = new Subject<StopAllEvent>();
+    this.onStopAll$ = this.onStopAll.asObservable();
+  }
+
+  /**
+   * For internal use only. It may be changed in the future.
+   * @docs-private
+   */
+  initLoaderData(loaderId: string, isMaster: boolean): void {
+    this.throwErrorIfLoaderExists(loaderId);
+    if (isMaster) {
+      this.throwErrorIfMasterLoaderExists();
+      this.masterLoaderId = loaderId;
+    }
+    this.loaders[loaderId] = {
+      loaderId,
+      background: {},
+      foreground: {},
+      isMaster,
+    };
+  }
+
+  /**
+   * For internal use only. It may be changed in the future.
+   * @docs-private
+   */
+  updateLoaderId(loaderId: string, newLoaderId: string): void {
+    this.throwErrorIfLoaderNotExist(loaderId);
+    if (newLoaderId !== loaderId) {
+      this.throwErrorIfLoaderExists(newLoaderId);
+      this.loaders[newLoaderId] = {
+        loaderId: newLoaderId,
+        background: this.loaders[loaderId].background,
+        foreground: this.loaders[loaderId].foreground,
+        isMaster: this.loaders[loaderId].isMaster
+      };
+      if (loaderId === this.masterLoaderId) {
+        this.masterLoaderId = newLoaderId;
+      }
+      delete this.loaders[loaderId];
+    }
+  }
+
+  /**
+   * For internal use only. It may be changed in the future.
+   * @docs-private
+   */
+  updateMasterStatus(loaderId: string, isMaster: boolean): void {
+    this.throwErrorIfLoaderNotExist(loaderId);
+    if (isMaster !== this.loaders[loaderId].isMaster) {
+      if (isMaster) {
+        this.throwErrorIfMasterLoaderExists();
+        this.masterLoaderId = loaderId;
+      } else { // update.isMaster == false
+        // the loader is previously a master loader,
+        // so set masterLoaderId to undefined
+        this.masterLoaderId = undefined;
+      }
+      this.loaders[loaderId].isMaster = isMaster;
+    }
+  }
+
+  /**
+   * For internal use only. It may be changed in the future.
+   * @docs-private
+   */
+  destroyLoaderData(loaderId: string): void {
+    this.stopLoaderAll(loaderId);
+    if (this.loaders[loaderId].isMaster) {
+      this.masterLoaderId = undefined;
+    }
+    delete this.loaders[loaderId];
   }
 
   /**
@@ -103,191 +176,330 @@ export class NgxUiLoaderService {
    * @returns default configuration object
    */
   getDefaultConfig(): NgxUiLoaderConfig {
-    return { ...this._defaultConfig };
+    return { ...this.defaultConfig };
   }
 
   /**
-   * Get current status
-   * @returns An object with waiting foreground and background properties
+   * Get current master loader id
+   * @returns id of the master loader or undefined if there is no master loader.
    */
-  getStatus() {
+  getMasterLoaderId(): string | undefined {
+    return this.masterLoaderId;
+  }
+
+  /**
+   * Get all the loaders
+   */
+  getLoaders(): Loaders {
+    return JSON.parse(JSON.stringify(this.loaders));
+  }
+
+  /**
+   * Get specific loader
+   */
+  getLoader(loaderId: string): Loader {
+    this.throwErrorIfLoaderNotExist(loaderId);
+    return JSON.parse(JSON.stringify(this.loaders[loaderId]));
+  }
+
+  /**
+   * @deprecated use getLoader() or getLoaders() instead. This will be removed in the version 8.x.x
+   * Return status of master loader
+   */
+  getStatus(): { waitingBackground: Task, waitingForeground: Task } {
+    this.throwErrorIfMasterLoaderNotExist();
     return {
-      waitingForeground: { ...this._waitingForeground },
-      waitingBackground: { ...this._waitingBackground }
+      waitingBackground: this.loaders[this.masterLoaderId].background,
+      waitingForeground: this.loaders[this.masterLoaderId].foreground
     };
   }
 
   /**
-   * Check whether the queue has a waiting foreground loader with the given id.
-   * If no `id` specified, it will check whether the queue has any waiting foreground loader.
-   * @param id the optional id
+   * Check whether the queue has a waiting foreground loader with the given `taskId`.
+   * If no `taskId` specified, it will check whether the queue has any waiting foreground loader.
+   * @param loaderId the loader Id
+   * @param taskId the optional task Id
    * @returns boolean
    */
-  hasForeground(id?: string): boolean {
-    if (id) {
-      return this._waitingForeground[id] ? true : false;
-    }
-    return Object.keys(this._waitingForeground).length > 0;
-  }
-
-  /**
-   * Check whether the queue has a waiting background loader with the given id.
-   * If no `id` specified, it will check whether the queue has any waiting background loader.
-   * @param id the optional id
-   * @returns boolean
-   */
-  hasBackground(id?: string): boolean {
-    if (id) {
-      return this._waitingBackground[id] ? true : false;
-    }
-    return Object.keys(this._waitingBackground).length > 0;
-  }
-
-  /**
-   * Start the foreground loading with a specified id.
-   * The loading is only closed off when all IDs are called with stop() method.
-   * @param id the optional id of the loading. id is set to 'default' by default.
-   */
-  start(id: string = DEFAULT_ID) {
-    const foregroundRunning = this.hasForeground();
-
-    this._waitingForeground[id] = Date.now();
-    if (!foregroundRunning) {
-      if (this.hasBackground()) {
-        this.backgroundCloseout();
-        this._showBackground.next(false);
+  hasForeground(loaderId: string, taskId?: string): boolean {
+    if (this.loaders[loaderId]) {
+      if (taskId) {
+        return this.loaders[loaderId].foreground[taskId] ? true : false;
       }
-      this._showForeground.next(true);
+      return Object.keys(this.loaders[loaderId].foreground).length > 0;
     }
-    this._onStart.next({ id: id, isForeground: true });
+    return false;
   }
 
   /**
-   * Start the background loading with a specified id.
-   * The loading is only closed off when all IDs are called with stopBackground() method.
-   * @param id the optional id of the loading. id is set to 'default' by default.
+   * Check whether the queue has a waiting background loader with the given `taskId`.
+   * If no `taskId` specified, it will check whether the queue has any waiting background loader.
+   * @param loaderId the loader Id
+   * @param taskId the optional task Id
+   * @returns boolean
    */
-  startBackground(id: string = DEFAULT_ID) {
-    this._waitingBackground[id] = Date.now();
-    if (!this.hasForeground()) {
-      this._showBackground.next(true);
+  hasBackground(loaderId: string, taskId?: string): boolean {
+    if (this.loaders[loaderId]) {
+      if (taskId) {
+        return this.loaders[loaderId].background[taskId] ? true : false;
+      }
+      return Object.keys(this.loaders[loaderId].background).length > 0;
     }
-    this._onStart.next({ id: id, isForeground: false });
+    return false;
   }
 
   /**
-   * Stop a foreground loading with specific id
-   * @param id the optional id to stop. If not provided, 'default' is used.
+   * Start the foreground loading of loader having `loaderId` with a specified `taskId`.
+   * The loading is only closed off when all taskIds of that loader are called with stopLoader() method.
+   * @param loaderId the loader Id
+   * @param taskId the optional task Id of the loading. taskId is set to 'default' by default.
+   */
+  startLoader(loaderId: string, taskId: string = DEFAULT_TASK_ID): void {
+    this.throwErrorIfLoaderNotExist(loaderId);
+
+    const foregroundRunning = this.hasForeground(loaderId);
+
+    this.loaders[loaderId].foreground[taskId] = Date.now();
+    if (!foregroundRunning) {
+      if (this.hasBackground(loaderId)) {
+        this.backgroundCloseout(loaderId);
+        this.showBackground.next({ loaderId, isShow: false });
+      }
+      this.showForeground.next({ loaderId, isShow: true });
+    }
+    this.onStart.next({ loaderId, taskId, isForeground: true });
+  }
+
+  /**
+   * Start the foreground loading of master loader with a specified `taskId`.
+   * The loading is only closed off when all taskIds of that loader are called with stop() method.
+   * NOTE: Really this function just wraps startLoader() function
+   * @param taskId the optional task Id of the loading. taskId is set to 'default' by default.
+   */
+  start(taskId: string = DEFAULT_TASK_ID): void {
+    this.throwErrorIfMasterLoaderNotExist();
+    this.startLoader(this.masterLoaderId, taskId);
+  }
+
+  /**
+   * Start the background loading of loader having `loaderId` with a specified `taskId`.
+   * The loading is only closed off when all taskIds of that loader are called with stopLoaderBackground() method.
+   * @param loaderId the loader Id
+   * @param taskId the optional task Id of the loading. taskId is set to 'default' by default.
+   */
+  startBackgroundLoader(loaderId: string, taskId: string = DEFAULT_TASK_ID): void {
+    this.throwErrorIfLoaderNotExist(loaderId);
+
+    this.loaders[loaderId].background[taskId] = Date.now();
+    if (!this.hasForeground(loaderId)) {
+      this.showBackground.next({ loaderId, isShow: true });
+    }
+    this.onStart.next({ loaderId, taskId, isForeground: false });
+  }
+
+  /**
+   * Start the background loading of master loader with a specified `taskId`.
+   * The loading is only closed off when all taskIds of that loader are called with stopBackground() method.
+   * NOTE: Really this function just wraps startBackgroundLoader() function
+   * @param taskId the optional task Id of the loading. taskId is set to 'default' by default.
+   */
+  startBackground(taskId: string = DEFAULT_TASK_ID): void {
+    this.throwErrorIfMasterLoaderNotExist();
+    this.startBackgroundLoader(this.masterLoaderId, taskId);
+  }
+
+  /**
+   * Stop a foreground loading of loader having `loaderId` with specific `taskId`
+   * @param loaderId the loader Id
+   * @param taskId the optional task Id to stop. If not provided, 'default' is used.
    * @returns Object
    */
-  stop(id: string = DEFAULT_ID) {
+  stopLoader(loaderId: string, taskId: string = DEFAULT_TASK_ID): void {
+    this.throwErrorIfLoaderNotExist(loaderId);
+
     const now = Date.now();
 
-    if (this._waitingForeground[id]) {
-      if (this._waitingForeground[id] + this._defaultConfig.threshold > now) {
+    if (this.hasForeground(loaderId, taskId)) {
+      if (this.loaders[loaderId].foreground[taskId] + this.defaultConfig.threshold > now) {
         setTimeout(() => {
-          this.stop(id);
-        }, this._waitingForeground[id] + this._defaultConfig.threshold - now);
+          this.stopLoader(loaderId, taskId);
+        }, this.loaders[loaderId].foreground[taskId] + this.defaultConfig.threshold - now);
         return;
       }
-      delete this._waitingForeground[id];
+      delete this.loaders[loaderId].foreground[taskId];
     } else {
       return;
     }
 
-    if (!this.isActive()) {
-      this.foregroundCloseout();
-      this._showForeground.next(false);
-      this._onStop.next({ id: id, isForeground: true });
-      this._onStopAll.next({ stopAll: true });
+    if (!this.isActive(loaderId)) {
+      this.foregroundCloseout(loaderId);
+      this.showForeground.next({ loaderId, isShow: false });
+      this.onStop.next({ loaderId, taskId, isForeground: true });
+      this.onStopAll.next({ loaderId, isStopAll: true });
       return;
     }
 
-    if (!this.hasForeground()) {
-      this.foregroundCloseout();
-      this._showForeground.next(false);
+    if (!this.hasForeground(loaderId)) {
+      // We can imply that this.hasBackground(loaderId) == true
+      this.foregroundCloseout(loaderId);
+      this.showForeground.next({ loaderId, isShow: false });
       // Show background spinner after the foreground is closed out
       setTimeout(() => {
-        if (this.hasBackground()) {
-          this._showBackground.next(true);
-        }
-      }, 500);
+        this.showBackground.next({ loaderId, isShow: true });
+      }, WAITING_FOR_OVERLAY_DISAPPEAR);
     }
-    this._onStop.next({ id: id, isForeground: true });
+    this.onStop.next({ loaderId, taskId, isForeground: true });
   }
 
   /**
-   * Stop a background loading with specific id
-   * @param id the optional id to stop. If not provided, 'default' is used.
+   * Stop a foreground loading of master loader with specific `taskId`
+   * @param taskId the optional task Id to stop. If not provided, 'default' is used.
    * @returns Object
    */
-  stopBackground(id: string = DEFAULT_ID) {
+  stop(taskId: string = DEFAULT_TASK_ID): void {
+    this.throwErrorIfMasterLoaderNotExist();
+    this.stopLoader(this.masterLoaderId, taskId);
+  }
+
+  /**
+   * Stop a background loading of loader having `loaderId` with specific `taskId`
+   * @param loaderId the loader Id
+   * @param taskId the optional task Id to stop. If not provided, 'default' is used.
+   * @returns Object
+   */
+  stopBackgroundLoader(loaderId: string, taskId: string = DEFAULT_TASK_ID): void {
+    this.throwErrorIfLoaderNotExist(loaderId);
+
     const now = Date.now();
 
-    if (this._waitingBackground[id]) {
-      if (this._waitingBackground[id] + this._defaultConfig.threshold > now) {
+    if (this.hasBackground(loaderId, taskId)) {
+      if (this.loaders[loaderId].background[taskId] + this.defaultConfig.threshold > now) {
         setTimeout(() => {
-          this.stopBackground(id);
-        }, this._waitingBackground[id] + this._defaultConfig.threshold - now);
+          this.stopBackgroundLoader(loaderId, taskId);
+        }, this.loaders[loaderId].background[taskId] + this.defaultConfig.threshold - now);
         return;
       }
-      delete this._waitingBackground[id];
+      delete this.loaders[loaderId].background[taskId];
     } else {
       return;
     }
 
-    if (!this.isActive()) {
-      this.backgroundCloseout();
-      this._showBackground.next(false);
-      this._onStop.next({ id: id, isForeground: false });
-      this._onStopAll.next({ stopAll: true });
+    if (!this.isActive(loaderId)) {
+      this.backgroundCloseout(loaderId);
+      this.showBackground.next({ loaderId, isShow: false });
+      this.onStop.next({ loaderId, taskId, isForeground: false });
+      this.onStopAll.next({ loaderId, isStopAll: true });
       return;
     }
 
-    this._onStop.next({ id: id, isForeground: false });
+    this.onStop.next({ loaderId, taskId, isForeground: false });
   }
 
   /**
-   * Stop all the loadings including foreground and background
+   * Stop a background loading of master loader with specific taskId
+   * @param taskId the optional task Id to stop. If not provided, 'default' is used.
+   * @returns Object
    */
-  stopAll() {
-    if (this.hasForeground()) {
-      this.foregroundCloseout();
-      this._showForeground.next(false);
-    } else if (this.hasBackground()) {
-      this.backgroundCloseout();
-      this._showBackground.next(false);
+  stopBackground(taskId: string = DEFAULT_TASK_ID): void {
+    this.throwErrorIfMasterLoaderNotExist();
+    this.stopBackgroundLoader(this.masterLoaderId, taskId);
+  }
+
+  /**
+   * Stop all the background and foreground loadings of loader having `loaderId`
+   * @param loaderId the loader Id
+   */
+  stopLoaderAll(loaderId: string): void {
+    this.throwErrorIfLoaderNotExist(loaderId);
+
+    if (this.hasForeground(loaderId)) {
+      this.foregroundCloseout(loaderId);
+      this.showForeground.next({ loaderId, isShow: false });
+    } else if (this.hasBackground(loaderId)) {
+      this.backgroundCloseout(loaderId);
+      this.showBackground.next({ loaderId, isShow: false });
     }
-    this._waitingForeground = {};
-    this._waitingBackground = {};
-    this._onStopAll.next({ stopAll: true });
+    this.loaders[loaderId].foreground = {};
+    this.loaders[loaderId].background = {};
+    this.onStopAll.next({ loaderId, isStopAll: true });
+  }
+
+  /**
+   * Stop all the background and foreground loadings of master loader
+   */
+  stopAll(): void {
+    this.throwErrorIfMasterLoaderNotExist();
+    this.stopLoaderAll(this.masterLoaderId);
+  }
+
+  /**
+   * Throw error if the loaderId does not exist.
+   * @docs-private
+   */
+  private throwErrorIfLoaderNotExist(loaderId: string): void {
+    if (!this.loaders[loaderId]) {
+      throw new Error(`[ngx-ui-loader] - loaderId "${loaderId}" does not exist.`);
+    }
+  }
+
+  /**
+   * Throw error if the loaderId has already existed.
+   * @docs-private
+   */
+  private throwErrorIfLoaderExists(loaderId: string): void {
+    if (this.loaders[loaderId]) {
+      throw new Error(`[ngx-ui-loader] - loaderId "${loaderId}" is duplicated. Please choose another one!`);
+    }
+  }
+
+  /**
+   * Throw error if the master loader has already existed.
+   * @docs-private
+   */
+  private throwErrorIfMasterLoaderExists(): void {
+    if (this.masterLoaderId) {
+      throw new Error(`[ngx-ui-loader] - The master loader has already existed. `
+        + `The app should have only one master loader and it should be placed in the root app template`);
+    }
+  }
+
+  /**
+   * Throw error if the master loader does not exist.
+   * @docs-private
+   */
+  private throwErrorIfMasterLoaderNotExist(): void {
+    if (!this.masterLoaderId) {
+      throw new Error(`[ngx-ui-loader] - The master loader does not exist.`);
+    }
   }
 
   /**
    * Determine whether the loader is active
    * @returns true if the loader is active
    */
-  private isActive() {
-    return Object.keys(this._waitingForeground).length > 0 || Object.keys(this._waitingBackground).length > 0;
+  private isActive(loaderId: string): boolean {
+    return this.hasForeground(loaderId) || this.hasBackground(loaderId);
   }
 
   /**
    * Manage to close foreground loading
+   * @param loaderId the loader id
    */
-  private foregroundCloseout() {
-    this._foregroundClosing.next(true);
+  private foregroundCloseout(loaderId: string): void {
+    this.fgClosing.next({ loaderId, isShow: true });
     setTimeout(() => {
-      this._foregroundClosing.next(false);
-    }, DELAY);
+      this.fgClosing.next({ loaderId, isShow: false });
+    }, CLOSING_TIME);
   }
 
   /**
    * Manage to close background loading
+   * @param loaderId the loader id
    */
-  private backgroundCloseout() {
-    this._backgroundClosing.next(true);
+  private backgroundCloseout(loaderId: string): void {
+    this.bgClosing.next({ loaderId, isShow: true });
     setTimeout(() => {
-      this._backgroundClosing.next(false);
-    }, DELAY);
+      this.bgClosing.next({ loaderId, isShow: false });
+    }, CLOSING_TIME);
   }
 }

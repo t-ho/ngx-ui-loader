@@ -1,0 +1,32 @@
+h2, h3 {
+  font-family: Roboto, "Heltical Neue", sans-serif;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.container {
+  position: relative;
+  margin: 12px;
+  background-color: red;
+  height: 400px;
+}
+
+.mat-elevation-z4 {
+  background-color: rgba(63, 81, 181, 0.3);
+}
+
+mat-slider {
+  width: 100%;
+}
+
+.place-holder {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 75%;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.mat-list-item code {
+  font-size: 75%;
+}

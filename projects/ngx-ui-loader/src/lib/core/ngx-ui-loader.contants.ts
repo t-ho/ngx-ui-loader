@@ -2,6 +2,21 @@ import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
 import { POSITION, PB_DIRECTION, SPINNER } from './ngx-ui-loader.enums';
 
 /**
+ * The default value of task id
+ */
+export const DEFAULT_TASK_ID = 'default';
+
+/**
+ * The default value of loader id
+ */
+export const DEFAULT_LOADER_ID = 'default';
+
+export const CLOSING_TIME = 1100;
+
+export const WAITING_FOR_OVERLAY_DISAPPEAR = 500;
+
+
+/**
  * The configuration of spinners
  */
 export const SPINNER_CONFIG = {
@@ -103,16 +118,19 @@ export const DEFAULT_CONFIG: NgxUiLoaderConfig = {
   bgsOpacity: 0.5,
   bgsPosition: POSITION.bottomRight,
   bgsSize: 60,
-  bgsType: SPINNER.rectangleBounce,
+  bgsType: SPINNER.ballSpinClockwise,
   blur: 5,
   fgsColor: '#00ACC1',
   fgsPosition: POSITION.centerCenter,
   fgsSize: 60,
-  fgsType: SPINNER.rectangleBounce,
+  fgsType: SPINNER.ballSpinClockwise,
   gap: 24,
+  loaderId: DEFAULT_LOADER_ID,
   logoPosition: POSITION.centerCenter,
   logoSize: 120,
   logoUrl: '',
+  isMaster: true,
+  overlayBorderRadius: '0',
   overlayColor: 'rgba(40, 40, 40, 0.8)',
   pbColor: '#00ACC1',
   pbDirection: PB_DIRECTION.leftToRight,
@@ -123,8 +141,3 @@ export const DEFAULT_CONFIG: NgxUiLoaderConfig = {
   textPosition: POSITION.centerCenter,
   threshold: 500
 };
-
-/**
- * The default id of the loading
- */
-export const DEFAULT_ID = 'default';

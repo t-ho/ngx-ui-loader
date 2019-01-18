@@ -1,0 +1,44 @@
+h2, h3 {
+  font-family: Roboto, "Heltical Neue", sans-serif;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.container {
+  position: relative;
+  margin: 12px;
+  height: 400px;
+}
+
+.mat-elevation-z4 {
+  background-color: rgba(63, 81, 181, 0.3);
+
+  &.master {
+    background-color: rgba(63, 81, 181, 0.6);
+  }
+}
+
+mat-slider {
+  width: 100%;
+}
+
+span code {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 100%;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.mat-list-item code {
+  font-size: 75%;
+}
+
+.info {
+  background-color: #e6e6e6;
+  height: 400px;
+
+  & pre {
+    margin: 0;
+    overflow: auto;
+  }
+}
