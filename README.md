@@ -1,15 +1,14 @@
 [![npm version](https://badge.fury.io/js/ngx-ui-loader.svg)](https://badge.fury.io/js/ngx-ui-loader)
 [![Build Status](https://travis-ci.org/t-ho/ngx-ui-loader.svg?branch=master)](https://travis-ci.org/t-ho/ngx-ui-loader)
 [![codecov](https://codecov.io/gh/t-ho/ngx-ui-loader/branch/master/graph/badge.svg)](https://codecov.io/gh/t-ho/ngx-ui-loader)
-[![David](https://img.shields.io/david/t-ho/ngx-ui-loader.svg)](https://github.com/t-ho/ngx-ui-loader)
 [![npm](https://img.shields.io/npm/dt/ngx-ui-loader.svg)](https://www.npmjs.com/package/ngx-ui-loader)
-[![npm](https://img.shields.io/badge/dynamic/json.svg?label=downloads&url=https%3A%2F%2Fapi.npmjs.org%2Fdownloads%2Fpoint%2Flast-week%2Fngx-ui-loader&query=%24.downloads&colorB=bightgreen&suffix=%2Fweek)](https://www.npmjs.com/package/ngx-ui-loader)
+[![npm](https://img.shields.io/npm/dw/ngx-ui-loader.svg)](https://www.npmjs.com/package/ngx-ui-loader)
 [![](https://data.jsdelivr.com/v1/package/npm/ngx-ui-loader/badge?style=rounded)](https://www.jsdelivr.com/package/npm/ngx-ui-loader)
 [![npm](https://img.shields.io/npm/l/ngx-ui-loader.svg)](https://www.npmjs.com/package/ngx-ui-loader)
 
 # ngx-ui-loader
 
-An all-in-one and fully customizable loader/spinner for Angular 5, 6 and 7+ applications. It supports foreground, background spinner/loader and indicative progress bar.
+An all-in-one and fully customizable loader/spinner for Angular 5, 6 and 7+ applications. It supports foreground, background spinner/loader, indicative progress bar and multiple loaders.
 
 [![ngx-ui-loader-demo](https://j.gifs.com/gL9k9r.gif)](https://ngx-ui-loader.stackblitz.io)
 
@@ -18,7 +17,7 @@ Available spinners:
 [![ngx-ui-loader-spinners](https://j.gifs.com/G5VxP7.gif)](https://ngx-ui-loader.stackblitz.io/spinners)
 
 ### Features
-
+* Support multiple loaders (>= ngx-ui-loader@7.1.0)
 * Show foreground loader with progress bar
 * The page content can be blurred/frosted while showing foreground loader. See [NgxUiLoaderBlurred](#ngxuiloaderblurred_directive) directive for more details
 * Show background loader with different id for different tasks
@@ -35,7 +34,8 @@ Available spinners:
   2.1 [Install](#install)  
   2.2 [Import `NgxUiLoaderModule`](#import_ngxuiloadermodule)  
   2.3 [Include `ngx-ui-loader` component ](#include_ngxuiloadercomponent)  
-  2.4 [Use `NgxUiLoaderService` service](#use_ngxuiloaderservice_service)  
+  2.4 [Multiple loaders](#multiple_loaders)  
+  2.5 [Use `NgxUiLoaderService` service](#use_ngxuiloaderservice_service)  
 3. [API - NgxUiLoaderService](#api_ngxuiloaderservice)
 4. [Attributes of NgxUiLoaderComponent](#attributes_of_ngxuiloadercomponent)
 5. [NgxUiLoaderBlurred directive](#ngxuiloaderblurred_directive)  
@@ -60,9 +60,13 @@ Available spinners:
 
 Live demo [here](https://ngx-ui-loader.stackblitz.io).
 
-Minimal setup [here](https://stackblitz.com/edit/ngx-ui-loader-minimal-setup) on stackblitz.
+Multiple loaders demo [here](https://ngx-ui-loader.stackblitz.io/multiloader).
 
-Play with **ngx-ui-loader** [here](https://stackblitz.com/edit/ngx-ui-loader) on stackblitz.
+Minimal setup [here](https://stackblitz.com/edit/ngx-ui-loader-minimal-setup) on Stackblitz.
+
+Simple setup for multiple loaders [here](https://stackblitz.com/edit/ngx-ui-loader-multiloader-simple-setup) on Stackblitz.
+
+Live demo source code [here](https://stackblitz.com/edit/ngx-ui-loader) on Stackblitz.
 
 If you like it, please [star on Github](https://github.com/t-ho/ngx-ui-loader).
 
@@ -138,9 +142,39 @@ After importing the `NgxUiLoaderModule`, use `ngx-ui-loader` component in your r
 
 See [Attributes of NgxUiLoaderComponent](#attributes_of_ngxuiloadercomponent) for more details about attributes.
 
+<a name="multiple_loaders"></a>
+
+### 2.4 Multiple loaders
+
+You can skip this step if you do not want to use multiple loaders
+
+After importing the `NgxUiLoaderModule`, use `ngx-ui-loader` component in your template:
+
+```html
+<div style="position: relative"> <!-- the position of the parent container must be set to relative -->
+  <!-- It is really important to set loaderId and isMaster=false for non-master loader -->
+  <ngx-ui-loader [loaderId]="'loader-01'" [isMaster]="false"></ngx-ui-loader>
+</div>
+
+<div style="position: relative"> <!-- the position of the parent container must be set to relative -->
+  <!-- It is really important to set loaderId and isMaster=false for non-master loader -->
+  <ngx-ui-loader [loaderId]="'loader-02'" [isMaster]="false"></ngx-ui-loader>
+</div>
+
+<ngx-ui-loader></ngx-ui-loader> <!-- master loader by default -->
+<!-- You can set loaderId for master loader -->
+```
+
+See simple setup for multiple loaders [here](https://stackblitz.com/edit/ngx-ui-loader-multiloader-simple-setup) on Stackblitz.
+
+#### Note:
+* The application can have only one **master** loader and many **non-master** loader.
+* The **master** loader will block the entire viewport.
+
+
 <a name="use_ngxuiloaderservice_service"></a>
 
-### 2.4 Use `NgxUiLoaderService` service
+### 2.5 Use `NgxUiLoaderService` service
 
 Add `NgxUiLoaderService` service wherever you want to use the `ngx-ui-loader`:
 
@@ -158,17 +192,22 @@ export class AppComponent implements OnInit {
   constructor(private ngxService: NgxUiLoaderService) { }
 
   ngOnInit() {
-    this.ngxService.start(); // start foreground loading with 'default' id
-
+    this.ngxService.start(); // start foreground spinner of the master loader with 'default' taskId
     // Stop the foreground loading after 5s
     setTimeout(() => {
-      this.ngxService.stop(); // stop foreground loading with 'default' id
+      this.ngxService.stop(); // stop foreground spinner of the master loader with 'default' taskId
     }, 5000);
 
     // OR
     this.ngxService.startBackground('do-background-things');
     // Do something here...
     this.ngxService.stopBackground('do-background-things');
+
+    this.ngxService.startLoader('loader-01'); // start foreground spinner of the loader "loader-01" with 'default' taskId
+    // Stop the foreground loading after 5s
+    setTimeout(() => {
+      this.ngxService.stopLoader('loader-01'); // stop foreground spinner of the loader "loader-01" with 'default' taskId
+    }, 5000);
   }
 }
 
@@ -180,12 +219,20 @@ See [API - NgxUiLoaderService](#api_ngxuiloaderservice) for more details.
 
 ## 3. API - NgxUiLoaderService
 
-* `NgxUiLoaderService.start([id]='default')` Starts a foreground loader with progress bar. Users cannot interact with the page when the loader is showed.
-* `NgxUiLoaderService.stop([id]='default')` Stops a foreground loader with progress bar.
-* `NgxUiLoaderService.startBackground([id]='default')` Starts a background loader. Users can interact with the page when the loader is showed.
-* `NgxUiLoaderService.stopBackground([id]='default')` Stops a background loader.
+* `NgxUiLoaderService.start([taskId]='default')` Starts a foreground spinner with progress bar of the **master** loader. Users cannot interact with the page when the loader is showed.
+* `NgxUiLoaderService.stop([taskId]='default')` Stops a foreground spinner with progress bar of the **master** loader.
+* `NgxUiLoaderService.startBackground([taskId]='default')` Starts a background spinner of the **master** loader. Users can interact with the page when the loader is showed.
+* `NgxUiLoaderService.stopBackground([taskId]='default')` Stops a background spinner of the **master** loader.
+
+* `NgxUiLoaderService.startLoader(loaderId, [taskId]='default')` Starts a foreground spinner with progress bar of a specified loader. Users cannot interact with the page when the loader is showed.
+* `NgxUiLoaderService.stopLoader(loaderId, [taskId]='default')` Stops a foreground spinner with progress bar of a specified loader.
+* `NgxUiLoaderService.startBackgroundLoader(loaderId, [taskId]='default')` Starts a background spinner of a specified loader. Users can interact with the page when the loader is showed.
+* `NgxUiLoaderService.stopBackgroundLoader(loaderId, [taskId]='default')` Stops a background spinner of a specified loader.
+
 * `NgxUiLoaderService.getDefaultConfig()` Returns the default configuration object of `ngx-ui-loader`.
-* `NgxUiLoaderService.getStatus()` Returns an object including `waitingForeground` and `waitingBackground` properties.
+* `NgxUiLoaderService.getLoader(loaderId)` Return a specific loader.
+* `NgxUiLoaderService.getLoaders()` Return the all of loaders.
+* `NgxUiLoaderService.getStatus()` Deprecated - will be remove in version 8.x.x.
 * `NgxUiLoaderService.stopAll()` Stops all foreground and background loaders.
 
 <a name="attributes_of_ngxuiloadercomponent"></a>
@@ -229,6 +276,8 @@ All attributes are listed below:
 | `textPosition`       | *string*  | optional | `center-center`    | Loading text position. All available positions can be accessed via `POSITION`                   |
 |                      |           |          |                    |                                                                                                 |
 | `gap`                | *number*  | optional | `24`               | The gap between logo, foreground spinner and text when their positions are `center-center`      |
+| `isMaster`           | *boolean* | optional | `true`             | Determine whether this loader is a master loader or not. Note: The app should have only one **master** loader and it should be placed in the root template.                            |
+| `loaderId`           | *string*  | optional | `default`          | The loader ID                                                                                   |
 | `overlayBorderRadius`| *string*  | optional | `0`                | Overlay border radius                                                                           |
 | `overlayColor`       | *string*  | optional | `rgba(40,40,40,.8)`| Overlay background color                                                                        |
 
@@ -257,6 +306,7 @@ If you want your page content is blurred/frosted while showing foreground loader
 |   Attribute      |  Type     | Required |     Default        |                                       Description                                               |
 | ---------------- | --------- | -------- | ------------------ | ----------------------------------------------------------------------------------------------- |
 | `blur`           | *number*  | optional | `5`                | Blur the page content while showing foreground loader.                                          |
+| `loaderId`       | *string*  | optional | `default`          | The loader id that this blurred directive attached to.                                          |
 
 
 <a name="custom_configuration_for_ngxuiloadermodule"></a>
@@ -334,6 +384,8 @@ export class AppModule { }
 |                      |           |          |                    |                                                                                                 |
 | `blur`               | *number*  | optional | `5`                | Blur the page content while showing foreground loader. Only applied when using [ngxUiLoaderBlurred](#ngxuiloaderblurred_directive) directive.                     |
 | `gap`                | *number*  | optional | `24`               | The gap between logo, foreground spinner and text when their positions are `center-center`      |
+| `isMaster`           | *boolean* | optional | `true`             | Determine whether this loader is a master loader or not. Note: The app should have only one **master** loader and it should be placed in the root template.                            |
+| `loaderId`           | *string*  | optional | `default`          | The default value for all *loaderId* attributes                                                 |
 | `overlayBorderRadius`| *string*  | optional | `0`                | Overlay border radius                                                                           |
 | `overlayColor`       | *string*  | optional | `rgba(40,40,40,.8)`| Overlay background color                                                                        |
 | `threshold`          | *number*  | optional | `500`              | The time a loader must be showed at least before it can be stopped. It must be >= 1 millisecond.|
@@ -382,7 +434,9 @@ export class AppModule { }
 
 |   Parameter      |  Type     | Required |     Default        |                                       Description                                               |
 | ---------------- | --------- | -------- | ------------------ | ----------------------------------------------------------------------------------------------- |
+| `loaderId`       | *string*  | optional | `default`          | Specify the loader id which will showed when navigating between app routes.                     |
 | `showForeground` | *boolean* | optional | `true`             | If `true`, foreground loader is showed. Otherwise, background loader is showed.                 |
+
 
 <a name="http_requests"></a>
 
@@ -444,6 +498,7 @@ NgxUiLoaderHttpModule.forRoot({ exclude: ['https://external-domain.com/api/auth'
 |   Parameter      |  Type     | Required |     Default        |                                       Description                                               |
 | ---------------- | --------- | -------- | ------------------ | ----------------------------------------------------------------------------------------------- |
 | `exclude`        | *string[]*| optional | `null`             | An array of API urls. The loader is not showed when making request to these API urls.           |
+| `loaderId`       | *string*  | optional | `default`          | Specify the loader id which will showed when making http requests.                              |
 | `showForeground` | *boolean* | optional | `false`            | If `true`, foreground loader is showed. Otherwise, background loader is showed.                 |
 
 <a name="changelog"></a>
