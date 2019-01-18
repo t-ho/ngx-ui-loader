@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnDestroy, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Input, OnDestroy, Renderer2, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
@@ -6,7 +6,7 @@ import { coerceNumber } from './coercion';
 import { WAITING_FOR_OVERLAY_DISAPPEAR } from './ngx-ui-loader.contants';
 
 @Directive({ selector: '[ngxUiLoaderBlurred]' })
-export class NgxUiLoaderBlurredDirective implements OnDestroy {
+export class NgxUiLoaderBlurredDirective implements OnInit, OnDestroy {
 
   private blurNumber: number;
 
@@ -30,7 +30,12 @@ export class NgxUiLoaderBlurredDirective implements OnDestroy {
   ) {
     this.blurNumber = this.ngxUiLoaderService.getDefaultConfig().blur;
     this.loaderId = this.ngxUiLoaderService.getDefaultConfig().loaderId;
+  }
 
+  /**
+   * On Init event
+   */
+  ngOnInit() {
     this.showForegroundWatcher = this.ngxUiLoaderService.showForeground$
       .subscribe(data => {
         if (data.loaderId === this.loaderId) {
@@ -40,7 +45,7 @@ export class NgxUiLoaderBlurredDirective implements OnDestroy {
             this.renderer.setStyle(this.elementRef.nativeElement, 'filter', filterValue);
           } else {
             setTimeout(() => {
-              if (!ngxUiLoaderService.hasForeground(data.loaderId)) {
+              if (!this.ngxUiLoaderService.hasForeground(data.loaderId)) {
                 this.renderer.setStyle(this.elementRef.nativeElement, '-webkit-filter', 'none');
                 this.renderer.setStyle(this.elementRef.nativeElement, 'filter', 'none');
               }
@@ -48,7 +53,6 @@ export class NgxUiLoaderBlurredDirective implements OnDestroy {
           }
         }
       });
-
   }
 
   /**

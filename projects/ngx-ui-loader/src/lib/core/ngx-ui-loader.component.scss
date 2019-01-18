@@ -18,6 +18,7 @@ $spinnerSize: 60px;
   z-index: 99999 !important;
   display: none;
   color: $pbColor;
+  overflow: hidden;
 
   &.loading-foreground, &.foreground-closing {
     display: block;
