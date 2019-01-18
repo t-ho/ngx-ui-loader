@@ -1,3 +1,7 @@
+# v7.1.0-beta.1
+* Support [multiple loaders](https://ngx-ui-loader.stackblitz.io/multiloader)
+* Update dependencies
+
 # v7.0.1
 * Update README
 * Update dependencies

@@ -17,7 +17,7 @@ Available spinners:
 [![ngx-ui-loader-spinners](https://j.gifs.com/G5VxP7.gif)](https://ngx-ui-loader.stackblitz.io/spinners)
 
 ### Features
-* Support multiple loaders (>= ngx-ui-loader@7.1.0)
+* Support multiple loaders (>= ngx-ui-loader@7.1.0). See [Multiple loaders](#multiple_loaders) for more details and [demo](https://ngx-ui-loader.stackblitz.io/multiloader)
 * Show foreground loader with progress bar
 * The page content can be blurred/frosted while showing foreground loader. See [NgxUiLoaderBlurred](#ngxuiloaderblurred_directive) directive for more details
 * Show background loader with different id for different tasks
