@@ -57,7 +57,7 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
   }
 
   getLoader() {
-    this.loader = this.ngxUiLoaderService.getLoader('default');
+    this.loader = this.ngxUiLoaderService.getLoader();
   }
 
     /**

@@ -45,7 +45,7 @@ export class NgxUiLoaderRouterModule {
     }
 
     let defaultConfig: NgxUiLoaderRouterConfig = {
-      loaderId: ngxUiLoaderService.getDefaultConfig().loaderId,
+      loaderId: ngxUiLoaderService.getDefaultConfig().masterLoaderId,
       showForeground: true
     };
 

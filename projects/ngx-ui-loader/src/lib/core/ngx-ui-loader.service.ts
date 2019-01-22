@@ -60,7 +60,6 @@ export class NgxUiLoaderService {
   private defaultConfig: NgxUiLoaderConfig;
   private fgClosing: BehaviorSubject<ShowEvent>;
   private loaders: Loaders;
-  private masterLoaderId: string;
   private onStart: Subject<StartStopEvent>;
   private onStop: Subject<StartStopEvent>;
   private onStopAll: Subject<StopAllEvent>;
@@ -83,14 +82,13 @@ export class NgxUiLoaderService {
     }
 
     this.loaders = {};
-    this.masterLoaderId = undefined;
-    this.showForeground = new BehaviorSubject<ShowEvent>({ loaderId: this.defaultConfig.loaderId, isShow: false });
+    this.showForeground = new BehaviorSubject<ShowEvent>({ loaderId: '', isShow: false });
     this.showForeground$ = this.showForeground.asObservable();
-    this.showBackground = new BehaviorSubject<ShowEvent>({ loaderId: this.defaultConfig.loaderId, isShow: false });
+    this.showBackground = new BehaviorSubject<ShowEvent>({ loaderId: '', isShow: false });
     this.showBackground$ = this.showBackground.asObservable();
-    this.fgClosing = new BehaviorSubject<ShowEvent>({ loaderId: this.defaultConfig.loaderId, isShow: false });
+    this.fgClosing = new BehaviorSubject<ShowEvent>({ loaderId: '', isShow: false });
     this.foregroundClosing$ = this.fgClosing.asObservable();
-    this.bgClosing = new BehaviorSubject<ShowEvent>({ loaderId: this.defaultConfig.loaderId, isShow: false });
+    this.bgClosing = new BehaviorSubject<ShowEvent>({ loaderId: '', isShow: false });
     this.backgroundClosing$ = this.bgClosing.asObservable();
 
     this.onStart = new Subject<StartStopEvent>();
@@ -105,18 +103,20 @@ export class NgxUiLoaderService {
    * For internal use only. It may be changed in the future.
    * @docs-private
    */
-  initLoaderData(loaderId: string, isMaster: boolean): void {
-    this.throwErrorIfLoaderExists(loaderId);
-    if (isMaster) {
-      this.throwErrorIfMasterLoaderExists();
-      this.masterLoaderId = loaderId;
+  initLoaderData(loaderId: string): void {
+    let isMaster = false;
+    if (loaderId === this.defaultConfig.masterLoaderId) {
+      this.throwErrorIfMasterLoaderExists(true);
+      isMaster = true;
+    } else { // not master loader
+      this.throwErrorIfLoaderExists(loaderId, true);
     }
-    this.loaders[loaderId] = {
-      loaderId,
-      background: {},
-      foreground: {},
-      isMaster,
-    };
+    if (this.loaders[loaderId]) {
+      this.loaders[loaderId].isBound = true;
+      this.loaders[loaderId].isMaster = isMaster;
+    } else {
+      this.createLoaderData(loaderId, isMaster, true);
+    }
   }
 
   /**
@@ -125,37 +125,22 @@ export class NgxUiLoaderService {
    */
   updateLoaderId(loaderId: string, newLoaderId: string): void {
     this.throwErrorIfLoaderNotExist(loaderId);
+    if (this.loaders[loaderId].loaderId === this.defaultConfig.masterLoaderId) {
+      console.warn(`[ngx-ui-loader] - Cannot change loaderId of master loader. The current ` +
+        `master's loaderId is "${this.defaultConfig.masterLoaderId}". If you really want to ` +
+        `change it, please use NgxUiLoaderModule.forRoot() method.`);
+      return;
+    }
     if (newLoaderId !== loaderId) {
-      this.throwErrorIfLoaderExists(newLoaderId);
+      this.throwErrorIfLoaderExists(newLoaderId, true);
       this.loaders[newLoaderId] = {
         loaderId: newLoaderId,
-        background: this.loaders[loaderId].background,
-        foreground: this.loaders[loaderId].foreground,
-        isMaster: this.loaders[loaderId].isMaster
+        background: { ...this.loaders[loaderId].background },
+        foreground: { ...this.loaders[loaderId].foreground },
+        isMaster: false,
+        isBound: this.loaders[loaderId].isBound
       };
-      if (loaderId === this.masterLoaderId) {
-        this.masterLoaderId = newLoaderId;
-      }
       delete this.loaders[loaderId];
-    }
-  }
-
-  /**
-   * For internal use only. It may be changed in the future.
-   * @docs-private
-   */
-  updateMasterStatus(loaderId: string, isMaster: boolean): void {
-    this.throwErrorIfLoaderNotExist(loaderId);
-    if (isMaster !== this.loaders[loaderId].isMaster) {
-      if (isMaster) {
-        this.throwErrorIfMasterLoaderExists();
-        this.masterLoaderId = loaderId;
-      } else { // update.isMaster == false
-        // the loader is previously a master loader,
-        // so set masterLoaderId to undefined
-        this.masterLoaderId = undefined;
-      }
-      this.loaders[loaderId].isMaster = isMaster;
     }
   }
 
@@ -165,9 +150,6 @@ export class NgxUiLoaderService {
    */
   destroyLoaderData(loaderId: string): void {
     this.stopLoaderAll(loaderId);
-    if (this.loaders[loaderId].isMaster) {
-      this.masterLoaderId = undefined;
-    }
     delete this.loaders[loaderId];
   }
 
@@ -180,14 +162,6 @@ export class NgxUiLoaderService {
   }
 
   /**
-   * Get current master loader id
-   * @returns id of the master loader or undefined if there is no master loader.
-   */
-  getMasterLoaderId(): string | undefined {
-    return this.masterLoaderId;
-  }
-
-  /**
    * Get all the loaders
    */
   getLoaders(): Loaders {
@@ -195,10 +169,15 @@ export class NgxUiLoaderService {
   }
 
   /**
-   * Get specific loader
+   * Get data of a specified loader. If loaderId is not provided, it will return data of master loader(if existed)
    */
-  getLoader(loaderId: string): Loader {
-    this.throwErrorIfLoaderNotExist(loaderId);
+  getLoader(loaderId?: string): Loader {
+    if (loaderId) {
+      this.throwErrorIfLoaderNotExist(loaderId);
+    } else {
+      this.throwErrorIfMasterLoaderNotExist();
+      loaderId = this.defaultConfig.masterLoaderId;
+    }
     return JSON.parse(JSON.stringify(this.loaders[loaderId]));
   }
 
@@ -209,8 +188,8 @@ export class NgxUiLoaderService {
   getStatus(): { waitingBackground: Task, waitingForeground: Task } {
     this.throwErrorIfMasterLoaderNotExist();
     return {
-      waitingBackground: this.loaders[this.masterLoaderId].background,
-      waitingForeground: this.loaders[this.masterLoaderId].foreground
+      waitingBackground: this.loaders[this.defaultConfig.masterLoaderId].background,
+      waitingForeground: this.loaders[this.defaultConfig.masterLoaderId].foreground
     };
   }
 
@@ -255,7 +234,7 @@ export class NgxUiLoaderService {
    * @param taskId the optional task Id of the loading. taskId is set to 'default' by default.
    */
   startLoader(loaderId: string, taskId: string = DEFAULT_TASK_ID): void {
-    this.throwErrorIfLoaderNotExist(loaderId);
+    this.createLoaderData(loaderId, undefined, false);
 
     const foregroundRunning = this.hasForeground(loaderId);
 
@@ -277,8 +256,7 @@ export class NgxUiLoaderService {
    * @param taskId the optional task Id of the loading. taskId is set to 'default' by default.
    */
   start(taskId: string = DEFAULT_TASK_ID): void {
-    this.throwErrorIfMasterLoaderNotExist();
-    this.startLoader(this.masterLoaderId, taskId);
+    this.startLoader(this.defaultConfig.masterLoaderId, taskId);
   }
 
   /**
@@ -288,7 +266,7 @@ export class NgxUiLoaderService {
    * @param taskId the optional task Id of the loading. taskId is set to 'default' by default.
    */
   startBackgroundLoader(loaderId: string, taskId: string = DEFAULT_TASK_ID): void {
-    this.throwErrorIfLoaderNotExist(loaderId);
+    this.createLoaderData(loaderId, undefined, false);
 
     this.loaders[loaderId].background[taskId] = Date.now();
     if (!this.hasForeground(loaderId)) {
@@ -304,8 +282,7 @@ export class NgxUiLoaderService {
    * @param taskId the optional task Id of the loading. taskId is set to 'default' by default.
    */
   startBackground(taskId: string = DEFAULT_TASK_ID): void {
-    this.throwErrorIfMasterLoaderNotExist();
-    this.startBackgroundLoader(this.masterLoaderId, taskId);
+    this.startBackgroundLoader(this.defaultConfig.masterLoaderId, taskId);
   }
 
   /**
@@ -358,7 +335,7 @@ export class NgxUiLoaderService {
    */
   stop(taskId: string = DEFAULT_TASK_ID): void {
     this.throwErrorIfMasterLoaderNotExist();
-    this.stopLoader(this.masterLoaderId, taskId);
+    this.stopLoader(this.defaultConfig.masterLoaderId, taskId);
   }
 
   /**
@@ -402,7 +379,7 @@ export class NgxUiLoaderService {
    */
   stopBackground(taskId: string = DEFAULT_TASK_ID): void {
     this.throwErrorIfMasterLoaderNotExist();
-    this.stopBackgroundLoader(this.masterLoaderId, taskId);
+    this.stopBackgroundLoader(this.defaultConfig.masterLoaderId, taskId);
   }
 
   /**
@@ -429,7 +406,26 @@ export class NgxUiLoaderService {
    */
   stopAll(): void {
     this.throwErrorIfMasterLoaderNotExist();
-    this.stopLoaderAll(this.masterLoaderId);
+    this.stopLoaderAll(this.defaultConfig.masterLoaderId);
+  }
+
+  /**
+   * Create loader data if it does not exist
+   * @param loaderId
+   * @param isMaster
+   * @param isBound
+   * @docs-private
+   */
+  private createLoaderData(loaderId: string, isMaster: boolean, isBound: boolean) {
+    if (!this.loaders[loaderId]) {
+      this.loaders[loaderId] = {
+        loaderId,
+        foreground: {},
+        background: {},
+        isMaster,
+        isBound
+      };
+    }
   }
 
   /**
@@ -446,8 +442,8 @@ export class NgxUiLoaderService {
    * Throw error if the loaderId has already existed.
    * @docs-private
    */
-  private throwErrorIfLoaderExists(loaderId: string): void {
-    if (this.loaders[loaderId]) {
+  private throwErrorIfLoaderExists(loaderId: string, useIsBoundProp?: boolean): void {
+    if (this.loaders[loaderId] && (this.loaders[loaderId].isBound && useIsBoundProp)) {
       throw new Error(`[ngx-ui-loader] - loaderId "${loaderId}" is duplicated. Please choose another one!`);
     }
   }
@@ -456,8 +452,8 @@ export class NgxUiLoaderService {
    * Throw error if the master loader has already existed.
    * @docs-private
    */
-  private throwErrorIfMasterLoaderExists(): void {
-    if (this.masterLoaderId) {
+  private throwErrorIfMasterLoaderExists(useIsBoundProp?: boolean): void {
+    if (this.loaders[this.defaultConfig.masterLoaderId] && (this.loaders[this.defaultConfig.masterLoaderId].isBound && useIsBoundProp)) {
       throw new Error(`[ngx-ui-loader] - The master loader has already existed. `
         + `The app should have only one master loader and it should be placed in the root app template`);
     }
@@ -468,7 +464,7 @@ export class NgxUiLoaderService {
    * @docs-private
    */
   private throwErrorIfMasterLoaderNotExist(): void {
-    if (!this.masterLoaderId) {
+    if (!this.loaders[this.defaultConfig.masterLoaderId]) {
       throw new Error(`[ngx-ui-loader] - The master loader does not exist.`);
     }
   }

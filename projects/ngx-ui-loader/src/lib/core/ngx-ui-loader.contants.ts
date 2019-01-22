@@ -9,7 +9,7 @@ export const DEFAULT_TASK_ID = 'default';
 /**
  * The default value of loader id
  */
-export const DEFAULT_LOADER_ID = 'default';
+export const DEFAULT_MASTER_LOADER_ID = 'master';
 
 export const CLOSING_TIME = 1100;
 
@@ -125,11 +125,10 @@ export const DEFAULT_CONFIG: NgxUiLoaderConfig = {
   fgsSize: 60,
   fgsType: SPINNER.ballSpinClockwise,
   gap: 24,
-  loaderId: DEFAULT_LOADER_ID,
   logoPosition: POSITION.centerCenter,
   logoSize: 120,
   logoUrl: '',
-  isMaster: true,
+  masterLoaderId: DEFAULT_MASTER_LOADER_ID,
   overlayBorderRadius: '0',
   overlayColor: 'rgba(40, 40, 40, 0.8)',
   pbColor: '#00ACC1',

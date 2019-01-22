@@ -29,7 +29,7 @@ export class NgxUiLoaderBlurredDirective implements OnInit, OnDestroy {
     private ngxUiLoaderService: NgxUiLoaderService
   ) {
     this.blurNumber = this.ngxUiLoaderService.getDefaultConfig().blur;
-    this.loaderId = this.ngxUiLoaderService.getDefaultConfig().loaderId;
+    this.loaderId = this.ngxUiLoaderService.getDefaultConfig().masterLoaderId;
   }
 
   /**

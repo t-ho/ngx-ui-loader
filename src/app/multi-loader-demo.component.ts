@@ -18,12 +18,6 @@ export class MultiLoaderDemoComponent implements OnInit, AfterViewInit, OnDestro
 
   constructor(private cdr: ChangeDetectorRef,
     private ngxUiLoaderService: NgxUiLoaderService) {
-  }
-
-  /**
-   * On init
-   */
-  ngOnInit() {
     this.loaders = {};
     this.data = [
       {
@@ -43,7 +37,12 @@ export class MultiLoaderDemoComponent implements OnInit, AfterViewInit, OnDestro
         spinnerType: SPINNER.ballSpinFadeRotating,
       },
     ];
+  }
 
+  /**
+   * On init
+   */
+  ngOnInit() {
     this.onStopWatcher = this.ngxUiLoaderService.onStop$
       .subscribe(data => {
         this.getLoaders();

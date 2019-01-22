@@ -9,12 +9,13 @@ import { PositionType } from './ngx-ui-loader.types';
 
 // DO NOT change the following constants {{{
 const BACKGROUND_CLOSING_CLASS = 'background-closing';
-const DEFAULT_LOADER_ID = 'default';
+const DEFAULT_MASTER_LOADER_ID = 'master';
 const DEFAULT_TASK_ID = 'default';
 const DELAY_CLOSING = 1100;
 const DELAY_OPENNING_BG_AFTER_CLOSING_FG = 500;
 const FOREGROUND_CLOSING_CLASS = 'foreground-closing';
 const IS_MASTER = true;
+const IS_BOUND = true;
 const LOADER_ID_01 = 'loader-id-01';
 const LOADING_BACKGROUND_CLASS = 'loading-background';
 const LOADING_FOREGROUND_CLASS = 'loading-foreground';
@@ -75,11 +76,12 @@ describe('NgxUiLoaderComponent', () => {
 
   it('should initialize loader data when component is initialized', () => {
     expect(loaderService.getLoaders()).toEqual({
-      default: {
-        loaderId: DEFAULT_LOADER_ID,
+      master: {
+        loaderId: DEFAULT_MASTER_LOADER_ID,
         background: {},
         foreground: {},
-        isMaster: true
+        isMaster: IS_MASTER,
+        isBound: IS_BOUND
       }
     });
   });
@@ -91,55 +93,42 @@ describe('NgxUiLoaderComponent', () => {
     component.foregroundClosingWatcher = null;
     component.ngOnDestroy();
     expect(loaderService.getLoaders()).toEqual({});
-    loaderService.initLoaderData(DEFAULT_LOADER_ID, IS_MASTER); // prevent throwing error when clean up component.
+    loaderService.initLoaderData(DEFAULT_MASTER_LOADER_ID); // prevent throwing error when clean up component.
   });
 
-  it(`should not have ${NGX_POSITION_ABSOLUTE_CLASS} class if isMaster == true`, () => {
-    component.isMaster = true;
+  it(`should not have ${NGX_POSITION_ABSOLUTE_CLASS} class if loaderId == ${DEFAULT_MASTER_LOADER_ID}`, () => {
+    component.loaderId = DEFAULT_MASTER_LOADER_ID;
     fixture.detectChanges();
     expect(progressBarEl.className).not.toMatch(NGX_POSITION_ABSOLUTE_CLASS);
     expect(fgContainerEl.className).not.toMatch(NGX_POSITION_ABSOLUTE_CLASS);
     expect(fgContainerEl.className).not.toMatch(NGX_POSITION_ABSOLUTE_CLASS);
   });
 
-  it(`should not have ${NGX_POSITION_ABSOLUTE_CLASS} class if isMaster == false`, () => {
-    component.isMaster = false;
+  it(`should have ${NGX_POSITION_ABSOLUTE_CLASS} class if loaderId != ${DEFAULT_MASTER_LOADER_ID}`, () => {
+    component.loaderId = LOADER_ID_01;
     fixture.detectChanges();
     expect(progressBarEl.className).toMatch(NGX_POSITION_ABSOLUTE_CLASS);
     expect(fgContainerEl.className).toMatch(NGX_POSITION_ABSOLUTE_CLASS);
     expect(fgContainerEl.className).toMatch(NGX_POSITION_ABSOLUTE_CLASS);
+    component.loaderId = DEFAULT_MASTER_LOADER_ID; // prevent throwing error when clean up component.
   });
 
-  it('should change loaderId', () => {
+  it('should not change loaderId', () => {
     component.loaderId = LOADER_ID_01;
     component.ngOnChanges({
-      loaderId: new SimpleChange(DEFAULT_LOADER_ID, component.loaderId, true)
+      loaderId: new SimpleChange(DEFAULT_MASTER_LOADER_ID, component.loaderId, true)
     });
     fixture.detectChanges();
     expect(loaderService.getLoaders()).toEqual({
-      'loader-id-01': {
-        loaderId: LOADER_ID_01,
+      master: {
+        loaderId: DEFAULT_MASTER_LOADER_ID,
         background: {},
         foreground: {},
-        isMaster: true
+        isMaster: true,
+        isBound: true
       }
     });
-  });
-
-  it('should change isMaster', () => {
-    component.isMaster = false;
-    component.ngOnChanges({
-      isMaster: new SimpleChange(true, component.isMaster, true)
-    });
-    fixture.detectChanges();
-    expect(loaderService.getLoaders()).toEqual({
-      default: {
-        loaderId: DEFAULT_LOADER_ID,
-        background: {},
-        foreground: {},
-        isMaster: false
-      }
-    });
+    component.loaderId = DEFAULT_MASTER_LOADER_ID; // prevent throwing error when clean up component.
   });
 
   it('should change foreground spinner types', () => {
@@ -514,7 +503,7 @@ describe('NgxUiLoaderComponent', () => {
   }));
 
   it(`startLoader('${LOADER_ID_01}') - 11 - should not show foreground loading`, () => {
-    loaderService.initLoaderData(LOADER_ID_01, !IS_MASTER);
+    loaderService.initLoaderData(LOADER_ID_01);
     loaderService.startLoader(LOADER_ID_01);
     fixture.detectChanges();
     expect(progressBarEl.className).not.toMatch(LOADING_FOREGROUND_CLASS);
@@ -522,7 +511,7 @@ describe('NgxUiLoaderComponent', () => {
   });
 
   it(`stopLoader('${LOADER_ID_01}') - 12 - should not stop foreground loading`, fakeAsync(() => {
-    loaderService.initLoaderData(LOADER_ID_01, !IS_MASTER);
+    loaderService.initLoaderData(LOADER_ID_01);
     loaderService.startLoader(LOADER_ID_01);
     loaderService.start();
     fixture.detectChanges();
@@ -543,14 +532,14 @@ describe('NgxUiLoaderComponent', () => {
   }));
 
   it(`startBackgroundLoader('${LOADER_ID_01}') - 13 - should not show background loading`, () => {
-    loaderService.initLoaderData(LOADER_ID_01, !IS_MASTER);
+    loaderService.initLoaderData(LOADER_ID_01);
     loaderService.startBackgroundLoader(LOADER_ID_01);
     fixture.detectChanges();
     expect(bgSpinnerEl.className).not.toMatch(LOADING_BACKGROUND_CLASS);
   });
 
   it(`stopBackgroundLoader('${LOADER_ID_01}') - 14 - should not stop background loading`, fakeAsync(() => {
-    loaderService.initLoaderData(LOADER_ID_01, !IS_MASTER);
+    loaderService.initLoaderData(LOADER_ID_01);
     loaderService.startBackgroundLoader(LOADER_ID_01);
     loaderService.startBackground();
     fixture.detectChanges();

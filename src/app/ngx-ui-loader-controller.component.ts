@@ -21,12 +21,6 @@ export class NgxUiLoaderControllerComponent implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.timers = [];
-    this.loader = {
-      loaderId: 'default',
-      foreground: {},
-      background: {},
-      isMaster: false
-    };
   }
 
   fgSlideChange(checked: boolean, delay: number, taskId?: string) {

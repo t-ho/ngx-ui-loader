@@ -24,7 +24,7 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
 
     this.count = 0;
     this.defaultConfig = {
-      loaderId: this.ngxUiLoaderService.getDefaultConfig().loaderId,
+      loaderId: this.ngxUiLoaderService.getDefaultConfig().masterLoaderId,
       showForeground: false
     };
 

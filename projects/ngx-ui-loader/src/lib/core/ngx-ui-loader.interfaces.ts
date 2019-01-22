@@ -6,7 +6,8 @@ export interface Loader {
   loaderId: string;
   foreground: Task;
   background: Task;
-  isMaster: boolean;
+  isMaster?: boolean;
+  isBound: boolean;
 }
 
 export interface Loaders {

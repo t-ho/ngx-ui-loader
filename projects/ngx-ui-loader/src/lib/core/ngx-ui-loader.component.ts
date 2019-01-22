@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, SimpleChange, OnDestroy } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl, SafeStyle } from '@angular/platform-browser';
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
 import { Subscription } from 'rxjs';
 
@@ -31,7 +31,6 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   @Input() logoPosition: PositionType;
   @Input() logoSize: number;
   @Input() logoUrl: string;
-  @Input() isMaster: boolean;
   @Input() overlayBorderRadius: string;
   @Input() overlayColor: string;
   @Input() pbColor: string;
@@ -51,10 +50,10 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   foregroundClosing: boolean;
   backgroundClosing: boolean;
 
-  trustedLogoUrl: any;
-  logoTop: any;
-  spinnerTop: any;
-  textTop: any;
+  trustedLogoUrl: SafeResourceUrl;
+  logoTop: SafeStyle;
+  spinnerTop: SafeStyle;
+  textTop: SafeStyle;
 
   showForegroundWatcher: Subscription;
   showBackgroundWatcher: Subscription;
@@ -86,12 +85,11 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.fgsSize = this.defaultConfig.fgsSize;
     this.fgsType = this.defaultConfig.fgsType;
     this.gap = this.defaultConfig.gap;
-    this.loaderId = this.defaultConfig.loaderId;
+    this.loaderId = this.defaultConfig.masterLoaderId;
     this.logoPosition = this.defaultConfig.logoPosition;
     this.logoSize = this.defaultConfig.logoSize;
     this.logoUrl = this.defaultConfig.logoUrl;
-    this.isMaster = this.defaultConfig.isMaster;
-    this.overlayBorderRadius =  this.defaultConfig.overlayBorderRadius;
+    this.overlayBorderRadius = this.defaultConfig.overlayBorderRadius;
     this.overlayColor = this.defaultConfig.overlayColor;
     this.pbColor = this.defaultConfig.pbColor;
     this.pbDirection = this.defaultConfig.pbDirection;
@@ -107,7 +105,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
    */
   ngOnInit() {
     this.initializeSpinners();
-    this.ngxService.initLoaderData(this.loaderId, this.isMaster);
+    this.ngxService.initLoaderData(this.loaderId);
     this.determinePositions();
 
     this.bgsPosition = <PositionType>this.validate('bgsPosition', this.bgsPosition, POSITION, this.defaultConfig.bgsPosition);
@@ -160,7 +158,6 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     const fgsTypeChange: SimpleChange = changes.fgsType;
     const loaderIdChange: SimpleChange = changes.loaderId;
     const logoUrlChange: SimpleChange = changes.logoUrl;
-    const isMasterChange: SimpleChange = changes.isMaster;
     const pbDirectionChange: SimpleChange = changes.pbDirection;
 
     if (fgsTypeChange || bgsTypeChange) {
@@ -169,10 +166,6 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
 
     if (loaderIdChange) {
       this.ngxService.updateLoaderId(loaderIdChange.previousValue, this.loaderId);
-    }
-
-    if (isMasterChange) {
-      this.ngxService.updateMasterStatus(this.loaderId, this.isMaster);
     }
 
     this.determinePositions();
