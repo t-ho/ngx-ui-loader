@@ -1,3 +1,8 @@
+# v7.1.0-beta.2
+* Support [multiple loaders](https://ngx-ui-loader.stackblitz.io/multiloader)
+* Remove `isMaster` attribute
+* Fixed incompatible issue
+
 # v7.1.0-beta.1
 * Support [multiple loaders](https://ngx-ui-loader.stackblitz.io/multiloader)
 * Update dependencies

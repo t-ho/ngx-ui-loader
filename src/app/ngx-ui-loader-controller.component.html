@@ -1,5 +1,5 @@
   <mat-list role="list" fxFlex="100" *ngIf="loader">
-    <h3><code>loaderId = "{{loader.loaderId}}"</code> and <code>isMaster = {{loader.isMaster}}</code></h3>
+    <h3><code>loaderId = "{{loader.loaderId}}"</code> {{loader.isMaster ? '- (master loader)' : ''}}</h3>
     <mat-list-item role="listitem">
       <mat-slide-toggle (change)="fgSlideChange($event.checked, 3000)"
           [(checked)]="loader.foreground['default']">

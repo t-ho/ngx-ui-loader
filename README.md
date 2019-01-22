@@ -17,7 +17,7 @@ Available spinners:
 [![ngx-ui-loader-spinners](https://j.gifs.com/G5VxP7.gif)](https://ngx-ui-loader.stackblitz.io/spinners)
 
 ### Features
-* Support multiple loaders (>= ngx-ui-loader@7.1.0). See [Multiple loaders](#multiple_loaders) for more details and [demo](https://ngx-ui-loader.stackblitz.io/multiloader)
+* Support multiple loaders (>= ngx-ui-loader@7.1.0). See [Multiple loaders](#multiple_loaders) for more details and [demo here](https://ngx-ui-loader.stackblitz.io/multiloader)
 * Show foreground loader with progress bar
 * The page content can be blurred/frosted while showing foreground loader. See [NgxUiLoaderBlurred](#ngxuiloaderblurred_directive) directive for more details
 * Show background loader with different id for different tasks
@@ -152,17 +152,19 @@ After importing the `NgxUiLoaderModule`, use `ngx-ui-loader` component in your t
 
 ```html
 <div style="position: relative"> <!-- the position of the parent container must be set to relative -->
-  <!-- It is really important to set loaderId and isMaster=false for non-master loader -->
-  <ngx-ui-loader [loaderId]="'loader-01'" [isMaster]="false"></ngx-ui-loader>
+  <!-- It is really important to set loaderId for non-master loader -->
+  <ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
 </div>
 
 <div style="position: relative"> <!-- the position of the parent container must be set to relative -->
-  <!-- It is really important to set loaderId and isMaster=false for non-master loader -->
-  <ngx-ui-loader [loaderId]="'loader-02'" [isMaster]="false"></ngx-ui-loader>
+  <!-- It is really important to set loaderId for non-master loader -->
+  <ngx-ui-loader [loaderId]="'loader-02'"></ngx-ui-loader>
 </div>
 
-<ngx-ui-loader></ngx-ui-loader> <!-- master loader by default -->
-<!-- You can set loaderId for master loader -->
+<ngx-ui-loader></ngx-ui-loader> <!-- this is master loader and its loaderId is "master" by default -->
+<!-- Note 1: If you really want to change loaderId of master loader, please use NgxUiLoaderModule.forRoot() method. -->
+<!-- Note 2: Your application can only have ONE master loader.
+             The master loader should be placed in your app root template, so you can call it anywhere in you app. -->
 ```
 
 See simple setup for multiple loaders [here](https://stackblitz.com/edit/ngx-ui-loader-multiloader-simple-setup) on Stackblitz.
@@ -276,8 +278,7 @@ All attributes are listed below:
 | `textPosition`       | *string*  | optional | `center-center`    | Loading text position. All available positions can be accessed via `POSITION`                   |
 |                      |           |          |                    |                                                                                                 |
 | `gap`                | *number*  | optional | `24`               | The gap between logo, foreground spinner and text when their positions are `center-center`      |
-| `isMaster`           | *boolean* | optional | `true`             | Determine whether this loader is a master loader or not. Note: The app should have only one **master** loader and it should be placed in the root template.                            |
-| `loaderId`           | *string*  | optional | `default`          | The loader ID                                                                                   |
+| `loaderId`           | *string*  | optional | `master`           | The loader ID                                                                                   |
 | `overlayBorderRadius`| *string*  | optional | `0`                | Overlay border radius                                                                           |
 | `overlayColor`       | *string*  | optional | `rgba(40,40,40,.8)`| Overlay background color                                                                        |
 
@@ -303,10 +304,10 @@ If you want your page content is blurred/frosted while showing foreground loader
 
 ### 5.2 Attributes:
 
-|   Attribute      |  Type     | Required |     Default        |                                       Description                                               |
-| ---------------- | --------- | -------- | ------------------ | ----------------------------------------------------------------------------------------------- |
-| `blur`           | *number*  | optional | `5`                | Blur the page content while showing foreground loader.                                          |
-| `loaderId`       | *string*  | optional | `default`          | The loader id that this blurred directive attached to.                                          |
+|   Attribute      |  Type     | Required |     Default        |                                       Description                                                            |
+| ---------------- | --------- | -------- | ------------------ | ------------------------------------------------------------------------------------------------------------ |
+| `blur`           | *number*  | optional | `5`                | Blur the page content while showing foreground loader.                                                       |
+| `loaderId`       | *string*  | optional | `master`           | The loader id that this blurred directive attached to. By default, `loaderId = DefaultConfig.masterLoaderId` |
 
 
 <a name="custom_configuration_for_ngxuiloadermodule"></a>
@@ -384,8 +385,7 @@ export class AppModule { }
 |                      |           |          |                    |                                                                                                 |
 | `blur`               | *number*  | optional | `5`                | Blur the page content while showing foreground loader. Only applied when using [ngxUiLoaderBlurred](#ngxuiloaderblurred_directive) directive.                     |
 | `gap`                | *number*  | optional | `24`               | The gap between logo, foreground spinner and text when their positions are `center-center`      |
-| `isMaster`           | *boolean* | optional | `true`             | Determine whether this loader is a master loader or not. Note: The app should have only one **master** loader and it should be placed in the root template.                            |
-| `loaderId`           | *string*  | optional | `default`          | The default value for all *loaderId* attributes                                                 |
+| `loaderId`           | *string*  | optional | `master`           | The default value for master's loaderId                                                           |
 | `overlayBorderRadius`| *string*  | optional | `0`                | Overlay border radius                                                                           |
 | `overlayColor`       | *string*  | optional | `rgba(40,40,40,.8)`| Overlay background color                                                                        |
 | `threshold`          | *number*  | optional | `500`              | The time a loader must be showed at least before it can be stopped. It must be >= 1 millisecond.|
@@ -432,10 +432,10 @@ export class AppModule { }
 
 ### 7.2 Parameters of `forRoot()` method
 
-|   Parameter      |  Type     | Required |     Default        |                                       Description                                               |
-| ---------------- | --------- | -------- | ------------------ | ----------------------------------------------------------------------------------------------- |
-| `loaderId`       | *string*  | optional | `default`          | Specify the loader id which will showed when navigating between app routes.                     |
-| `showForeground` | *boolean* | optional | `true`             | If `true`, foreground loader is showed. Otherwise, background loader is showed.                 |
+|   Parameter      |  Type     | Required |     Default        |                                       Description                                                                                 |
+| ---------------- | --------- | -------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| `loaderId`       | *string*  | optional | `master`           | Specify the loader id which will showed when navigating between app routes. By default, `loaderId = DefaultConfig.masterLoaderId` |
+| `showForeground` | *boolean* | optional | `true`             | If `true`, foreground loader is showed. Otherwise, background loader is showed.                                                   |
 
 
 <a name="http_requests"></a>
@@ -495,11 +495,11 @@ NgxUiLoaderHttpModule.forRoot({ exclude: ['https://external-domain.com/api/auth'
 ### 8.2 Parameters of `forRoot()` method
 
 
-|   Parameter      |  Type     | Required |     Default        |                                       Description                                               |
-| ---------------- | --------- | -------- | ------------------ | ----------------------------------------------------------------------------------------------- |
-| `exclude`        | *string[]*| optional | `null`             | An array of API urls. The loader is not showed when making request to these API urls.           |
-| `loaderId`       | *string*  | optional | `default`          | Specify the loader id which will showed when making http requests.                              |
-| `showForeground` | *boolean* | optional | `false`            | If `true`, foreground loader is showed. Otherwise, background loader is showed.                 |
+|   Parameter      |  Type     | Required |     Default        |                                                       Description                                                        |
+| ---------------- | --------- | -------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `exclude`        | *string[]*| optional | `null`             | An array of API urls. The loader is not showed when making request to these API urls.                                    |
+| `loaderId`       | *string*  | optional | `master`           | Specify the loader id which will showed when making http requests. By default, `loaderId = DefaultConfig.masterLoaderId` |
+| `showForeground` | *boolean* | optional | `false`            | If `true`, foreground loader is showed. Otherwise, background loader is showed.                                          |
 
 <a name="changelog"></a>
 
