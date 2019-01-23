@@ -15,6 +15,7 @@ export const CLOSING_TIME = 1100;
 
 export const WAITING_FOR_OVERLAY_DISAPPEAR = 500;
 
+export const UNKNOWN_TASK_ID = 'unknown-task-id';
 
 /**
  * The configuration of spinners

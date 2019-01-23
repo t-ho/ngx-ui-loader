@@ -14,6 +14,7 @@ const EXISTING_TASK_ID = 'existing-task-id';
 const TASK_ID_01 = 'task-id-01';
 const IS_MASTER = true;
 const IS_BOUND = true;
+const UNKNOW_TASK_ID = 'unknown-task-id';
 // }}}
 
 // backgroundCloseOut and foregroundCloseOut are tested in NgxUiLoaderComponent
@@ -346,7 +347,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     }));
     expect(loaderService.hasForeground(NOT_EXISTING_LOADER_ID)).toEqual(true);
     loaderService.showForeground$.subscribe((data) => {
-      expect(data).toEqual({ loaderId: NOT_EXISTING_LOADER_ID, isShow: true });
+      expect(data).toEqual({ loaderId: '', isShow: false });
     });
   });
 
@@ -410,9 +411,15 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
 
   it(`#initLoaderData('${LOADER_ID_01}') - should not throw any error`, () => {
     loaderService.startLoader(LOADER_ID_01);
+    loaderService.onStart$.subscribe((data) => {
+      expect(data).toEqual({ loaderId: LOADER_ID_01, taskId: UNKNOW_TASK_ID, isForeground: true });
+    });
     expect(function () {
       loaderService.initLoaderData(LOADER_ID_01);
     }).not.toThrowError(`[ngx-ui-loader] - loaderId "${LOADER_ID_01}" is duplicated. Please choose another one!`);
+    loaderService.showForeground$.subscribe((data) => {
+      expect(data).toEqual({ loaderId: LOADER_ID_01, isShow: true });
+    });
     expect(loaderService.getLoaders()[LOADER_ID_01]).toEqual(jasmine.objectContaining({
       loaderId: LOADER_ID_01,
       background: {},
@@ -437,7 +444,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     }));
     expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID)).toEqual(true);
     loaderService.showForeground$.subscribe((data) => {
-      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
+      expect(data).toEqual({ loaderId: '', isShow: false });
     });
   });
 
@@ -476,11 +483,17 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
 
   it(`#initLoaderData('${DEFAULT_MASTER_LOADER_ID}') - should not throw any error`, () => {
     loaderService.destroyLoaderData(DEFAULT_MASTER_LOADER_ID);
-    loaderService.startLoader(DEFAULT_MASTER_LOADER_ID);
+    loaderService.start();
+    loaderService.onStart$.subscribe((data) => {
+      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, taskId: UNKNOW_TASK_ID, isForeground: true });
+    });
     expect(function () {
       loaderService.initLoaderData(DEFAULT_MASTER_LOADER_ID);
     }).not.toThrowError(`[ngx-ui-loader] - The master loader has already existed. `
       + `The app should have only one master loader and it should be placed in the root app template`);
+    loaderService.showForeground$.subscribe((data) => {
+      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
+    });
     expect(loaderService.getLoaders()[DEFAULT_MASTER_LOADER_ID]).toEqual(jasmine.objectContaining({
       loaderId: DEFAULT_MASTER_LOADER_ID,
       background: {},
@@ -503,7 +516,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     }));
     expect(loaderService.hasBackground(NOT_EXISTING_LOADER_ID)).toEqual(true);
     loaderService.showBackground$.subscribe((data) => {
-      expect(data).toEqual({ loaderId: NOT_EXISTING_LOADER_ID, isShow: true });
+      expect(data).toEqual({ loaderId: '', isShow: false });
     });
   });
 
@@ -549,9 +562,15 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
 
   it(`#initLoaderData('${LOADER_ID_01}') - should not throw any error`, () => {
     loaderService.startBackgroundLoader(LOADER_ID_01);
+    loaderService.onStart$.subscribe((data) => {
+      expect(data).toEqual({ loaderId: LOADER_ID_01, taskId: UNKNOW_TASK_ID, isForeground: false });
+    });
     expect(function () {
       loaderService.initLoaderData(LOADER_ID_01);
     }).not.toThrowError(`[ngx-ui-loader] - loaderId "${LOADER_ID_01}" is duplicated. Please choose another one!`);
+    loaderService.showBackground$.subscribe((data) => {
+      expect(data).toEqual({ loaderId: LOADER_ID_01, isShow: true });
+    });
     expect(loaderService.getLoaders()[LOADER_ID_01]).toEqual(jasmine.objectContaining({
       loaderId: LOADER_ID_01,
       foreground: {},
@@ -576,7 +595,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     }));
     expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID)).toEqual(true);
     loaderService.showBackground$.subscribe((data) => {
-      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
+      expect(data).toEqual({ loaderId: '', isShow: false });
     });
   });
 
@@ -600,6 +619,26 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.showBackground$.subscribe((data) => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
     });
+  });
+
+  it(`#initLoaderData('${DEFAULT_MASTER_LOADER_ID}') - should not throw any error`, () => {
+    loaderService.destroyLoaderData(DEFAULT_MASTER_LOADER_ID);
+    loaderService.startBackground();
+    loaderService.onStart$.subscribe((data) => {
+      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, taskId: UNKNOW_TASK_ID, isForeground: false });
+    });
+    expect(function () {
+      loaderService.initLoaderData(DEFAULT_MASTER_LOADER_ID);
+    }).not.toThrowError(`[ngx-ui-loader] - loaderId "${DEFAULT_MASTER_LOADER_ID}" is duplicated. Please choose another one!`);
+    loaderService.showBackground$.subscribe((data) => {
+      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
+    });
+    expect(loaderService.getLoaders()[DEFAULT_MASTER_LOADER_ID]).toEqual(jasmine.objectContaining({
+      loaderId: DEFAULT_MASTER_LOADER_ID,
+      foreground: {},
+      isMaster: IS_MASTER,
+      isBound: IS_BOUND
+    }));
   });
 
   it(`#stopLoader('${NOT_EXISTING_LOADER_ID}') - 1 - should not throw any error`, () => {
@@ -660,7 +699,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.destroyLoaderData(DEFAULT_MASTER_LOADER_ID);
     expect(() => {
       loaderService.stop();
-    }).toThrowError(`[ngx-ui-loader] - The master loader does not exist.`);
+    }).toThrowError(`[ngx-ui-loader] - loaderId "${DEFAULT_MASTER_LOADER_ID}" does not exist.`);
   });
 
   it(`#stop() - 1 - should work correctly`, fakeAsync(() => {
@@ -738,7 +777,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.destroyLoaderData(DEFAULT_MASTER_LOADER_ID);
     expect(() => {
       loaderService.stopBackground();
-    }).toThrowError(`[ngx-ui-loader] - The master loader does not exist.`);
+    }).toThrowError(`[ngx-ui-loader] - loaderId "${DEFAULT_MASTER_LOADER_ID}" does not exist.`);
   });
 
   it(`#stopBackground() - 1 - should work correctly`, fakeAsync(() => {
@@ -844,7 +883,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.destroyLoaderData(DEFAULT_MASTER_LOADER_ID);
     expect(() => {
       loaderService.stopAll();
-    }).toThrowError(`[ngx-ui-loader] - The master loader does not exist.`);
+    }).toThrowError(`[ngx-ui-loader] - loaderId "${DEFAULT_MASTER_LOADER_ID}" does not exist.`);
   });
 
   it(`#stopAll() - 1 - should work correctly`, () => {

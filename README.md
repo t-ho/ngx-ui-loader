@@ -232,7 +232,7 @@ See [API - NgxUiLoaderService](#api_ngxuiloaderservice) for more details.
 * `NgxUiLoaderService.stopBackgroundLoader(loaderId, [taskId]='default')` Stops a background spinner of a specified loader.
 
 * `NgxUiLoaderService.getDefaultConfig()` Returns the default configuration object of `ngx-ui-loader`.
-* `NgxUiLoaderService.getLoader(loaderId)` Return a specific loader.
+* `NgxUiLoaderService.getLoader([loaderId])` Return a specified loader. If no loaderId given, it will return master loader (if exist).
 * `NgxUiLoaderService.getLoaders()` Return the all of loaders.
 * `NgxUiLoaderService.getStatus()` Deprecated - will be remove in version 8.x.x.
 * `NgxUiLoaderService.stopAll()` Stops all foreground and background loaders.
@@ -385,7 +385,7 @@ export class AppModule { }
 |                      |           |          |                    |                                                                                                 |
 | `blur`               | *number*  | optional | `5`                | Blur the page content while showing foreground loader. Only applied when using [ngxUiLoaderBlurred](#ngxuiloaderblurred_directive) directive.                     |
 | `gap`                | *number*  | optional | `24`               | The gap between logo, foreground spinner and text when their positions are `center-center`      |
-| `loaderId`           | *string*  | optional | `master`           | The default value for master's loaderId                                                           |
+| `masterLoaderId`     | *string*  | optional | `master`           | The default value for master's loaderId                                                           |
 | `overlayBorderRadius`| *string*  | optional | `0`                | Overlay border radius                                                                           |
 | `overlayColor`       | *string*  | optional | `rgba(40,40,40,.8)`| Overlay background color                                                                        |
 | `threshold`          | *number*  | optional | `500`              | The time a loader must be showed at least before it can be stopped. It must be >= 1 millisecond.|
