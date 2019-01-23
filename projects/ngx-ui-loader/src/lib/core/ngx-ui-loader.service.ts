@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { CLOSING_TIME, DEFAULT_TASK_ID, DEFAULT_CONFIG, UNKNOWN_TASK_ID, WAITING_FOR_OVERLAY_DISAPPEAR } from './ngx-ui-loader.contants';
 import { NGX_UI_LOADER_CONFIG_TOKEN } from './ngx-ui-loader-config.token';
 import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
-import { Loaders, Loader, ShowEvent, StartStopEvent, StopAllEvent, Task } from './ngx-ui-loader.interfaces';
+import { Loaders, Loader, ShowEvent, StartStopEvent, Task } from './ngx-ui-loader.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -41,12 +41,6 @@ export class NgxUiLoaderService {
    * For internal use only. It may be changed in the future.
    * @docs-private
    */
-  onStopAll$: Observable<StopAllEvent>;
-
-  /**
-   * For internal use only. It may be changed in the future.
-   * @docs-private
-   */
   showBackground$: Observable<ShowEvent>;
 
   /**
@@ -62,7 +56,6 @@ export class NgxUiLoaderService {
   private loaders: Loaders;
   private onStart: Subject<StartStopEvent>;
   private onStop: Subject<StartStopEvent>;
-  private onStopAll: Subject<StopAllEvent>;
   private showBackground: BehaviorSubject<ShowEvent>;
   private showForeground: BehaviorSubject<ShowEvent>;
 
@@ -95,8 +88,6 @@ export class NgxUiLoaderService {
     this.onStart$ = this.onStart.asObservable();
     this.onStop = new Subject<StartStopEvent>();
     this.onStop$ = this.onStop.asObservable();
-    this.onStopAll = new Subject<StopAllEvent>();
-    this.onStopAll$ = this.onStopAll.asObservable();
   }
 
   /**
@@ -313,8 +304,8 @@ export class NgxUiLoaderService {
   stopLoader(loaderId: string, taskId: string = DEFAULT_TASK_ID): void {
     this.throwErrorIfLoaderNotExist(loaderId);
 
+    // Update loader data {{{
     const now = Date.now();
-
     if (this.hasForeground(loaderId, taskId)) {
       if (this.loaders[loaderId].foreground[taskId] + this.defaultConfig.threshold > now) {
         setTimeout(() => {
@@ -326,25 +317,23 @@ export class NgxUiLoaderService {
     } else {
       return;
     }
+    // }}}
 
-    if (!this.isActive(loaderId)) {
-      this.foregroundCloseout(loaderId);
-      this.showForeground.next({ loaderId, isShow: false });
-      this.onStop.next({ loaderId, taskId, isForeground: true });
-      this.onStopAll.next({ loaderId, isStopAll: true });
-      return;
-    }
-
+    // Emit ShowEvents to update view {{{
     if (!this.hasForeground(loaderId)) {
-      // We can imply that this.hasBackground(loaderId) == true
       this.foregroundCloseout(loaderId);
       this.showForeground.next({ loaderId, isShow: false });
-      // Show background spinner after the foreground is closed out
-      setTimeout(() => {
-        this.showBackground.next({ loaderId, isShow: true });
-      }, WAITING_FOR_OVERLAY_DISAPPEAR);
+      if (this.hasBackground(loaderId)) {
+        setTimeout(() => {
+          if (this.hasBackground(loaderId)) { // still have background tasks
+            this.showBackground.next({ loaderId, isShow: true });
+          }
+        }, WAITING_FOR_OVERLAY_DISAPPEAR);
+      }
     }
+
     this.onStop.next({ loaderId, taskId, isForeground: true });
+    // }}}
   }
 
   /**
@@ -365,8 +354,8 @@ export class NgxUiLoaderService {
   stopBackgroundLoader(loaderId: string, taskId: string = DEFAULT_TASK_ID): void {
     this.throwErrorIfLoaderNotExist(loaderId);
 
+    // Update loader data {{{
     const now = Date.now();
-
     if (this.hasBackground(loaderId, taskId)) {
       if (this.loaders[loaderId].background[taskId] + this.defaultConfig.threshold > now) {
         setTimeout(() => {
@@ -378,16 +367,15 @@ export class NgxUiLoaderService {
     } else {
       return;
     }
+    // }}}
 
-    if (!this.isActive(loaderId)) {
+    // Emit ShowEvents to update view {{{
+    if (!this.hasForeground(loaderId) && !this.hasBackground(loaderId)) {
       this.backgroundCloseout(loaderId);
       this.showBackground.next({ loaderId, isShow: false });
-      this.onStop.next({ loaderId, taskId, isForeground: false });
-      this.onStopAll.next({ loaderId, isStopAll: true });
-      return;
     }
-
     this.onStop.next({ loaderId, taskId, isForeground: false });
+    // }}}
   }
 
   /**
@@ -415,7 +403,6 @@ export class NgxUiLoaderService {
     }
     this.loaders[loaderId].foreground = {};
     this.loaders[loaderId].background = {};
-    this.onStopAll.next({ loaderId, isStopAll: true });
   }
 
   /**
@@ -483,14 +470,6 @@ export class NgxUiLoaderService {
     if (!this.loaders[this.defaultConfig.masterLoaderId]) {
       throw new Error(`[ngx-ui-loader] - The master loader does not exist.`);
     }
-  }
-
-  /**
-   * Determine whether the loader is active
-   * @returns true if the loader is active
-   */
-  private isActive(loaderId: string): boolean {
-    return this.hasForeground(loaderId) || this.hasBackground(loaderId);
   }
 
   /**

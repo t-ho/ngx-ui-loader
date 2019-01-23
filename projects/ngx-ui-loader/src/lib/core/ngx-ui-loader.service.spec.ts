@@ -579,6 +579,25 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     }));
   });
 
+  it(`#initLoaderData('${LOADER_ID_01}') - should not throw any error`, () => {
+    loaderService.startBackgroundLoader(LOADER_ID_01);
+    loaderService.onStart$.subscribe((data) => {
+      expect(data).toEqual({ loaderId: LOADER_ID_01, taskId: UNKNOW_TASK_ID, isForeground: false });
+    });
+    expect(function () {
+      loaderService.initLoaderData(LOADER_ID_01);
+    }).not.toThrowError(`[ngx-ui-loader] - loaderId "${LOADER_ID_01}" is duplicated. Please choose another one!`);
+    loaderService.showBackground$.subscribe((data) => {
+      expect(data).toEqual({ loaderId: LOADER_ID_01, isShow: true });
+    });
+    expect(loaderService.getLoaders()[LOADER_ID_01]).toEqual(jasmine.objectContaining({
+      loaderId: LOADER_ID_01,
+      foreground: {},
+      isMaster: !IS_MASTER,
+      isBound: IS_BOUND
+    }));
+  });
+
   it(`#startBackground() - 0 - should not throw any error`, () => {
     loaderService.destroyLoaderData(DEFAULT_MASTER_LOADER_ID);
     loaderService.onStart$.subscribe((data) => {
@@ -658,9 +677,6 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.onStop$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, taskId: DEFAULT_TASK_ID, isForeground: true });
     });
-    loaderService.onStopAll$.subscribe(data => {
-      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isStopAll: true });
-    });
     setTimeout(() => {
       loaderService.stopLoader(DEFAULT_MASTER_LOADER_ID);
     }, THRESHOLD - 1);
@@ -692,6 +708,34 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
     });
+    tick(500);
+    loaderService.showBackground$.subscribe(data => {
+      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
+    });
+    tick(10000);
+  }));
+
+  it(`#stopLoader('${DEFAULT_MASTER_LOADER_ID}') - 5 - should work correctly`, fakeAsync(() => {
+    loaderService.startBackground(); // has background
+    loaderService.startLoader(DEFAULT_MASTER_LOADER_ID);
+    setTimeout(() => {
+      loaderService.stopLoader(DEFAULT_MASTER_LOADER_ID);
+    }, THRESHOLD - 1);
+    tick(THRESHOLD - 1);
+    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, DEFAULT_TASK_ID)).toEqual(true);
+    tick(1);
+    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, DEFAULT_TASK_ID)).toEqual(false);
+    tick(1);
+    loaderService.showForeground$.subscribe(data => {
+      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
+    });
+    tick(200);
+    loaderService.stopBackground();
+    tick(300);
+    loaderService.showBackground$.subscribe(data => {
+      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
+    });
+
     tick(10000);
   }));
 
@@ -739,9 +783,6 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.onStop$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, taskId: DEFAULT_TASK_ID, isForeground: false });
     });
-    loaderService.onStopAll$.subscribe(data => {
-      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isStopAll: true });
-    });
     setTimeout(() => {
       loaderService.stopBackgroundLoader(DEFAULT_MASTER_LOADER_ID);
     }, THRESHOLD - 1);
@@ -785,9 +826,6 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.onStop$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, taskId: DEFAULT_TASK_ID, isForeground: false });
     });
-    loaderService.onStopAll$.subscribe(data => {
-      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isStopAll: true });
-    });
     setTimeout(() => {
       loaderService.stopBackground();
     }, THRESHOLD - 1);
@@ -809,9 +847,6 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
   });
 
   it(`#stopLoaderAll('${DEFAULT_MASTER_LOADER_ID}') - 2 - should work correctly`, () => {
-    loaderService.onStopAll$.subscribe(data => {
-      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isStopAll: true });
-    });
     loaderService.stopLoaderAll(DEFAULT_MASTER_LOADER_ID);
     expect(loaderService.getLoaders()[DEFAULT_MASTER_LOADER_ID]).toEqual({
       loaderId: DEFAULT_MASTER_LOADER_ID,
@@ -824,9 +859,6 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
 
   it(`#stopLoaderAll('${DEFAULT_MASTER_LOADER_ID}') - 3 - should work correctly`, () => {
     loaderService.start();
-    loaderService.onStopAll$.subscribe(data => {
-      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isStopAll: true });
-    });
     loaderService.stopLoaderAll(DEFAULT_MASTER_LOADER_ID);
     loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
@@ -844,9 +876,6 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.start();
     loaderService.startBackground();
     loaderService.startBackground(TASK_ID_01);
-    loaderService.onStopAll$.subscribe(data => {
-      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isStopAll: true });
-    });
     loaderService.stopLoaderAll(DEFAULT_MASTER_LOADER_ID);
     loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
@@ -863,9 +892,6 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
   it(`#stopLoaderAll('${DEFAULT_MASTER_LOADER_ID}') - 5 - should work correctly`, () => {
     loaderService.startBackground();
     loaderService.startBackground(TASK_ID_01);
-    loaderService.onStopAll$.subscribe(data => {
-      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isStopAll: true });
-    });
     loaderService.stopLoaderAll(DEFAULT_MASTER_LOADER_ID);
     loaderService.showBackground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
@@ -890,9 +916,6 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.start();
     loaderService.startBackground();
     loaderService.startBackground(TASK_ID_01);
-    loaderService.onStopAll$.subscribe(data => {
-      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isStopAll: true });
-    });
     loaderService.stopAll();
     loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
@@ -911,9 +934,6 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
   it(`#stopAll() - 2 - should work correctly`, () => {
     loaderService.startBackground();
     loaderService.startBackground(TASK_ID_01);
-    loaderService.onStopAll$.subscribe(data => {
-      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isStopAll: true });
-    });
     loaderService.stopAll();
     loaderService.showBackground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });

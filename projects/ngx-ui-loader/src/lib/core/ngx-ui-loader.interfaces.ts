@@ -26,7 +26,3 @@ export interface StartStopEvent extends LoaderEvent {
   taskId: string;
   isForeground: boolean;
 }
-
-export interface StopAllEvent extends LoaderEvent {
-  isStopAll: boolean;
-}
