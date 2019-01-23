@@ -1,3 +1,8 @@
+# v7.1.0-beta.3
+* Support [multiple loaders](https://ngx-ui-loader.stackblitz.io/multiloader)
+* Remove stopAll event - it is useless
+* Bug fixed: Should not emit ShowEvent before loader data is bound to ngx-ui-loader component
+
 # v7.1.0-beta.2
 * Support [multiple loaders](https://ngx-ui-loader.stackblitz.io/multiloader)
 * Remove `isMaster` attribute
