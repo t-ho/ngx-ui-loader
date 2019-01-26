@@ -1,3 +1,6 @@
+# v7.1.1
+* Republish the package - Cannot find the ngx-ui-loader on NPM
+
 # v7.1.0
 * Support [multiple loaders](https://ngx-ui-loader.stackblitz.io/multiloader)
 * Remove stopAll event
