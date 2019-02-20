@@ -9,9 +9,11 @@ import { NgxUiLoaderService, Loader } from 'ngx-ui-loader';
 })
 export class NgxUiLoaderControllerComponent implements OnInit, OnDestroy {
 
-  timers: any[];
-
   @Input() loader: Loader;
+
+  timers: any[];
+  foregroundStarted: {};
+  backgroundStarted: {};
 
   constructor(private ngxUiLoaderService: NgxUiLoaderService) {
   }
@@ -21,37 +23,31 @@ export class NgxUiLoaderControllerComponent implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.timers = [];
-  }
-
-  fgSlideChange(checked: boolean, delay: number, taskId?: string) {
-    if (checked) {
-      if (this.loader.isMaster) {
-        this.ngxUiLoaderService.start(taskId);
-        this.timers = [...this.timers, setTimeout(() => {
-          this.ngxUiLoaderService.stop(taskId);
-        }, delay)];
-      } else {
-        this.ngxUiLoaderService.startLoader(this.loader.loaderId, taskId);
-        this.timers = [...this.timers, setTimeout(() => {
-          this.ngxUiLoaderService.stopLoader(this.loader.loaderId, taskId);
-        }, delay)];
-      }
+    this.foregroundStarted = {};
+    this.backgroundStarted = {};
+    if (this.loader.isMaster) {
+      this.backgroundStarted = { ...this.loader.background };
     }
   }
 
-  bgSlideChange(checked: boolean, delay: number, taskId?: string) {
+  fgSlideChange(checked: boolean, delay: number, taskId: string = 'default') {
     if (checked) {
-      if (this.loader.isMaster) {
-        this.ngxUiLoaderService.startBackground(taskId);
-      } else {
-        this.ngxUiLoaderService.startBackgroundLoader(this.loader.loaderId, taskId);
-      }
+      this.ngxUiLoaderService.startLoader(this.loader.loaderId, taskId);
+      this.foregroundStarted[taskId] = true;
+      this.timers = [...this.timers, setTimeout(() => {
+        this.ngxUiLoaderService.stopLoader(this.loader.loaderId, taskId);
+        this.foregroundStarted[taskId] = false;
+      }, delay)];
+    }
+  }
+
+  bgSlideChange(checked: boolean, taskId: string = 'default') {
+    if (checked) {
+      this.ngxUiLoaderService.startBackgroundLoader(this.loader.loaderId, taskId);
+      this.backgroundStarted[taskId] = true;
     } else {
-      if (this.loader.isMaster) {
-        this.ngxUiLoaderService.stopBackground(taskId);
-      } else {
-        this.ngxUiLoaderService.stopBackgroundLoader(this.loader.loaderId, taskId);
-      }
+      this.ngxUiLoaderService.stopBackgroundLoader(this.loader.loaderId, taskId);
+      this.backgroundStarted[taskId] = false;
     }
   }
 

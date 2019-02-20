@@ -14,15 +14,7 @@ export interface Loaders {
   [loaderId: string]: Loader;
 }
 
-interface LoaderEvent {
+export interface ShowEvent {
   loaderId: string;
-}
-
-export interface ShowEvent extends LoaderEvent {
   isShow: boolean;
-}
-
-export interface StartStopEvent extends LoaderEvent {
-  taskId: string;
-  isForeground: boolean;
 }

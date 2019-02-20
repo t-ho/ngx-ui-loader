@@ -1,74 +1,44 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { NgxUiLoaderService, Loaders, SPINNER } from 'ngx-ui-loader';
-import { Subscription } from 'rxjs';
+import { NgxUiLoaderService, Loader, SPINNER } from 'ngx-ui-loader';
+
+const LOGO_URL = 'assets/angular.png';
 
 @Component({
   selector: 'app-multi-loader-demo',
   templateUrl: './multi-loader-demo.component.html',
   styleUrls: ['./multi-loader-demo.component.scss']
 })
-export class MultiLoaderDemoComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MultiLoaderDemoComponent {
 
-  data: any[];
-  loaders: Loaders;
-  onStartWatcher: Subscription;
-  onStopWatcher: Subscription;
+  loaders: any[];
+  masterLoader: Loader;
   timers: any;
 
-  constructor(private cdr: ChangeDetectorRef,
-    private ngxUiLoaderService: NgxUiLoaderService) {
-    this.loaders = {};
-    this.data = [
+  constructor(private ngxUiLoaderService: NgxUiLoaderService) {
+    this.masterLoader = this.ngxUiLoaderService.getLoader();
+    this.loaders = [
       {
+        hasProgressBar: true,
         loaderId: 'loader-01',
+        logoUrl: LOGO_URL,
+        logoSize: 80,
+        isMaster: false,
         spinnerType: SPINNER.ballScaleMultiple,
       },
       {
+        hasProgressBar: false,
         loaderId: 'loader-02',
+        isMaster: false,
         spinnerType: SPINNER.chasingDots,
+        text: 'NO progress bar'
       },
       {
+        hasProgressBar: true,
         loaderId: 'loader-03',
+        isMaster: false,
         spinnerType: SPINNER.wanderingCubes,
       },
-      {
-        loaderId: 'loader-04',
-        spinnerType: SPINNER.ballSpinFadeRotating,
-      },
     ];
-  }
-
-  /**
-   * On init
-   */
-  ngOnInit() {
-    this.onStopWatcher = this.ngxUiLoaderService.onStop$
-      .subscribe(data => {
-        this.getLoaders();
-      });
-
-    this.onStartWatcher = this.ngxUiLoaderService.onStart$
-      .subscribe(data => {
-        this.getLoaders();
-      });
-  }
-
-  ngAfterViewInit() {
-    this.getLoaders();
-    this.cdr.detectChanges();
-  }
-
-  getLoaders() {
-    this.loaders = this.ngxUiLoaderService.getLoaders();
-  }
-
-  ngOnDestroy() {
-    if (this.onStartWatcher) {
-      this.onStartWatcher.unsubscribe();
-    }
-    if (this.onStopWatcher) {
-      this.onStopWatcher.unsubscribe();
-    }
   }
 }

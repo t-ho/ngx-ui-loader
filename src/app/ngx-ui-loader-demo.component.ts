@@ -1,6 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgxUiLoaderService, Loader, SPINNER, POSITION, PB_DIRECTION } from 'ngx-ui-loader';
-import { Subscription } from 'rxjs';
 import { NgxUiLoaderDemoService } from './ngx-ui-loader-demo.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -11,7 +10,7 @@ const LOGO_URL = 'assets/angular.png';
   templateUrl: './ngx-ui-loader-demo.component.html',
   styleUrls: ['./ngx-ui-loader-demo.component.scss']
 })
-export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
+export class NgxUiLoaderDemoComponent implements OnInit {
   spinnerTypes: string[];
   positions: string[];
   directions: string[];
@@ -19,9 +18,6 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
   disabled: boolean;
 
   loader: Loader;
-
-  onStartWatcher: Subscription;
-  onStopWatcher: Subscription;
 
   /**
    * Constructor
@@ -43,27 +39,14 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
 
     this.disabled = false;
 
-    this.getLoader();
-
-    this.onStopWatcher = this.ngxUiLoaderService.onStop$
-      .subscribe(data => {
-        this.getLoader();
-      });
-
-    this.onStartWatcher = this.ngxUiLoaderService.onStart$
-      .subscribe(data => {
-        this.getLoader();
-      });
-  }
-
-  getLoader() {
     this.loader = this.ngxUiLoaderService.getLoader();
+
   }
 
-    /**
-   * Add logo url
-   * @param checked
-   */
+  /**
+ * Add logo url
+ * @param checked
+ */
   addLogo(checked: boolean) {
     if (checked) {
       this.demoService.config.logoUrl = LOGO_URL;
@@ -93,17 +76,5 @@ export class NgxUiLoaderDemoComponent implements OnDestroy, OnInit {
       console.log(res);
       this.disabled = false;
     });
-  }
-
-  /**
-   * On destroy
-   */
-  ngOnDestroy() {
-    if (this.onStartWatcher) {
-      this.onStartWatcher.unsubscribe();
-    }
-    if (this.onStopWatcher) {
-      this.onStopWatcher.unsubscribe();
-    }
   }
 }
