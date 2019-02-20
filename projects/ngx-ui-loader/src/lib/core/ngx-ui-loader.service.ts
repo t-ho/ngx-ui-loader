@@ -1,10 +1,10 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
-import { CLOSING_TIME, DEFAULT_TASK_ID, DEFAULT_CONFIG, UNKNOWN_TASK_ID, WAITING_FOR_OVERLAY_DISAPPEAR } from './ngx-ui-loader.contants';
+import { CLOSING_TIME, DEFAULT_TASK_ID, DEFAULT_CONFIG, WAITING_FOR_OVERLAY_DISAPPEAR } from './ngx-ui-loader.contants';
 import { NGX_UI_LOADER_CONFIG_TOKEN } from './ngx-ui-loader-config.token';
 import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
-import { Loaders, Loader, ShowEvent, StartStopEvent, Task } from './ngx-ui-loader.interfaces';
+import { Loaders, Loader, ShowEvent, Task } from './ngx-ui-loader.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -29,18 +29,6 @@ export class NgxUiLoaderService {
    * For internal use only. It may be changed in the future.
    * @docs-private
    */
-  onStart$: Observable<StartStopEvent>;
-
-  /**
-   * For internal use only. It may be changed in the future.
-   * @docs-private
-   */
-  onStop$: Observable<StartStopEvent>;
-
-  /**
-   * For internal use only. It may be changed in the future.
-   * @docs-private
-   */
   showBackground$: Observable<ShowEvent>;
 
   /**
@@ -54,8 +42,6 @@ export class NgxUiLoaderService {
   private defaultConfig: NgxUiLoaderConfig;
   private fgClosing: BehaviorSubject<ShowEvent>;
   private loaders: Loaders;
-  private onStart: Subject<StartStopEvent>;
-  private onStop: Subject<StartStopEvent>;
   private showBackground: BehaviorSubject<ShowEvent>;
   private showForeground: BehaviorSubject<ShowEvent>;
 
@@ -83,11 +69,6 @@ export class NgxUiLoaderService {
     this.foregroundClosing$ = this.fgClosing.asObservable();
     this.bgClosing = new BehaviorSubject<ShowEvent>({ loaderId: '', isShow: false });
     this.backgroundClosing$ = this.bgClosing.asObservable();
-
-    this.onStart = new Subject<StartStopEvent>();
-    this.onStart$ = this.onStart.asObservable();
-    this.onStop = new Subject<StartStopEvent>();
-    this.onStop$ = this.onStop.asObservable();
   }
 
   /**
@@ -108,11 +89,9 @@ export class NgxUiLoaderService {
       // emit showEvent after data loader is bound
       if (this.hasForeground(loaderId)) {
         this.showForeground.next({ loaderId, isShow: true });
-        this.onStart.next({ loaderId, taskId: UNKNOWN_TASK_ID, isForeground: true });
       } else {
         if (this.hasBackground(loaderId)) {
           this.showBackground.next({ loaderId, isShow: true });
-          this.onStart.next({ loaderId, taskId: UNKNOWN_TASK_ID, isForeground: false });
         }
       }
     } else {
@@ -251,7 +230,6 @@ export class NgxUiLoaderService {
       }
       this.showForeground.next({ loaderId, isShow: true });
     }
-    this.onStart.next({ loaderId, taskId, isForeground: true });
   }
 
   /**
@@ -282,7 +260,6 @@ export class NgxUiLoaderService {
     if (!this.hasForeground(loaderId)) {
       this.showBackground.next({ loaderId, isShow: true });
     }
-    this.onStart.next({ loaderId, taskId, isForeground: false });
   }
 
   /**
@@ -331,8 +308,6 @@ export class NgxUiLoaderService {
         }, WAITING_FOR_OVERLAY_DISAPPEAR);
       }
     }
-
-    this.onStop.next({ loaderId, taskId, isForeground: true });
     // }}}
   }
 
@@ -374,7 +349,6 @@ export class NgxUiLoaderService {
       this.backgroundCloseout(loaderId);
       this.showBackground.next({ loaderId, isShow: false });
     }
-    this.onStop.next({ loaderId, taskId, isForeground: false });
     // }}}
   }
 

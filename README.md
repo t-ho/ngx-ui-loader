@@ -258,12 +258,12 @@ All attributes are listed below:
 | `bgsOpacity`         | *number*  | optional | `0.5`              | Background spinner opacity                                                                      |
 | `bgsPosition`        | *string*  | optional | `bottom-right`     | Background spinner postion. All available positions can be accessed via `POSITION`              |
 | `bgsSize`            | *number*  | optional | `60`               | Background spinner size.                                                                        |
-| `bgsType`            | *string*  | optional | `rectangle-bounce` | Background spinner type. All available types can be accessed via `SPINNER`                      |
+| `bgsType`            | *string*  | optional | `ball-spin-clockwise` | Background spinner type. All available types can be accessed via `SPINNER`                      |
 |                      |           |          |                    |                                                                                                 |
 | `fgsColor`           | *string*  | optional | `#00ACC1`          | Foreground spinner color                                                                        |
 | `fgsPosition`        | *string*  | optional | `center-center`    | Foreground spinner position. All available positions can be accessed via `POSITION`             |
 | `fgsSize`            | *number*  | optional | `60`               | Foreground spinner size.                                                                        |
-| `fgsType`            | *string*  | optional | `rectangle-bounce` | Foreground spinner type. All available types can be accessed via `SPINNER`                      |
+| `fgsType`            | *string*  | optional | `ball-spin-clockwise` | Foreground spinner type. All available types can be accessed via `SPINNER`                      |
 |                      |           |          |                    |                                                                                                 |
 | `logoPosition`       | *string*  | optional | `center-center`    | Logo position. All available positions can be accessed via `POSITION`                           |
 | `logoSize`           | *number*  | optional | `120`              | Logo size (px)                                                                                  |
@@ -364,12 +364,12 @@ export class AppModule { }
 | `bgsOpacity`         | *number*  | optional | `0.5`              | Background spinner opacity                                                                      |
 | `bgsPosition`        | *string*  | optional | `bottom-right`     | Background spinner postion. All available positions can be accessed via `POSITION`              |
 | `bgsSize`            | *number*  | optional | `60`               | Background spinner size.                                                                        |
-| `bgsType`            | *string*  | optional | `rectangle-bounce` | Background spinner type. All available types can be accessed via `SPINNER`                      |
+| `bgsType`            | *string*  | optional | `ball-spin-clockwise` | Background spinner type. All available types can be accessed via `SPINNER`                      |
 |                      |           |          |                    |                                                                                                 |
 | `fgsColor`           | *string*  | optional | `#00ACC1`          | Foreground spinner color                                                                        |
 | `fgsPosition`        | *string*  | optional | `center-center`    | Foreground spinner position. All available positions can be accessed via `POSITION`             |
 | `fgsSize`            | *number*  | optional | `60`               | Foreground spinner size.                                                                        |
-| `fgsType`            | *string*  | optional | `rectangle-bounce` | Foreground spinner type. All available types can be accessed via `SPINNER`                      |
+| `fgsType`            | *string*  | optional | `ball-spin-clockwise` | Foreground spinner type. All available types can be accessed via `SPINNER`                      |
 |                      |           |          |                    |                                                                                                 |
 | `logoPosition`       | *string*  | optional | `center-center`    | Logo position. All available positions can be accessed via `POSITION`                           |
 | `logoSize`           | *number*  | optional | `120`              | Logo size (px)                                                                                  |
