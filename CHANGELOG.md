@@ -1,3 +1,7 @@
+# v7.1.2
+* Reduce the package's size - [bundlephobia](https://bundlephobia.com/result?p=ngx-ui-loader@7.1.2)
+* Remove internal events that are only used in demo app
+
 # v7.1.1
 * Republish the package - Cannot find the ngx-ui-loader on NPM
 

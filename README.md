@@ -236,7 +236,7 @@ See [API - NgxUiLoaderService](#api_ngxuiloaderservice) for more details.
 * `NgxUiLoaderService.getLoader([loaderId])` Return a specified loader. If no loaderId given, it will return master loader (if exist).
 * `NgxUiLoaderService.getLoaders()` Return the all of loaders.
 * `NgxUiLoaderService.getStatus()` Deprecated - will be remove in version 8.x.x.
-* `NgxUiLoaderService.stopAll()` Stops all foreground and background loaders.
+* `NgxUiLoaderService.stopAll()` Stops all foreground and background loadings/spinners of master loader.
 
 <a name="attributes_of_ngxuiloadercomponent"></a>
 
