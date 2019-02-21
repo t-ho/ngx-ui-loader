@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { CLOSING_TIME, DEFAULT_TASK_ID, DEFAULT_CONFIG, WAITING_FOR_OVERLAY_DISAPPEAR } from './ngx-ui-loader.contants';
 import { NGX_UI_LOADER_CONFIG_TOKEN } from './ngx-ui-loader-config.token';

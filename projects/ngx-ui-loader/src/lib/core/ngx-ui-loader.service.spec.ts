@@ -14,7 +14,6 @@ const EXISTING_TASK_ID = 'existing-task-id';
 const TASK_ID_01 = 'task-id-01';
 const IS_MASTER = true;
 const IS_BOUND = true;
-const UNKNOW_TASK_ID = 'unknown-task-id';
 // }}}
 
 // backgroundCloseOut and foregroundCloseOut are tested in NgxUiLoaderComponent

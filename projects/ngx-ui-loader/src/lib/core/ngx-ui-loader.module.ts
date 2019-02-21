@@ -1,7 +1,6 @@
-import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NgxUiLoaderService } from './ngx-ui-loader.service';
 import { NgxUiLoaderComponent } from './ngx-ui-loader.component';
 import { NgxUiLoaderBlurredDirective } from './ngx-ui-loader-blurred.directive';
 import { NGX_UI_LOADER_CONFIG_TOKEN } from './ngx-ui-loader-config.token';

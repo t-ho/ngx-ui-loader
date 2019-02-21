@@ -8,7 +8,6 @@ import { DirectionType, PositionType, SpinnerType } from './ngx-ui-loader.types'
 import { POSITION, PB_DIRECTION, SPINNER } from './ngx-ui-loader.enums';
 import { SPINNER_CONFIG } from './ngx-ui-loader.contants';
 import { coerceNumber } from './coercion';
-import { ShowEvent } from './ngx-ui-loader.interfaces';
 
 @Component({
   selector: 'ngx-ui-loader',
