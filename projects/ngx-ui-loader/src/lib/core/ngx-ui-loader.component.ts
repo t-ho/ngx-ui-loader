@@ -2,11 +2,13 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges, SimpleChange, OnDes
 import { DomSanitizer, SafeResourceUrl, SafeStyle } from '@angular/platform-browser';
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
 import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
 import { DirectionType, PositionType, SpinnerType } from './ngx-ui-loader.types';
 import { POSITION, PB_DIRECTION, SPINNER } from './ngx-ui-loader.enums';
 import { SPINNER_CONFIG } from './ngx-ui-loader.contants';
+import { ShowEvent } from './ngx-ui-loader.interfaces';
 import { coerceNumber } from './coercion';
 
 @Component({
@@ -114,31 +116,27 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.pbDirection = <DirectionType>this.validate('pbDirection', this.pbDirection, PB_DIRECTION, this.defaultConfig.pbDirection);
 
     this.showForegroundWatcher = this.ngxService.showForeground$
+      .pipe(filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId))
       .subscribe(data => {
-        if (data.loaderId === this.loaderId) {
-          this.showForeground = data.isShow;
-        }
+        this.showForeground = data.isShow;
       });
 
     this.showBackgroundWatcher = this.ngxService.showBackground$
+      .pipe(filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId))
       .subscribe(data => {
-        if (data.loaderId === this.loaderId) {
-          this.showBackground = data.isShow;
-        }
+        this.showBackground = data.isShow;
       });
 
     this.foregroundClosingWatcher = this.ngxService.foregroundClosing$
+      .pipe(filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId))
       .subscribe(data => {
-        if (data.loaderId === this.loaderId) {
-          this.foregroundClosing = data.isShow;
-        }
+        this.foregroundClosing = data.isShow;
       });
 
     this.backgroundClosingWatcher = this.ngxService.backgroundClosing$
+      .pipe(filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId))
       .subscribe(data => {
-        if (data.loaderId === this.loaderId) {
-          this.backgroundClosing = data.isShow;
-        }
+        this.backgroundClosing = data.isShow;
       });
     this.initialized = true;
   }

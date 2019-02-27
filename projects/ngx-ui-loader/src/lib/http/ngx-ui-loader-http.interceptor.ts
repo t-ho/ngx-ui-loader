@@ -13,6 +13,8 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
 
   private count: number;
   private defaultConfig: NgxUiLoaderHttpConfig;
+  private exclude: string[];
+  private excludeRegexp: RegExp[];
 
   /**
    * Constructor
@@ -30,18 +32,18 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
 
     if (config) {
       if (config.exclude) {
-        config.exclude = config.exclude.map(url => url.toLowerCase());
+        this.exclude = config.exclude.map(url => url.toLowerCase());
+      }
+      if (config.excludeRegexp) {
+        this.excludeRegexp = config.excludeRegexp.map(regexp => new RegExp(regexp, 'i'));
       }
       this.defaultConfig = { ...this.defaultConfig, ...config };
     }
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (this.defaultConfig.exclude) {
-      // do not show the loader for api url in the `exclude` list
-      if (this.defaultConfig.exclude.findIndex(url => req.url.toLowerCase().startsWith(url)) !== -1) {
-        return next.handle(req);
-      }
+    if (this.isIgnored(req.url)) {
+      return next.handle(req);
     }
 
     this.count++;
@@ -65,5 +67,23 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
         }
       }
     }));
+  }
+
+  private isIgnored(url: string): boolean {
+    if (this.exclude) {
+      // do not show the loader for api urls in the `exclude` list
+      if (this.exclude.findIndex(str => url.toLowerCase().startsWith(str)) !== -1) {
+        return true;
+      }
+    }
+
+    if (this.excludeRegexp) {
+      // do not show the loader for api urls which matches regexps in the `excludeRegexp` list
+      if (this.excludeRegexp.findIndex(regexp => regexp.test(url)) !== -1) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }
