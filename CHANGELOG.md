@@ -1,5 +1,8 @@
+# v7.2.0
+* NgxUiLoaderHttpModule configuration can accept regexp list [#18](https://github.com/t-ho/ngx-ui-loader/issues/18)
+
 # v7.1.2
-* Reduce the package's size - [bundlephobia](https://bundlephobia.com/result?p=ngx-ui-loader@7.1.2)
+* Reduce the package's size
 * Remove internal events that are only used in demo app
 
 # v7.1.1
