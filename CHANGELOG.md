@@ -1,3 +1,6 @@
+# v7.2.1
+* BugFix: The `core` folder is missing due to [npm-cli@6.8.0 bug](https://npm.community/t/npm-v6-8-0-pack-publish-not-bundling-folders-named-core/5727) - [#19](https://github.com/t-ho/ngx-ui-loader/issues/19)
+
 # v7.2.0
 * NgxUiLoaderHttpModule configuration can accept regexp list [#18](https://github.com/t-ho/ngx-ui-loader/issues/18)
 
