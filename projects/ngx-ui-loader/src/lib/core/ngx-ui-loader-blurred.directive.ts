@@ -1,8 +1,10 @@
 import { Directive, ElementRef, Input, OnDestroy, Renderer2, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
 import { coerceNumber } from './coercion';
+import { ShowEvent } from './ngx-ui-loader.interfaces';
 import { WAITING_FOR_OVERLAY_DISAPPEAR } from './ngx-ui-loader.contants';
 
 @Directive({ selector: '[ngxUiLoaderBlurred]' })
@@ -37,20 +39,19 @@ export class NgxUiLoaderBlurredDirective implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.showForegroundWatcher = this.ngxUiLoaderService.showForeground$
+      .pipe(filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId))
       .subscribe(data => {
-        if (data.loaderId === this.loaderId) {
-          if (data.isShow) {
-            const filterValue = `blur(${this.blurNumber}px)`;
-            this.renderer.setStyle(this.elementRef.nativeElement, '-webkit-filter', filterValue);
-            this.renderer.setStyle(this.elementRef.nativeElement, 'filter', filterValue);
-          } else {
-            setTimeout(() => {
-              if (!this.ngxUiLoaderService.hasForeground(data.loaderId)) {
-                this.renderer.setStyle(this.elementRef.nativeElement, '-webkit-filter', 'none');
-                this.renderer.setStyle(this.elementRef.nativeElement, 'filter', 'none');
-              }
-            }, WAITING_FOR_OVERLAY_DISAPPEAR);
-          }
+        if (data.isShow) {
+          const filterValue = `blur(${this.blurNumber}px)`;
+          this.renderer.setStyle(this.elementRef.nativeElement, '-webkit-filter', filterValue);
+          this.renderer.setStyle(this.elementRef.nativeElement, 'filter', filterValue);
+        } else {
+          setTimeout(() => {
+            if (!this.ngxUiLoaderService.hasForeground(data.loaderId)) {
+              this.renderer.setStyle(this.elementRef.nativeElement, '-webkit-filter', 'none');
+              this.renderer.setStyle(this.elementRef.nativeElement, 'filter', 'none');
+            }
+          }, WAITING_FOR_OVERLAY_DISAPPEAR);
         }
       });
   }
