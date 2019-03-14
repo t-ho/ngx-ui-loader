@@ -11,7 +11,7 @@
 
 An all-in-one and fully customizable loader/spinner for Angular 5, 6 and 7+ applications. It supports foreground, background spinner/loader, indicative progress bar and multiple loaders.
 
-[![ngx-ui-loader-demo](https://raw.githubusercontent.com/t-ho/ngx-ui-loader/master/src/assets/multiloader.gif)](https://ngx-ui-loader.stackblitz.io)
+[![ngx-ui-loader-demo](https://raw.githubusercontent.com/t-ho/ngx-ui-loader/master/src/assets/multi-loaders.gif)](https://ngx-ui-loader.stackblitz.io/multiloader)
 
 Available spinners:
 
