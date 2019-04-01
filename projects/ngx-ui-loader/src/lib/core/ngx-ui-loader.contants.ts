@@ -11,7 +11,7 @@ export const DEFAULT_TASK_ID = 'default';
  */
 export const DEFAULT_MASTER_LOADER_ID = 'master';
 
-export const CLOSING_TIME = 1100;
+export const CLOSING_TIME = 1001;
 
 export const WAITING_FOR_OVERLAY_DISAPPEAR = 500;
 

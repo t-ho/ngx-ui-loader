@@ -117,6 +117,7 @@ $spinnerSize: 60px;
   height: 100%;
   z-index: 99998 !important;
   background-color: $overlayColor;
+  cursor: progress;
   display: none;
 
   &.loading-foreground, &.foreground-closing {
