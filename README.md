@@ -22,7 +22,7 @@ Available spinners:
 * Show foreground loader with **progress bar**
 * The page content can be **blurred/frosted** while showing foreground loader. See [NgxUiLoaderBlurred](https://github.com/t-ho/ngx-ui-loader/wiki/NgxUiLoaderBlurred-directive) directive for more details
 * Show loader with different id for different tasks
-* Be able to add **logo**, **loading text**
+* Be able to add **logo** and **loading text**
 * Be able to change position of spinners, logo and loading text
 * Be able to change color and size of logo, spinners and progress bar
 * Be able to change the direction of progress bar
@@ -36,10 +36,6 @@ Available spinners:
 Live demo [here](https://ngx-ui-loader.stackblitz.io).
 
 Multiple loaders demo [here](https://ngx-ui-loader.stackblitz.io/multiloader).
-
-Minimal setup [here](https://stackblitz.com/edit/ngx-ui-loader-minimal-setup) on Stackblitz.
-
-Simple setup for multiple loaders [here](https://stackblitz.com/edit/ngx-ui-loader-multiloader-simple-setup) on Stackblitz.
 
 Live demo source code [here](https://stackblitz.com/edit/ngx-ui-loader) on Stackblitz.
 
@@ -58,6 +54,8 @@ $ npm install --save ngx-ui-loader
 ```shell
 $ yarn add ngx-ui-loader
 ```
+
+*Please read [wiki page](https://github.com/t-ho/ngx-ui-loader/wiki) for more instructions*
 
 ### * For Angular 4 and 5, please use ngx-ui-loader version 1.2.x
 

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { NgxUiLoaderComponent } from './ngx-ui-loader.component';
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
-import { SimpleChange } from '@angular/core';
+import { SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { SPINNER, POSITION, PB_DIRECTION } from './ngx-ui-loader.enums';
 import { SPINNER_CONFIG } from './ngx-ui-loader.contants';
 import { PositionType } from './ngx-ui-loader.types';
@@ -43,6 +43,9 @@ describe('NgxUiLoaderComponent', () => {
         NgxUiLoaderService
       ]
     })
+      .overrideComponent(NgxUiLoaderComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default }
+      })
       .compileComponents();
   }));
 
@@ -335,7 +338,7 @@ describe('NgxUiLoaderComponent', () => {
     });
     fixture.detectChanges();
     expect(console.error).toHaveBeenCalledWith(`[ngx-ui-loader] - bgsPosition ("invalid-position") is invalid. `
-    + `Default value "${component.defaultConfig.bgsPosition}" is used.`);
+      + `Default value "${component.defaultConfig.bgsPosition}" is used.`);
     expect(component.bgsPosition).toBe(component.defaultConfig.bgsPosition);
   });
 

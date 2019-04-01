@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges, SimpleChange, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, SimpleChange,
+  OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeStyle } from '@angular/platform-browser';
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
 import { Subscription } from 'rxjs';
@@ -14,7 +15,8 @@ import { coerceNumber } from './coercion';
 @Component({
   selector: 'ngx-ui-loader',
   templateUrl: './ngx-ui-loader.component.html',
-  styleUrls: ['./ngx-ui-loader.component.scss']
+  styleUrls: ['./ngx-ui-loader.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
 
@@ -71,6 +73,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
    */
   constructor(
     private domSanitizer: DomSanitizer,
+    private changeDetectorRef: ChangeDetectorRef,
     private ngxService: NgxUiLoaderService) {
 
     this.initialized = false;
@@ -119,24 +122,28 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
       .pipe(filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId))
       .subscribe(data => {
         this.showForeground = data.isShow;
+        this.changeDetectorRef.markForCheck();
       });
 
     this.showBackgroundWatcher = this.ngxService.showBackground$
       .pipe(filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId))
       .subscribe(data => {
         this.showBackground = data.isShow;
+        this.changeDetectorRef.markForCheck();
       });
 
     this.foregroundClosingWatcher = this.ngxService.foregroundClosing$
       .pipe(filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId))
       .subscribe(data => {
         this.foregroundClosing = data.isShow;
+        this.changeDetectorRef.markForCheck();
       });
 
     this.backgroundClosingWatcher = this.ngxService.backgroundClosing$
       .pipe(filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId))
       .subscribe(data => {
         this.backgroundClosing = data.isShow;
+        this.changeDetectorRef.markForCheck();
       });
     this.initialized = true;
   }
