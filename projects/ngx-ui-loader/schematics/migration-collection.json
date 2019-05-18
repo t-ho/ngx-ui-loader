@@ -1,0 +1,9 @@
+{
+  "schematics": {
+    "migration-01": {
+      "version": "7.2.2",
+      "factory": "./update/index#update722",
+      "description": "Update ngx-ui-loader to version 7.2.2"
+    }
+  }
+}

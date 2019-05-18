@@ -2,6 +2,15 @@
   "name": "ngx-ui-loader",
   "description": "An all-in-one and fully customizable loader/spinner for Angular 5, 6 and 7+ applications. It supports foreground, background spinner/loader, indicative progress bar and multiple loaders.",
   "version": "7.2.2",
+  "scripts": {
+    "build": "../../node_modules/.bin/tsc -p tsconfig.schematics.json",
+    "copy:collections": "cp schematics/*collection.json ../../dist/ngx-ui-loader/schematics/",
+    "postbuild": "npm run copy:collections"
+  },
+  "schematics": "./schematics/collection.json",
+  "ng-update": {
+    "migrations": "./schematics/migration-collection.json"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/t-ho/ngx-ui-loader.git"

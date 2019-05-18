@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build ngx-ui-loader && ng build",
     "build:lib": "ng build ngx-ui-loader && cp README.md CHANGELOG.md LICENSE ./dist/ngx-ui-loader/",
+    "build:schematics": "cd projects/ngx-ui-loader && npm run build && cd ../..",
     "test": "ng test ngx-ui-loader --code-coverage",
     "lint": "ng lint",
     "e2e": "ng e2e"
