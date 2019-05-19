@@ -5,5 +5,5 @@ export function ngAdd(_options: any): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     _context.addTask(new NodePackageInstallTask());
     return tree;
-  }
+  };
 }
