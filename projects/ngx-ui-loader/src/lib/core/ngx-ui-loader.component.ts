@@ -6,11 +6,11 @@ import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
-import { DirectionType, PositionType, SpinnerType } from './ngx-ui-loader.types';
-import { POSITION, PB_DIRECTION, SPINNER } from './ngx-ui-loader.enums';
-import { SPINNER_CONFIG } from './ngx-ui-loader.contants';
-import { ShowEvent } from './ngx-ui-loader.interfaces';
-import { coerceNumber } from './coercion';
+import { DirectionType, PositionType, SpinnerType } from '../utils/types';
+import { POSITION, PB_DIRECTION, SPINNER } from '../utils/enums';
+import { SPINNER_CONFIG } from '../utils/constants';
+import { ShowEvent } from '../utils/interfaces';
+import { coerceNumber } from '../utils/functions';
 
 @Component({
   selector: 'ngx-ui-loader',

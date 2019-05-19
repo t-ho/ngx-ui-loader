@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SPINNER_CONFIG } from '../../projects/ngx-ui-loader/src/lib/core/ngx-ui-loader.contants';
+import { SPINNER_CONFIG } from '../../projects/ngx-ui-loader/src/lib/utils/constants';
 
 @Component({
   selector: 'app-spinner-demo',

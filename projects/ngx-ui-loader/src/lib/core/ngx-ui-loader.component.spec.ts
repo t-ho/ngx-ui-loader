@@ -3,9 +3,9 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { NgxUiLoaderComponent } from './ngx-ui-loader.component';
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
 import { SimpleChange, ChangeDetectionStrategy } from '@angular/core';
-import { SPINNER, POSITION, PB_DIRECTION } from './ngx-ui-loader.enums';
-import { SPINNER_CONFIG } from './ngx-ui-loader.contants';
-import { PositionType } from './ngx-ui-loader.types';
+import { SPINNER, POSITION, PB_DIRECTION } from '../utils/enums';
+import { SPINNER_CONFIG } from '../utils/constants';
+import { PositionType } from '../utils/types';
 
 // DO NOT change the following constants {{{
 const BACKGROUND_CLOSING_CLASS = 'background-closing';

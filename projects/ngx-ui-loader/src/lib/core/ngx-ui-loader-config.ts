@@ -1,4 +1,4 @@
-import { DirectionType, PositionType, SpinnerType } from './ngx-ui-loader.types';
+import { DirectionType, PositionType, SpinnerType } from '../utils/types';
 
 /**
  * The interface of ngx-ui-loader configuration

@@ -1,7 +1,7 @@
 import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
-import { DEFAULT_CONFIG } from './ngx-ui-loader.contants';
+import { DEFAULT_CONFIG } from '../utils/constants';
 
 // DO NOT change the following constants {{{
 const THRESHOLD = 500;

@@ -6,15 +6,16 @@ import { finalize } from 'rxjs/operators';
 import { NgxUiLoaderService } from '../core/ngx-ui-loader.service';
 import { NGX_UI_LOADER_HTTP_CONFIG_TOKEN } from './ngx-ui-loader-http-config.token';
 import { NgxUiLoaderHttpConfig } from './ngx-ui-loader-http-config';
-import { HTTP_LOADER_ID } from './ngx-ui-loader-http.constants';
+import { HTTP_LOADER_TASK_ID } from '../utils/constants';
+import { getExclude, isIgnored } from '../utils/functions';
+import { Exclude } from '../utils/interfaces';
 
 @Injectable()
 export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
 
   private count: number;
   private defaultConfig: NgxUiLoaderHttpConfig;
-  private exclude: string[];
-  private excludeRegexp: RegExp[];
+  private exclude: Exclude;
 
   /**
    * Constructor
@@ -30,30 +31,26 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
       showForeground: false
     };
 
+    this.exclude = getExclude(config);
+
     if (config) {
-      if (config.exclude) {
-        this.exclude = config.exclude.map(url => url.toLowerCase());
-      }
-      if (config.excludeRegexp) {
-        this.excludeRegexp = config.excludeRegexp.map(regexp => new RegExp(regexp, 'i'));
-      }
       this.defaultConfig = { ...this.defaultConfig, ...config };
     }
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (this.isIgnored(req.url)) {
+    if (isIgnored(req.url, this.exclude.strs, this.exclude.regExps)) {
       return next.handle(req);
     }
 
     this.count++;
     if (this.defaultConfig.showForeground) {
-      if (!this.ngxUiLoaderService.hasForeground(this.defaultConfig.loaderId, HTTP_LOADER_ID)) {
-        this.ngxUiLoaderService.startLoader(this.defaultConfig.loaderId, HTTP_LOADER_ID);
+      if (!this.ngxUiLoaderService.hasForeground(this.defaultConfig.loaderId, HTTP_LOADER_TASK_ID)) {
+        this.ngxUiLoaderService.startLoader(this.defaultConfig.loaderId, HTTP_LOADER_TASK_ID);
       }
     } else {
-      if (!this.ngxUiLoaderService.hasBackground(this.defaultConfig.loaderId, HTTP_LOADER_ID)) {
-        this.ngxUiLoaderService.startBackgroundLoader(this.defaultConfig.loaderId, HTTP_LOADER_ID);
+      if (!this.ngxUiLoaderService.hasBackground(this.defaultConfig.loaderId, HTTP_LOADER_TASK_ID)) {
+        this.ngxUiLoaderService.startBackgroundLoader(this.defaultConfig.loaderId, HTTP_LOADER_TASK_ID);
       }
     }
 
@@ -61,29 +58,12 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
       this.count--;
       if (this.count === 0) {
         if (this.defaultConfig.showForeground) {
-          this.ngxUiLoaderService.stopLoader(this.defaultConfig.loaderId, HTTP_LOADER_ID);
+          this.ngxUiLoaderService.stopLoader(this.defaultConfig.loaderId, HTTP_LOADER_TASK_ID);
         } else {
-          this.ngxUiLoaderService.stopBackgroundLoader(this.defaultConfig.loaderId, HTTP_LOADER_ID);
+          this.ngxUiLoaderService.stopBackgroundLoader(this.defaultConfig.loaderId, HTTP_LOADER_TASK_ID);
         }
       }
     }));
   }
 
-  private isIgnored(url: string): boolean {
-    if (this.exclude) {
-      // do not show the loader for api urls in the `exclude` list
-      if (this.exclude.findIndex(str => url.toLowerCase().startsWith(str)) !== -1) {
-        return true;
-      }
-    }
-
-    if (this.excludeRegexp) {
-      // do not show the loader for api urls which matches regexps in the `excludeRegexp` list
-      if (this.excludeRegexp.findIndex(regexp => regexp.test(url)) !== -1) {
-        return true;
-      }
-    }
-
-    return false;
-  }
 }

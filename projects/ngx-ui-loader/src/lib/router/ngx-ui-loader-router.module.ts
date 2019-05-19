@@ -4,13 +4,14 @@ import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Rout
 import { NgxUiLoaderService } from '../core/ngx-ui-loader.service';
 import { NgxUiLoaderRouterConfig } from './ngx-ui-loader-router-config';
 import { NGX_UI_LOADER_ROUTER_CONFIG_TOKEN } from './ngx-ui-loader-router-config.token';
-import { ROUTER_LOADER_ID } from './ngx-ui-loader-router.constants';
+import { ROUTER_LOADER_TASK_ID } from '../utils/constants';
+import { getExclude, isIgnored } from '../utils/functions';
+import { Exclude } from '../utils/interfaces';
 
 @NgModule({})
 export class NgxUiLoaderRouterModule {
 
-  private exclude: string[];
-  private excludeRegexp: RegExp[];
+  private exclude: Exclude;
 
   /**
    * forRoot
@@ -52,55 +53,34 @@ export class NgxUiLoaderRouterModule {
       showForeground: true
     };
 
+    this.exclude = getExclude(config);
+
     if (config) {
-      if (config.exclude) {
-        this.exclude = config.exclude.map(url => url.toLowerCase());
-      }
-      if (config.excludeRegexp) {
-        this.excludeRegexp = config.excludeRegexp.map(regexp => new RegExp(regexp, 'i'));
-      }
       defaultConfig = { ...defaultConfig, ...config };
     }
 
     router.events
       .subscribe((event: RouterEvent) => {
         if (event instanceof NavigationStart) {
-          if (!this.isIgnored(event.url)) {
+          if (!isIgnored(event.url, this.exclude.strs, this.exclude.regExps)) {
             if (defaultConfig.showForeground) {
-              ngxUiLoaderService.startLoader(defaultConfig.loaderId, ROUTER_LOADER_ID);
+              ngxUiLoaderService.startLoader(defaultConfig.loaderId, ROUTER_LOADER_TASK_ID);
             } else {
-              ngxUiLoaderService.startBackgroundLoader(defaultConfig.loaderId, ROUTER_LOADER_ID);
+              ngxUiLoaderService.startBackgroundLoader(defaultConfig.loaderId, ROUTER_LOADER_TASK_ID);
             }
           }
         }
 
         if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
-          if (!this.isIgnored(event.url)) {
+          if (!isIgnored(event.url, this.exclude.strs, this.exclude.regExps)) {
             if (defaultConfig.showForeground) {
-              ngxUiLoaderService.stopLoader(defaultConfig.loaderId, ROUTER_LOADER_ID);
+              ngxUiLoaderService.stopLoader(defaultConfig.loaderId, ROUTER_LOADER_TASK_ID);
             } else {
-              ngxUiLoaderService.stopBackgroundLoader(defaultConfig.loaderId, ROUTER_LOADER_ID);
+              ngxUiLoaderService.stopBackgroundLoader(defaultConfig.loaderId, ROUTER_LOADER_TASK_ID);
             }
           }
         }
       });
   }
 
-  private isIgnored(url: string): boolean {
-    if (this.exclude) {
-      // do not show the loader for urls in the `exclude` list
-      if (this.exclude.findIndex(str => url.toLowerCase().startsWith(str)) !== -1) {
-        return true;
-      }
-    }
-
-    if (this.excludeRegexp) {
-      // do not show the loader for urls which matches regexps in the `excludeRegexp` list
-      if (this.excludeRegexp.findIndex(regexp => regexp.test(url)) !== -1) {
-        return true;
-      }
-    }
-
-    return false;
-  }
 }

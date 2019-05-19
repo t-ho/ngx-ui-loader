@@ -3,9 +3,9 @@ import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
-import { coerceNumber } from './coercion';
-import { ShowEvent } from './ngx-ui-loader.interfaces';
-import { WAITING_FOR_OVERLAY_DISAPPEAR } from './ngx-ui-loader.contants';
+import { coerceNumber } from '../utils/functions';
+import { ShowEvent } from '../utils/interfaces';
+import { WAITING_FOR_OVERLAY_DISAPPEAR } from '../utils/constants';
 
 @Directive({ selector: '[ngxUiLoaderBlurred]' })
 export class NgxUiLoaderBlurredDirective implements OnInit, OnDestroy {

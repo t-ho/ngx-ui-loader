@@ -1,5 +1,5 @@
-import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
-import { POSITION, PB_DIRECTION, SPINNER } from './ngx-ui-loader.enums';
+import { NgxUiLoaderConfig } from '../core/ngx-ui-loader-config';
+import { POSITION, PB_DIRECTION, SPINNER } from './enums';
 
 /**
  * The default value of task id
@@ -14,6 +14,16 @@ export const DEFAULT_MASTER_LOADER_ID = 'master';
 export const CLOSING_TIME = 1001;
 
 export const WAITING_FOR_OVERLAY_DISAPPEAR = 500;
+
+/**
+ * Http loader taskId
+ */
+export const HTTP_LOADER_TASK_ID = '$_http-loader';
+
+/**
+ * Router loader taskId
+ */
+export const ROUTER_LOADER_TASK_ID = '$_router_loader';
 
 /**
  * The configuration of spinners
