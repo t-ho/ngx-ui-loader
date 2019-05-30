@@ -19,11 +19,9 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
 
   /**
    * Constructor
-   * @param config
-   * @param ngxUiLoaderService
    */
   constructor(@Optional() @Inject(NGX_UI_LOADER_HTTP_CONFIG_TOKEN) config: NgxUiLoaderHttpConfig,
-    private ngxUiLoaderService: NgxUiLoaderService) {
+              private ngxUiLoaderService: NgxUiLoaderService) {
 
     this.count = 0;
     this.defaultConfig = {

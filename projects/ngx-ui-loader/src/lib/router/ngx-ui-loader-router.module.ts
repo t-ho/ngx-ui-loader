@@ -15,7 +15,6 @@ export class NgxUiLoaderRouterModule {
 
   /**
    * forRoot
-   * @param routerConfig Configuration
    * @returns A module with its provider dependencies
    */
   static forRoot(routerConfig: NgxUiLoaderRouterConfig): ModuleWithProviders {
@@ -32,17 +31,11 @@ export class NgxUiLoaderRouterModule {
 
   /**
    * Constructor
-   *
-   * @param parentModule
-   * @param config
-   * @param router
-   * @param ngxUiLoaderService
    */
-  constructor(
-    @Optional() @SkipSelf() parentModule: NgxUiLoaderRouterModule,
-    @Optional() @Inject(NGX_UI_LOADER_ROUTER_CONFIG_TOKEN) config: NgxUiLoaderRouterConfig,
-    router: Router,
-    ngxUiLoaderService: NgxUiLoaderService) {
+  constructor(@Optional() @SkipSelf() parentModule: NgxUiLoaderRouterModule,
+              @Optional() @Inject(NGX_UI_LOADER_ROUTER_CONFIG_TOKEN) config: NgxUiLoaderRouterConfig,
+              router: Router,
+              ngxUiLoaderService: NgxUiLoaderService) {
 
     if (parentModule) {
       throw new Error('[ngx-ui-loader] - NgxUiLoaderRouterModule is already loaded. It should be imported in the root `AppModule` only!');

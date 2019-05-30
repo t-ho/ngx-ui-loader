@@ -18,7 +18,6 @@ export class NgxUiLoaderHttpModule {
 
   /**
    * Constructor
-   * @param parentModule optional
    */
   constructor(@Optional() @SkipSelf() parentModule: NgxUiLoaderHttpModule) {
     if (parentModule) {
@@ -28,7 +27,6 @@ export class NgxUiLoaderHttpModule {
 
   /**
    * forRoot
-   * @param httpConfig Configuration
    * @returns A module with its provider dependencies
    */
   static forRoot(httpConfig: NgxUiLoaderHttpConfig): ModuleWithProviders {

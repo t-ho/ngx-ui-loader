@@ -332,7 +332,7 @@ describe('NgxUiLoaderComponent', () => {
 
   it('#validate', () => {
     spyOn(console, 'error');
-    component.bgsPosition = <PositionType>'invalid-position';
+    component.bgsPosition = 'invalid-position' as PositionType;
     component.ngOnChanges({
       bgsPosition: new SimpleChange(null, component.bgsPosition, true),
     });

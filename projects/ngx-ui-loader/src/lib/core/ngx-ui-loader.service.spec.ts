@@ -67,13 +67,13 @@ describe(`NgxUiLoaderService (no loader)`, () => {
   });
 
   it(`#getLoader('${NOT_EXISTING_LOADER_ID}')`, () => {
-    expect(function () {
+    expect(() => {
       loaderService.getLoader(NOT_EXISTING_LOADER_ID);
     }).toThrowError(`[ngx-ui-loader] - loaderId "${NOT_EXISTING_LOADER_ID}" does not exist.`);
   });
 
   it(`#getLoader()`, () => {
-    expect(function () {
+    expect(() => {
       loaderService.getLoader();
     }).toThrowError(`[ngx-ui-loader] - The master loader does not exist.`);
   });
@@ -100,14 +100,14 @@ describe(`NgxUiLoaderService (no loader)`, () => {
 
   it(`#bindLoaderData('${LOADER_ID_01}') - 3 - should throw duplicated loaderId error`, () => {
     loaderService.bindLoaderData(LOADER_ID_01);
-    expect(function () {
+    expect(() => {
       loaderService.bindLoaderData(LOADER_ID_01);
     }).toThrowError(`[ngx-ui-loader] - loaderId "${LOADER_ID_01}" is duplicated.`);
   });
 
   it(`#bindLoaderData('${DEFAULT_MASTER_LOADER_ID}') - 4 - should throw master loader already existed error`, () => {
     loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
-    expect(function () {
+    expect(() => {
       loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
     }).toThrowError(`[ngx-ui-loader] - The master loader has already existed. `
       + `The app should have only one master loader and it should be placed in the root app template`);
@@ -401,7 +401,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
 
   it(`#bindLoaderData('${LOADER_ID_01}') - should not throw any error`, () => {
     loaderService.startLoader(LOADER_ID_01);
-    expect(function () {
+    expect(() => {
       loaderService.bindLoaderData(LOADER_ID_01);
     }).not.toThrowError(`[ngx-ui-loader] - loaderId "${LOADER_ID_01}" is duplicated.`);
     loaderService.showForeground$.subscribe((data) => {
@@ -464,7 +464,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
   it(`#bindLoaderData('${DEFAULT_MASTER_LOADER_ID}') - should not throw any error`, () => {
     loaderService.destroyLoaderData(DEFAULT_MASTER_LOADER_ID);
     loaderService.start();
-    expect(function () {
+    expect(() => {
       loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
     }).not.toThrowError(`[ngx-ui-loader] - The master loader has already existed. `
       + `The app should have only one master loader and it should be placed in the root app template`);
@@ -526,7 +526,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
 
   it(`#bindLoaderData('${LOADER_ID_01}') - should not throw any error`, () => {
     loaderService.startBackgroundLoader(LOADER_ID_01);
-    expect(function () {
+    expect(() => {
       loaderService.bindLoaderData(LOADER_ID_01);
     }).not.toThrowError(`[ngx-ui-loader] - loaderId "${LOADER_ID_01}" is duplicated.`);
     loaderService.showBackground$.subscribe((data) => {
@@ -543,7 +543,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
 
   it(`#bindLoaderData('${LOADER_ID_01}') - should not throw any error`, () => {
     loaderService.startBackgroundLoader(LOADER_ID_01);
-    expect(function () {
+    expect(() => {
       loaderService.bindLoaderData(LOADER_ID_01);
     }).not.toThrowError(`[ngx-ui-loader] - loaderId "${LOADER_ID_01}" is duplicated.`);
     loaderService.showBackground$.subscribe((data) => {
@@ -595,7 +595,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
   it(`#bindLoaderData('${DEFAULT_MASTER_LOADER_ID}') - should not throw any error`, () => {
     loaderService.destroyLoaderData(DEFAULT_MASTER_LOADER_ID);
     loaderService.startBackground();
-    expect(function () {
+    expect(() => {
       loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
     }).not.toThrowError(`[ngx-ui-loader] - loaderId "${DEFAULT_MASTER_LOADER_ID}" is duplicated.`);
     loaderService.showBackground$.subscribe((data) => {

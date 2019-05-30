@@ -43,7 +43,6 @@ export class NgxUiLoaderService {
 
   /**
    * Constructor
-   * @param config
    */
   constructor(@Optional() @Inject(NGX_UI_LOADER_CONFIG_TOKEN) private config: NgxUiLoaderConfig) {
     this.defaultConfig = { ...DEFAULT_CONFIG };
@@ -312,9 +311,6 @@ export class NgxUiLoaderService {
 
   /**
    * Create loader data if it does not exist
-   * @param loaderId
-   * @param isMaster
-   * @param isBound
    * @docs-private
    */
   private createLoaderData(loaderId: string, isMaster: boolean, isBound: boolean): void {
@@ -396,7 +392,6 @@ export class NgxUiLoaderService {
   /**
    * Clear all timers of the given task
    * @docs-private
-   * @param task
    */
   private clearTimers(task: Task): void {
     if (task.delayTimer) {
@@ -413,7 +408,6 @@ export class NgxUiLoaderService {
   /**
    * Clear all timers of the given tasks
    * @docs-private
-   * @param tasks
    */
   private clearAllTimers(tasks: Tasks): void {
     Object.keys(tasks).map((id) => {
@@ -423,9 +417,6 @@ export class NgxUiLoaderService {
 
   /**
    * @docs-private
-   * @param loaderId
-   * @param taskId
-   * @param isForeground
    */
   private hasRunningTask(loaderId: string, taskId: string, isForeground: boolean): boolean {
     if (this.loaders[loaderId]) {
@@ -443,9 +434,6 @@ export class NgxUiLoaderService {
 
   /**
    * @docs-private
-   * @param loaderId
-   * @param taskId
-   * @param isForeground
    */
   private readyToStart(loaderId: string, taskId: string, isForeground: boolean): boolean {
     this.createLoaderData(loaderId, undefined, false);
@@ -474,8 +462,6 @@ export class NgxUiLoaderService {
 
   /**
    * @docs-private
-   * @param loaderId
-   * @param taskId
    */
   private readyToStop(loaderId: string, taskId: string): boolean {
     this.throwErrorIfLoaderNotExist(loaderId);
@@ -499,8 +485,6 @@ export class NgxUiLoaderService {
   /**
    * Set delay timer, if `delay` > 0
    * @docs-private
-   * @param task
-   * @param loaderId
    * @returns boolean
    */
   private setDelayTimer(task: Task, loaderId: string): boolean {
@@ -527,8 +511,6 @@ export class NgxUiLoaderService {
   /**
    * Set maxTimer if `maxTime` > `minTime`
    * @docs-private
-   * @param task
-   * @param loaderId
    * @returns boolean
    */
   private setMaxTimer(task: Task, loaderId: string): void {
@@ -548,8 +530,6 @@ export class NgxUiLoaderService {
   /**
    * Set minTimer if `startAt` + `minTime` > `Date.now()`
    * @docs-private
-   * @param task
-   * @param loaderId
    * @returns boolean
    */
   private setMinTimer(task: Task, loaderId: string): boolean {

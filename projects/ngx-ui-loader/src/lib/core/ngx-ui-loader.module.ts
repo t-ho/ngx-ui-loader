@@ -23,7 +23,6 @@ export class NgxUiLoaderModule {
 
   /**
    * forRoot
-   * @param ngxUiLoaderConfig
    * @returns A module with its provider dependencies
    */
   static forRoot(ngxUiLoaderConfig: NgxUiLoaderConfig): ModuleWithProviders {

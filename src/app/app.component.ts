@@ -11,7 +11,6 @@ export class AppComponent {
 
   /**
    * Constructor
-   * @param demoService
    */
   constructor(public demoService: NgxUiLoaderDemoService) {
   }

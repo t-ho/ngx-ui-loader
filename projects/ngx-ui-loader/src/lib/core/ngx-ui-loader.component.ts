@@ -68,8 +68,6 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
 
   /**
    * Constructor
-   * @param domSanitizer
-   * @param ngxService
    */
   constructor(
     private domSanitizer: DomSanitizer,
@@ -112,11 +110,11 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.ngxService.bindLoaderData(this.loaderId);
     this.determinePositions();
 
-    this.bgsPosition = <PositionType>this.validate('bgsPosition', this.bgsPosition, POSITION, this.defaultConfig.bgsPosition);
+    this.bgsPosition = this.validate('bgsPosition', this.bgsPosition, POSITION, this.defaultConfig.bgsPosition) as PositionType;
 
     this.trustedLogoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.logoUrl);
 
-    this.pbDirection = <DirectionType>this.validate('pbDirection', this.pbDirection, PB_DIRECTION, this.defaultConfig.pbDirection);
+    this.pbDirection = this.validate('pbDirection', this.pbDirection, PB_DIRECTION, this.defaultConfig.pbDirection) as DirectionType;
 
     this.showForegroundWatcher = this.ngxService.showForeground$
       .pipe(filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId))
@@ -150,7 +148,6 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
 
   /**
    * On changes event
-   * @param changes
    */
   ngOnChanges(changes: SimpleChanges) {
     if (!this.initialized) {
@@ -175,7 +172,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.determinePositions();
 
     if (bgsPositionChange) {
-      this.bgsPosition = <PositionType>this.validate('bgsPosition', this.bgsPosition, POSITION, this.defaultConfig.bgsPosition);
+      this.bgsPosition = this.validate('bgsPosition', this.bgsPosition, POSITION, this.defaultConfig.bgsPosition) as PositionType;
     }
 
     if (logoUrlChange) {
@@ -183,7 +180,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     }
 
     if (pbDirectionChange) {
-      this.pbDirection = <DirectionType>this.validate('pbDirection', this.pbDirection, PB_DIRECTION, this.defaultConfig.pbDirection);
+      this.pbDirection = this.validate('pbDirection', this.pbDirection, PB_DIRECTION, this.defaultConfig.pbDirection) as DirectionType;
     }
   }
 
@@ -191,8 +188,8 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
    * Initialize spinners
    */
   private initializeSpinners(): void {
-    this.fgsType = <SpinnerType>this.validate('fgsType', this.fgsType, SPINNER, this.defaultConfig.fgsType);
-    this.bgsType = <SpinnerType>this.validate('bgsType', this.bgsType, SPINNER, this.defaultConfig.bgsType);
+    this.fgsType = this.validate('fgsType', this.fgsType, SPINNER, this.defaultConfig.fgsType) as SpinnerType;
+    this.bgsType = this.validate('bgsType', this.bgsType, SPINNER, this.defaultConfig.bgsType) as SpinnerType;
 
     this.fgDivs = Array(SPINNER_CONFIG[this.fgsType].divs).fill(1);
     this.fgSpinnerClass = SPINNER_CONFIG[this.fgsType].class;
@@ -204,9 +201,9 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
    * Determine the positions of spinner, logo and text
    */
   private determinePositions(): void {
-    this.fgsPosition = <PositionType>this.validate('fgsPosition', this.fgsPosition, POSITION, this.defaultConfig.fgsPosition);
-    this.logoPosition = <PositionType>this.validate('logoPosition', this.logoPosition, POSITION, this.defaultConfig.logoPosition);
-    this.textPosition = <PositionType>this.validate('textPosition', this.textPosition, POSITION, this.defaultConfig.textPosition);
+    this.fgsPosition = this.validate('fgsPosition', this.fgsPosition, POSITION, this.defaultConfig.fgsPosition) as PositionType;
+    this.logoPosition = this.validate('logoPosition', this.logoPosition, POSITION, this.defaultConfig.logoPosition) as PositionType;
+    this.textPosition = this.validate('textPosition', this.textPosition, POSITION, this.defaultConfig.textPosition) as PositionType;
     this.gap = coerceNumber(this.gap, this.defaultConfig.gap);
 
     this.logoTop = 'initial';

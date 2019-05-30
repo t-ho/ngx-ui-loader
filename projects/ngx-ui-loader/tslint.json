@@ -13,6 +13,6 @@
       "ngx",
       "kebab-case"
     ],
-    "no-empty-interface": false 
+    "no-empty-interface": false
   }
 }

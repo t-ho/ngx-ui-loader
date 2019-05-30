@@ -7,7 +7,6 @@ export class NgxUiLoaderDemoService {
 
   /**
    * Constructor
-   * @param ngxUiLoaderService
    */
   constructor(private ngxUiLoaderService: NgxUiLoaderService) {
     this.config = this.ngxUiLoaderService.getDefaultConfig();

@@ -21,10 +21,9 @@ export class NgxUiLoaderDemoComponent implements OnInit {
 
   /**
    * Constructor
-   * @param ngxUiLoaderService
-   * @param demoService
    */
-  constructor(private ngxUiLoaderService: NgxUiLoaderService,
+  constructor(
+    private ngxUiLoaderService: NgxUiLoaderService,
     public demoService: NgxUiLoaderDemoService,
     private http: HttpClient) {
   }
@@ -44,9 +43,8 @@ export class NgxUiLoaderDemoComponent implements OnInit {
   }
 
   /**
- * Add logo url
- * @param checked
- */
+   * Add logo url
+   */
   addLogo(checked: boolean) {
     if (checked) {
       this.demoService.config.logoUrl = LOGO_URL;
@@ -57,7 +55,6 @@ export class NgxUiLoaderDemoComponent implements OnInit {
 
   /**
    * Toggle progress bar
-   * @param checked
    */
   toggleProgressBar(checked: boolean) {
     this.demoService.config.hasProgressBar = checked;
