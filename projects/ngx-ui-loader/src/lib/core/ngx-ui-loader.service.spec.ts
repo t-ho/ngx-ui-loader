@@ -371,10 +371,6 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
     });
 
-    loaderService.backgroundClosing$.subscribe((data) => {
-      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
-    });
-
     loaderService.showForeground$.subscribe((data) => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
     });
@@ -450,10 +446,6 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
 
     loaderService.showBackground$.subscribe((data) => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
-    });
-
-    loaderService.backgroundClosing$.subscribe((data) => {
-      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
     });
 
     loaderService.showForeground$.subscribe((data) => {
