@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { NgxUiLoaderHttpInterceptor } from './ngx-ui-loader-http.interceptor';
-import { NgxUiLoaderHttpConfig } from './ngx-ui-loader-http-config';
+import { NgxUiLoaderHttpConfig } from '../utils/interfaces';
 import { NGX_UI_LOADER_HTTP_CONFIG_TOKEN } from './ngx-ui-loader-http-config.token';
 
 @NgModule({

@@ -5,7 +5,7 @@ import { finalize } from 'rxjs/operators';
 
 import { NgxUiLoaderService } from '../core/ngx-ui-loader.service';
 import { NGX_UI_LOADER_HTTP_CONFIG_TOKEN } from './ngx-ui-loader-http-config.token';
-import { NgxUiLoaderHttpConfig } from './ngx-ui-loader-http-config';
+import { NgxUiLoaderHttpConfig } from '../utils/interfaces';
 import { HTTP_LOADER_TASK_ID } from '../utils/constants';
 import { getExclude, isIgnored } from '../utils/functions';
 import { Exclude } from '../utils/interfaces';

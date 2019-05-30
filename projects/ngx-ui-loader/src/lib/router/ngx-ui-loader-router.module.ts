@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders, Inject, Optional, SkipSelf } from '@angu
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterEvent } from '@angular/router';
 
 import { NgxUiLoaderService } from '../core/ngx-ui-loader.service';
-import { NgxUiLoaderRouterConfig } from './ngx-ui-loader-router-config';
+import { NgxUiLoaderRouterConfig } from '../utils/interfaces';
 import { NGX_UI_LOADER_ROUTER_CONFIG_TOKEN } from './ngx-ui-loader-router-config.token';
 import { ROUTER_LOADER_TASK_ID } from '../utils/constants';
 import { getExclude, isIgnored } from '../utils/functions';

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { NgxUiLoaderComponent } from './ngx-ui-loader.component';
 import { NgxUiLoaderBlurredDirective } from './ngx-ui-loader-blurred.directive';
 import { NGX_UI_LOADER_CONFIG_TOKEN } from './ngx-ui-loader-config.token';
-import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
+import { NgxUiLoaderConfig } from '../utils/interfaces';
 
 @NgModule({
   imports: [

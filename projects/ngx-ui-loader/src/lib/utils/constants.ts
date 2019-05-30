@@ -1,10 +1,15 @@
-import { NgxUiLoaderConfig } from '../core/ngx-ui-loader-config';
+import { NgxUiLoaderConfig } from '../utils/interfaces';
 import { POSITION, PB_DIRECTION, SPINNER } from './enums';
 
 /**
- * The default value of task id
+ * The default value of foreground task id
  */
-export const DEFAULT_TASK_ID = 'default';
+export const DEFAULT_FG_TASK_ID = 'fg-default';
+
+/**
+ * The default value of background task id
+ */
+export const DEFAULT_BG_TASK_ID = 'bg-default';
 
 /**
  * The default value of loader id
@@ -129,6 +134,7 @@ export const DEFAULT_CONFIG: NgxUiLoaderConfig = {
   bgsSize: 60,
   bgsType: SPINNER.ballSpinClockwise,
   blur: 5,
+  delay: 0,
   fgsColor: '#00ACC1',
   fgsPosition: POSITION.centerCenter,
   fgsSize: 60,
@@ -147,5 +153,6 @@ export const DEFAULT_CONFIG: NgxUiLoaderConfig = {
   text: '',
   textColor: '#FFFFFF',
   textPosition: POSITION.centerCenter,
-  threshold: 500
+  maxTime: -1,
+  minTime: 500
 };

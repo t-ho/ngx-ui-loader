@@ -5,7 +5,7 @@ import { NgxUiLoaderService } from './ngx-ui-loader.service';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { NgxUiLoaderConfig } from './ngx-ui-loader-config';
+import { NgxUiLoaderConfig } from '../utils/interfaces';
 import { DirectionType, PositionType, SpinnerType } from '../utils/types';
 import { POSITION, PB_DIRECTION, SPINNER } from '../utils/enums';
 import { SPINNER_CONFIG } from '../utils/constants';
@@ -109,7 +109,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
    */
   ngOnInit() {
     this.initializeSpinners();
-    this.ngxService.initLoaderData(this.loaderId);
+    this.ngxService.bindLoaderData(this.loaderId);
     this.determinePositions();
 
     this.bgsPosition = <PositionType>this.validate('bgsPosition', this.bgsPosition, POSITION, this.defaultConfig.bgsPosition);

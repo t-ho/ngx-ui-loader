@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { NgxUiLoaderHttpConfig } from './ngx-ui-loader-http-config';
+import { NgxUiLoaderHttpConfig } from '../utils/interfaces';
 
 /**
  * Injection token for ngx-ui-loader-http configuration

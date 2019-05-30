@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { NgxUiLoaderRouterConfig } from './ngx-ui-loader-router-config';
+import { NgxUiLoaderRouterConfig } from '../utils/interfaces';
 
 /**
  * Injection token for ngx-ui-loader-router configuration
