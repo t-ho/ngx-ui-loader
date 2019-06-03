@@ -8,14 +8,12 @@ import { NgxUiLoaderService, Loader } from 'ngx-ui-loader';
   styleUrls: ['./ngx-ui-loader-controller.component.scss']
 })
 export class NgxUiLoaderControllerComponent implements OnInit, OnDestroy {
-
   @Input() loader: Loader;
 
   timers: any[];
   tasks: {};
 
-  constructor(private ngxUiLoaderService: NgxUiLoaderService) {
-  }
+  constructor(private ngxUiLoaderService: NgxUiLoaderService) {}
 
   /**
    * On init
@@ -32,10 +30,13 @@ export class NgxUiLoaderControllerComponent implements OnInit, OnDestroy {
     if (checked) {
       this.ngxUiLoaderService.startLoader(this.loader.loaderId, taskId);
       this.tasks[taskId] = true;
-      this.timers = [...this.timers, setTimeout(() => {
-        this.ngxUiLoaderService.stopLoader(this.loader.loaderId, taskId);
-        this.tasks[taskId] = false;
-      }, delay)];
+      this.timers = [
+        ...this.timers,
+        setTimeout(() => {
+          this.ngxUiLoaderService.stopLoader(this.loader.loaderId, taskId);
+          this.tasks[taskId] = false;
+        }, delay)
+      ];
     }
   }
 

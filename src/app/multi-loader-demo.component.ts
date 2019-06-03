@@ -10,7 +10,6 @@ const LOGO_URL = 'assets/angular.png';
   styleUrls: ['./multi-loader-demo.component.scss']
 })
 export class MultiLoaderDemoComponent {
-
   loaders: any[];
   masterLoader: Loader;
   timers: any;
@@ -24,7 +23,7 @@ export class MultiLoaderDemoComponent {
         logoUrl: LOGO_URL,
         logoSize: 80,
         isMaster: false,
-        spinnerType: SPINNER.ballScaleMultiple,
+        spinnerType: SPINNER.ballScaleMultiple
       },
       {
         hasProgressBar: false,
@@ -37,8 +36,8 @@ export class MultiLoaderDemoComponent {
         hasProgressBar: true,
         loaderId: 'loader-03',
         isMaster: false,
-        spinnerType: SPINNER.wanderingCubes,
-      },
+        spinnerType: SPINNER.wanderingCubes
+      }
     ];
   }
 }

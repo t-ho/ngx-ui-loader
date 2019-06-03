@@ -6,9 +6,7 @@ import { NgxUiLoaderHttpInterceptor } from './ngx-ui-loader-http.interceptor';
 describe('NgxUiLoaderHttpInterceptor', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        NgxUiLoaderService,
-      ]
+      providers: [NgxUiLoaderService]
     });
   });
 

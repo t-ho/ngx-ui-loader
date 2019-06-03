@@ -8,8 +8,7 @@ import { SPINNER_CONFIG } from '../../projects/ngx-ui-loader/src/lib/utils/const
 })
 export class SpinnerDemoComponent implements OnInit {
   spinners: any;
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * On init

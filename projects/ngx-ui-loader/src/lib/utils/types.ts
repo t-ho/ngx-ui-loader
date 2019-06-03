@@ -1,4 +1,5 @@
-export type SpinnerType = 'ball-scale-multiple'
+export type SpinnerType =
+  | 'ball-scale-multiple'
   | 'ball-spin'
   | 'ball-spin-clockwise'
   | 'ball-spin-clockwise-fade-rotating'
@@ -23,7 +24,8 @@ export type SpinnerType = 'ball-scale-multiple'
 
 export type DirectionType = 'ltr' | 'rtl';
 
-export type PositionType = 'bottom-center'
+export type PositionType =
+  | 'bottom-center'
   | 'bottom-left'
   | 'bottom-right'
   | 'center-center'

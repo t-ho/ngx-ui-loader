@@ -5,12 +5,11 @@ import { NgxUiLoaderService } from '../core/ngx-ui-loader.service';
 import { NgxUiLoaderRouterConfig } from '../utils/interfaces';
 import { NGX_UI_LOADER_ROUTER_CONFIG_TOKEN } from './ngx-ui-loader-router-config.token';
 import { ROUTER_LOADER_TASK_ID } from '../utils/constants';
-import { getExclude, isIgnored } from '../utils/functions';
+import { getExcludeObj, isIgnored } from '../utils/functions';
 import { Exclude } from '../utils/interfaces';
 
 @NgModule({})
 export class NgxUiLoaderRouterModule {
-
   private exclude: Exclude;
 
   /**
@@ -32,48 +31,47 @@ export class NgxUiLoaderRouterModule {
   /**
    * Constructor
    */
-  constructor(@Optional() @SkipSelf() parentModule: NgxUiLoaderRouterModule,
-              @Optional() @Inject(NGX_UI_LOADER_ROUTER_CONFIG_TOKEN) config: NgxUiLoaderRouterConfig,
-              router: Router,
-              ngxUiLoaderService: NgxUiLoaderService) {
-
+  constructor(
+    @Optional() @SkipSelf() parentModule: NgxUiLoaderRouterModule,
+    @Optional() @Inject(NGX_UI_LOADER_ROUTER_CONFIG_TOKEN) customConfig: NgxUiLoaderRouterConfig,
+    router: Router,
+    loader: NgxUiLoaderService
+  ) {
     if (parentModule) {
       throw new Error('[ngx-ui-loader] - NgxUiLoaderRouterModule is already loaded. It should be imported in the root `AppModule` only!');
     }
 
-    let defaultConfig: NgxUiLoaderRouterConfig = {
-      loaderId: ngxUiLoaderService.getDefaultConfig().masterLoaderId,
+    let config: NgxUiLoaderRouterConfig = {
+      loaderId: loader.getDefaultConfig().masterLoaderId,
       showForeground: true
     };
 
-    this.exclude = getExclude(config);
+    this.exclude = getExcludeObj(customConfig);
 
-    if (config) {
-      defaultConfig = { ...defaultConfig, ...config };
+    if (customConfig) {
+      config = { ...config, ...customConfig };
     }
 
-    router.events
-      .subscribe((event: RouterEvent) => {
-        if (event instanceof NavigationStart) {
-          if (!isIgnored(event.url, this.exclude.strs, this.exclude.regExps)) {
-            if (defaultConfig.showForeground) {
-              ngxUiLoaderService.startLoader(defaultConfig.loaderId, ROUTER_LOADER_TASK_ID);
-            } else {
-              ngxUiLoaderService.startBackgroundLoader(defaultConfig.loaderId, ROUTER_LOADER_TASK_ID);
-            }
+    router.events.subscribe((event: RouterEvent) => {
+      if (event instanceof NavigationStart) {
+        if (!isIgnored(event.url, this.exclude.strs, this.exclude.regExps)) {
+          if (config.showForeground) {
+            loader.startLoader(config.loaderId, ROUTER_LOADER_TASK_ID);
+          } else {
+            loader.startBackgroundLoader(config.loaderId, ROUTER_LOADER_TASK_ID);
           }
         }
+      }
 
-        if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
-          if (!isIgnored(event.url, this.exclude.strs, this.exclude.regExps)) {
-            if (defaultConfig.showForeground) {
-              ngxUiLoaderService.stopLoader(defaultConfig.loaderId, ROUTER_LOADER_TASK_ID);
-            } else {
-              ngxUiLoaderService.stopBackgroundLoader(defaultConfig.loaderId, ROUTER_LOADER_TASK_ID);
-            }
+      if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+        if (!isIgnored(event.url, this.exclude.strs, this.exclude.regExps)) {
+          if (config.showForeground) {
+            loader.stopLoader(config.loaderId, ROUTER_LOADER_TASK_ID);
+          } else {
+            loader.stopBackgroundLoader(config.loaderId, ROUTER_LOADER_TASK_ID);
           }
         }
-      });
+      }
+    });
   }
-
 }

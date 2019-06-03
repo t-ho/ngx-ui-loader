@@ -5,11 +5,10 @@ import { filter } from 'rxjs/operators';
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
 import { coerceNumber } from '../utils/functions';
 import { ShowEvent } from '../utils/interfaces';
-import { WAITING_FOR_OVERLAY_DISAPPEAR } from '../utils/constants';
+import { FOREGROUND, WAITING_FOR_OVERLAY_DISAPPEAR } from '../utils/constants';
 
 @Directive({ selector: '[ngxUiLoaderBlurred]' })
 export class NgxUiLoaderBlurredDirective implements OnInit, OnDestroy {
-
   private blurNumber: number;
 
   @Input()
@@ -18,27 +17,23 @@ export class NgxUiLoaderBlurredDirective implements OnInit, OnDestroy {
   }
 
   set blur(value: number) {
-    this.blurNumber = coerceNumber(value, this.ngxUiLoaderService.getDefaultConfig().blur);
+    this.blurNumber = coerceNumber(value, this.loader.getDefaultConfig().blur);
   }
 
   @Input() loaderId: string;
 
   showForegroundWatcher: Subscription;
 
-  constructor(
-    private elementRef: ElementRef,
-    private renderer: Renderer2,
-    private ngxUiLoaderService: NgxUiLoaderService
-  ) {
-    this.blurNumber = this.ngxUiLoaderService.getDefaultConfig().blur;
-    this.loaderId = this.ngxUiLoaderService.getDefaultConfig().masterLoaderId;
+  constructor(private elementRef: ElementRef, private renderer: Renderer2, private loader: NgxUiLoaderService) {
+    this.blurNumber = this.loader.getDefaultConfig().blur;
+    this.loaderId = this.loader.getDefaultConfig().masterLoaderId;
   }
 
   /**
    * On Init event
    */
   ngOnInit() {
-    this.showForegroundWatcher = this.ngxUiLoaderService.showForeground$
+    this.showForegroundWatcher = this.loader.showForeground$
       .pipe(filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId))
       .subscribe(data => {
         if (data.isShow) {
@@ -47,7 +42,7 @@ export class NgxUiLoaderBlurredDirective implements OnInit, OnDestroy {
           this.renderer.setStyle(this.elementRef.nativeElement, 'filter', filterValue);
         } else {
           setTimeout(() => {
-            if (!this.ngxUiLoaderService.hasForeground(data.loaderId)) {
+            if (!this.loader.hasRunningTask(FOREGROUND, data.loaderId)) {
               this.renderer.setStyle(this.elementRef.nativeElement, '-webkit-filter', 'none');
               this.renderer.setStyle(this.elementRef.nativeElement, 'filter', 'none');
             }

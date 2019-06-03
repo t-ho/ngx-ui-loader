@@ -12,10 +12,9 @@ import { NGX_UI_LOADER_HTTP_CONFIG_TOKEN } from './ngx-ui-loader-http-config.tok
       useClass: NgxUiLoaderHttpInterceptor,
       multi: true
     }
-  ],
+  ]
 })
 export class NgxUiLoaderHttpModule {
-
   /**
    * Constructor
    */

@@ -1,6 +1,12 @@
 import { DirectionType, PositionType, SpinnerType } from './types';
 
-export interface Task {
+export interface Time {
+  delay?: number;
+  maxTime?: number;
+  minTime?: number;
+}
+
+export interface Task extends Time {
   delayTimer?: NodeJS.Timer;
   isDelayed?: boolean;
   isForeground: boolean;
@@ -43,14 +49,13 @@ export interface Exclude {
   regExps: RegExp[];
 }
 
-export interface NgxUiLoaderConfig {
+export interface NgxUiLoaderConfig extends Time {
   bgsColor?: string;
   bgsOpacity?: number;
   bgsPosition?: PositionType;
   bgsSize?: number;
   blur?: number;
   bgsType?: SpinnerType;
-  delay?: number;
   fgsColor?: string;
   fgsPosition?: PositionType;
   fgsSize?: number;
@@ -69,10 +74,8 @@ export interface NgxUiLoaderConfig {
   text?: string;
   textColor?: string;
   textPosition?: PositionType;
-  maxTime?: number;
-  minTime?: number;
 }
 
-export interface NgxUiLoaderHttpConfig extends Config { }
+export interface NgxUiLoaderHttpConfig extends Config {}
 
-export interface NgxUiLoaderRouterConfig extends Config { }
+export interface NgxUiLoaderRouterConfig extends Config {}

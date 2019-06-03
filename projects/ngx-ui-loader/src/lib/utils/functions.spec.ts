@@ -1,4 +1,4 @@
-import { coerceNumber, getExclude, isIgnored } from './functions';
+import { coerceNumber, getExcludeObj, isIgnored } from './functions';
 import { Config } from './interfaces';
 
 describe('functions', () => {
@@ -14,7 +14,7 @@ describe('functions', () => {
   });
 
   it('getExclude(null) - 01', () => {
-    expect(getExclude(null)).toEqual({
+    expect(getExcludeObj(null)).toEqual({
       strs: undefined,
       regExps: undefined
     });
@@ -24,7 +24,7 @@ describe('functions', () => {
     const config: Config = {
       exclude: ['/Api/not/Show', 'https://www.domain.com/Not/show']
     };
-    expect(getExclude(config)).toEqual({
+    expect(getExcludeObj(config)).toEqual({
       strs: ['/api/not/show', 'https://www.domain.com/not/show'],
       regExps: undefined
     });
@@ -34,7 +34,7 @@ describe('functions', () => {
     const config: Config = {
       excludeRegexp: ['/Api/not/Show/path$', '^https://www.domain.com/Not/show']
     };
-    expect(getExclude(config)).toEqual({
+    expect(getExcludeObj(config)).toEqual({
       strs: undefined,
       regExps: [new RegExp('/Api/not/Show/path$', 'i'), new RegExp('^https://www.domain.com/Not/show', 'i')]
     });
@@ -45,7 +45,7 @@ describe('functions', () => {
       exclude: ['/Api/not/Show', 'https://www.domain.com/Not/show'],
       excludeRegexp: ['/Api/not/Show/path$', '^https://www.domain.com/Not/show']
     };
-    expect(getExclude(config)).toEqual({
+    expect(getExcludeObj(config)).toEqual({
       strs: ['/api/not/show', 'https://www.domain.com/not/show'],
       regExps: [new RegExp('/Api/not/Show/path$', 'i'), new RegExp('^https://www.domain.com/Not/show', 'i')]
     });

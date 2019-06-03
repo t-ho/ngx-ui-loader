@@ -23,7 +23,7 @@ export enum SPINNER {
   squareLoader = 'square-loader',
   threeBounce = 'three-bounce',
   threeStrings = 'three-strings',
-  wanderingCubes = 'wandering-cubes',
+  wanderingCubes = 'wandering-cubes'
 }
 
 /**

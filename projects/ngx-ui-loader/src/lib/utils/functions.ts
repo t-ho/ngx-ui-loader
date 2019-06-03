@@ -7,7 +7,7 @@ export function coerceNumber(value, fallbackValue): number {
   return !isNaN(parseFloat(value as any)) && !isNaN(Number(value)) ? Number(value) : fallbackValue;
 }
 
-export function getExclude(config: Config): Exclude {
+export function getExcludeObj(config: Config): Exclude {
   let strs: string[];
   let regExps: RegExp[];
 

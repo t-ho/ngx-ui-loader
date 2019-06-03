@@ -7,20 +7,11 @@ import { NGX_UI_LOADER_CONFIG_TOKEN } from './ngx-ui-loader-config.token';
 import { NgxUiLoaderConfig } from '../utils/interfaces';
 
 @NgModule({
-  imports: [
-    CommonModule,
-  ],
-  declarations: [
-    NgxUiLoaderComponent,
-    NgxUiLoaderBlurredDirective,
-  ],
-  exports: [
-    NgxUiLoaderComponent,
-    NgxUiLoaderBlurredDirective,
-  ]
+  imports: [CommonModule],
+  declarations: [NgxUiLoaderComponent, NgxUiLoaderBlurredDirective],
+  exports: [NgxUiLoaderComponent, NgxUiLoaderBlurredDirective]
 })
 export class NgxUiLoaderModule {
-
   /**
    * forRoot
    * @returns A module with its provider dependencies

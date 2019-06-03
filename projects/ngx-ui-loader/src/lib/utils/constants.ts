@@ -1,4 +1,4 @@
-import { NgxUiLoaderConfig } from '../utils/interfaces';
+import { NgxUiLoaderConfig, Time } from '../utils/interfaces';
 import { POSITION, PB_DIRECTION, SPINNER } from './enums';
 
 /**
@@ -16,7 +16,13 @@ export const DEFAULT_BG_TASK_ID = 'bg-default';
  */
 export const DEFAULT_MASTER_LOADER_ID = 'master';
 
+export const DEFAULT_TIME: Time = {};
+
 export const CLOSING_TIME = 1001;
+
+export const BACKGROUND = false;
+
+export const FOREGROUND = true;
 
 export const WAITING_FOR_OVERLAY_DISAPPEAR = 500;
 
@@ -58,7 +64,7 @@ export const SPINNER_CONFIG = {
     divs: 2,
     class: 'sk-chasing-dots'
   },
-  'circle': {
+  circle: {
     divs: 12,
     class: 'sk-circle'
   },
@@ -78,7 +84,7 @@ export const SPINNER_CONFIG = {
     divs: 4,
     class: 'sk-folding-cube'
   },
-  'pulse':  {
+  pulse: {
     divs: 1,
     class: 'sk-pulse'
   },
@@ -121,7 +127,7 @@ export const SPINNER_CONFIG = {
   'wandering-cubes': {
     divs: 2,
     class: 'sk-wandering-cubes'
-  },
+  }
 };
 
 /**

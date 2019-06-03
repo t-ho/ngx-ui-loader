@@ -3,6 +3,7 @@
   "version": "7.2.2",
   "scripts": {
     "ng": "ng",
+    "prettier": "prettier --write \"**/*.{scss,ts,component.html}\"",
     "start": "ng serve",
     "build": "ng build ngx-ui-loader && ng build",
     "build:lib": "ng build ngx-ui-loader && cp README.md CHANGELOG.md LICENSE ./dist/ngx-ui-loader/",
@@ -24,6 +25,7 @@
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
+    "@schuchard/prettier": "^3.1.0",
     "hammerjs": "^2.0.8",
     "ngx-color-picker": "^7.5.0",
     "rxjs": "~6.5.2",
@@ -31,15 +33,16 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.800.0",
-    "@angular-devkit/build-ng-packagr": "~0.800.0",
-    "@angular/cli": "~8.0.0",
+    "@angular-devkit/build-angular": "~0.800.1",
+    "@angular-devkit/build-ng-packagr": "~0.800.1",
+    "@angular/cli": "~8.0.1",
     "@angular/compiler-cli": "~8.0.0",
     "@angular/language-service": "~8.0.0",
     "@types/node": "~8.9.4",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
     "codelyzer": "^5.0.0",
+    "husky": "2.3.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",
@@ -47,11 +50,25 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
+    "lint-staged": "8.1.7",
     "ng-packagr": "^5.1.0",
+    "prettier": "1.17.1",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tsickle": "^0.35.0",
     "tslint": "~5.15.0",
+    "tslint-config-prettier": "1.18.0",
     "typescript": "~3.4.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,css,scss,less,md,ts,html,component.html}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

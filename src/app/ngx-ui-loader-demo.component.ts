@@ -22,11 +22,7 @@ export class NgxUiLoaderDemoComponent implements OnInit {
   /**
    * Constructor
    */
-  constructor(
-    private ngxUiLoaderService: NgxUiLoaderService,
-    public demoService: NgxUiLoaderDemoService,
-    private http: HttpClient) {
-  }
+  constructor(private ngxUiLoaderService: NgxUiLoaderService, public demoService: NgxUiLoaderDemoService, private http: HttpClient) {}
 
   /**
    * On init
@@ -39,7 +35,6 @@ export class NgxUiLoaderDemoComponent implements OnInit {
     this.disabled = false;
 
     this.loader = this.ngxUiLoaderService.getLoader();
-
   }
 
   /**

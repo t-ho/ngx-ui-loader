@@ -8,10 +8,8 @@ import { NgxUiLoaderDemoService } from './ngx-ui-loader-demo.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
   /**
    * Constructor
    */
-  constructor(public demoService: NgxUiLoaderDemoService) {
-  }
+  constructor(public demoService: NgxUiLoaderDemoService) {}
 }

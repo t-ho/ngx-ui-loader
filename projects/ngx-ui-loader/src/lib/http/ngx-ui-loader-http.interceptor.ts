@@ -7,32 +7,32 @@ import { NgxUiLoaderService } from '../core/ngx-ui-loader.service';
 import { NGX_UI_LOADER_HTTP_CONFIG_TOKEN } from './ngx-ui-loader-http-config.token';
 import { NgxUiLoaderHttpConfig } from '../utils/interfaces';
 import { HTTP_LOADER_TASK_ID } from '../utils/constants';
-import { getExclude, isIgnored } from '../utils/functions';
+import { getExcludeObj, isIgnored } from '../utils/functions';
 import { Exclude } from '../utils/interfaces';
 
 @Injectable()
 export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
-
   private count: number;
-  private defaultConfig: NgxUiLoaderHttpConfig;
+  private config: NgxUiLoaderHttpConfig;
   private exclude: Exclude;
 
   /**
    * Constructor
    */
-  constructor(@Optional() @Inject(NGX_UI_LOADER_HTTP_CONFIG_TOKEN) config: NgxUiLoaderHttpConfig,
-              private ngxUiLoaderService: NgxUiLoaderService) {
-
+  constructor(
+    @Optional() @Inject(NGX_UI_LOADER_HTTP_CONFIG_TOKEN) customConfig: NgxUiLoaderHttpConfig,
+    private loader: NgxUiLoaderService
+  ) {
     this.count = 0;
-    this.defaultConfig = {
-      loaderId: this.ngxUiLoaderService.getDefaultConfig().masterLoaderId,
+    this.config = {
+      loaderId: this.loader.getDefaultConfig().masterLoaderId,
       showForeground: false
     };
 
-    this.exclude = getExclude(config);
+    this.exclude = getExcludeObj(customConfig);
 
-    if (config) {
-      this.defaultConfig = { ...this.defaultConfig, ...config };
+    if (customConfig) {
+      this.config = { ...this.config, ...customConfig };
     }
   }
 
@@ -42,26 +42,25 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
     }
 
     this.count++;
-    if (this.defaultConfig.showForeground) {
-      if (!this.ngxUiLoaderService.hasForeground(this.defaultConfig.loaderId, HTTP_LOADER_TASK_ID)) {
-        this.ngxUiLoaderService.startLoader(this.defaultConfig.loaderId, HTTP_LOADER_TASK_ID);
-      }
-    } else {
-      if (!this.ngxUiLoaderService.hasBackground(this.defaultConfig.loaderId, HTTP_LOADER_TASK_ID)) {
-        this.ngxUiLoaderService.startBackgroundLoader(this.defaultConfig.loaderId, HTTP_LOADER_TASK_ID);
+    if (!this.loader.hasRunningTask(this.config.showForeground, this.config.loaderId, HTTP_LOADER_TASK_ID)) {
+      if (this.config.showForeground) {
+        this.loader.startLoader(this.config.loaderId, HTTP_LOADER_TASK_ID);
+      } else {
+        this.loader.startBackgroundLoader(this.config.loaderId, HTTP_LOADER_TASK_ID);
       }
     }
 
-    return next.handle(req).pipe(finalize(() => {
-      this.count--;
-      if (this.count === 0) {
-        if (this.defaultConfig.showForeground) {
-          this.ngxUiLoaderService.stopLoader(this.defaultConfig.loaderId, HTTP_LOADER_TASK_ID);
-        } else {
-          this.ngxUiLoaderService.stopBackgroundLoader(this.defaultConfig.loaderId, HTTP_LOADER_TASK_ID);
+    return next.handle(req).pipe(
+      finalize(() => {
+        this.count--;
+        if (this.count === 0) {
+          if (this.config.showForeground) {
+            this.loader.stopLoader(this.config.loaderId, HTTP_LOADER_TASK_ID);
+          } else {
+            this.loader.stopBackgroundLoader(this.config.loaderId, HTTP_LOADER_TASK_ID);
+          }
         }
-      }
-    }));
+      })
+    );
   }
-
 }

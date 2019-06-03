@@ -1,5 +1,14 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges, SimpleChange,
-  OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  SimpleChange,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
+} from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeStyle } from '@angular/platform-browser';
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
 import { Subscription } from 'rxjs';
@@ -19,7 +28,6 @@ import { coerceNumber } from '../utils/functions';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
-
   @Input() bgsColor: string;
   @Input() bgsOpacity: number;
   @Input() bgsPosition: PositionType;
@@ -69,11 +77,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   /**
    * Constructor
    */
-  constructor(
-    private domSanitizer: DomSanitizer,
-    private changeDetectorRef: ChangeDetectorRef,
-    private ngxService: NgxUiLoaderService) {
-
+  constructor(private domSanitizer: DomSanitizer, private changeDetectorRef: ChangeDetectorRef, private ngxService: NgxUiLoaderService) {
     this.initialized = false;
     this.defaultConfig = this.ngxService.getDefaultConfig();
 
@@ -231,42 +235,43 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
 
     if (this.fgsPosition === POSITION.centerCenter) {
       if (this.logoUrl && this.logoPosition === POSITION.centerCenter) {
-        if (this.text && this.textPosition === POSITION.centerCenter) { // logo, spinner and text
-          this.logoTop = this.domSanitizer
-            .bypassSecurityTrustStyle(`calc(50% - ${this.fgsSize / 2}px - ${textSize / 2}px - ${this.gap}px)`);
-          this.spinnerTop = this.domSanitizer
-            .bypassSecurityTrustStyle(`calc(50% + ${this.logoSize / 2}px - ${textSize / 2}px)`);
-          this.textTop = this.domSanitizer
-            .bypassSecurityTrustStyle(`calc(50% + ${this.logoSize / 2}px + ${this.gap}px + ${this.fgsSize / 2}px)`);
-        } else { // logo and spinner
-          this.logoTop = this.domSanitizer
-            .bypassSecurityTrustStyle(`calc(50% - ${this.fgsSize / 2}px - ${this.gap / 2}px)`);
-          this.spinnerTop = this.domSanitizer
-            .bypassSecurityTrustStyle(`calc(50% + ${this.logoSize / 2}px + ${this.gap / 2}px)`);
+        if (this.text && this.textPosition === POSITION.centerCenter) {
+          // logo, spinner and text
+          this.logoTop = this.domSanitizer.bypassSecurityTrustStyle(
+            `calc(50% - ${this.fgsSize / 2}px - ${textSize / 2}px - ${this.gap}px)`
+          );
+          this.spinnerTop = this.domSanitizer.bypassSecurityTrustStyle(`calc(50% + ${this.logoSize / 2}px - ${textSize / 2}px)`);
+          this.textTop = this.domSanitizer.bypassSecurityTrustStyle(
+            `calc(50% + ${this.logoSize / 2}px + ${this.gap}px + ${this.fgsSize / 2}px)`
+          );
+        } else {
+          // logo and spinner
+          this.logoTop = this.domSanitizer.bypassSecurityTrustStyle(`calc(50% - ${this.fgsSize / 2}px - ${this.gap / 2}px)`);
+          this.spinnerTop = this.domSanitizer.bypassSecurityTrustStyle(`calc(50% + ${this.logoSize / 2}px + ${this.gap / 2}px)`);
         }
       } else {
-        if (this.text && this.textPosition === POSITION.centerCenter) { // spinner and text
-          this.spinnerTop = this.domSanitizer
-            .bypassSecurityTrustStyle(`calc(50% - ${textSize / 2}px - ${this.gap / 2}px)`);
-          this.textTop = this.domSanitizer
-            .bypassSecurityTrustStyle(`calc(50% + ${this.fgsSize / 2}px + ${this.gap / 2}px)`);
+        if (this.text && this.textPosition === POSITION.centerCenter) {
+          // spinner and text
+          this.spinnerTop = this.domSanitizer.bypassSecurityTrustStyle(`calc(50% - ${textSize / 2}px - ${this.gap / 2}px)`);
+          this.textTop = this.domSanitizer.bypassSecurityTrustStyle(`calc(50% + ${this.fgsSize / 2}px + ${this.gap / 2}px)`);
         }
       }
     } else {
-      if (this.logoUrl && this.logoPosition === POSITION.centerCenter
-        && this.text && this.textPosition === POSITION.centerCenter) { // logo and text
-        this.logoTop = this.domSanitizer
-          .bypassSecurityTrustStyle(`calc(50% - ${textSize / 2}px - ${this.gap / 2}px)`);
-        this.textTop = this.domSanitizer
-          .bypassSecurityTrustStyle(`calc(50% + ${this.logoSize / 2}px + ${this.gap / 2}px)`);
+      if (this.logoUrl && this.logoPosition === POSITION.centerCenter && this.text && this.textPosition === POSITION.centerCenter) {
+        // logo and text
+        this.logoTop = this.domSanitizer.bypassSecurityTrustStyle(`calc(50% - ${textSize / 2}px - ${this.gap / 2}px)`);
+        this.textTop = this.domSanitizer.bypassSecurityTrustStyle(`calc(50% + ${this.logoSize / 2}px + ${this.gap / 2}px)`);
       }
     }
   }
 
   private validate(inputName: string, value: string, validTypeObj: {}, fallbackValue: string): string {
-    if (Object.keys(validTypeObj).map(k => validTypeObj[k]).findIndex(v => v === value) === -1) {
-      console.error(`[ngx-ui-loader] - ${inputName} ("${value}") is invalid. `
-        + `Default value "${fallbackValue}" is used.`);
+    if (
+      Object.keys(validTypeObj)
+        .map(k => validTypeObj[k])
+        .findIndex(v => v === value) === -1
+    ) {
+      console.error(`[ngx-ui-loader] - ${inputName} ("${value}") is invalid. ` + `Default value "${fallbackValue}" is used.`);
       return fallbackValue;
     }
     return value;

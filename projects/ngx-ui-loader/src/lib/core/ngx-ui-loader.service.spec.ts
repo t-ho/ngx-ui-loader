@@ -5,22 +5,24 @@ import { DEFAULT_CONFIG } from '../utils/constants';
 import { NgxUiLoaderModule } from './ngx-ui-loader.module';
 
 // DO NOT change the following constants {{{
-const MINTIME = 500;
-const MAXTIME = 8000;
-const END_TIME = 10000;
-const DELAY = 200;
+const BACKGROUND = false;
 const DEFAULT_BG_TASK_ID = 'bg-default';
 const DEFAULT_FG_TASK_ID = 'fg-default';
 const DEFAULT_MASTER_LOADER_ID = 'master';
+const DELAY = 200;
 const DUPLICATED_TASK_ID = 'duplicated-task-id';
-const LOADER_ID_01 = 'loader-id-01';
+const END_TIME = 10000;
 const EXISTING_LOADER_ID = 'existing-loader-id';
-const NOT_EXISTING_LOADER_ID = 'not-existing-loader-id';
 const EXISTING_TASK_ID = 'existing-task-id';
+const FOREGROUND = true;
+const IS_BOUND = true;
+const IS_MASTER = true;
+const LOADER_ID_01 = 'loader-id-01';
+const MIN_TIME = 500;
+const MAX_TIME = 8000;
+const NOT_EXISTING_LOADER_ID = 'not-existing-loader-id';
 const NOT_EXISTING_TASK_ID = 'not-existing-task-id';
 const TASK_ID_01 = 'task-id-01';
-const IS_MASTER = true;
-const IS_BOUND = true;
 // }}}
 
 // backgroundCloseOut and foregroundCloseOut are tested in NgxUiLoaderComponent
@@ -46,9 +48,7 @@ describe(`NgxUiLoaderService (no loader)`, () => {
   let loaderService: NgxUiLoaderService;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        NgxUiLoaderService,
-      ]
+      providers: [NgxUiLoaderService]
     });
     loaderService = TestBed.get(NgxUiLoaderService);
     spyOn(console, 'warn');
@@ -109,8 +109,10 @@ describe(`NgxUiLoaderService (no loader)`, () => {
     loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
     expect(() => {
       loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
-    }).toThrowError(`[ngx-ui-loader] - The master loader has already existed. `
-      + `The app should have only one master loader and it should be placed in the root app template`);
+    }).toThrowError(
+      `[ngx-ui-loader] - The master loader has already existed. ` +
+        `The app should have only one master loader and it should be placed in the root app template`
+    );
   });
 
   it(`#bindLoaderData('${LOADER_ID_01}') - 5 - should not throw any error`, () => {
@@ -141,9 +143,11 @@ describe(`NgxUiLoaderService (no loader)`, () => {
   it(`#updateLoaderId('${DEFAULT_MASTER_LOADER_ID}', '${LOADER_ID_01}') - 3 - should print a warning`, () => {
     loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
     loaderService.updateLoaderId(DEFAULT_MASTER_LOADER_ID, LOADER_ID_01);
-    expect(console.warn).toHaveBeenCalledWith(`[ngx-ui-loader] - Cannot change loaderId of master loader. The current ` +
-      `master's loaderId is "${DEFAULT_MASTER_LOADER_ID}". If you really want to ` +
-      `change it, please use NgxUiLoaderModule.forRoot() method.`);
+    expect(console.warn).toHaveBeenCalledWith(
+      `[ngx-ui-loader] - Cannot change loaderId of master loader. The current ` +
+        `master's loaderId is "${DEFAULT_MASTER_LOADER_ID}". If you really want to ` +
+        `change it, please use NgxUiLoaderModule.forRoot() method.`
+    );
     expect(loaderService.getLoaders()[DEFAULT_MASTER_LOADER_ID]).toEqual({
       loaderId: DEFAULT_MASTER_LOADER_ID,
       tasks: {},
@@ -193,16 +197,13 @@ describe(`NgxUiLoaderService (no loader)`, () => {
       loaderService.destroyLoaderData(NOT_EXISTING_LOADER_ID);
     }).toThrowError(`[ngx-ui-loader] - loaderId "${NOT_EXISTING_LOADER_ID}" does not exist.`);
   });
-
 });
 
 describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
   let loaderService: NgxUiLoaderService;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        NgxUiLoaderService,
-      ]
+      providers: [NgxUiLoaderService]
     });
     loaderService = TestBed.get(NgxUiLoaderService);
     loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
@@ -231,7 +232,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
         tasks: {},
         isMaster: !IS_MASTER,
         isBound: IS_BOUND
-      },
+      }
     });
   });
 
@@ -253,88 +254,88 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     });
   });
 
-  it(`#hasBackground('${DEFAULT_MASTER_LOADER_ID}') should return false`, () => {
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID)).toEqual(false);
+  it(`#hasRunningTask(${BACKGROUND}, '${DEFAULT_MASTER_LOADER_ID}') should return false`, () => {
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID)).toEqual(false);
   });
 
-  it(`#hasBackground('${DEFAULT_MASTER_LOADER_ID}') should return true`, () => {
+  it(`#hasRunningTask(${BACKGROUND}, '${DEFAULT_MASTER_LOADER_ID}') should return true`, () => {
     loaderService.startBackground();
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID)).toEqual(true);
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID)).toEqual(true);
   });
 
-  it(`#hasBackground('${DEFAULT_MASTER_LOADER_ID}', '${NOT_EXISTING_TASK_ID}') should return false`, () => {
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID, NOT_EXISTING_TASK_ID)).toEqual(false);
+  it(`#hasRunningTask(${BACKGROUND}, '${DEFAULT_MASTER_LOADER_ID}', '${NOT_EXISTING_TASK_ID}') should return false`, () => {
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, NOT_EXISTING_TASK_ID)).toEqual(false);
   });
 
-  it(`#hasBackground('${DEFAULT_MASTER_LOADER_ID}', '${NOT_EXISTING_TASK_ID}') should return false`, () => {
+  it(`#hasRunningTask(${BACKGROUND}, '${DEFAULT_MASTER_LOADER_ID}', '${NOT_EXISTING_TASK_ID}') should return false`, () => {
     loaderService.startBackground();
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID, NOT_EXISTING_TASK_ID)).toEqual(false);
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, NOT_EXISTING_TASK_ID)).toEqual(false);
   });
 
-  it(`#hasBackground('${DEFAULT_MASTER_LOADER_ID}', '${DEFAULT_BG_TASK_ID}') with delay`, fakeAsync(() => {
+  it(`#hasRunningTask(${BACKGROUND}, '${DEFAULT_MASTER_LOADER_ID}', '${DEFAULT_BG_TASK_ID}') with delay`, fakeAsync(() => {
     loaderService = new NgxUiLoaderService({ delay: DELAY });
     loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
     loaderService.startBackground(DEFAULT_BG_TASK_ID);
     tick(DELAY - 1);
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
     tick(1);
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(true);
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(true);
     tick(END_TIME);
   }));
 
-  it(`#hasForeground('${DEFAULT_MASTER_LOADER_ID}', '${DEFAULT_BG_TASK_ID}') with delay`, fakeAsync(() => {
+  it(`#hasRunningTask(${FOREGROUND},   '${DEFAULT_MASTER_LOADER_ID}', '${DEFAULT_BG_TASK_ID}') with delay`, fakeAsync(() => {
     loaderService = new NgxUiLoaderService({ delay: DELAY });
     loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
     loaderService.start(DEFAULT_BG_TASK_ID);
     tick(DELAY - 1);
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
     tick(1);
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(true);
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(true);
     tick(END_TIME);
   }));
 
-  it(`#hasBackground('${DEFAULT_MASTER_LOADER_ID}', '${EXISTING_TASK_ID}') should return true`, () => {
+  it(`#hasRunningTask(${BACKGROUND}, '${DEFAULT_MASTER_LOADER_ID}', '${EXISTING_TASK_ID}') should return true`, () => {
     loaderService.startBackground(EXISTING_TASK_ID);
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID, EXISTING_TASK_ID)).toEqual(true);
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, EXISTING_TASK_ID)).toEqual(true);
   });
 
-  it(`#hasBackground('${NOT_EXISTING_LOADER_ID}') should return false`, () => {
-    expect(loaderService.hasBackground(NOT_EXISTING_LOADER_ID)).toEqual(false);
+  it(`#hasRunningTask(${BACKGROUND}, '${NOT_EXISTING_LOADER_ID}') should return false`, () => {
+    expect(loaderService.hasRunningTask(BACKGROUND, NOT_EXISTING_LOADER_ID)).toEqual(false);
   });
 
-  it(`#hasBackground('${NOT_EXISTING_LOADER_ID}', '${DEFAULT_BG_TASK_ID}') should return false`, () => {
-    expect(loaderService.hasBackground(NOT_EXISTING_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
+  it(`#hasRunningTask(${BACKGROUND}, '${NOT_EXISTING_LOADER_ID}', '${DEFAULT_BG_TASK_ID}') should return false`, () => {
+    expect(loaderService.hasRunningTask(BACKGROUND, NOT_EXISTING_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
   });
 
-  it(`#hasForeground('${DEFAULT_MASTER_LOADER_ID}') should return false`, () => {
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID)).toEqual(false);
+  it(`#hasRunningTask(${FOREGROUND},   '${DEFAULT_MASTER_LOADER_ID}') should return false`, () => {
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID)).toEqual(false);
   });
 
-  it(`#hasForeground('${DEFAULT_MASTER_LOADER_ID}') should return true`, () => {
+  it(`#hasRunningTask(${FOREGROUND},   '${DEFAULT_MASTER_LOADER_ID}') should return true`, () => {
     loaderService.start();
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID)).toEqual(true);
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID)).toEqual(true);
   });
 
-  it(`#hasForeground('${DEFAULT_MASTER_LOADER_ID}', '${NOT_EXISTING_TASK_ID}') should return false`, () => {
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, NOT_EXISTING_TASK_ID)).toEqual(false);
+  it(`#hasRunningTask(${FOREGROUND},   '${DEFAULT_MASTER_LOADER_ID}', '${NOT_EXISTING_TASK_ID}') should return false`, () => {
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, NOT_EXISTING_TASK_ID)).toEqual(false);
   });
 
-  it(`#hasForeground('${DEFAULT_MASTER_LOADER_ID}', '${NOT_EXISTING_TASK_ID}') should return false`, () => {
+  it(`#hasRunningTask(${FOREGROUND},   '${DEFAULT_MASTER_LOADER_ID}', '${NOT_EXISTING_TASK_ID}') should return false`, () => {
     loaderService.start(); // there are 'default' task
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, NOT_EXISTING_TASK_ID)).toEqual(false);
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, NOT_EXISTING_TASK_ID)).toEqual(false);
   });
 
-  it(`#hasForeground('${DEFAULT_MASTER_LOADER_ID}', '${EXISTING_TASK_ID}') should return true`, () => {
+  it(`#hasRunningTask(${FOREGROUND},   '${DEFAULT_MASTER_LOADER_ID}', '${EXISTING_TASK_ID}') should return true`, () => {
     loaderService.start(EXISTING_TASK_ID);
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, EXISTING_TASK_ID)).toEqual(true);
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, EXISTING_TASK_ID)).toEqual(true);
   });
 
-  it(`#hasForeground('${NOT_EXISTING_LOADER_ID}') should return false`, () => {
-    expect(loaderService.hasForeground(NOT_EXISTING_LOADER_ID)).toEqual(false);
+  it(`#hasRunningTask(${FOREGROUND},   '${NOT_EXISTING_LOADER_ID}') should return false`, () => {
+    expect(loaderService.hasRunningTask(FOREGROUND, NOT_EXISTING_LOADER_ID)).toEqual(false);
   });
 
-  it(`#hasForeground('${NOT_EXISTING_LOADER_ID}', '${DEFAULT_FG_TASK_ID}') should return false`, () => {
-    expect(loaderService.hasForeground(NOT_EXISTING_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(false);
+  it(`#hasRunningTask(${FOREGROUND},   '${NOT_EXISTING_LOADER_ID}', '${DEFAULT_FG_TASK_ID}') should return false`, () => {
+    expect(loaderService.hasRunningTask(FOREGROUND, NOT_EXISTING_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(false);
   });
 
   it(`#startLoader('${NOT_EXISTING_LOADER_ID}') - 1 - should not throw any error`, () => {
@@ -342,21 +343,23 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
       loaderService.startLoader(NOT_EXISTING_LOADER_ID);
     }).not.toThrowError(`[ngx-ui-loader] - loaderId "${NOT_EXISTING_LOADER_ID}" does not exist.`);
     const loader = loaderService.getLoader(NOT_EXISTING_LOADER_ID);
-    expect(loader).toEqual(jasmine.objectContaining({
-      loaderId: NOT_EXISTING_LOADER_ID,
-      isBound: !IS_BOUND
-    }));
+    expect(loader).toEqual(
+      jasmine.objectContaining({
+        loaderId: NOT_EXISTING_LOADER_ID,
+        isBound: !IS_BOUND
+      })
+    );
     expect(Object.keys(loader.tasks).every(id => loader.tasks[id].isForeground === true)).toEqual(true);
-    expect(loaderService.hasForeground(NOT_EXISTING_LOADER_ID)).toEqual(true);
-    loaderService.showForeground$.subscribe((data) => {
+    expect(loaderService.hasRunningTask(FOREGROUND, NOT_EXISTING_LOADER_ID)).toEqual(true);
+    loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: '', isShow: false });
     });
   });
 
   it(`#startLoader('${DEFAULT_MASTER_LOADER_ID}') - 2 - condition: no foreground and background id in the queue`, () => {
     loaderService.startLoader(DEFAULT_MASTER_LOADER_ID);
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID)).toEqual(true);
-    loaderService.showForeground$.subscribe((data) => {
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID)).toEqual(true);
+    loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
     });
   });
@@ -365,21 +368,21 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.startBackground();
     loaderService.startLoader(DEFAULT_MASTER_LOADER_ID);
 
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID)).toEqual(true);
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID)).toEqual(true);
 
-    loaderService.showBackground$.subscribe((data) => {
+    loaderService.showBackground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
     });
 
-    loaderService.showForeground$.subscribe((data) => {
+    loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
     });
   });
 
   it(`#startLoader('${DEFAULT_MASTER_LOADER_ID}', '${TASK_ID_01}') - 4 - condition: no foreground and background id in the queue`, () => {
     loaderService.startLoader(DEFAULT_MASTER_LOADER_ID, TASK_ID_01);
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, TASK_ID_01)).toEqual(true);
-    loaderService.showForeground$.subscribe((data) => {
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, TASK_ID_01)).toEqual(true);
+    loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
     });
   });
@@ -388,9 +391,9 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.startBackground();
     loaderService.startLoader(DEFAULT_MASTER_LOADER_ID, TASK_ID_01);
 
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, TASK_ID_01)).toEqual(true);
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, TASK_ID_01)).toEqual(true);
 
-    loaderService.showBackground$.subscribe((data) => {
+    loaderService.showBackground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
     });
   });
@@ -400,15 +403,17 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     expect(() => {
       loaderService.bindLoaderData(LOADER_ID_01);
     }).not.toThrowError(`[ngx-ui-loader] - loaderId "${LOADER_ID_01}" is duplicated.`);
-    loaderService.showForeground$.subscribe((data) => {
+    loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: LOADER_ID_01, isShow: true });
     });
     const loader = loaderService.getLoaders()[LOADER_ID_01];
-    expect(loader).toEqual(jasmine.objectContaining({
-      loaderId: LOADER_ID_01,
-      isMaster: !IS_MASTER,
-      isBound: IS_BOUND
-    }));
+    expect(loader).toEqual(
+      jasmine.objectContaining({
+        loaderId: LOADER_ID_01,
+        isMaster: !IS_MASTER,
+        isBound: IS_BOUND
+      })
+    );
     expect(Object.keys(loader.tasks).every(id => loader.tasks[id].isForeground === true)).toEqual(true);
   });
 
@@ -416,24 +421,28 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.destroyLoaderData(DEFAULT_MASTER_LOADER_ID);
     expect(() => {
       loaderService.start();
-    }).not.toThrowError(`[ngx-ui-loader] - The master loader has already existed. `
-      + `The app should have only one master loader and it should be placed in the root app template`);
+    }).not.toThrowError(
+      `[ngx-ui-loader] - The master loader has already existed. ` +
+        `The app should have only one master loader and it should be placed in the root app template`
+    );
     const loader = loaderService.getLoaders()[DEFAULT_MASTER_LOADER_ID];
-    expect(loader).toEqual(jasmine.objectContaining({
-      loaderId: DEFAULT_MASTER_LOADER_ID,
-      isBound: !IS_BOUND
-    }));
+    expect(loader).toEqual(
+      jasmine.objectContaining({
+        loaderId: DEFAULT_MASTER_LOADER_ID,
+        isBound: !IS_BOUND
+      })
+    );
     expect(Object.keys(loader.tasks).every(id => loader.tasks[id].isForeground === true)).toEqual(true);
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID)).toEqual(true);
-    loaderService.showForeground$.subscribe((data) => {
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID)).toEqual(true);
+    loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: '', isShow: false });
     });
   });
 
   it(`#start() - 1 - condition: no foreground and background id in the queue`, () => {
     loaderService.start();
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID)).toEqual(true);
-    loaderService.showForeground$.subscribe((data) => {
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID)).toEqual(true);
+    loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
     });
   });
@@ -442,13 +451,13 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.startBackground();
     loaderService.start(TASK_ID_01);
 
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, TASK_ID_01)).toEqual(true);
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, TASK_ID_01)).toEqual(true);
 
-    loaderService.showBackground$.subscribe((data) => {
+    loaderService.showBackground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
     });
 
-    loaderService.showForeground$.subscribe((data) => {
+    loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
     });
   });
@@ -458,17 +467,21 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.start();
     expect(() => {
       loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
-    }).not.toThrowError(`[ngx-ui-loader] - The master loader has already existed. `
-      + `The app should have only one master loader and it should be placed in the root app template`);
-    loaderService.showForeground$.subscribe((data) => {
+    }).not.toThrowError(
+      `[ngx-ui-loader] - The master loader has already existed. ` +
+        `The app should have only one master loader and it should be placed in the root app template`
+    );
+    loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
     });
     const loader = loaderService.getLoaders()[DEFAULT_MASTER_LOADER_ID];
-    expect(loader).toEqual(jasmine.objectContaining({
-      loaderId: DEFAULT_MASTER_LOADER_ID,
-      isMaster: IS_MASTER,
-      isBound: IS_BOUND
-    }));
+    expect(loader).toEqual(
+      jasmine.objectContaining({
+        loaderId: DEFAULT_MASTER_LOADER_ID,
+        isMaster: IS_MASTER,
+        isBound: IS_BOUND
+      })
+    );
     expect(Object.keys(loader.tasks).every(id => loader.tasks[id].isForeground === true)).toEqual(true);
   });
 
@@ -477,21 +490,23 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
       loaderService.startBackgroundLoader(NOT_EXISTING_LOADER_ID);
     }).not.toThrowError(`[ngx-ui-loader] - loaderId "${NOT_EXISTING_LOADER_ID}" does not exist.`);
     const loader = loaderService.getLoaders()[NOT_EXISTING_LOADER_ID];
-    expect(loader).toEqual(jasmine.objectContaining({
-      loaderId: NOT_EXISTING_LOADER_ID,
-      isBound: !IS_BOUND
-    }));
+    expect(loader).toEqual(
+      jasmine.objectContaining({
+        loaderId: NOT_EXISTING_LOADER_ID,
+        isBound: !IS_BOUND
+      })
+    );
     expect(Object.keys(loader.tasks).every(id => loader.tasks[id].isForeground === false)).toEqual(true);
-    expect(loaderService.hasBackground(NOT_EXISTING_LOADER_ID)).toEqual(true);
-    loaderService.showBackground$.subscribe((data) => {
+    expect(loaderService.hasRunningTask(BACKGROUND, NOT_EXISTING_LOADER_ID)).toEqual(true);
+    loaderService.showBackground$.subscribe(data => {
       expect(data).toEqual({ loaderId: '', isShow: false });
     });
   });
 
   it(`#startBackgroundLoader('${DEFAULT_MASTER_LOADER_ID}') - 2 - condition: no foreground id in the queue`, () => {
     loaderService.startBackgroundLoader(DEFAULT_MASTER_LOADER_ID);
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID)).toEqual(true);
-    loaderService.showBackground$.subscribe((data) => {
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID)).toEqual(true);
+    loaderService.showBackground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
     });
   });
@@ -499,13 +514,13 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
   it(`#startBackgroundLoader('${DEFAULT_MASTER_LOADER_ID}') - 3 - condition: has 1 foreground id in the queue`, () => {
     loaderService.start();
     loaderService.startBackgroundLoader(DEFAULT_MASTER_LOADER_ID);
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID)).toEqual(true);
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID)).toEqual(true);
   });
 
   it(`#startBackgroundLoader('${DEFAULT_MASTER_LOADER_ID}', '${TASK_ID_01}') - 4 - condition: no foreground id in the queue`, () => {
     loaderService.startBackgroundLoader(DEFAULT_MASTER_LOADER_ID, TASK_ID_01);
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID, TASK_ID_01)).toEqual(true);
-    loaderService.showBackground$.subscribe((data) => {
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, TASK_ID_01)).toEqual(true);
+    loaderService.showBackground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
     });
   });
@@ -513,7 +528,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
   it(`#startBackgroundLoader('${DEFAULT_MASTER_LOADER_ID}', '${TASK_ID_01}') - 5 - condition: 1 foreground id in the queue`, () => {
     loaderService.start();
     loaderService.startBackgroundLoader(DEFAULT_MASTER_LOADER_ID, TASK_ID_01);
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID, TASK_ID_01)).toEqual(true);
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, TASK_ID_01)).toEqual(true);
   });
 
   it(`#bindLoaderData('${LOADER_ID_01}') - should not throw any error`, () => {
@@ -521,15 +536,17 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     expect(() => {
       loaderService.bindLoaderData(LOADER_ID_01);
     }).not.toThrowError(`[ngx-ui-loader] - loaderId "${LOADER_ID_01}" is duplicated.`);
-    loaderService.showBackground$.subscribe((data) => {
+    loaderService.showBackground$.subscribe(data => {
       expect(data).toEqual({ loaderId: LOADER_ID_01, isShow: true });
     });
     const loader = loaderService.getLoaders()[LOADER_ID_01];
-    expect(loader).toEqual(jasmine.objectContaining({
-      loaderId: LOADER_ID_01,
-      isMaster: !IS_MASTER,
-      isBound: IS_BOUND
-    }));
+    expect(loader).toEqual(
+      jasmine.objectContaining({
+        loaderId: LOADER_ID_01,
+        isMaster: !IS_MASTER,
+        isBound: IS_BOUND
+      })
+    );
     expect(Object.keys(loader.tasks).every(id => loader.tasks[id].isForeground === false)).toEqual(true);
   });
 
@@ -538,15 +555,17 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     expect(() => {
       loaderService.bindLoaderData(LOADER_ID_01);
     }).not.toThrowError(`[ngx-ui-loader] - loaderId "${LOADER_ID_01}" is duplicated.`);
-    loaderService.showBackground$.subscribe((data) => {
+    loaderService.showBackground$.subscribe(data => {
       expect(data).toEqual({ loaderId: LOADER_ID_01, isShow: true });
     });
     const loader = loaderService.getLoaders()[LOADER_ID_01];
-    expect(loader).toEqual(jasmine.objectContaining({
-      loaderId: LOADER_ID_01,
-      isMaster: !IS_MASTER,
-      isBound: IS_BOUND
-    }));
+    expect(loader).toEqual(
+      jasmine.objectContaining({
+        loaderId: LOADER_ID_01,
+        isMaster: !IS_MASTER,
+        isBound: IS_BOUND
+      })
+    );
     expect(Object.keys(loader.tasks).every(id => loader.tasks[id].isForeground === false)).toEqual(true);
   });
 
@@ -554,32 +573,36 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.destroyLoaderData(DEFAULT_MASTER_LOADER_ID);
     expect(() => {
       loaderService.startBackground();
-    }).not.toThrowError(`[ngx-ui-loader] - The master loader has already existed. `
-      + `The app should have only one master loader and it should be placed in the root app template`);
+    }).not.toThrowError(
+      `[ngx-ui-loader] - The master loader has already existed. ` +
+        `The app should have only one master loader and it should be placed in the root app template`
+    );
     const loader = loaderService.getLoader(DEFAULT_MASTER_LOADER_ID);
-    expect(loader).toEqual(jasmine.objectContaining({
-      loaderId: DEFAULT_MASTER_LOADER_ID,
-      isBound: !IS_BOUND
-    }));
+    expect(loader).toEqual(
+      jasmine.objectContaining({
+        loaderId: DEFAULT_MASTER_LOADER_ID,
+        isBound: !IS_BOUND
+      })
+    );
     expect(Object.keys(loader.tasks).every(id => loader.tasks[id].isForeground === false)).toEqual(true);
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID)).toEqual(true);
-    loaderService.showBackground$.subscribe((data) => {
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID)).toEqual(true);
+    loaderService.showBackground$.subscribe(data => {
       expect(data).toEqual({ loaderId: '', isShow: false });
     });
   });
 
   it(`#startBackground() - 1 - condition: no foreground id in the queue`, () => {
     loaderService.startBackground();
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID)).toEqual(true);
-    loaderService.showBackground$.subscribe((data) => {
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID)).toEqual(true);
+    loaderService.showBackground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
     });
   });
 
   it(`#startBackground('${TASK_ID_01}') - 2 - condition: no foreground id in the queue`, () => {
     loaderService.startBackground(TASK_ID_01);
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID, TASK_ID_01)).toEqual(true);
-    loaderService.showBackground$.subscribe((data) => {
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, TASK_ID_01)).toEqual(true);
+    loaderService.showBackground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
     });
   });
@@ -590,15 +613,17 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     expect(() => {
       loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
     }).not.toThrowError(`[ngx-ui-loader] - loaderId "${DEFAULT_MASTER_LOADER_ID}" is duplicated.`);
-    loaderService.showBackground$.subscribe((data) => {
+    loaderService.showBackground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: true });
     });
     const loader = loaderService.getLoaders()[DEFAULT_MASTER_LOADER_ID];
-    expect(loader).toEqual(jasmine.objectContaining({
-      loaderId: DEFAULT_MASTER_LOADER_ID,
-      isMaster: IS_MASTER,
-      isBound: IS_BOUND
-    }));
+    expect(loader).toEqual(
+      jasmine.objectContaining({
+        loaderId: DEFAULT_MASTER_LOADER_ID,
+        isMaster: IS_MASTER,
+        isBound: IS_BOUND
+      })
+    );
     expect(Object.keys(loader.tasks).every(id => loader.tasks[id].isForeground === false)).toEqual(true);
   });
 
@@ -609,20 +634,20 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
   });
 
   it(`#stopLoader('${DEFAULT_MASTER_LOADER_ID}') - 2 - not exist task id`, () => {
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(false);
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(false);
     loaderService.stopLoader(DEFAULT_MASTER_LOADER_ID);
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(false);
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(false);
   });
 
   it(`#stopLoader('${DEFAULT_MASTER_LOADER_ID}') - 3 - should work correctly`, fakeAsync(() => {
     loaderService.startLoader(DEFAULT_MASTER_LOADER_ID);
     setTimeout(() => {
       loaderService.stopLoader(DEFAULT_MASTER_LOADER_ID);
-    }, MINTIME - 1);
-    tick(MINTIME - 1);
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(true);
+    }, MIN_TIME - 1);
+    tick(MIN_TIME - 1);
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(true);
     tick(1);
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(false);
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(false);
     tick(1);
     loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
@@ -635,11 +660,11 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.startLoader(DEFAULT_MASTER_LOADER_ID);
     setTimeout(() => {
       loaderService.stopLoader(DEFAULT_MASTER_LOADER_ID);
-    }, MINTIME - 1);
-    tick(MINTIME - 1);
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(true);
+    }, MIN_TIME - 1);
+    tick(MIN_TIME - 1);
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(true);
     tick(1);
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(false);
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(false);
     tick(1);
     loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
@@ -656,11 +681,11 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.startLoader(DEFAULT_MASTER_LOADER_ID);
     setTimeout(() => {
       loaderService.stopLoader(DEFAULT_MASTER_LOADER_ID);
-    }, MINTIME - 1);
-    tick(MINTIME - 1);
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(true);
+    }, MIN_TIME - 1);
+    tick(MIN_TIME - 1);
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(true);
     tick(1);
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(false);
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(false);
     tick(1);
     loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
@@ -687,11 +712,11 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.start();
     setTimeout(() => {
       loaderService.stop();
-    }, MINTIME - 1);
-    tick(MINTIME - 1);
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(true);
+    }, MIN_TIME - 1);
+    tick(MIN_TIME - 1);
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(true);
     tick(1);
-    expect(loaderService.hasForeground(DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(false);
+    expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(false);
     tick(1);
     loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
@@ -706,20 +731,20 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
   });
 
   it(`#stopBackgroundLoader('${DEFAULT_MASTER_LOADER_ID}') - 2 - not exist task id`, () => {
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
     loaderService.stopBackgroundLoader(DEFAULT_MASTER_LOADER_ID);
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
   });
 
   it(`#stopBackgroundLoader('${DEFAULT_MASTER_LOADER_ID}') - 3 - should work correctly`, fakeAsync(() => {
     loaderService.startBackgroundLoader(DEFAULT_MASTER_LOADER_ID);
     setTimeout(() => {
       loaderService.stopBackgroundLoader(DEFAULT_MASTER_LOADER_ID);
-    }, MINTIME - 1);
-    tick(MINTIME - 1);
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(true);
+    }, MIN_TIME - 1);
+    tick(MIN_TIME - 1);
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(true);
     tick(1);
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
     tick(1);
     loaderService.showBackground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
@@ -732,11 +757,11 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.startBackgroundLoader(DEFAULT_MASTER_LOADER_ID);
     setTimeout(() => {
       loaderService.stopBackgroundLoader(DEFAULT_MASTER_LOADER_ID);
-    }, MINTIME - 1);
-    tick(MINTIME - 1);
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(true);
+    }, MIN_TIME - 1);
+    tick(MIN_TIME - 1);
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(true);
     tick(1);
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
     tick(1);
     tick(END_TIME);
   }));
@@ -752,11 +777,11 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.startBackground();
     setTimeout(() => {
       loaderService.stopBackground();
-    }, MINTIME - 1);
-    tick(MINTIME - 1);
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(true);
+    }, MIN_TIME - 1);
+    tick(MIN_TIME - 1);
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(true);
     tick(1);
-    expect(loaderService.hasBackground(DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
+    expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
     tick(1);
     loaderService.showBackground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
@@ -826,7 +851,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
   });
 
   it(`#stopAllLoader('${DEFAULT_MASTER_LOADER_ID}') - 6 - should work correctly`, fakeAsync(() => {
-    loaderService = new NgxUiLoaderService({ maxTime: MAXTIME, delay: DELAY });
+    loaderService = new NgxUiLoaderService({ maxTime: MAX_TIME, delay: DELAY });
     loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
     loaderService.startBackground();
     loaderService.startBackground(); // this one is ignored
@@ -844,7 +869,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
   }));
 
   it(`#stopAllLoader('${DEFAULT_MASTER_LOADER_ID}') - 7 - should work correctly`, fakeAsync(() => {
-    loaderService = new NgxUiLoaderService({ maxTime: MAXTIME, delay: DELAY });
+    loaderService = new NgxUiLoaderService({ maxTime: MAX_TIME, delay: DELAY });
     loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
     loaderService.startBackground();
     loaderService.startBackground(TASK_ID_01);
@@ -864,15 +889,38 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
   }));
 
   it(`#Stop automatically due to timeout('${DEFAULT_MASTER_LOADER_ID}') - 1 - should work correctly`, fakeAsync(() => {
-    loaderService = new NgxUiLoaderService({ maxTime: MAXTIME, delay: DELAY });
+    loaderService = new NgxUiLoaderService({ maxTime: MAX_TIME, delay: DELAY });
     loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
     loaderService.start();
-    tick(DELAY + MAXTIME);
+    tick(DELAY + MAX_TIME);
     loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
     });
     loaderService.startBackground();
-    tick(DELAY + MAXTIME);
+    tick(DELAY + MAX_TIME);
+    expect(loaderService.getLoaders()[DEFAULT_MASTER_LOADER_ID]).toEqual({
+      loaderId: DEFAULT_MASTER_LOADER_ID,
+      tasks: {},
+      isMaster: IS_MASTER,
+      isBound: IS_BOUND
+    });
+    tick(END_TIME);
+  }));
+
+  it(`#Stop automatically due to timeout('${DEFAULT_MASTER_LOADER_ID}') - 2 - should work correctly`, fakeAsync(() => {
+    loaderService = new NgxUiLoaderService({ maxTime: MAX_TIME, delay: DELAY });
+    loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
+    loaderService.start(DEFAULT_FG_TASK_ID, { maxTime: MAX_TIME - 20, delay: DELAY - 20, minTime: MIN_TIME - 20 });
+    tick(DELAY + MAX_TIME - 20);
+    loaderService.showForeground$.subscribe(data => {
+      expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
+    });
+    loaderService.startBackground(DEFAULT_FG_TASK_ID, {
+      maxTime: MAX_TIME - 30,
+      delay: DELAY - 30,
+      minTime: MIN_TIME - 30
+    });
+    tick(DELAY + MAX_TIME - 30);
     expect(loaderService.getLoaders()[DEFAULT_MASTER_LOADER_ID]).toEqual({
       loaderId: DEFAULT_MASTER_LOADER_ID,
       tasks: {},
@@ -883,7 +931,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
   }));
 
   it(`#Stop before delay('${DEFAULT_MASTER_LOADER_ID}') - 1 - should work correctly`, fakeAsync(() => {
-    loaderService = new NgxUiLoaderService({ maxTime: MAXTIME, delay: DELAY });
+    loaderService = new NgxUiLoaderService({ maxTime: MAX_TIME, delay: DELAY });
     loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
     loaderService.start();
     tick(DELAY - 1);

@@ -16,8 +16,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ColorPickerModule } from 'ngx-color-picker';
 
-import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER, POSITION,
-  PB_DIRECTION, NgxUiLoaderRouterModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
+import {
+  NgxUiLoaderModule,
+  NgxUiLoaderConfig,
+  SPINNER,
+  POSITION,
+  PB_DIRECTION,
+  NgxUiLoaderRouterModule,
+  NgxUiLoaderHttpModule
+} from 'ngx-ui-loader';
 
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
@@ -62,13 +69,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SpinnerDemoComponent,
-    MultiLoaderDemoComponent,
-    NgxUiLoaderDemoComponent,
-    NgxUiLoaderControllerComponent
-  ],
+  declarations: [AppComponent, SpinnerDemoComponent, MultiLoaderDemoComponent, NgxUiLoaderDemoComponent, NgxUiLoaderControllerComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -89,9 +90,9 @@ const routes: Routes = [
 
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     NgxUiLoaderRouterModule, // import this module for showing loader automatically when navigating between app routes
-    NgxUiLoaderHttpModule,
+    NgxUiLoaderHttpModule
   ],
   providers: [NgxUiLoaderDemoService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,27 +1,29 @@
-  <mat-list role="list" fxFlex="100" *ngIf="loader">
-    <h3><code>loaderId = "{{loader.loaderId}}"</code> {{loader.isMaster ? '- (master loader)' : ''}}</h3>
-    <mat-list-item role="listitem">
-      <mat-slide-toggle (change)="fgSlideChange($event.checked, 3000)"
-          [(checked)]="tasks['fg-default']">
-        {{tasks['fg-default'] ? 'stop' : 'start'}}{{loader.isMaster ? '()' : 'Loader("' + loader.loaderId +'")'}} - 3 seconds
-      </mat-slide-toggle>
-    </mat-list-item>
-    <mat-list-item role="listitem">
-      <mat-slide-toggle (change)="fgSlideChange($event.checked, 15000, 'task-01')"
-          [(checked)]="tasks['task-01']">
-        {{tasks['task-01'] ? 'stop' : 'start'}}{{loader.isMaster ? '("task-01")' : 'Loader("' + loader.loaderId + '", "task-01")'}} - 15 seconds
-      </mat-slide-toggle>
-    </mat-list-item>
-    <mat-list-item role="listitem">
-      <mat-slide-toggle (change)="bgSlideChange($event.checked)"
-          [(checked)]="tasks['bg-default']">
-        {{tasks['bg-default'] ? 'stop' : 'start'}}Background{{loader.isMaster ? '()' : 'Loader("' + loader.loaderId + '")'}}
-      </mat-slide-toggle>
-    </mat-list-item>
-    <mat-list-item role="listitem">
-      <mat-slide-toggle (change)="bgSlideChange($event.checked, 'task-02')"
-          [(checked)]="tasks['task-02']">
-        {{tasks['task-02'] ? 'stop' : 'start'}}Background{{loader.isMaster ? '("task-02")' : 'Loader("' + loader.loaderId + '", "task-02")'}}
-      </mat-slide-toggle>
-    </mat-list-item>
-  <mat-list>
+<mat-list role="list" fxFlex="100" *ngIf="loader">
+  <h3>
+    <code>loaderId = "{{ loader.loaderId }}"</code> {{ loader.isMaster ? '- (master loader)' : '' }}
+  </h3>
+  <mat-list-item role="listitem">
+    <mat-slide-toggle (change)="fgSlideChange($event.checked, 3000)" [(checked)]="tasks['fg-default']">
+      {{ tasks['fg-default'] ? 'stop' : 'start' }}{{ loader.isMaster ? '()' : 'Loader("' + loader.loaderId + '")' }} - 3 seconds
+    </mat-slide-toggle>
+  </mat-list-item>
+  <mat-list-item role="listitem">
+    <mat-slide-toggle (change)="fgSlideChange($event.checked, 15000, 'task-01')" [(checked)]="tasks['task-01']">
+      {{ tasks['task-01'] ? 'stop' : 'start' }}{{ loader.isMaster ? '("task-01")' : 'Loader("' + loader.loaderId + '", "task-01")' }} - 15
+      seconds
+    </mat-slide-toggle>
+  </mat-list-item>
+  <mat-list-item role="listitem">
+    <mat-slide-toggle (change)="bgSlideChange($event.checked)" [(checked)]="tasks['bg-default']">
+      {{ tasks['bg-default'] ? 'stop' : 'start' }}Background{{ loader.isMaster ? '()' : 'Loader("' + loader.loaderId + '")' }}
+    </mat-slide-toggle>
+  </mat-list-item>
+  <mat-list-item role="listitem">
+    <mat-slide-toggle (change)="bgSlideChange($event.checked, 'task-02')" [(checked)]="tasks['task-02']">
+      {{ tasks['task-02'] ? 'stop' : 'start' }}Background{{
+        loader.isMaster ? '("task-02")' : 'Loader("' + loader.loaderId + '", "task-02")'
+      }}
+    </mat-slide-toggle>
+  </mat-list-item>
+  <mat-list> </mat-list
+></mat-list>
