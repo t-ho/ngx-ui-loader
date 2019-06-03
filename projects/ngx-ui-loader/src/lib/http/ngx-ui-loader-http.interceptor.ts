@@ -42,12 +42,10 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
     }
 
     this.count++;
-    if (!this.loader.hasRunningTask(this.config.showForeground, this.config.loaderId, HTTP_LOADER_TASK_ID)) {
-      if (this.config.showForeground) {
-        this.loader.startLoader(this.config.loaderId, HTTP_LOADER_TASK_ID);
-      } else {
-        this.loader.startBackgroundLoader(this.config.loaderId, HTTP_LOADER_TASK_ID);
-      }
+    if (this.config.showForeground) {
+      this.loader.startLoader(this.config.loaderId, HTTP_LOADER_TASK_ID, this.config);
+    } else {
+      this.loader.startBackgroundLoader(this.config.loaderId, HTTP_LOADER_TASK_ID, this.config);
     }
 
     return next.handle(req).pipe(

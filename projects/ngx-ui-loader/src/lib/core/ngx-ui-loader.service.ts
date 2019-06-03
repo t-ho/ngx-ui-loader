@@ -9,6 +9,8 @@ import {
   DEFAULT_FG_TASK_ID,
   DEFAULT_TIME,
   FOREGROUND,
+  MIN_DELAY,
+  MIN_TIME,
   WAITING_FOR_OVERLAY_DISAPPEAR
 } from '../utils/constants';
 import { NGX_UI_LOADER_CONFIG_TOKEN } from './ngx-ui-loader-config.token';
@@ -56,8 +58,8 @@ export class NgxUiLoaderService {
   constructor(@Optional() @Inject(NGX_UI_LOADER_CONFIG_TOKEN) private config: NgxUiLoaderConfig) {
     this.defaultConfig = { ...DEFAULT_CONFIG };
     if (this.config) {
-      if (this.config.minTime && this.config.minTime <= 0) {
-        this.config.minTime = DEFAULT_CONFIG.minTime;
+      if (this.config.minTime && this.config.minTime < MIN_TIME) {
+        this.config.minTime = MIN_TIME;
       }
       this.defaultConfig = { ...this.defaultConfig, ...this.config };
     }
@@ -440,9 +442,9 @@ export class NgxUiLoaderService {
       this.loaders[loaderId].tasks[taskId] = {
         taskId,
         isForeground,
-        minTime: time.minTime > 0 ? time.minTime : this.defaultConfig.minTime,
+        minTime: time.minTime >= MIN_TIME ? time.minTime : this.defaultConfig.minTime,
         maxTime: time.maxTime ? time.maxTime : this.defaultConfig.maxTime,
-        delay: time.delay ? time.delay : this.defaultConfig.delay
+        delay: time.delay >= MIN_DELAY ? time.delay : this.defaultConfig.delay
       };
     } else {
       if (this.loaders[loaderId].tasks[taskId].isForeground !== isForeground) {
@@ -492,7 +494,7 @@ export class NgxUiLoaderService {
    * @returns boolean
    */
   private setDelayTimer(task: Task, loaderId: string): boolean {
-    if (task.delay > 0) {
+    if (task.delay > MIN_DELAY) {
       if (task.isDelayed) {
         return true;
       }
@@ -519,15 +521,17 @@ export class NgxUiLoaderService {
    */
   private setMaxTimer(task: Task, loaderId: string): void {
     if (task.maxTime > task.minTime) {
-      if (!task.maxTimer) {
-        task.maxTimer = setTimeout(() => {
-          if (task.isForeground) {
-            this.stopLoader(loaderId, task.taskId);
-          } else {
-            this.stopBackgroundLoader(loaderId, task.taskId);
-          }
-        }, task.maxTime);
+      // restart the task, reset maxTimer
+      if (task.maxTimer) {
+        clearTimeout(task.maxTimer);
       }
+      task.maxTimer = setTimeout(() => {
+        if (task.isForeground) {
+          this.stopLoader(loaderId, task.taskId);
+        } else {
+          this.stopBackgroundLoader(loaderId, task.taskId);
+        }
+      }, task.maxTime);
     }
   }
 

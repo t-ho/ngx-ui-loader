@@ -18,6 +18,10 @@ export const DEFAULT_MASTER_LOADER_ID = 'master';
 
 export const DEFAULT_TIME: Time = {};
 
+export const MIN_DELAY = 0;
+
+export const MIN_TIME = 300;
+
 export const CLOSING_TIME = 1001;
 
 export const BACKGROUND = false;

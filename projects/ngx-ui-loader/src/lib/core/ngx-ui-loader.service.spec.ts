@@ -2,7 +2,6 @@ import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
 import { DEFAULT_CONFIG } from '../utils/constants';
-import { NgxUiLoaderModule } from './ngx-ui-loader.module';
 
 // DO NOT change the following constants {{{
 const BACKGROUND = false;
@@ -18,7 +17,7 @@ const FOREGROUND = true;
 const IS_BOUND = true;
 const IS_MASTER = true;
 const LOADER_ID_01 = 'loader-id-01';
-const MIN_TIME = 500;
+const MIN_TIME = 300;
 const MAX_TIME = 8000;
 const NOT_EXISTING_LOADER_ID = 'not-existing-loader-id';
 const NOT_EXISTING_TASK_ID = 'not-existing-task-id';
@@ -33,14 +32,24 @@ describe('NgxUiLoaderService with custom config', () => {
     expect(loaderService.getDefaultConfig()).toEqual(DEFAULT_CONFIG);
   });
 
-  it('NgxUiLoaderService({ minTime: 20 }) should return DEFAUL_CONFIG', () => {
-    const loaderService = new NgxUiLoaderService({ minTime: 20 });
-    expect(loaderService.getDefaultConfig()).toEqual({ ...DEFAULT_CONFIG, minTime: 20 });
+  it(`NgxUiLoaderService({ minTime: -20 }) should return minTime: ${MIN_TIME}`, () => {
+    const loaderService = new NgxUiLoaderService({ minTime: -20 });
+    expect(loaderService.getDefaultConfig()).toEqual({ ...DEFAULT_CONFIG, minTime: MIN_TIME });
   });
 
-  it('NgxUiLoaderService({ minTime: -20 }) should return DEFAUL_CONFIG', () => {
-    const loaderService = new NgxUiLoaderService({ minTime: -20 });
-    expect(loaderService.getDefaultConfig()).toEqual(DEFAULT_CONFIG);
+  it(`NgxUiLoaderService({ minTime: ${MIN_TIME - 1} }) should return DEFAUL_CONFIG`, () => {
+    const loaderService = new NgxUiLoaderService({ minTime: MIN_TIME - 1 });
+    expect(loaderService.getDefaultConfig()).toEqual({ ...DEFAULT_CONFIG, minTime: MIN_TIME });
+  });
+
+  it(`NgxUiLoaderService({ minTime: ${MIN_TIME} }) should return minTime: ${MIN_TIME}`, () => {
+    const loaderService = new NgxUiLoaderService({ minTime: MIN_TIME });
+    expect(loaderService.getDefaultConfig()).toEqual({ ...DEFAULT_CONFIG, minTime: MIN_TIME });
+  });
+
+  it(`NgxUiLoaderService({ minTime: ${MIN_TIME + 1} }) should return minTime: ${MIN_TIME + 1}`, () => {
+    const loaderService = new NgxUiLoaderService({ minTime: MIN_TIME + 1 });
+    expect(loaderService.getDefaultConfig()).toEqual({ ...DEFAULT_CONFIG, minTime: MIN_TIME + 1 });
   });
 });
 
@@ -643,8 +652,8 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.startLoader(DEFAULT_MASTER_LOADER_ID);
     setTimeout(() => {
       loaderService.stopLoader(DEFAULT_MASTER_LOADER_ID);
-    }, MIN_TIME - 1);
-    tick(MIN_TIME - 1);
+    }, DEFAULT_CONFIG.minTime - 1);
+    tick(DEFAULT_CONFIG.minTime - 1);
     expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(true);
     tick(1);
     expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(false);
@@ -660,8 +669,8 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.startLoader(DEFAULT_MASTER_LOADER_ID);
     setTimeout(() => {
       loaderService.stopLoader(DEFAULT_MASTER_LOADER_ID);
-    }, MIN_TIME - 1);
-    tick(MIN_TIME - 1);
+    }, DEFAULT_CONFIG.minTime - 1);
+    tick(DEFAULT_CONFIG.minTime - 1);
     expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(true);
     tick(1);
     expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(false);
@@ -681,8 +690,8 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.startLoader(DEFAULT_MASTER_LOADER_ID);
     setTimeout(() => {
       loaderService.stopLoader(DEFAULT_MASTER_LOADER_ID);
-    }, MIN_TIME - 1);
-    tick(MIN_TIME - 1);
+    }, DEFAULT_CONFIG.minTime - 1);
+    tick(DEFAULT_CONFIG.minTime - 1);
     expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(true);
     tick(1);
     expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(false);
@@ -712,8 +721,8 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.start();
     setTimeout(() => {
       loaderService.stop();
-    }, MIN_TIME - 1);
-    tick(MIN_TIME - 1);
+    }, DEFAULT_CONFIG.minTime - 1);
+    tick(DEFAULT_CONFIG.minTime - 1);
     expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(true);
     tick(1);
     expect(loaderService.hasRunningTask(FOREGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_FG_TASK_ID)).toEqual(false);
@@ -740,8 +749,8 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.startBackgroundLoader(DEFAULT_MASTER_LOADER_ID);
     setTimeout(() => {
       loaderService.stopBackgroundLoader(DEFAULT_MASTER_LOADER_ID);
-    }, MIN_TIME - 1);
-    tick(MIN_TIME - 1);
+    }, DEFAULT_CONFIG.minTime - 1);
+    tick(DEFAULT_CONFIG.minTime - 1);
     expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(true);
     tick(1);
     expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
@@ -757,8 +766,8 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.startBackgroundLoader(DEFAULT_MASTER_LOADER_ID);
     setTimeout(() => {
       loaderService.stopBackgroundLoader(DEFAULT_MASTER_LOADER_ID);
-    }, MIN_TIME - 1);
-    tick(MIN_TIME - 1);
+    }, DEFAULT_CONFIG.minTime - 1);
+    tick(DEFAULT_CONFIG.minTime - 1);
     expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(true);
     tick(1);
     expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
@@ -777,8 +786,8 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.startBackground();
     setTimeout(() => {
       loaderService.stopBackground();
-    }, MIN_TIME - 1);
-    tick(MIN_TIME - 1);
+    }, DEFAULT_CONFIG.minTime - 1);
+    tick(DEFAULT_CONFIG.minTime - 1);
     expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(true);
     tick(1);
     expect(loaderService.hasRunningTask(BACKGROUND, DEFAULT_MASTER_LOADER_ID, DEFAULT_BG_TASK_ID)).toEqual(false);
@@ -892,7 +901,9 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService = new NgxUiLoaderService({ maxTime: MAX_TIME, delay: DELAY });
     loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
     loaderService.start();
-    tick(DELAY + MAX_TIME);
+    tick(DELAY + 10);
+    loaderService.start();
+    tick(MAX_TIME);
     loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
     });
@@ -910,7 +921,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
   it(`#Stop automatically due to timeout('${DEFAULT_MASTER_LOADER_ID}') - 2 - should work correctly`, fakeAsync(() => {
     loaderService = new NgxUiLoaderService({ maxTime: MAX_TIME, delay: DELAY });
     loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
-    loaderService.start(DEFAULT_FG_TASK_ID, { maxTime: MAX_TIME - 20, delay: DELAY - 20, minTime: MIN_TIME - 20 });
+    loaderService.start(DEFAULT_FG_TASK_ID, { maxTime: MAX_TIME - 20, delay: DELAY - 20, minTime: DEFAULT_CONFIG.minTime - 20 });
     tick(DELAY + MAX_TIME - 20);
     loaderService.showForeground$.subscribe(data => {
       expect(data).toEqual({ loaderId: DEFAULT_MASTER_LOADER_ID, isShow: false });
@@ -918,7 +929,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     loaderService.startBackground(DEFAULT_FG_TASK_ID, {
       maxTime: MAX_TIME - 30,
       delay: DELAY - 30,
-      minTime: MIN_TIME - 30
+      minTime: DEFAULT_CONFIG.minTime - 30
     });
     tick(DELAY + MAX_TIME - 30);
     expect(loaderService.getLoaders()[DEFAULT_MASTER_LOADER_ID]).toEqual({

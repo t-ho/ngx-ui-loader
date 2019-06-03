@@ -76,6 +76,6 @@ export interface NgxUiLoaderConfig extends Time {
   textPosition?: PositionType;
 }
 
-export interface NgxUiLoaderHttpConfig extends Config {}
+export interface NgxUiLoaderHttpConfig extends Config, Time {}
 
 export interface NgxUiLoaderRouterConfig extends Config {}
