@@ -10,7 +10,7 @@
 
 # ngx-ui-loader
 
-An all-in-one and fully customizable loader/spinner for Angular 5, 6 and 7+ applications. It supports foreground, background spinner/loader, indicative progress bar and multiple loaders.
+An all-in-one and fully customizable loader/spinner for Angular 5, 6, 7 and 8+ applications. It supports foreground, background spinner/loader, indicative progress bar and multiple loaders.
 
 [![ngx-ui-loader-demo](https://raw.githubusercontent.com/t-ho/ngx-ui-loader/master/src/assets/multi-loaders.gif)](https://ngx-ui-loader.stackblitz.io/multiloader)
 
@@ -58,6 +58,15 @@ $ yarn add ngx-ui-loader
 ```
 
 _Please read [wiki page](https://github.com/t-ho/ngx-ui-loader/wiki) for more instructions_
+
+### \* For Angular 6 and 7, please use ngx-ui-loader version 7.2.x
+
+```shell
+$ npm install --save ngx-ui-loader@7.2.2
+```
+
+_The documentation for **v7.2.x** is available [here](https://github.com/t-ho/ngx-ui-loader/blob/v7.x.x/README.md)_
+
 
 ### \* For Angular 4 and 5, please use ngx-ui-loader version 1.2.x
 
