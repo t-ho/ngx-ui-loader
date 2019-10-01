@@ -559,25 +559,6 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     expect(Object.keys(loader.tasks).every(id => loader.tasks[id].isForeground === false)).toEqual(true);
   });
 
-  it(`#bindLoaderData('${LOADER_ID_01}') - should not throw any error`, () => {
-    loaderService.startBackgroundLoader(LOADER_ID_01);
-    expect(() => {
-      loaderService.bindLoaderData(LOADER_ID_01);
-    }).not.toThrowError(`[ngx-ui-loader] - loaderId "${LOADER_ID_01}" is duplicated.`);
-    loaderService.showBackground$.subscribe(data => {
-      expect(data).toEqual({ loaderId: LOADER_ID_01, isShow: true });
-    });
-    const loader = loaderService.getLoaders()[LOADER_ID_01];
-    expect(loader).toEqual(
-      jasmine.objectContaining({
-        loaderId: LOADER_ID_01,
-        isMaster: !IS_MASTER,
-        isBound: IS_BOUND
-      })
-    );
-    expect(Object.keys(loader.tasks).every(id => loader.tasks[id].isForeground === false)).toEqual(true);
-  });
-
   it(`#startBackground() - 0 - should not throw any error`, () => {
     loaderService.destroyLoaderData(DEFAULT_MASTER_LOADER_ID);
     expect(() => {
