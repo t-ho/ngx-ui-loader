@@ -244,7 +244,7 @@ describe('NgxUiLoaderComponent', () => {
     logoEl = ngxUiLoaderEl.querySelector('.ngx-loading-logo');
     expect(logoEl.style.top).toBe('calc(((50% - 30px) - 12px) - 24px)');
     expect(fgSpinnerEl.style.top).toBe('calc((50% + 60px) - 12px)');
-    expect(textEl.style.top).toBe('calc(((50% + 60px) + 24px) + 30px)');
+    expect(textEl.style.top).toBe('calc(50% + 60px + 24px + 30px)');
   });
 
   it('#determinePosition - spinner and logo are center-center', () => {
@@ -263,7 +263,7 @@ describe('NgxUiLoaderComponent', () => {
     fixture.detectChanges();
     logoEl = ngxUiLoaderEl.querySelector('.ngx-loading-logo');
     expect(logoEl.style.top).toBe('calc((50% - 30px) - 12px)');
-    expect(fgSpinnerEl.style.top).toBe('calc((50% + 60px) + 12px)');
+    expect(fgSpinnerEl.style.top).toBe('calc(50% + 60px + 12px)');
     expect(textEl.style.top).toBe('30px');
   });
 
@@ -284,7 +284,7 @@ describe('NgxUiLoaderComponent', () => {
     logoEl = ngxUiLoaderEl.querySelector('.ngx-loading-logo');
     expect(logoEl.style.top).toBe('30px');
     expect(fgSpinnerEl.style.top).toBe('calc((50% - 12px) - 12px)');
-    expect(textEl.style.top).toBe('calc((50% + 30px) + 12px)');
+    expect(textEl.style.top).toBe('calc(50% + 30px + 12px)');
   });
 
   it('#determinePosition - logo and text are center-center', () => {
@@ -304,7 +304,7 @@ describe('NgxUiLoaderComponent', () => {
     logoEl = ngxUiLoaderEl.querySelector('.ngx-loading-logo');
     expect(logoEl.style.top).toBe('calc((50% - 12px) - 12px)');
     expect(fgSpinnerEl.style.top).toBe('30px');
-    expect(textEl.style.top).toBe('calc((50% + 60px) + 12px)');
+    expect(textEl.style.top).toBe('calc(50% + 60px + 12px)');
   });
 
   it('#determinePosition - logo, spinner and text are bottom-center', () => {
