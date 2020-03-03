@@ -16,7 +16,7 @@ export class NgxUiLoaderRouterModule {
    * forRoot
    * @returns A module with its provider dependencies
    */
-  static forRoot(routerConfig: NgxUiLoaderRouterConfig): ModuleWithProviders {
+  static forRoot(routerConfig: NgxUiLoaderRouterConfig): ModuleWithProviders<NgxUiLoaderRouterModule> {
     return {
       ngModule: NgxUiLoaderRouterModule,
       providers: [

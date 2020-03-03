@@ -16,7 +16,7 @@ export class NgxUiLoaderModule {
    * forRoot
    * @returns A module with its provider dependencies
    */
-  static forRoot(ngxUiLoaderConfig: NgxUiLoaderConfig): ModuleWithProviders {
+  static forRoot(ngxUiLoaderConfig: NgxUiLoaderConfig): ModuleWithProviders<NgxUiLoaderModule> {
     return {
       ngModule: NgxUiLoaderModule,
       providers: [
