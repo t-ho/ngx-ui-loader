@@ -20,7 +20,7 @@ before_script:
 
 script: 
   - ng lint
-  - ng build ngx-ui-loader
+  - ng build ngx-ui-loader --prod
   - ng test ngx-ui-loader --code-coverage
   - codecov
   - ng build --prod

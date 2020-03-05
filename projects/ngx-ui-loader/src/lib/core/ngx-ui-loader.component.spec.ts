@@ -52,7 +52,7 @@ describe('NgxUiLoaderComponent', () => {
     fixture = TestBed.createComponent(NgxUiLoaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    loaderService = TestBed.get(NgxUiLoaderService);
+    loaderService = TestBed.inject(NgxUiLoaderService);
     ngxUiLoaderEl = fixture.nativeElement;
     fgContainerEl = ngxUiLoaderEl.querySelector('.ngx-overlay');
     progressBarEl = ngxUiLoaderEl.querySelector('.ngx-progress-bar');

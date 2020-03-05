@@ -59,7 +59,7 @@ describe(`NgxUiLoaderService (no loader)`, () => {
     TestBed.configureTestingModule({
       providers: [NgxUiLoaderService]
     });
-    loaderService = TestBed.get(NgxUiLoaderService);
+    loaderService = TestBed.inject(NgxUiLoaderService);
     spyOn(console, 'warn');
   });
 
@@ -214,7 +214,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     TestBed.configureTestingModule({
       providers: [NgxUiLoaderService]
     });
-    loaderService = TestBed.get(NgxUiLoaderService);
+    loaderService = TestBed.inject(NgxUiLoaderService);
     loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
     spyOn(console, 'warn');
   });
