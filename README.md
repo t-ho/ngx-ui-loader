@@ -12,15 +12,15 @@
 
 An all-in-one and fully customizable loader/spinner for Angular 5, 6, 7 and 8+ applications. It supports foreground, background spinner/loader, indicative progress bar and multiple loaders.
 
-[![ngx-ui-loader-demo](https://raw.githubusercontent.com/t-ho/ngx-ui-loader/master/src/assets/multi-loaders.gif)](https://ngx-ui-loader.stackblitz.io/multiloader)
+[![ngx-ui-loader-demo](https://raw.githubusercontent.com/t-ho/ngx-ui-loader/master/src/assets/multi-loaders.gif)](https://tdev.app/ngx-ui-loader/demo)
 
 Available spinners:
 
-[![ngx-ui-loader-spinners](https://raw.githubusercontent.com/t-ho/ngx-ui-loader/master/src/assets/available-spinners.gif)](https://ngx-ui-loader.stackblitz.io/spinners)
+[![ngx-ui-loader-spinners](https://raw.githubusercontent.com/t-ho/ngx-ui-loader/master/src/assets/available-spinners.gif)](https://tdev.app/ngx-ui-loader/demo)
 
 ## Features
 
-- Support **multiple loaders** (>= ngx-ui-loader@7.1.0). See [Multiple loaders](https://github.com/t-ho/ngx-ui-loader/wiki/Getting-started#24-multiple-loaders) for more details and [demo here](https://ngx-ui-loader.stackblitz.io/multiloader)
+- Support **multiple loaders** (>= ngx-ui-loader@7.1.0). See [Multiple loaders](https://github.com/t-ho/ngx-ui-loader/wiki/Getting-started#24-multiple-loaders) for more details and [demo here](https://tdev.app/ngx-ui-loader/demo)
 - Show foreground loader with **progress bar**
 - The page content can be **blurred/frosted** while showing foreground loader. See [NgxUiLoaderBlurred](https://github.com/t-ho/ngx-ui-loader/wiki/NgxUiLoaderBlurred-directive) directive for more details
 - Show loader with different id for different tasks
@@ -35,9 +35,7 @@ Available spinners:
 
 ## Demo
 
-Live demo [here](https://ngx-ui-loader.stackblitz.io).
-
-Multiple loaders demo [here](https://ngx-ui-loader.stackblitz.io/multiloader).
+Live demo [here](https://tdev.app/ngx-ui-loader/demo).
 
 Live demo source code [here](https://stackblitz.com/edit/ngx-ui-loader) on Stackblitz.
 

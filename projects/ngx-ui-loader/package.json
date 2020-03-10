@@ -15,8 +15,8 @@
     "type": "git",
     "url": "https://github.com/t-ho/ngx-ui-loader.git"
   },
-  "author": "t-ho <toan.hmt@gmail.com>",
-  "homepage": "https://ngx-ui-loader.stackblitz.io",
+  "author": "t-ho <toan.hmt@protonmail.com>",
+  "homepage": "https://tdev.app/ngx-ui-loader/demo",
   "license": "MIT",
   "private": false,
   "peerDependencies": {
