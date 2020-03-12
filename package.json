@@ -1,6 +1,6 @@
 {
   "name": "ngx-ui-loader",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "scripts": {
     "ng": "ng",
     "prettier": "prettier --write \"**/*.{scss,ts,component.html}\"",
