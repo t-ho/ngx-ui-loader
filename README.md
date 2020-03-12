@@ -10,68 +10,45 @@
 
 # ngx-ui-loader
 
-An all-in-one and fully customizable loader/spinner for Angular 5, 6, 7 and 8+ applications. It supports foreground, background spinner/loader, indicative progress bar and multiple loaders.
+An all-in-one and fully customizable loader/spinner for Angular applications. It supports foreground, background spinner/loader, indicative progress bar and multiple loaders.
 
 [![ngx-ui-loader-demo](https://raw.githubusercontent.com/t-ho/ngx-ui-loader/master/src/assets/multi-loaders.gif)](https://tdev.app/ngx-ui-loader/demo)
 
-Available spinners:
-
-[![ngx-ui-loader-spinners](https://raw.githubusercontent.com/t-ho/ngx-ui-loader/master/src/assets/available-spinners.gif)](https://tdev.app/ngx-ui-loader/demo)
-
 ## Features
 
-- Support **multiple loaders** (>= ngx-ui-loader@7.1.0). See [Multiple loaders](https://github.com/t-ho/ngx-ui-loader/wiki/Getting-started#24-multiple-loaders) for more details and [demo here](https://tdev.app/ngx-ui-loader/demo)
+- Support **multiple loaders** (>= ngx-ui-loader@7.1.0). See [Multiple loaders](https://tdev.app/ngx-ui-loader#multiple-loaders) for more details and [demo here](https://tdev.app/ngx-ui-loader/demo)
 - Show foreground loader with **progress bar**
-- The page content can be **blurred/frosted** while showing foreground loader. See [NgxUiLoaderBlurred](https://github.com/t-ho/ngx-ui-loader/wiki/NgxUiLoaderBlurred-directive) directive for more details
+- The page content can be **blurred/frosted** while showing foreground loader. See [NgxUiLoaderBlurred](https://tdev.app/ngx-ui-loader#ngxuiloaderblurred-directive) directive for more details
 - Show loader with different id for different tasks
 - Be able to add **logo** and **loading text**
 - Be able to change position of spinners, logo and loading text
 - Be able to change color and size of logo, spinners and progress bar
 - Be able to change the direction of progress bar
-- Automatically show loader for router events. See [NgxUiLoaderRouterModule](https://github.com/t-ho/ngx-ui-loader/wiki/Automatically-show-loader-for-router-events) for more details
-- Automatically show loader for http requests. See [NgxUiLoaderHttpModule](https://github.com/t-ho/ngx-ui-loader/wiki/Automatically-show-loader-for-Http-requests) for more details
+- Automatically show loader for router events. See [NgxUiLoaderRouterModule](https://tdev.app/ngx-ui-loader#automatically-show-loader-for-router-events) for more details
+- Automatically show loader for http requests. See [NgxUiLoaderHttpModule](https://tdev.app/ngx-ui-loader#automatically-show-loader-for-http-requests) for more details
 
-## The full documentation is available at the [wiki page](https://github.com/t-ho/ngx-ui-loader/wiki)
+### See full documentation [here](https://tdev.app/ngx-ui-loader)
 
 ## Demo
 
 Live demo [here](https://tdev.app/ngx-ui-loader/demo).
 
-Live demo source code [here](https://stackblitz.com/edit/ngx-ui-loader) on Stackblitz.
-
 ## Installation
 
 Install `ngx-ui-loader` via NPM, using the command below.
 
-### NPM
-
 ```shell
 $ npm install --save ngx-ui-loader
-```
 
-### Or Yarn
+# Or Yarn
 
-```shell
 $ yarn add ngx-ui-loader
 ```
 
-_Please read [wiki page](https://github.com/t-ho/ngx-ui-loader/wiki) for more instructions_
-
-### \* For Angular 6 and 7, please use ngx-ui-loader version 7.2.x
-
-```shell
-$ npm install --save ngx-ui-loader@7.2.2
-```
-
-_The documentation for **v7.2.x** is available [here](https://github.com/t-ho/ngx-ui-loader/blob/v7.x.x/README.md)_
-
-
-### \* For Angular 4 and 5, please use ngx-ui-loader version 1.2.x
-
-```shell
-$ npm install --save ngx-ui-loader@1.2.5
-```
-
-_The documentation for **v1.2.x** is available [here](https://github.com/t-ho/ngx-ui-loader/blob/v1.x.x/README.md)_
+| Angular       | Installation                       | Documentation                                                         |
+| ------------- | ---------------------------------- | --------------------------------------------------------------------- |
+| Angular 8     | `npm i --save ngx-ui-loader`       | [v8.x.x](https://tdev.app/ngx-ui-loader/demo)                         |
+| Angular 6 & 7 | `npm i --save ngx-ui-loader@7.2.2` | [v7.2.x](https://github.com/t-ho/ngx-ui-loader/blob/v7.x.x/README.md) |
+| Angular 4 & 5 | `npm i --save ngx-ui-loader@1.2.5` | [v1.x.x](https://github.com/t-ho/ngx-ui-loader/blob/v1.x.x/README.md) |
 
 ### If you like `ngx-ui-loader`, please give it a :star:

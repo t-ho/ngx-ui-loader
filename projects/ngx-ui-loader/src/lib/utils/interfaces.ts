@@ -56,6 +56,7 @@ export interface NgxUiLoaderConfig extends Time {
   bgsSize?: number;
   blur?: number;
   bgsType?: SpinnerType;
+  fastFadeOut?: boolean;
   fgsColor?: string;
   fgsPosition?: PositionType;
   fgsSize?: number;

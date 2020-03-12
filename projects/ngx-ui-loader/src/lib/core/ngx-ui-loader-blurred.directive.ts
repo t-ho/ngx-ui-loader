@@ -5,7 +5,7 @@ import { filter } from 'rxjs/operators';
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
 import { coerceNumber } from '../utils/functions';
 import { ShowEvent } from '../utils/interfaces';
-import { FOREGROUND, WAITING_FOR_OVERLAY_DISAPPEAR } from '../utils/constants';
+import { FOREGROUND, OVERLAY_DISAPPEAR_TIME, FAST_OVERLAY_DISAPPEAR_TIME } from '../utils/constants';
 
 @Directive({ selector: '[ngxUiLoaderBlurred]' })
 export class NgxUiLoaderBlurredDirective implements OnInit, OnDestroy {
@@ -23,10 +23,12 @@ export class NgxUiLoaderBlurredDirective implements OnInit, OnDestroy {
   @Input() loaderId: string;
 
   showForegroundWatcher: Subscription;
+  fastFadeOut: boolean;
 
   constructor(private elementRef: ElementRef, private renderer: Renderer2, private loader: NgxUiLoaderService) {
     this.blurNumber = this.loader.getDefaultConfig().blur;
     this.loaderId = this.loader.getDefaultConfig().masterLoaderId;
+    this.fastFadeOut = this.loader.getDefaultConfig().fastFadeOut;
   }
 
   /**
@@ -41,12 +43,15 @@ export class NgxUiLoaderBlurredDirective implements OnInit, OnDestroy {
           this.renderer.setStyle(this.elementRef.nativeElement, '-webkit-filter', filterValue);
           this.renderer.setStyle(this.elementRef.nativeElement, 'filter', filterValue);
         } else {
-          setTimeout(() => {
-            if (!this.loader.hasRunningTask(FOREGROUND, data.loaderId)) {
-              this.renderer.setStyle(this.elementRef.nativeElement, '-webkit-filter', 'none');
-              this.renderer.setStyle(this.elementRef.nativeElement, 'filter', 'none');
-            }
-          }, WAITING_FOR_OVERLAY_DISAPPEAR);
+          setTimeout(
+            () => {
+              if (!this.loader.hasRunningTask(FOREGROUND, data.loaderId)) {
+                this.renderer.setStyle(this.elementRef.nativeElement, '-webkit-filter', 'none');
+                this.renderer.setStyle(this.elementRef.nativeElement, 'filter', 'none');
+              }
+            },
+            this.fastFadeOut ? FAST_OVERLAY_DISAPPEAR_TIME : OVERLAY_DISAPPEAR_TIME
+          );
         }
       });
   }

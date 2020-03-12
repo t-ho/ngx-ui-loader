@@ -52,6 +52,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   @Input() textColor: string;
   @Input() textPosition: PositionType;
 
+  fastFadeOut: boolean;
   fgDivs: number[];
   fgSpinnerClass: string;
   bgDivs: number[];
@@ -86,6 +87,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.bgsPosition = this.defaultConfig.bgsPosition;
     this.bgsSize = this.defaultConfig.bgsSize;
     this.bgsType = this.defaultConfig.bgsType;
+    this.fastFadeOut = this.defaultConfig.fastFadeOut;
     this.fgsColor = this.defaultConfig.fgsColor;
     this.fgsPosition = this.defaultConfig.fgsPosition;
     this.fgsSize = this.defaultConfig.fgsSize;

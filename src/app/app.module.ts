@@ -51,6 +51,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // text: 'Welcome to ngx-ui-loader',
   // textColor: '#FFFFFF',
   // textPosition: POSITION.centerCenter
+  fastFadeOut: true
 };
 
 const routes: Routes = [
