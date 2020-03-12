@@ -24,11 +24,15 @@ export const MIN_TIME = 300;
 
 export const CLOSING_TIME = 1001;
 
+export const FAST_CLOSING_TIME = 601;
+
 export const BACKGROUND = false;
 
 export const FOREGROUND = true;
 
-export const WAITING_FOR_OVERLAY_DISAPPEAR = 500;
+export const OVERLAY_DISAPPEAR_TIME = 500;
+
+export const FAST_OVERLAY_DISAPPEAR_TIME = 300;
 
 /**
  * Http loader taskId
@@ -145,6 +149,7 @@ export const DEFAULT_CONFIG: NgxUiLoaderConfig = {
   bgsType: SPINNER.ballSpinClockwise,
   blur: 5,
   delay: 0,
+  fastFadeOut: false,
   fgsColor: '#00ACC1',
   fgsPosition: POSITION.centerCenter,
   fgsSize: 60,

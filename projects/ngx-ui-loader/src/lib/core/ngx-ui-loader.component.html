@@ -8,6 +8,7 @@
   [style.color]="pbColor"
   [class.loading-foreground]="showForeground"
   [class.foreground-closing]="foregroundClosing"
+  [class.fast-closing]="foregroundClosing && fastFadeOut"
 ></div>
 <!-- Progress bar }}} -->
 
@@ -19,6 +20,7 @@
   [style.border-radius]="overlayBorderRadius"
   [class.loading-foreground]="showForeground"
   [class.foreground-closing]="foregroundClosing"
+  [class.fast-closing]="foregroundClosing && fastFadeOut"
 >
   <!-- Logo {{{ -->
   <img
@@ -60,6 +62,7 @@
   [ngClass]="bgsPosition"
   [class.loading-background]="showBackground"
   [class.background-closing]="backgroundClosing"
+  [class.fast-closing]="backgroundClosing && fastFadeOut"
   [style.width.px]="bgsSize"
   [style.height.px]="bgsSize"
   [style.color]="bgsColor"

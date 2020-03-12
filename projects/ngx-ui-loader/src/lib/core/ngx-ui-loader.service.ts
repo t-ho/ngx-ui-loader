@@ -8,10 +8,12 @@ import {
   DEFAULT_CONFIG,
   DEFAULT_FG_TASK_ID,
   DEFAULT_TIME,
+  FAST_CLOSING_TIME,
   FOREGROUND,
   MIN_DELAY,
   MIN_TIME,
-  WAITING_FOR_OVERLAY_DISAPPEAR
+  OVERLAY_DISAPPEAR_TIME,
+  FAST_OVERLAY_DISAPPEAR_TIME
 } from '../utils/constants';
 import { NGX_UI_LOADER_CONFIG_TOKEN } from './ngx-ui-loader-config.token';
 import { NgxUiLoaderConfig } from '../utils/interfaces';
@@ -235,12 +237,15 @@ export class NgxUiLoaderService {
       this.foregroundCloseout(loaderId);
       this.showForeground.next({ loaderId, isShow: false });
       if (this.hasRunningTask(BACKGROUND, loaderId)) {
-        setTimeout(() => {
-          if (this.hasRunningTask(BACKGROUND, loaderId)) {
-            // still have background tasks
-            this.showBackground.next({ loaderId, isShow: true });
-          }
-        }, WAITING_FOR_OVERLAY_DISAPPEAR);
+        setTimeout(
+          () => {
+            if (this.hasRunningTask(BACKGROUND, loaderId)) {
+              // still have background tasks
+              this.showBackground.next({ loaderId, isShow: true });
+            }
+          },
+          this.defaultConfig.fastFadeOut ? FAST_OVERLAY_DISAPPEAR_TIME : OVERLAY_DISAPPEAR_TIME
+        );
       }
     }
   }
@@ -333,7 +338,7 @@ export class NgxUiLoaderService {
    * @docs-private
    */
   private throwErrorIfLoaderExists(loaderId: string, useIsBoundProp?: boolean): void {
-    if (this.loaders[loaderId] && (this.loaders[loaderId].isBound && useIsBoundProp)) {
+    if (this.loaders[loaderId] && this.loaders[loaderId].isBound && useIsBoundProp) {
       throw new Error(`[ngx-ui-loader] - loaderId "${loaderId}" is duplicated.`);
     }
   }
@@ -343,7 +348,7 @@ export class NgxUiLoaderService {
    * @docs-private
    */
   private throwErrorIfMasterLoaderExists(useIsBoundProp?: boolean): void {
-    if (this.loaders[this.defaultConfig.masterLoaderId] && (this.loaders[this.defaultConfig.masterLoaderId].isBound && useIsBoundProp)) {
+    if (this.loaders[this.defaultConfig.masterLoaderId] && this.loaders[this.defaultConfig.masterLoaderId].isBound && useIsBoundProp) {
       throw new Error(
         `[ngx-ui-loader] - The master loader has already existed. ` +
           `The app should have only one master loader and it should be placed in the root app template`
@@ -368,9 +373,12 @@ export class NgxUiLoaderService {
    */
   private foregroundCloseout(loaderId: string): void {
     this.fgClosing.next({ loaderId, isShow: true });
-    setTimeout(() => {
-      this.fgClosing.next({ loaderId, isShow: false });
-    }, CLOSING_TIME);
+    setTimeout(
+      () => {
+        this.fgClosing.next({ loaderId, isShow: false });
+      },
+      this.defaultConfig.fastFadeOut ? FAST_CLOSING_TIME : CLOSING_TIME
+    );
   }
 
   /**
@@ -380,9 +388,12 @@ export class NgxUiLoaderService {
    */
   private backgroundCloseout(loaderId: string): void {
     this.bgClosing.next({ loaderId, isShow: true });
-    setTimeout(() => {
-      this.bgClosing.next({ loaderId, isShow: false });
-    }, CLOSING_TIME);
+    setTimeout(
+      () => {
+        this.bgClosing.next({ loaderId, isShow: false });
+      },
+      this.defaultConfig.fastFadeOut ? FAST_CLOSING_TIME : CLOSING_TIME
+    );
   }
 
   /**
