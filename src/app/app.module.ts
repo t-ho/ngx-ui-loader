@@ -35,17 +35,17 @@ import { NgxUiLoaderDemoService } from './ngx-ui-loader-demo.service';
 import { NgxUiLoaderControllerComponent } from './ngx-ui-loader-controller.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
-  // bgsColor: '#OOACC1',
+  bgsColor: 'red',
   // bgsOpacity: 0.5,
   // bgsPosition: POSITION.bottomCenter,
   // bgsSize: 60,
   // bgsType: SPINNER.rectangleBounce,
-  // fgsColor: '#00ACC1',
+  fgsColor: 'red',
   // fgsPosition: POSITION.centerCenter,
   // fgsSize: 60,
   // fgsType: SPINNER.chasingDots,
   // logoUrl: 'assets/angular.png',
-  // pbColor: '#FF0000',
+  pbColor: 'red',
   // pbDirection: PB_DIRECTION.leftToRight,
   // pbThickness: 5,
   // text: 'Welcome to ngx-ui-loader',
