@@ -23,6 +23,4 @@ export class CustomTemplateComponent {
       text: 'Custom Spinner'
     };
   }
-
-  ngOnInit() {}
 }
