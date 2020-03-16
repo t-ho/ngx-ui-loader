@@ -2,7 +2,7 @@
   <div fxFlex="100" fxFlex.gt-xs="1200" fxLayout="row wrap" fxLayoutAlign="center start">
     <div fxFlex.xs="90" fxFlex.sm="70" fxFlex="90" class="container mat-elevation-z4">
       <div fxFlex="100" [loaderId]="loader.loaderId" ngxUiLoaderBlurred>
-        <app-ngx-ui-loader-controller [loader]="loader"></app-ngx-ui-loader-controller>
+        <app-controller [loader]="loader"></app-controller>
       </div>
       <ngx-ui-loader
         [loaderId]="loader.loaderId"
@@ -11,6 +11,7 @@
         [fgsSize]="loader.fgsSize"
         [bgsSize]="loader.bgsSize"
         [text]="loader.text"
+        [gap]="loader.gap"
       ></ngx-ui-loader>
     </div>
   </div>

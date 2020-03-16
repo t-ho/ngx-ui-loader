@@ -19,6 +19,7 @@ export class CustomTemplateComponent {
       isMaster: false,
       fgsSize: 100,
       bgsSize: 64,
+      gap: 80,
       text: 'Custom Spinner'
     };
   }

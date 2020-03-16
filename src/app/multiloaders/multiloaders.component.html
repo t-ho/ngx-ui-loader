@@ -1,11 +1,11 @@
 <div fxLayout="row wrap" fxLayoutAlign="center" style="margin-top: 12px">
   <div fxFlex="100" fxFlex.gt-xs="1200" fxLayout="row wrap" fxLayoutAlign="center start">
     <div fxFlex.xs="90" fxFlex.sm="70" fxFlex="40" class="container mat-elevation-z4 master">
-      <app-ngx-ui-loader-controller [loader]="masterLoader"></app-ngx-ui-loader-controller>
+      <app-controller [loader]="masterLoader"></app-controller>
     </div>
     <div *ngFor="let l of loaders" fxFlex.xs="90" fxFlex.sm="70" fxFlex="40" class="container mat-elevation-z4">
       <div fxFlex="100" [loaderId]="l.loaderId" ngxUiLoaderBlurred>
-        <app-ngx-ui-loader-controller [loader]="l"></app-ngx-ui-loader-controller>
+        <app-controller [loader]="l"></app-controller>
       </div>
       <ngx-ui-loader
         [hasProgressBar]="l.hasProgressBar"

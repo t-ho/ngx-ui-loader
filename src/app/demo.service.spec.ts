@@ -1,14 +1,14 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { NgxUiLoaderDemoService } from './ngx-ui-loader-demo.service';
+import { DemoService } from './demo.service';
 
 describe('NgxUiLoaderDemoService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [NgxUiLoaderService, NgxUiLoaderDemoService]
+      providers: [NgxUiLoaderService, DemoService]
     });
   });
-  it('should be created', inject([NgxUiLoaderDemoService], (service: NgxUiLoaderDemoService) => {
+  it('should be created', inject([DemoService], (service: DemoService) => {
     expect(service).toBeTruthy();
   }));
 });

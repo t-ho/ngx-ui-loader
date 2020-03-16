@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { SPINNER_CONFIG } from '../../projects/ngx-ui-loader/src/lib/utils/constants';
+import { SPINNER_CONFIG } from '../../../projects/ngx-ui-loader/src/lib/utils/constants';
 
 @Component({
-  selector: 'app-spinner-demo',
-  templateUrl: './spinner-demo.component.html',
-  styleUrls: ['../../projects/ngx-ui-loader/src/lib/core/ngx-ui-loader.component.scss', './spinner-demo.component.scss']
+  selector: 'app-spinners',
+  templateUrl: './spinners.component.html',
+  styleUrls: ['../../../projects/ngx-ui-loader/src/lib/core/ngx-ui-loader.component.scss', './spinners.component.scss']
 })
-export class SpinnerDemoComponent implements OnInit {
+export class SpinnersComponent implements OnInit {
   spinners: any;
   constructor() {}
 

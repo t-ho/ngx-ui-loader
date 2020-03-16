@@ -2,7 +2,7 @@
   <div fxFlex="100" fxFlex.lg="90" fxFlex.gt-lg="70" fxLayout="row wrap" fxLayoutAlign="center">
     <div fxFlex="100" fxFlex.gt-md="36" fxLayout="column" fxLayout.sm="row" fxLayout.md="row" class="p-12">
       <div fxFlex.sm="50" fxFlex.md="50" class="mat-elevation-z4">
-        <app-ngx-ui-loader-controller [loader]="loader"></app-ngx-ui-loader-controller>
+        <app-controller [loader]="loader"></app-controller>
       </div>
       <div fxLayout="column" fxFlex.sm="50" fxFlex.md="50" class="config-info">
         <span class="place-holder">ngx-ui-loader-configuration = </span>
@@ -174,7 +174,7 @@
     <!-- Background }}}-->
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center">
       <button mat-raised-button color="accent" (click)="reset()">Reset Configuration</button>
-      <a mat-raised-button color="primary" [routerLink]="'/multiloader'">Multiple Loaders</a>
+      <a mat-raised-button color="primary" [routerLink]="'/multiloaders'">Multiple Loaders</a>
       <button mat-raised-button color="accent" (click)="getDownloadStats()" [disabled]="disabled">
         Http request with loader
       </button>
