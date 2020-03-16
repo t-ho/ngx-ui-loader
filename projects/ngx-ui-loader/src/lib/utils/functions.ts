@@ -1,12 +1,5 @@
 import { Config, Exclude } from './interfaces';
 
-/**
- * Coerce a value (string) to a number
- */
-export function coerceNumber(value, fallbackValue): number {
-  return !isNaN(parseFloat(value as any)) && !isNaN(Number(value)) ? Number(value) : fallbackValue;
-}
-
 export function getExcludeObj(config: Config): Exclude {
   let strs: string[];
   let regExps: RegExp[];

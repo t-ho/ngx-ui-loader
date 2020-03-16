@@ -76,19 +76,16 @@ describe(`NgxUiLoaderService (no loader)`, () => {
   });
 
   it(`#getLoader('${NOT_EXISTING_LOADER_ID}')`, () => {
-    expect(() => {
-      loaderService.getLoader(NOT_EXISTING_LOADER_ID);
-    }).toThrowError(`[ngx-ui-loader] - loaderId "${NOT_EXISTING_LOADER_ID}" does not exist.`);
+    expect(loaderService.getLoader(NOT_EXISTING_LOADER_ID)).toEqual(null);
   });
-
   it(`#getLoader()`, () => {
-    expect(() => {
-      loaderService.getLoader();
-    }).toThrowError(`[ngx-ui-loader] - The master loader does not exist.`);
+    expect(loaderService.getLoader()).toEqual(null);
   });
 
   it(`#bindLoaderData('${DEFAULT_MASTER_LOADER_ID}') - 1 - should not throw any error`, () => {
-    loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
+    expect(() => {
+      loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
+    }).not.toThrowError(`[ngx-ui-loader] - loaderId "${LOADER_ID_01}" is duplicated.`);
     expect(loaderService.getLoaders()[DEFAULT_MASTER_LOADER_ID]).toEqual({
       loaderId: DEFAULT_MASTER_LOADER_ID,
       tasks: {},
@@ -118,10 +115,7 @@ describe(`NgxUiLoaderService (no loader)`, () => {
     loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
     expect(() => {
       loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
-    }).toThrowError(
-      `[ngx-ui-loader] - The master loader has already existed. ` +
-        `The app should have only one master loader and it should be placed in the root app template`
-    );
+    }).toThrowError(`[ngx-ui-loader] - loaderId "${DEFAULT_MASTER_LOADER_ID}" is duplicated.`);
   });
 
   it(`#bindLoaderData('${LOADER_ID_01}') - 5 - should not throw any error`, () => {
@@ -133,59 +127,6 @@ describe(`NgxUiLoaderService (no loader)`, () => {
       isMaster: !IS_MASTER,
       isBound: IS_BOUND
     });
-  });
-
-  it(`#updateLoaderId('${NOT_EXISTING_LOADER_ID}', '${LOADER_ID_01}') - 1 - should throw not exist loaderId error`, () => {
-    expect(() => {
-      loaderService.updateLoaderId(NOT_EXISTING_LOADER_ID, LOADER_ID_01);
-    }).toThrowError(`[ngx-ui-loader] - loaderId "${NOT_EXISTING_LOADER_ID}" does not exist.`);
-  });
-
-  it(`#updateLoaderId('${LOADER_ID_01}', '${EXISTING_LOADER_ID}') - 2 - should throw duplicated loaderId error`, () => {
-    loaderService.bindLoaderData(LOADER_ID_01);
-    loaderService.bindLoaderData(EXISTING_LOADER_ID);
-    expect(() => {
-      loaderService.updateLoaderId(LOADER_ID_01, EXISTING_LOADER_ID);
-    }).toThrowError(`[ngx-ui-loader] - loaderId "${EXISTING_LOADER_ID}" is duplicated.`);
-  });
-
-  it(`#updateLoaderId('${DEFAULT_MASTER_LOADER_ID}', '${LOADER_ID_01}') - 3 - should print a warning`, () => {
-    loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
-    loaderService.updateLoaderId(DEFAULT_MASTER_LOADER_ID, LOADER_ID_01);
-    expect(console.warn).toHaveBeenCalledWith(
-      `[ngx-ui-loader] - Cannot change loaderId of master loader. The current ` +
-        `master's loaderId is "${DEFAULT_MASTER_LOADER_ID}". If you really want to ` +
-        `change it, please use NgxUiLoaderModule.forRoot() method.`
-    );
-    expect(loaderService.getLoaders()[DEFAULT_MASTER_LOADER_ID]).toEqual({
-      loaderId: DEFAULT_MASTER_LOADER_ID,
-      tasks: {},
-      isMaster: IS_MASTER,
-      isBound: IS_BOUND
-    });
-  });
-
-  it(`#updateLoaderId('${LOADER_ID_01}', '${LOADER_ID_01}') - 4 - should not throw any error`, () => {
-    loaderService.bindLoaderData(LOADER_ID_01);
-    loaderService.updateLoaderId(LOADER_ID_01, LOADER_ID_01);
-    expect(loaderService.getLoaders()[LOADER_ID_01]).toEqual({
-      loaderId: LOADER_ID_01,
-      tasks: {},
-      isMaster: !IS_MASTER,
-      isBound: IS_BOUND
-    });
-  });
-
-  it(`#updateLoaderId('${EXISTING_LOADER_ID}', '${LOADER_ID_01}') - 4 - should not throw any error`, () => {
-    loaderService.bindLoaderData(EXISTING_LOADER_ID);
-    loaderService.updateLoaderId(EXISTING_LOADER_ID, LOADER_ID_01);
-    expect(loaderService.getLoaders()[LOADER_ID_01]).toEqual({
-      loaderId: LOADER_ID_01,
-      tasks: {},
-      isMaster: !IS_MASTER,
-      isBound: IS_BOUND
-    });
-    expect(loaderService.getLoaders()[EXISTING_LOADER_ID]).toBeUndefined();
   });
 
   it(`#destroyLoaderData('${EXISTING_LOADER_ID}') - 1 - existing loader is not master loader`, () => {
@@ -202,9 +143,8 @@ describe(`NgxUiLoaderService (no loader)`, () => {
 
   it(`#destroyLoaderData('${NOT_EXISTING_LOADER_ID}')`, () => {
     loaderService.bindLoaderData(DEFAULT_MASTER_LOADER_ID);
-    expect(() => {
-      loaderService.destroyLoaderData(NOT_EXISTING_LOADER_ID);
-    }).toThrowError(`[ngx-ui-loader] - loaderId "${NOT_EXISTING_LOADER_ID}" does not exist.`);
+    loaderService.destroyLoaderData(NOT_EXISTING_LOADER_ID);
+    expect(console.warn).toHaveBeenCalledWith(`[ngx-ui-loader] - loaderId "${NOT_EXISTING_LOADER_ID}" does not exist.`);
   });
 });
 
@@ -617,10 +557,9 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     expect(Object.keys(loader.tasks).every(id => loader.tasks[id].isForeground === false)).toEqual(true);
   });
 
-  it(`#stopLoader('${NOT_EXISTING_LOADER_ID}') - 1 - should not throw any error`, () => {
-    expect(() => {
-      loaderService.stopLoader(NOT_EXISTING_LOADER_ID);
-    }).toThrowError(`[ngx-ui-loader] - loaderId "${NOT_EXISTING_LOADER_ID}" does not exist.`);
+  it(`#stopLoader('${NOT_EXISTING_LOADER_ID}') - 1 - should print not-exist-loaderid warning`, () => {
+    loaderService.stopLoader(NOT_EXISTING_LOADER_ID);
+    expect(console.warn).toHaveBeenCalledWith(`[ngx-ui-loader] - loaderId "${NOT_EXISTING_LOADER_ID}" does not exist.`);
   });
 
   it(`#stopLoader('${DEFAULT_MASTER_LOADER_ID}') - 2 - not exist task id`, () => {
@@ -690,11 +629,10 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     tick(END_TIME);
   }));
 
-  it(`#stop() - 0 - should throw not exist master loader error`, () => {
+  it(`#stop() - 0 - should print not exist master loader warning`, () => {
     loaderService.destroyLoaderData(DEFAULT_MASTER_LOADER_ID);
-    expect(() => {
-      loaderService.stop();
-    }).toThrowError(`[ngx-ui-loader] - loaderId "${DEFAULT_MASTER_LOADER_ID}" does not exist.`);
+    loaderService.stop();
+    expect(console.warn).toHaveBeenCalledWith(`[ngx-ui-loader] - loaderId "${DEFAULT_MASTER_LOADER_ID}" does not exist.`);
   });
 
   it(`#stop() - 1 - should work correctly`, fakeAsync(() => {
@@ -714,10 +652,9 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     tick(END_TIME);
   }));
 
-  it(`#stopBackgroundLoader('${NOT_EXISTING_LOADER_ID}') - 1 - should not throw any error`, () => {
-    expect(() => {
-      loaderService.stopBackgroundLoader(NOT_EXISTING_LOADER_ID);
-    }).toThrowError(`[ngx-ui-loader] - loaderId "${NOT_EXISTING_LOADER_ID}" does not exist.`);
+  it(`#stopBackgroundLoader('${NOT_EXISTING_LOADER_ID}') - 1 - should print not-existing-loaderId warning`, () => {
+    loaderService.stopBackgroundLoader(NOT_EXISTING_LOADER_ID);
+    expect(console.warn).toHaveBeenCalledWith(`[ngx-ui-loader] - loaderId "${NOT_EXISTING_LOADER_ID}" does not exist.`);
   });
 
   it(`#stopBackgroundLoader('${DEFAULT_MASTER_LOADER_ID}') - 2 - not exist task id`, () => {
@@ -756,11 +693,10 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     tick(END_TIME);
   }));
 
-  it(`#stopBackground() - 0 - should throw not exist master loader error`, () => {
+  it(`#stopBackground() - 0 - should print not-exist-master-loader warning`, () => {
     loaderService.destroyLoaderData(DEFAULT_MASTER_LOADER_ID);
-    expect(() => {
-      loaderService.stopBackground();
-    }).toThrowError(`[ngx-ui-loader] - loaderId "${DEFAULT_MASTER_LOADER_ID}" does not exist.`);
+    loaderService.stopBackground();
+    expect(console.warn).toHaveBeenCalledWith(`[ngx-ui-loader] - loaderId "${DEFAULT_MASTER_LOADER_ID}" does not exist.`);
   });
 
   it(`#stopBackground() - 1 - should work correctly`, fakeAsync(() => {
@@ -779,10 +715,9 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     tick(END_TIME);
   }));
 
-  it(`#stopAllLoader('${NOT_EXISTING_LOADER_ID}') - 1 - should not throw any error`, () => {
-    expect(() => {
-      loaderService.stopAllLoader(NOT_EXISTING_LOADER_ID);
-    }).toThrowError(`[ngx-ui-loader] - loaderId "${NOT_EXISTING_LOADER_ID}" does not exist.`);
+  it(`#stopAllLoader('${NOT_EXISTING_LOADER_ID}') - 1 - should print warning message`, () => {
+    loaderService.stopAllLoader(NOT_EXISTING_LOADER_ID);
+    expect(console.warn).toHaveBeenCalledWith(`[ngx-ui-loader] - loaderId "${NOT_EXISTING_LOADER_ID}" does not exist.`);
   });
 
   it(`#stopAllLoader('${DEFAULT_MASTER_LOADER_ID}') - 2 - should work correctly`, () => {
@@ -944,11 +879,10 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     tick(END_TIME);
   }));
 
-  it(`#stopAll() - 0 - should throw not exist master loader error`, () => {
+  it(`#stopAll() - 0 - should print not-exist-master-loader warning`, () => {
     loaderService.destroyLoaderData(DEFAULT_MASTER_LOADER_ID);
-    expect(() => {
-      loaderService.stopAll();
-    }).toThrowError(`[ngx-ui-loader] - loaderId "${DEFAULT_MASTER_LOADER_ID}" does not exist.`);
+    loaderService.stopAll();
+    expect(console.warn).toHaveBeenCalledWith(`[ngx-ui-loader] - loaderId "${DEFAULT_MASTER_LOADER_ID}" does not exist.`);
   });
 
   it(`#stopAll() - 1 - should work correctly`, () => {

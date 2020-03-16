@@ -3,30 +3,19 @@ import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
-import { coerceNumber } from '../utils/functions';
 import { ShowEvent } from '../utils/interfaces';
 import { FOREGROUND, OVERLAY_DISAPPEAR_TIME, FAST_OVERLAY_DISAPPEAR_TIME } from '../utils/constants';
 
 @Directive({ selector: '[ngxUiLoaderBlurred]' })
 export class NgxUiLoaderBlurredDirective implements OnInit, OnDestroy {
-  private blurNumber: number;
-
-  @Input()
-  get blur(): number {
-    return this.blurNumber;
-  }
-
-  set blur(value: number) {
-    this.blurNumber = coerceNumber(value, this.loader.getDefaultConfig().blur);
-  }
-
+  @Input() blur: number;
   @Input() loaderId: string;
 
   showForegroundWatcher: Subscription;
   fastFadeOut: boolean;
 
   constructor(private elementRef: ElementRef, private renderer: Renderer2, private loader: NgxUiLoaderService) {
-    this.blurNumber = this.loader.getDefaultConfig().blur;
+    this.blur = this.loader.getDefaultConfig().blur;
     this.loaderId = this.loader.getDefaultConfig().masterLoaderId;
     this.fastFadeOut = this.loader.getDefaultConfig().fastFadeOut;
   }
@@ -39,7 +28,7 @@ export class NgxUiLoaderBlurredDirective implements OnInit, OnDestroy {
       .pipe(filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId))
       .subscribe(data => {
         if (data.isShow) {
-          const filterValue = `blur(${this.blurNumber}px)`;
+          const filterValue = `blur(${this.blur}px)`;
           this.renderer.setStyle(this.elementRef.nativeElement, '-webkit-filter', filterValue);
           this.renderer.setStyle(this.elementRef.nativeElement, 'filter', filterValue);
         } else {
