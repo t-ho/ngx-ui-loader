@@ -3,11 +3,11 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { NgxUiLoaderService, Loader } from 'ngx-ui-loader';
 
 @Component({
-  selector: 'app-ngx-ui-loader-controller',
-  templateUrl: './ngx-ui-loader-controller.component.html',
-  styleUrls: ['./ngx-ui-loader-controller.component.scss']
+  selector: 'app-controller',
+  templateUrl: './controller.component.html',
+  styleUrls: ['./controller.component.scss']
 })
-export class NgxUiLoaderControllerComponent implements OnInit, OnDestroy {
+export class ControllerComponent implements OnInit, OnDestroy {
   @Input() loader: Loader;
 
   timers: any[];

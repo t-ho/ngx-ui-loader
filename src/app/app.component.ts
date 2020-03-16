@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NgxUiLoaderDemoService } from './ngx-ui-loader-demo.service';
+import { DemoService } from './demo.service';
 
 @Component({
   selector: 'app-root',
@@ -11,5 +11,5 @@ export class AppComponent {
   /**
    * Constructor
    */
-  constructor(public demoService: NgxUiLoaderDemoService) {}
+  constructor(public demoService: DemoService) {}
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgxUiLoaderConfig, NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Injectable()
-export class NgxUiLoaderDemoService {
+export class DemoService {
   config: NgxUiLoaderConfig;
 
   /**

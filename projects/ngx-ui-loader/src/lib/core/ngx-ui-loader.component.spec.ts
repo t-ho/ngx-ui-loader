@@ -327,19 +327,6 @@ describe('NgxUiLoaderComponent', () => {
     expect(textEl.style.top).toBe('initial');
   });
 
-  it('#validate', () => {
-    spyOn(console, 'error');
-    component.bgsPosition = 'invalid-position' as PositionType;
-    component.ngOnChanges({
-      bgsPosition: new SimpleChange(null, component.bgsPosition, true)
-    });
-    fixture.detectChanges();
-    expect(console.error).toHaveBeenCalledWith(
-      `[ngx-ui-loader] - bgsPosition ("invalid-position") is invalid. ` + `Default value "${component.defaultConfig.bgsPosition}" is used.`
-    );
-    expect(component.bgsPosition).toBe(component.defaultConfig.bgsPosition);
-  });
-
   it(`start() - 1 - condition: 0 background and 0 foreground`, () => {
     loaderService.start();
     fixture.detectChanges();

@@ -28,24 +28,25 @@ import {
 
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import { SpinnerDemoComponent } from './spinner-demo.component';
-import { MultiLoaderDemoComponent } from './multi-loader-demo.component';
-import { NgxUiLoaderDemoComponent } from './ngx-ui-loader-demo.component';
-import { NgxUiLoaderDemoService } from './ngx-ui-loader-demo.service';
-import { NgxUiLoaderControllerComponent } from './ngx-ui-loader-controller.component';
+import { SpinnersComponent } from './spinners/spinners.component';
+import { MultiloadersComponent } from './multiloaders/multiloaders.component';
+import { MasterConfigurationComponent } from './master-configuration/master-configuration.component';
+import { DemoService } from './demo.service';
+import { ControllerComponent } from './controller/controller.component';
+import { CustomTemplateComponent } from './custom-template/custom-template.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
-  // bgsColor: '#OOACC1',
+  bgsColor: 'red',
   // bgsOpacity: 0.5,
   // bgsPosition: POSITION.bottomCenter,
   // bgsSize: 60,
   // bgsType: SPINNER.rectangleBounce,
-  // fgsColor: '#00ACC1',
+  fgsColor: 'red',
   // fgsPosition: POSITION.centerCenter,
   // fgsSize: 60,
   // fgsType: SPINNER.chasingDots,
   // logoUrl: 'assets/angular.png',
-  // pbColor: '#FF0000',
+  pbColor: 'red',
   // pbDirection: PB_DIRECTION.leftToRight,
   // pbThickness: 5,
   // text: 'Welcome to ngx-ui-loader',
@@ -57,20 +58,31 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 const routes: Routes = [
   {
     path: 'spinners',
-    component: SpinnerDemoComponent
+    component: SpinnersComponent
   },
   {
-    path: 'multiloader',
-    component: MultiLoaderDemoComponent
+    path: 'multiloaders',
+    component: MultiloadersComponent
+  },
+  {
+    path: 'custom-template',
+    component: CustomTemplateComponent
   },
   {
     path: '',
-    component: NgxUiLoaderDemoComponent
+    component: MasterConfigurationComponent
   }
 ];
 
 @NgModule({
-  declarations: [AppComponent, SpinnerDemoComponent, MultiLoaderDemoComponent, NgxUiLoaderDemoComponent, NgxUiLoaderControllerComponent],
+  declarations: [
+    AppComponent,
+    SpinnersComponent,
+    MultiloadersComponent,
+    MasterConfigurationComponent,
+    ControllerComponent,
+    CustomTemplateComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -93,7 +105,7 @@ const routes: Routes = [
     NgxUiLoaderRouterModule, // import this module for showing loader automatically when navigating between app routes
     NgxUiLoaderHttpModule
   ],
-  providers: [NgxUiLoaderDemoService],
+  providers: [DemoService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

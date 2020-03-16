@@ -1,17 +1,9 @@
-import { coerceNumber, getExcludeObj, isIgnored } from './functions';
+import { getExcludeObj, isIgnored } from './functions';
 import { Config } from './interfaces';
 
 describe('functions', () => {
   const excludeStrings = ['/api/not/show', 'https://www.domain.com/not/show'];
   const excludeRegexps = [new RegExp('/Api/not/Show/path$', 'i'), new RegExp('^https://www.domain.com/Not/show', 'i')];
-
-  it('coerceNumber(12, 10) should return 12', () => {
-    expect(coerceNumber(12, 10)).toEqual(12);
-  });
-
-  it(`coerceNumber('abc', 10) should return 10`, () => {
-    expect(coerceNumber('abc', 10)).toEqual(10);
-  });
 
   it('getExclude(null) - 01', () => {
     expect(getExcludeObj(null)).toEqual({

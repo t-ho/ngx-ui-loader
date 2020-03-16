@@ -43,9 +43,12 @@
     [style.height.px]="fgsSize"
     [style.top]="spinnerTop"
   >
-    <div [class]="fgSpinnerClass">
+    <div *ngIf="!fgsTemplate; else foregroundTemplate" [class]="fgSpinnerClass">
       <div *ngFor="let div of fgDivs"></div>
     </div>
+    <ng-template #foregroundTemplate>
+      <ng-container *ngTemplateOutlet="fgsTemplate"></ng-container>
+    </ng-template>
   </div>
   <!-- Foreground spinner }}} -->
 
@@ -68,8 +71,11 @@
   [style.color]="bgsColor"
   [style.opacity]="bgsOpacity"
 >
-  <div [class]="bgSpinnerClass">
+  <div *ngIf="!bgsTemplate; else backgroundTemplate" [class]="bgSpinnerClass">
     <div *ngFor="let div of bgDivs"></div>
   </div>
+  <ng-template #backgroundTemplate>
+    <ng-container *ngTemplateOutlet="bgsTemplate"></ng-container>
+  </ng-template>
 </div>
 <!-- Background spinner }}} -->

@@ -1,0 +1,39 @@
+<div fxLayout="row wrap" fxLayoutAlign="center" style="margin-top: 12px">
+  <div fxFlex="100" fxFlex.gt-xs="1200" fxLayout="row wrap" fxLayoutAlign="center start">
+    <div fxFlex.xs="90" fxFlex.sm="70" fxFlex="90" class="container mat-elevation-z4">
+      <div fxFlex="100" [loaderId]="loader.loaderId" ngxUiLoaderBlurred>
+        <app-controller [loader]="loader"></app-controller>
+      </div>
+      <ngx-ui-loader
+        [loaderId]="loader.loaderId"
+        [fgsTemplate]="foregroundSpinner"
+        [bgsTemplate]="backgroundSpinner"
+        [fgsSize]="loader.fgsSize"
+        [bgsSize]="loader.bgsSize"
+        [text]="loader.text"
+        [gap]="loader.gap"
+      ></ngx-ui-loader>
+    </div>
+  </div>
+  <div fxFlex="100" fxLayout="row" fxLayoutAlign="center" style="margin-top: 24px; margin-bottom: 24px">
+    <a mat-raised-button color="primary" [routerLink]="'/'">Back</a>
+  </div>
+</div>
+
+<ng-template #foregroundSpinner>
+  <div class="sk-chase">
+    <div class="sk-chase-dot"></div>
+    <div class="sk-chase-dot"></div>
+    <div class="sk-chase-dot"></div>
+    <div class="sk-chase-dot"></div>
+    <div class="sk-chase-dot"></div>
+    <div class="sk-chase-dot"></div>
+  </div>
+</ng-template>
+
+<ng-template #backgroundSpinner>
+  <div class="la-ball-clip-rotate-multiple la-2x">
+    <div></div>
+    <div></div>
+  </div>
+</ng-template>

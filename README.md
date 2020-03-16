@@ -3,7 +3,6 @@
 [![Build Status](https://travis-ci.org/t-ho/ngx-ui-loader.svg?branch=master)](https://travis-ci.org/t-ho/ngx-ui-loader)
 [![codecov](https://codecov.io/gh/t-ho/ngx-ui-loader/branch/master/graph/badge.svg)](https://codecov.io/gh/t-ho/ngx-ui-loader)
 [![npm](https://img.shields.io/npm/dw/ngx-ui-loader.svg)](https://www.npmjs.com/package/ngx-ui-loader)
-[![](https://data.jsdelivr.com/v1/package/npm/ngx-ui-loader/badge?style=rounded)](https://www.jsdelivr.com/package/npm/ngx-ui-loader)
 [![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/ngx-ui-loader.svg)](https://bundlephobia.com/result?p=ngx-ui-loader)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![license](https://img.shields.io/npm/l/ngx-ui-loader.svg)](https://github.com/t-ho/ngx-ui-loader/wiki/License)
@@ -16,14 +15,10 @@ An all-in-one and fully customizable loader/spinner for Angular applications. It
 
 ## Features
 
-- Support **multiple loaders** (>= ngx-ui-loader@7.1.0). See [Multiple loaders](https://tdev.app/ngx-ui-loader#multiple-loaders) for more details and [demo here](https://tdev.app/ngx-ui-loader/demo)
+- Support [custom template](https://tdev.app/ngx-ui-loader#custom-template) (>= ngx-ui-loader@9.1.0).
+- Support [multiple loaders](https://tdev.app/ngx-ui-loader#multiple-loaders) (>= ngx-ui-loader@7.1.0).
 - Show foreground loader with **progress bar**
 - The page content can be **blurred/frosted** while showing foreground loader. See [NgxUiLoaderBlurred](https://tdev.app/ngx-ui-loader#ngxuiloaderblurred-directive) directive for more details
-- Show loader with different id for different tasks
-- Be able to add **logo** and **loading text**
-- Be able to change position of spinners, logo and loading text
-- Be able to change color and size of logo, spinners and progress bar
-- Be able to change the direction of progress bar
 - Automatically show loader for router events. See [NgxUiLoaderRouterModule](https://tdev.app/ngx-ui-loader#automatically-show-loader-for-router-events) for more details
 - Automatically show loader for http requests. See [NgxUiLoaderHttpModule](https://tdev.app/ngx-ui-loader#automatically-show-loader-for-http-requests) for more details
 

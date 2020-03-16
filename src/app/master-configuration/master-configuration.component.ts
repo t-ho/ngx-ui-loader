@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxUiLoaderService, Loader, SPINNER, POSITION, PB_DIRECTION } from 'ngx-ui-loader';
-import { NgxUiLoaderDemoService } from './ngx-ui-loader-demo.service';
+import { DemoService } from '../demo.service';
 import { HttpClient } from '@angular/common/http';
 
 const LOGO_URL = 'assets/angular.png';
 
 @Component({
-  selector: 'app-ngx-ui-loader-demo',
-  templateUrl: './ngx-ui-loader-demo.component.html',
-  styleUrls: ['./ngx-ui-loader-demo.component.scss']
+  selector: 'app-master-configuration',
+  templateUrl: './master-configuration.component.html',
+  styleUrls: ['./master-configuration.component.scss']
 })
-export class NgxUiLoaderDemoComponent implements OnInit {
+export class MasterConfigurationComponent implements OnInit {
   spinnerTypes: string[];
   positions: string[];
   directions: string[];
@@ -22,7 +22,7 @@ export class NgxUiLoaderDemoComponent implements OnInit {
   /**
    * Constructor
    */
-  constructor(private ngxUiLoaderService: NgxUiLoaderService, public demoService: NgxUiLoaderDemoService, private http: HttpClient) {}
+  constructor(private ngxUiLoaderService: NgxUiLoaderService, public demoService: DemoService, private http: HttpClient) {}
 
   /**
    * On init

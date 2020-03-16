@@ -7,7 +7,8 @@ import {
   SimpleChange,
   OnDestroy,
   ChangeDetectionStrategy,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  TemplateRef
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeStyle } from '@angular/platform-browser';
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
@@ -16,10 +17,9 @@ import { filter } from 'rxjs/operators';
 
 import { NgxUiLoaderConfig } from '../utils/interfaces';
 import { DirectionType, PositionType, SpinnerType } from '../utils/types';
-import { POSITION, PB_DIRECTION, SPINNER } from '../utils/enums';
+import { POSITION } from '../utils/enums';
 import { SPINNER_CONFIG } from '../utils/constants';
 import { ShowEvent } from '../utils/interfaces';
-import { coerceNumber } from '../utils/functions';
 
 @Component({
   selector: 'ngx-ui-loader',
@@ -32,10 +32,12 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   @Input() bgsOpacity: number;
   @Input() bgsPosition: PositionType;
   @Input() bgsSize: number;
+  @Input() bgsTemplate: TemplateRef<any>;
   @Input() bgsType: SpinnerType;
   @Input() fgsColor: string;
   @Input() fgsPosition: PositionType;
   @Input() fgsSize: number;
+  @Input() fgsTemplate: TemplateRef<any>;
   @Input() fgsType: SpinnerType;
   @Input() gap: number;
   @Input() loaderId: string;
@@ -116,11 +118,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.ngxService.bindLoaderData(this.loaderId);
     this.determinePositions();
 
-    this.bgsPosition = this.validate('bgsPosition', this.bgsPosition, POSITION, this.defaultConfig.bgsPosition) as PositionType;
-
     this.trustedLogoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.logoUrl);
-
-    this.pbDirection = this.validate('pbDirection', this.pbDirection, PB_DIRECTION, this.defaultConfig.pbDirection) as DirectionType;
 
     this.showForegroundWatcher = this.ngxService.showForeground$
       .pipe(filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId))
@@ -161,32 +159,17 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     }
 
     const bgsTypeChange: SimpleChange = changes.bgsType;
-    const bgsPositionChange: SimpleChange = changes.bgsPosition;
     const fgsTypeChange: SimpleChange = changes.fgsType;
-    const loaderIdChange: SimpleChange = changes.loaderId;
     const logoUrlChange: SimpleChange = changes.logoUrl;
-    const pbDirectionChange: SimpleChange = changes.pbDirection;
 
     if (fgsTypeChange || bgsTypeChange) {
       this.initializeSpinners();
     }
 
-    if (loaderIdChange) {
-      this.ngxService.updateLoaderId(loaderIdChange.previousValue, this.loaderId);
-    }
-
     this.determinePositions();
-
-    if (bgsPositionChange) {
-      this.bgsPosition = this.validate('bgsPosition', this.bgsPosition, POSITION, this.defaultConfig.bgsPosition) as PositionType;
-    }
 
     if (logoUrlChange) {
       this.trustedLogoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.logoUrl);
-    }
-
-    if (pbDirectionChange) {
-      this.pbDirection = this.validate('pbDirection', this.pbDirection, PB_DIRECTION, this.defaultConfig.pbDirection) as DirectionType;
     }
   }
 
@@ -194,9 +177,6 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
    * Initialize spinners
    */
   private initializeSpinners(): void {
-    this.fgsType = this.validate('fgsType', this.fgsType, SPINNER, this.defaultConfig.fgsType) as SpinnerType;
-    this.bgsType = this.validate('bgsType', this.bgsType, SPINNER, this.defaultConfig.bgsType) as SpinnerType;
-
     this.fgDivs = Array(SPINNER_CONFIG[this.fgsType].divs).fill(1);
     this.fgSpinnerClass = SPINNER_CONFIG[this.fgsType].class;
     this.bgDivs = Array(SPINNER_CONFIG[this.bgsType].divs).fill(1);
@@ -207,11 +187,6 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
    * Determine the positions of spinner, logo and text
    */
   private determinePositions(): void {
-    this.fgsPosition = this.validate('fgsPosition', this.fgsPosition, POSITION, this.defaultConfig.fgsPosition) as PositionType;
-    this.logoPosition = this.validate('logoPosition', this.logoPosition, POSITION, this.defaultConfig.logoPosition) as PositionType;
-    this.textPosition = this.validate('textPosition', this.textPosition, POSITION, this.defaultConfig.textPosition) as PositionType;
-    this.gap = coerceNumber(this.gap, this.defaultConfig.gap);
-
     this.logoTop = 'initial';
     this.spinnerTop = 'initial';
     this.textTop = 'initial';
@@ -265,18 +240,6 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
         this.textTop = this.domSanitizer.bypassSecurityTrustStyle(`calc(50% + ${this.logoSize / 2}px + ${this.gap / 2}px)`);
       }
     }
-  }
-
-  private validate(inputName: string, value: string, validTypeObj: {}, fallbackValue: string): string {
-    if (
-      Object.keys(validTypeObj)
-        .map(k => validTypeObj[k])
-        .findIndex(v => v === value) === -1
-    ) {
-      console.error(`[ngx-ui-loader] - ${inputName} ("${value}") is invalid. ` + `Default value "${fallbackValue}" is used.`);
-      return fallbackValue;
-    }
-    return value;
   }
 
   /**

@@ -5,11 +5,11 @@ import { NgxUiLoaderService, Loader, SPINNER } from 'ngx-ui-loader';
 const LOGO_URL = 'assets/angular.png';
 
 @Component({
-  selector: 'app-multi-loader-demo',
-  templateUrl: './multi-loader-demo.component.html',
-  styleUrls: ['./multi-loader-demo.component.scss']
+  selector: 'app-multiloaders',
+  templateUrl: './multiloaders.component.html',
+  styleUrls: ['./multiloaders.component.scss']
 })
-export class MultiLoaderDemoComponent {
+export class MultiloadersComponent {
   loaders: any[];
   masterLoader: Loader;
   timers: any;
