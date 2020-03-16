@@ -33,6 +33,7 @@ import { MultiLoaderDemoComponent } from './multi-loader-demo.component';
 import { NgxUiLoaderDemoComponent } from './ngx-ui-loader-demo.component';
 import { NgxUiLoaderDemoService } from './ngx-ui-loader-demo.service';
 import { NgxUiLoaderControllerComponent } from './ngx-ui-loader-controller.component';
+import { CustomTemplateComponent } from './custom-template/custom-template.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: 'red',
@@ -64,13 +65,24 @@ const routes: Routes = [
     component: MultiLoaderDemoComponent
   },
   {
+    path: 'custom-template',
+    component: CustomTemplateComponent
+  },
+  {
     path: '',
     component: NgxUiLoaderDemoComponent
   }
 ];
 
 @NgModule({
-  declarations: [AppComponent, SpinnerDemoComponent, MultiLoaderDemoComponent, NgxUiLoaderDemoComponent, NgxUiLoaderControllerComponent],
+  declarations: [
+    AppComponent,
+    SpinnerDemoComponent,
+    MultiLoaderDemoComponent,
+    NgxUiLoaderDemoComponent,
+    NgxUiLoaderControllerComponent,
+    CustomTemplateComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

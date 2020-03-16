@@ -7,7 +7,8 @@ import {
   SimpleChange,
   OnDestroy,
   ChangeDetectionStrategy,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  TemplateRef
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeStyle } from '@angular/platform-browser';
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
@@ -31,10 +32,12 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   @Input() bgsOpacity: number;
   @Input() bgsPosition: PositionType;
   @Input() bgsSize: number;
+  @Input() bgsTemplate: TemplateRef<any>;
   @Input() bgsType: SpinnerType;
   @Input() fgsColor: string;
   @Input() fgsPosition: PositionType;
   @Input() fgsSize: number;
+  @Input() fgsTemplate: TemplateRef<any>;
   @Input() fgsType: SpinnerType;
   @Input() gap: number;
   @Input() loaderId: string;
