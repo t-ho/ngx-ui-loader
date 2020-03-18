@@ -38,21 +38,31 @@ import { CustomTemplateComponent } from './custom-template/custom-template.compo
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: 'red',
   // bgsOpacity: 0.5,
-  // bgsPosition: POSITION.bottomCenter,
+  // bgsPosition: POSITION.bottomLeft,
   // bgsSize: 60,
-  // bgsType: SPINNER.rectangleBounce,
+  // bgsType: SPINNER.chasingDots,
+  // blur: 5,
+  // delay: 0,
+  fastFadeOut: true,
   fgsColor: 'red',
   // fgsPosition: POSITION.centerCenter,
   // fgsSize: 60,
   // fgsType: SPINNER.chasingDots,
+  // gap: 24,
+  // logoPosition: POSITION.centerCenter,
+  // logoSize: 120,
   // logoUrl: 'assets/angular.png',
-  pbColor: 'red',
+  // overlayBorderRadius: '0',
+  // overlayColor: 'rgba(40, 40, 40, 0.8)',
+  pbColor: 'red'
   // pbDirection: PB_DIRECTION.leftToRight,
   // pbThickness: 5,
+  // hasProgressBar: false,
   // text: 'Welcome to ngx-ui-loader',
   // textColor: '#FFFFFF',
-  // textPosition: POSITION.centerCenter
-  fastFadeOut: true
+  // textPosition: POSITION.centerCenter,
+  // maxTime: -1,
+  // minTime: 500
 };
 
 const routes: Routes = [

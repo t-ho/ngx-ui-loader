@@ -75,7 +75,7 @@
       </mat-form-field>
 
       <div style="margin-top: 21px; margin-bottom: 20px">
-        <mat-checkbox (change)="addLogo($event.checked)">Add logo</mat-checkbox>
+        <mat-checkbox (change)="addLogo($event.checked)" [checked]="demoService.config.logoUrl !== ''">Add logo</mat-checkbox>
       </div>
 
       <mat-form-field *ngIf="demoService.config.logoUrl">

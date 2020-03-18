@@ -330,15 +330,9 @@ export class NgxUiLoaderService {
    * @docs-private
    */
   private clearTimers(task: Task): void {
-    if (task.delayTimer) {
-      clearTimeout(task.delayTimer);
-    }
-    if (task.maxTimer) {
-      clearTimeout(task.maxTimer);
-    }
-    if (task.minTimer) {
-      clearTimeout(task.minTimer);
-    }
+    clearTimeout(task.delayTimer);
+    clearTimeout(task.maxTimer);
+    clearTimeout(task.minTimer);
   }
 
   /**
@@ -465,9 +459,7 @@ export class NgxUiLoaderService {
   private setMaxTimer(task: Task, loaderId: string): void {
     if (task.maxTime > task.minTime) {
       // restart the task, reset maxTimer
-      if (task.maxTimer) {
-        clearTimeout(task.maxTimer);
-      }
+      clearTimeout(task.maxTimer);
       task.maxTimer = setTimeout(() => {
         if (task.isForeground) {
           this.stopLoader(loaderId, task.taskId);
