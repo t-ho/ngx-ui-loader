@@ -17,7 +17,7 @@ const FOREGROUND = true;
 const IS_BOUND = true;
 const IS_MASTER = true;
 const LOADER_ID_01 = 'loader-id-01';
-const MIN_TIME = 300;
+const MIN_TIME = 0;
 const MAX_TIME = 8000;
 const NOT_EXISTING_LOADER_ID = 'not-existing-loader-id';
 const NOT_EXISTING_TASK_ID = 'not-existing-task-id';
@@ -927,7 +927,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     }).not.toThrowError(`[ngx-ui-loader] - taskId "${DUPLICATED_TASK_ID}" is duplicated.`);
   });
 
-  it(`#check duplicate task id - 2 - should not throw any error`, () => {
+  it(`#check duplicate task id - 2 - should throw an error`, () => {
     loaderService.startBackgroundLoader(DEFAULT_MASTER_LOADER_ID, DUPLICATED_TASK_ID);
     expect(() => {
       loaderService.startLoader(DEFAULT_MASTER_LOADER_ID, DUPLICATED_TASK_ID);
@@ -941,7 +941,7 @@ describe(`NgxUiLoaderService (loaderId == ${DEFAULT_MASTER_LOADER_ID})`, () => {
     }).not.toThrowError(`[ngx-ui-loader] - taskId "${DUPLICATED_TASK_ID}" is duplicated.`);
   });
 
-  it(`#check duplicate task id - 4 - should not throw any error`, () => {
+  it(`#check duplicate task id - 4 - should throw an error`, () => {
     loaderService.startBackground(DUPLICATED_TASK_ID);
     expect(() => {
       loaderService.start(DUPLICATED_TASK_ID);

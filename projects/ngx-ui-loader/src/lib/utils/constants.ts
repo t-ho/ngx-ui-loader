@@ -20,7 +20,7 @@ export const DEFAULT_TIME: Time = {};
 
 export const MIN_DELAY = 0;
 
-export const MIN_TIME = 300;
+export const MIN_TIME = 0;
 
 export const CLOSING_TIME = 1001;
 
@@ -169,5 +169,5 @@ export const DEFAULT_CONFIG: NgxUiLoaderConfig = {
   textColor: '#FFFFFF',
   textPosition: POSITION.centerCenter,
   maxTime: -1,
-  minTime: 500
+  minTime: 300
 };
