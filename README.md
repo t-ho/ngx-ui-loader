@@ -1,7 +1,7 @@
 [![npm](https://img.shields.io/npm/v/ngx-ui-loader)](https://www.npmjs.com/package/ngx-ui-loader)
 [![GitHub stars](https://img.shields.io/github/stars/t-ho/ngx-ui-loader?color=00bcd4)](https://github.com/t-ho/ngx-ui-loader/stargazers)
 [![demo](https://img.shields.io/badge/demo-StackBlitz-blueviolet.svg)](https://stackblitz.com/edit/ngx-ui-loader)
-[![Build Status](https://travis-ci.org/t-ho/ngx-ui-loader.svg?branch=master)](https://travis-ci.org/t-ho/ngx-ui-loader)
+[![CI Testing](https://github.com/t-ho/ngx-ui-loader/workflows/CI%20Testing/badge.svg)](https://github.com/t-ho/ngx-ui-loader/actions)
 [![codecov](https://codecov.io/gh/t-ho/ngx-ui-loader/branch/master/graph/badge.svg)](https://codecov.io/gh/t-ho/ngx-ui-loader)
 [![npm](https://img.shields.io/npm/dw/ngx-ui-loader.svg)](https://www.npmjs.com/package/ngx-ui-loader)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
