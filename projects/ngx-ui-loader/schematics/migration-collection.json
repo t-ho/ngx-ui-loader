@@ -1,9 +1,9 @@
 {
   "schematics": {
     "migration-01": {
-      "version": "9.0.0",
-      "factory": "./update/index#update900",
-      "description": "Update ngx-ui-loader to version 9.0.0"
+      "version": "10.0.0",
+      "factory": "./update/index#update1000",
+      "description": "Update ngx-ui-loader to version 10.0.0"
     }
   }
 }

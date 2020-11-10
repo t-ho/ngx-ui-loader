@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { NgxUiLoaderComponent } from './ngx-ui-loader.component';
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
@@ -37,16 +37,18 @@ describe('NgxUiLoaderComponent', () => {
   let logoEl: HTMLElement;
   let textEl: HTMLElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [NgxUiLoaderComponent],
-      providers: [NgxUiLoaderService]
-    })
-      .overrideComponent(NgxUiLoaderComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default }
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [NgxUiLoaderComponent],
+        providers: [NgxUiLoaderService]
       })
-      .compileComponents();
-  }));
+        .overrideComponent(NgxUiLoaderComponent, {
+          set: { changeDetection: ChangeDetectionStrategy.Default }
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NgxUiLoaderComponent);
