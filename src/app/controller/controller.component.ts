@@ -5,13 +5,13 @@ import { NgxUiLoaderService, Loader } from 'ngx-ui-loader';
 @Component({
   selector: 'app-controller',
   templateUrl: './controller.component.html',
-  styleUrls: ['./controller.component.scss']
+  styleUrls: ['./controller.component.scss'],
 })
 export class ControllerComponent implements OnInit, OnDestroy {
   @Input() loader: Loader;
 
   timers: any[];
-  tasks: {};
+  tasks: any;
 
   constructor(private ngxUiLoaderService: NgxUiLoaderService) {}
 
@@ -26,7 +26,11 @@ export class ControllerComponent implements OnInit, OnDestroy {
     }
   }
 
-  fgSlideChange(checked: boolean, delay: number, taskId: string = 'fg-default') {
+  fgSlideChange(
+    checked: boolean,
+    delay: number,
+    taskId: string = 'fg-default'
+  ) {
     if (checked) {
       this.ngxUiLoaderService.startLoader(this.loader.loaderId, taskId);
       this.tasks[taskId] = true;
@@ -35,22 +39,28 @@ export class ControllerComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           this.ngxUiLoaderService.stopLoader(this.loader.loaderId, taskId);
           this.tasks[taskId] = false;
-        }, delay)
+        }, delay),
       ];
     }
   }
 
   bgSlideChange(checked: boolean, taskId: string = 'bg-default') {
     if (checked) {
-      this.ngxUiLoaderService.startBackgroundLoader(this.loader.loaderId, taskId);
+      this.ngxUiLoaderService.startBackgroundLoader(
+        this.loader.loaderId,
+        taskId
+      );
       this.tasks[taskId] = true;
     } else {
-      this.ngxUiLoaderService.stopBackgroundLoader(this.loader.loaderId, taskId);
+      this.ngxUiLoaderService.stopBackgroundLoader(
+        this.loader.loaderId,
+        taskId
+      );
       this.tasks[taskId] = false;
     }
   }
 
   ngOnDestroy() {
-    this.timers.forEach(timer => clearTimeout(timer));
+    this.timers.forEach((timer) => clearTimeout(timer));
   }
 }

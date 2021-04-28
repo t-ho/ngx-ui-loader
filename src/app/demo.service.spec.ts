@@ -5,7 +5,7 @@ import { DemoService } from './demo.service';
 describe('NgxUiLoaderDemoService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [NgxUiLoaderService, DemoService]
+      providers: [NgxUiLoaderService, DemoService],
     });
   });
   it('should be created', inject([DemoService], (service: DemoService) => {

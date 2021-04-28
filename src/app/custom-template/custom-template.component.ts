@@ -5,7 +5,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
   selector: 'app-custom-template',
   templateUrl: './custom-template.component.html',
-  styleUrls: ['./custom-template.component.scss']
+  styleUrls: ['./custom-template.component.scss'],
 })
 export class CustomTemplateComponent {
   loader: any;
@@ -20,7 +20,7 @@ export class CustomTemplateComponent {
       fgsSize: 100,
       bgsSize: 64,
       gap: 80,
-      text: 'Custom Spinner'
+      text: 'Custom Spinner',
     };
   }
 }

@@ -4,7 +4,10 @@ import { SPINNER_CONFIG } from '../../../projects/ngx-ui-loader/src/lib/utils/co
 @Component({
   selector: 'app-spinners',
   templateUrl: './spinners.component.html',
-  styleUrls: ['../../../projects/ngx-ui-loader/src/lib/core/ngx-ui-loader.component.scss', './spinners.component.scss']
+  styleUrls: [
+    '../../../projects/ngx-ui-loader/src/lib/core/ngx-ui-loader.component.scss',
+    './spinners.component.scss',
+  ],
 })
 export class SpinnersComponent implements OnInit {
   spinners: any;
@@ -14,12 +17,10 @@ export class SpinnersComponent implements OnInit {
    * On init
    */
   ngOnInit() {
-    this.spinners = Object.keys(SPINNER_CONFIG).map(key => {
-      return {
-        name: key,
-        divs: Array(SPINNER_CONFIG[key].divs).fill(1),
-        class: SPINNER_CONFIG[key].class
-      };
-    });
+    this.spinners = Object.keys(SPINNER_CONFIG).map((key) => ({
+      name: key,
+      divs: Array(SPINNER_CONFIG[key].divs).fill(1),
+      class: SPINNER_CONFIG[key].class,
+    }));
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-interface */
 import { DirectionType, PositionType, SpinnerType } from './types';
 
 export interface Time {

@@ -50,92 +50,92 @@ export const ROUTER_LOADER_TASK_ID = '$_router_loader';
 export const SPINNER_CONFIG = {
   'ball-scale-multiple': {
     divs: 3,
-    class: 'sk-ball-scale-multiple'
+    class: 'sk-ball-scale-multiple',
   },
   'ball-spin': {
     divs: 8,
-    class: 'sk-ball-spin'
+    class: 'sk-ball-spin',
   },
   'ball-spin-clockwise': {
     divs: 8,
-    class: 'sk-ball-spin-clockwise'
+    class: 'sk-ball-spin-clockwise',
   },
   'ball-spin-clockwise-fade-rotating': {
     divs: 8,
-    class: 'sk-ball-spin-clockwise-fade-rotating'
+    class: 'sk-ball-spin-clockwise-fade-rotating',
   },
   'ball-spin-fade-rotating': {
     divs: 8,
-    class: 'sk-ball-spin-fade-rotating'
+    class: 'sk-ball-spin-fade-rotating',
   },
   'chasing-dots': {
     divs: 2,
-    class: 'sk-chasing-dots'
+    class: 'sk-chasing-dots',
   },
   circle: {
     divs: 12,
-    class: 'sk-circle'
+    class: 'sk-circle',
   },
   'cube-grid': {
     divs: 9,
-    class: 'sk-cube-grid'
+    class: 'sk-cube-grid',
   },
   'double-bounce': {
     divs: 2,
-    class: 'sk-double-bounce'
+    class: 'sk-double-bounce',
   },
   'fading-circle': {
     divs: 12,
-    class: 'sk-fading-circle'
+    class: 'sk-fading-circle',
   },
   'folding-cube': {
     divs: 4,
-    class: 'sk-folding-cube'
+    class: 'sk-folding-cube',
   },
   pulse: {
     divs: 1,
-    class: 'sk-pulse'
+    class: 'sk-pulse',
   },
   'rectangle-bounce': {
     divs: 5,
-    class: 'sk-rectangle-bounce'
+    class: 'sk-rectangle-bounce',
   },
   'rectangle-bounce-party': {
     divs: 5,
-    class: 'sk-rectangle-bounce-party'
+    class: 'sk-rectangle-bounce-party',
   },
   'rectangle-bounce-pulse-out': {
     divs: 5,
-    class: 'sk-rectangle-bounce-pulse-out'
+    class: 'sk-rectangle-bounce-pulse-out',
   },
   'rectangle-bounce-pulse-out-rapid': {
     divs: 5,
-    class: 'sk-rectangle-bounce-pulse-out-rapid'
+    class: 'sk-rectangle-bounce-pulse-out-rapid',
   },
   'rotating-plane': {
     divs: 1,
-    class: 'sk-rotating-plane'
+    class: 'sk-rotating-plane',
   },
   'square-jelly-box': {
     divs: 2,
-    class: 'sk-square-jelly-box'
+    class: 'sk-square-jelly-box',
   },
   'square-loader': {
     divs: 1,
-    class: 'sk-square-loader'
+    class: 'sk-square-loader',
   },
   'three-bounce': {
     divs: 3,
-    class: 'sk-three-bounce'
+    class: 'sk-three-bounce',
   },
   'three-strings': {
     divs: 3,
-    class: 'sk-three-strings'
+    class: 'sk-three-strings',
   },
   'wandering-cubes': {
     divs: 2,
-    class: 'sk-wandering-cubes'
-  }
+    class: 'sk-wandering-cubes',
+  },
 };
 
 /**
@@ -169,5 +169,5 @@ export const DEFAULT_CONFIG: NgxUiLoaderConfig = {
   textColor: '#FFFFFF',
   textPosition: POSITION.centerCenter,
   maxTime: -1,
-  minTime: 300
+  minTime: 300,
 };
