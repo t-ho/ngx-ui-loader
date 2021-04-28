@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxUiLoaderService, Loader, SPINNER, POSITION, PB_DIRECTION } from 'ngx-ui-loader';
+import {
+  NgxUiLoaderService,
+  Loader,
+  SPINNER,
+  POSITION,
+  PB_DIRECTION,
+} from 'ngx-ui-loader';
 import { DemoService } from '../demo.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -8,7 +14,7 @@ const LOGO_URL = 'assets/angular.png';
 @Component({
   selector: 'app-master-configuration',
   templateUrl: './master-configuration.component.html',
-  styleUrls: ['./master-configuration.component.scss']
+  styleUrls: ['./master-configuration.component.scss'],
 })
 export class MasterConfigurationComponent implements OnInit {
   spinnerTypes: string[];
@@ -22,15 +28,19 @@ export class MasterConfigurationComponent implements OnInit {
   /**
    * Constructor
    */
-  constructor(private ngxUiLoaderService: NgxUiLoaderService, public demoService: DemoService, private http: HttpClient) {}
+  constructor(
+    private ngxUiLoaderService: NgxUiLoaderService,
+    public demoService: DemoService,
+    private http: HttpClient
+  ) {}
 
   /**
    * On init
    */
   ngOnInit() {
-    this.spinnerTypes = Object.keys(SPINNER).map(key => SPINNER[key]);
-    this.positions = Object.keys(POSITION).map(key => POSITION[key]);
-    this.directions = Object.keys(PB_DIRECTION).map(key => PB_DIRECTION[key]);
+    this.spinnerTypes = Object.keys(SPINNER).map((key) => SPINNER[key]);
+    this.positions = Object.keys(POSITION).map((key) => POSITION[key]);
+    this.directions = Object.keys(PB_DIRECTION).map((key) => PB_DIRECTION[key]);
 
     this.disabled = false;
 
@@ -64,9 +74,13 @@ export class MasterConfigurationComponent implements OnInit {
 
   getDownloadStats() {
     this.disabled = true;
-    this.http.get(`https://api.npmjs.org/downloads/range/last-month/ngx-ui-loader?t=${Date.now()}`).subscribe((res: any) => {
-      console.log(res);
-      this.disabled = false;
-    });
+    this.http
+      .get(
+        `https://api.npmjs.org/downloads/range/last-month/ngx-ui-loader?t=${Date.now()}`
+      )
+      .subscribe((res: any) => {
+        console.log(res);
+        this.disabled = false;
+      });
   }
 }

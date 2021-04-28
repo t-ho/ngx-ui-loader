@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/component-selector */
 import {
   Component,
   Input,
@@ -8,9 +9,13 @@ import {
   OnDestroy,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  TemplateRef
+  TemplateRef,
 } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl, SafeStyle } from '@angular/platform-browser';
+import {
+  DomSanitizer,
+  SafeResourceUrl,
+  SafeStyle,
+} from '@angular/platform-browser';
 import { NgxUiLoaderService } from './ngx-ui-loader.service';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -25,7 +30,7 @@ import { ShowEvent } from '../utils/interfaces';
   selector: 'ngx-ui-loader',
   templateUrl: './ngx-ui-loader.component.html',
   styleUrls: ['./ngx-ui-loader.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   @Input() bgsColor: string;
@@ -80,7 +85,11 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   /**
    * Constructor
    */
-  constructor(private domSanitizer: DomSanitizer, private changeDetectorRef: ChangeDetectorRef, private ngxService: NgxUiLoaderService) {
+  constructor(
+    private domSanitizer: DomSanitizer,
+    private changeDetectorRef: ChangeDetectorRef,
+    private ngxService: NgxUiLoaderService
+  ) {
     this.initialized = false;
     this.defaultConfig = this.ngxService.getDefaultConfig();
 
@@ -118,32 +127,42 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.ngxService.bindLoaderData(this.loaderId);
     this.determinePositions();
 
-    this.trustedLogoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.logoUrl);
+    this.trustedLogoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
+      this.logoUrl
+    );
 
     this.showForegroundWatcher = this.ngxService.showForeground$
-      .pipe(filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId))
-      .subscribe(data => {
+      .pipe(
+        filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId)
+      )
+      .subscribe((data) => {
         this.showForeground = data.isShow;
         this.changeDetectorRef.markForCheck();
       });
 
     this.showBackgroundWatcher = this.ngxService.showBackground$
-      .pipe(filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId))
-      .subscribe(data => {
+      .pipe(
+        filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId)
+      )
+      .subscribe((data) => {
         this.showBackground = data.isShow;
         this.changeDetectorRef.markForCheck();
       });
 
     this.foregroundClosingWatcher = this.ngxService.foregroundClosing$
-      .pipe(filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId))
-      .subscribe(data => {
+      .pipe(
+        filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId)
+      )
+      .subscribe((data) => {
         this.foregroundClosing = data.isShow;
         this.changeDetectorRef.markForCheck();
       });
 
     this.backgroundClosingWatcher = this.ngxService.backgroundClosing$
-      .pipe(filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId))
-      .subscribe(data => {
+      .pipe(
+        filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId)
+      )
+      .subscribe((data) => {
         this.backgroundClosing = data.isShow;
         this.changeDetectorRef.markForCheck();
       });
@@ -169,7 +188,28 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.determinePositions();
 
     if (logoUrlChange) {
-      this.trustedLogoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.logoUrl);
+      this.trustedLogoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
+        this.logoUrl
+      );
+    }
+  }
+
+  /**
+   * On destroy event
+   */
+  ngOnDestroy() {
+    this.ngxService.destroyLoaderData(this.loaderId);
+    if (this.showForegroundWatcher) {
+      this.showForegroundWatcher.unsubscribe();
+    }
+    if (this.showBackgroundWatcher) {
+      this.showBackgroundWatcher.unsubscribe();
+    }
+    if (this.foregroundClosingWatcher) {
+      this.foregroundClosingWatcher.unsubscribe();
+    }
+    if (this.backgroundClosingWatcher) {
+      this.backgroundClosingWatcher.unsubscribe();
     }
   }
 
@@ -215,49 +255,53 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
         if (this.text && this.textPosition === POSITION.centerCenter) {
           // logo, spinner and text
           this.logoTop = this.domSanitizer.bypassSecurityTrustStyle(
-            `calc(50% - ${this.fgsSize / 2}px - ${textSize / 2}px - ${this.gap}px)`
+            `calc(50% - ${this.fgsSize / 2}px - ${textSize / 2}px - ${
+              this.gap
+            }px)`
           );
-          this.spinnerTop = this.domSanitizer.bypassSecurityTrustStyle(`calc(50% + ${this.logoSize / 2}px - ${textSize / 2}px)`);
+          this.spinnerTop = this.domSanitizer.bypassSecurityTrustStyle(
+            `calc(50% + ${this.logoSize / 2}px - ${textSize / 2}px)`
+          );
           this.textTop = this.domSanitizer.bypassSecurityTrustStyle(
-            `calc(50% + ${this.logoSize / 2}px + ${this.gap}px + ${this.fgsSize / 2}px)`
+            `calc(50% + ${this.logoSize / 2}px + ${this.gap}px + ${
+              this.fgsSize / 2
+            }px)`
           );
         } else {
           // logo and spinner
-          this.logoTop = this.domSanitizer.bypassSecurityTrustStyle(`calc(50% - ${this.fgsSize / 2}px - ${this.gap / 2}px)`);
-          this.spinnerTop = this.domSanitizer.bypassSecurityTrustStyle(`calc(50% + ${this.logoSize / 2}px + ${this.gap / 2}px)`);
+          this.logoTop = this.domSanitizer.bypassSecurityTrustStyle(
+            `calc(50% - ${this.fgsSize / 2}px - ${this.gap / 2}px)`
+          );
+          this.spinnerTop = this.domSanitizer.bypassSecurityTrustStyle(
+            `calc(50% + ${this.logoSize / 2}px + ${this.gap / 2}px)`
+          );
         }
       } else {
         if (this.text && this.textPosition === POSITION.centerCenter) {
           // spinner and text
-          this.spinnerTop = this.domSanitizer.bypassSecurityTrustStyle(`calc(50% - ${textSize / 2}px - ${this.gap / 2}px)`);
-          this.textTop = this.domSanitizer.bypassSecurityTrustStyle(`calc(50% + ${this.fgsSize / 2}px + ${this.gap / 2}px)`);
+          this.spinnerTop = this.domSanitizer.bypassSecurityTrustStyle(
+            `calc(50% - ${textSize / 2}px - ${this.gap / 2}px)`
+          );
+          this.textTop = this.domSanitizer.bypassSecurityTrustStyle(
+            `calc(50% + ${this.fgsSize / 2}px + ${this.gap / 2}px)`
+          );
         }
       }
     } else {
-      if (this.logoUrl && this.logoPosition === POSITION.centerCenter && this.text && this.textPosition === POSITION.centerCenter) {
+      if (
+        this.logoUrl &&
+        this.logoPosition === POSITION.centerCenter &&
+        this.text &&
+        this.textPosition === POSITION.centerCenter
+      ) {
         // logo and text
-        this.logoTop = this.domSanitizer.bypassSecurityTrustStyle(`calc(50% - ${textSize / 2}px - ${this.gap / 2}px)`);
-        this.textTop = this.domSanitizer.bypassSecurityTrustStyle(`calc(50% + ${this.logoSize / 2}px + ${this.gap / 2}px)`);
+        this.logoTop = this.domSanitizer.bypassSecurityTrustStyle(
+          `calc(50% - ${textSize / 2}px - ${this.gap / 2}px)`
+        );
+        this.textTop = this.domSanitizer.bypassSecurityTrustStyle(
+          `calc(50% + ${this.logoSize / 2}px + ${this.gap / 2}px)`
+        );
       }
-    }
-  }
-
-  /**
-   * On destroy event
-   */
-  ngOnDestroy() {
-    this.ngxService.destroyLoaderData(this.loaderId);
-    if (this.showForegroundWatcher) {
-      this.showForegroundWatcher.unsubscribe();
-    }
-    if (this.showBackgroundWatcher) {
-      this.showBackgroundWatcher.unsubscribe();
-    }
-    if (this.foregroundClosingWatcher) {
-      this.foregroundClosingWatcher.unsubscribe();
-    }
-    if (this.backgroundClosingWatcher) {
-      this.backgroundClosingWatcher.unsubscribe();
     }
   }
 }

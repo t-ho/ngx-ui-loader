@@ -1,5 +1,10 @@
 import { Injectable, Inject, Optional } from '@angular/core';
-import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
+import {
+  HttpInterceptor,
+  HttpEvent,
+  HttpHandler,
+  HttpRequest,
+} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
@@ -20,13 +25,15 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
    * Constructor
    */
   constructor(
-    @Optional() @Inject(NGX_UI_LOADER_HTTP_CONFIG_TOKEN) customConfig: NgxUiLoaderHttpConfig,
+    @Optional()
+    @Inject(NGX_UI_LOADER_HTTP_CONFIG_TOKEN)
+    customConfig: NgxUiLoaderHttpConfig,
     private loader: NgxUiLoaderService
   ) {
     this.count = 0;
     this.config = {
       loaderId: this.loader.getDefaultConfig().masterLoaderId,
-      showForeground: false
+      showForeground: false,
     };
 
     this.exclude = getExcludeObj(customConfig);
@@ -36,16 +43,27 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
     }
   }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     if (isIgnored(req.url, this.exclude.strs, this.exclude.regExps)) {
       return next.handle(req);
     }
 
     this.count++;
     if (this.config.showForeground) {
-      this.loader.startLoader(this.config.loaderId, HTTP_LOADER_TASK_ID, this.config);
+      this.loader.startLoader(
+        this.config.loaderId,
+        HTTP_LOADER_TASK_ID,
+        this.config
+      );
     } else {
-      this.loader.startBackgroundLoader(this.config.loaderId, HTTP_LOADER_TASK_ID, this.config);
+      this.loader.startBackgroundLoader(
+        this.config.loaderId,
+        HTTP_LOADER_TASK_ID,
+        this.config
+      );
     }
 
     return next.handle(req).pipe(
@@ -55,7 +73,10 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
           if (this.config.showForeground) {
             this.loader.stopLoader(this.config.loaderId, HTTP_LOADER_TASK_ID);
           } else {
-            this.loader.stopBackgroundLoader(this.config.loaderId, HTTP_LOADER_TASK_ID);
+            this.loader.stopBackgroundLoader(
+              this.config.loaderId,
+              HTTP_LOADER_TASK_ID
+            );
           }
         }
       })

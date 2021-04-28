@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /**
  * Available spinner types
  */
@@ -23,7 +24,7 @@ export enum SPINNER {
   squareLoader = 'square-loader',
   threeBounce = 'three-bounce',
   threeStrings = 'three-strings',
-  wanderingCubes = 'wandering-cubes'
+  wanderingCubes = 'wandering-cubes',
 }
 
 /**
@@ -38,7 +39,7 @@ export enum POSITION {
   centerRight = 'center-right',
   topCenter = 'top-center',
   topLeft = 'top-left',
-  topRight = 'top-right'
+  topRight = 'top-right',
 }
 
 /**
@@ -46,5 +47,5 @@ export enum POSITION {
  */
 export enum PB_DIRECTION {
   leftToRight = 'ltr',
-  rightToLeft = 'rtl'
+  rightToLeft = 'rtl',
 }

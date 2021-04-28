@@ -23,7 +23,7 @@ import {
   POSITION,
   PB_DIRECTION,
   NgxUiLoaderRouterModule,
-  NgxUiLoaderHttpModule
+  NgxUiLoaderHttpModule,
 } from 'ngx-ui-loader';
 
 import { AppComponent } from './app.component';
@@ -54,7 +54,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // logoUrl: 'assets/angular.png',
   // overlayBorderRadius: '0',
   // overlayColor: 'rgba(40, 40, 40, 0.8)',
-  pbColor: 'red'
+  pbColor: 'red',
   // pbDirection: PB_DIRECTION.leftToRight,
   // pbThickness: 5,
   // hasProgressBar: false,
@@ -68,20 +68,20 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 const routes: Routes = [
   {
     path: 'spinners',
-    component: SpinnersComponent
+    component: SpinnersComponent,
   },
   {
     path: 'multiloaders',
-    component: MultiloadersComponent
+    component: MultiloadersComponent,
   },
   {
     path: 'custom-template',
-    component: CustomTemplateComponent
+    component: CustomTemplateComponent,
   },
   {
     path: '',
-    component: MasterConfigurationComponent
-  }
+    component: MasterConfigurationComponent,
+  },
 ];
 
 @NgModule({
@@ -91,7 +91,7 @@ const routes: Routes = [
     MultiloadersComponent,
     MasterConfigurationComponent,
     ControllerComponent,
-    CustomTemplateComponent
+    CustomTemplateComponent,
   ],
   imports: [
     BrowserModule,
@@ -113,9 +113,9 @@ const routes: Routes = [
 
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     NgxUiLoaderRouterModule, // import this module for showing loader automatically when navigating between app routes
-    NgxUiLoaderHttpModule
+    NgxUiLoaderHttpModule,
   ],
   providers: [DemoService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -9,22 +9,25 @@ import { NgxUiLoaderConfig } from '../utils/interfaces';
 @NgModule({
   imports: [CommonModule],
   declarations: [NgxUiLoaderComponent, NgxUiLoaderBlurredDirective],
-  exports: [NgxUiLoaderComponent, NgxUiLoaderBlurredDirective]
+  exports: [NgxUiLoaderComponent, NgxUiLoaderBlurredDirective],
 })
 export class NgxUiLoaderModule {
   /**
    * forRoot
+   *
    * @returns A module with its provider dependencies
    */
-  static forRoot(ngxUiLoaderConfig: NgxUiLoaderConfig): ModuleWithProviders<NgxUiLoaderModule> {
+  static forRoot(
+    ngxUiLoaderConfig: NgxUiLoaderConfig
+  ): ModuleWithProviders<NgxUiLoaderModule> {
     return {
       ngModule: NgxUiLoaderModule,
       providers: [
         {
           provide: NGX_UI_LOADER_CONFIG_TOKEN,
-          useValue: ngxUiLoaderConfig
-        }
-      ]
+          useValue: ngxUiLoaderConfig,
+        },
+      ],
     };
   }
 }

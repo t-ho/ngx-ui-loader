@@ -1,5 +1,18 @@
-import { NgModule, ModuleWithProviders, Inject, Optional, SkipSelf } from '@angular/core';
-import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterEvent } from '@angular/router';
+import {
+  NgModule,
+  ModuleWithProviders,
+  Inject,
+  Optional,
+  SkipSelf,
+} from '@angular/core';
+import {
+  NavigationCancel,
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  Router,
+  RouterEvent,
+} from '@angular/router';
 
 import { NgxUiLoaderService } from '../core/ngx-ui-loader.service';
 import { NgxUiLoaderRouterConfig } from '../utils/interfaces';
@@ -13,37 +26,25 @@ export class NgxUiLoaderRouterModule {
   private exclude: Exclude;
 
   /**
-   * forRoot
-   * @returns A module with its provider dependencies
-   */
-  static forRoot(routerConfig: NgxUiLoaderRouterConfig): ModuleWithProviders<NgxUiLoaderRouterModule> {
-    return {
-      ngModule: NgxUiLoaderRouterModule,
-      providers: [
-        {
-          provide: NGX_UI_LOADER_ROUTER_CONFIG_TOKEN,
-          useValue: routerConfig
-        }
-      ]
-    };
-  }
-
-  /**
    * Constructor
    */
   constructor(
     @Optional() @SkipSelf() parentModule: NgxUiLoaderRouterModule,
-    @Optional() @Inject(NGX_UI_LOADER_ROUTER_CONFIG_TOKEN) customConfig: NgxUiLoaderRouterConfig,
+    @Optional()
+    @Inject(NGX_UI_LOADER_ROUTER_CONFIG_TOKEN)
+    customConfig: NgxUiLoaderRouterConfig,
     router: Router,
     loader: NgxUiLoaderService
   ) {
     if (parentModule) {
-      throw new Error('[ngx-ui-loader] - NgxUiLoaderRouterModule is already loaded. It should be imported in the root `AppModule` only!');
+      throw new Error(
+        '[ngx-ui-loader] - NgxUiLoaderRouterModule is already loaded. It should be imported in the root `AppModule` only!'
+      );
     }
 
     let config: NgxUiLoaderRouterConfig = {
       loaderId: loader.getDefaultConfig().masterLoaderId,
-      showForeground: true
+      showForeground: true,
     };
 
     this.exclude = getExcludeObj(customConfig);
@@ -58,12 +59,19 @@ export class NgxUiLoaderRouterModule {
           if (config.showForeground) {
             loader.startLoader(config.loaderId, ROUTER_LOADER_TASK_ID);
           } else {
-            loader.startBackgroundLoader(config.loaderId, ROUTER_LOADER_TASK_ID);
+            loader.startBackgroundLoader(
+              config.loaderId,
+              ROUTER_LOADER_TASK_ID
+            );
           }
         }
       }
 
-      if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+      if (
+        event instanceof NavigationEnd ||
+        event instanceof NavigationCancel ||
+        event instanceof NavigationError
+      ) {
         if (!isIgnored(event.url, this.exclude.strs, this.exclude.regExps)) {
           if (config.showForeground) {
             loader.stopLoader(config.loaderId, ROUTER_LOADER_TASK_ID);
@@ -73,5 +81,24 @@ export class NgxUiLoaderRouterModule {
         }
       }
     });
+  }
+
+  /**
+   * forRoot
+   *
+   * @returns A module with its provider dependencies
+   */
+  static forRoot(
+    routerConfig: NgxUiLoaderRouterConfig
+  ): ModuleWithProviders<NgxUiLoaderRouterModule> {
+    return {
+      ngModule: NgxUiLoaderRouterModule,
+      providers: [
+        {
+          provide: NGX_UI_LOADER_ROUTER_CONFIG_TOKEN,
+          useValue: routerConfig,
+        },
+      ],
+    };
   }
 }
