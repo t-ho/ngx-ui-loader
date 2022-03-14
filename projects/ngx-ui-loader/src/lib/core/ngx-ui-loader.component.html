@@ -53,7 +53,14 @@
   <!-- Foreground spinner }}} -->
 
   <!-- Loading text {{{ -->
-  <div class="ngx-loading-text" [ngClass]="textPosition" [style.top]="textTop" [style.color]="textColor">{{ text }}</div>
+  <div
+    class="ngx-loading-text"
+    [ngClass]="textPosition"
+    [style.top]="textTop"
+    [style.color]="textColor"
+  >
+    <span>{{ text }}</span>
+  </div>
   <!-- Loading text }}} -->
 </div>
 <!-- Foreground container }}} -->

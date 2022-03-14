@@ -9,6 +9,11 @@
       "version": "11.0.0",
       "factory": "./update/index#update1100",
       "description": "Update ngx-ui-loader to version 11.0.0"
+    },
+    "migration-1300": {
+      "version": "13.0.0",
+      "factory": "./update/index#update1300",
+      "description": "Update ngx-ui-loader to version 13.0.0"
     }
   }
 }

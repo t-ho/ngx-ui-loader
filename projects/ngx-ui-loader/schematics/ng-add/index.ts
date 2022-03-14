@@ -1,10 +1,9 @@
-/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 
-export function ngAdd(_options: any): Rule {
-  return (tree: Tree, _context: SchematicContext) => {
-    _context.addTask(new NodePackageInstallTask());
+export function ngAdd(): Rule {
+  return (tree: Tree, context: SchematicContext) => {
+    context.addTask(new NodePackageInstallTask());
     return tree;
   };
 }

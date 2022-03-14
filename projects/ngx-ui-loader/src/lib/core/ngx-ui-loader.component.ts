@@ -177,9 +177,9 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
       return;
     }
 
-    const bgsTypeChange: SimpleChange = changes.bgsType;
-    const fgsTypeChange: SimpleChange = changes.fgsType;
-    const logoUrlChange: SimpleChange = changes.logoUrl;
+    const bgsTypeChange: SimpleChange = changes['bgsType'];
+    const fgsTypeChange: SimpleChange = changes['fgsType'];
+    const logoUrlChange: SimpleChange = changes['logoUrl'];
 
     if (fgsTypeChange || bgsTypeChange) {
       this.initializeSpinners();

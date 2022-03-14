@@ -1,4 +1,3 @@
-/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { Config, Exclude } from './interfaces';
 
 export function getExcludeObj(config: Config): Exclude {

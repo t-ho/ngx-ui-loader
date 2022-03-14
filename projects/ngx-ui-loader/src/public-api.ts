@@ -4,6 +4,8 @@
 
 export { NgxUiLoaderService } from './lib/core/ngx-ui-loader.service';
 export { NgxUiLoaderModule } from './lib/core/ngx-ui-loader.module';
+export { NgxUiLoaderComponent } from './lib/core/ngx-ui-loader.component';
+export { NgxUiLoaderBlurredDirective } from './lib/core/ngx-ui-loader-blurred.directive';
 export { SPINNER, POSITION, PB_DIRECTION } from './lib/utils/enums';
 export {
   Loader,

@@ -8,6 +8,9 @@
     "postbuild": "npm run copy:collections"
   },
   "schematics": "./schematics/collection.json",
+  "ng-save": {
+    "save": "dependencies"
+  },
   "ng-update": {
     "migrations": "./schematics/migration-collection.json"
   },
@@ -20,14 +23,11 @@
   "license": "MIT",
   "private": false,
   "peerDependencies": {
-    "@angular/common": ">=11.0.0",
-    "@angular/core": ">=11.0.0",
-    "@angular/platform-browser": ">=11.0.0",
-    "@angular/router": ">=11.0.0",
-    "rxjs": ">=6.6.0"
+    "@angular/common": ">=13.0.0",
+    "@angular/core": ">=13.0.0"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.3.0"
   },
   "keywords": [
     "ngx-ui-loader",

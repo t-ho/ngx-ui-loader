@@ -39,10 +39,10 @@ jobs:
       - name: Linting
         run: npx ng lint
       - name: Build lib
-        run: npx ng build ngx-ui-loader --prod
+        run: npx ng build ngx-ui-loader
       - name: Testing
         run: npm test
       - name: Upload codecov report
         uses: codecov/codecov-action@v1
       - name: Production build
-        run: npx ng build --prod
+        run: npx ng build
