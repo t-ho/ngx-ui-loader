@@ -11,7 +11,7 @@ import {
   NavigationError,
   NavigationStart,
   Router,
-  RouterEvent,
+  Event,
 } from '@angular/router';
 
 import { NgxUiLoaderService } from '../core/ngx-ui-loader.service';
@@ -53,7 +53,7 @@ export class NgxUiLoaderRouterModule {
       config = { ...config, ...customConfig };
     }
 
-    router.events.subscribe((event: RouterEvent) => {
+    router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
         if (!isIgnored(event.url, this.exclude.strs, this.exclude.regExps)) {
           if (config.showForeground) {
