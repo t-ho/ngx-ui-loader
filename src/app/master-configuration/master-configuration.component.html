@@ -73,9 +73,10 @@
           max="150"
           min="20"
           step="10"
-          [thumbLabel]="true"
-          [(ngModel)]="demoService.config.fgsSize"
-        ></mat-slider>
+          discrete
+        >
+          <input matSliderThumb [(ngModel)]="demoService.config.fgsSize">
+        </mat-slider>
       </div>
 
       <div>
@@ -86,9 +87,10 @@
           max="15"
           min="0"
           step="1"
-          [thumbLabel]="true"
-          [(ngModel)]="demoService.config.blur"
-        ></mat-slider>
+          discrete
+        >
+          <input matSliderThumb [(ngModel)]="demoService.config.blur">
+        </mat-slider>
       </div>
 
       <mat-form-field>
@@ -155,9 +157,11 @@
           max="200"
           min="40"
           step="10"
-          [thumbLabel]="true"
-          [(ngModel)]="demoService.config.logoSize"
-        ></mat-slider>
+          discrete
+        >
+          <input matSliderThumb [(ngModel)]="demoService.config.logoSize"
+        >
+        </mat-slider>
       </div>
     </div>
     <!-- Foreground }}}-->
@@ -213,9 +217,11 @@
           max="150"
           min="20"
           step="10"
-          [thumbLabel]="true"
-          [(ngModel)]="demoService.config.bgsSize"
-        ></mat-slider>
+          discrete
+        >
+          <input matSliderThumb [(ngModel)]="demoService.config.bgsSize"
+        >
+        </mat-slider>
       </div>
 
       <div>
@@ -226,9 +232,11 @@
           max="1"
           min="0.1"
           step="0.1"
-          [thumbLabel]="true"
-          [(ngModel)]="demoService.config.bgsOpacity"
-        ></mat-slider>
+          discrete
+        >
+          <input matSliderThumb [(ngModel)]="demoService.config.bgsOpacity"
+        >
+        </mat-slider>
       </div>
 
       <div>
@@ -239,9 +247,11 @@
           max="150"
           min="10"
           step="1"
-          [thumbLabel]="true"
-          [(ngModel)]="demoService.config.gap"
-        ></mat-slider>
+          discrete
+        >
+          <input matSliderThumb [(ngModel)]="demoService.config.gap"
+        >
+        </mat-slider>
       </div>
 
       <div *ngIf="demoService.config.hasProgressBar">
@@ -250,9 +260,11 @@
           max="10"
           min="1"
           step="1"
-          [thumbLabel]="true"
-          [(ngModel)]="demoService.config.pbThickness"
-        ></mat-slider>
+          discrete
+        >
+          <input matSliderThumb [(ngModel)]="demoService.config.pbThickness"
+        >
+        </mat-slider>
       </div>
 
       <mat-form-field *ngIf="demoService.config.hasProgressBar">
