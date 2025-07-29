@@ -27,3 +27,7 @@ export function update1600(_options: unknown): Rule {
 export function update1700(_options: unknown): Rule {
   return (tree: Tree, _context: SchematicContext) => tree;
 }
+
+export function update1800(_options: unknown): Rule {
+  return (tree: Tree, _context: SchematicContext) => tree;
+}

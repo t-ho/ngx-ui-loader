@@ -34,6 +34,11 @@
       "version": "17.0.0",
       "factory": "./update/index#update1700",
       "description": "Update ngx-ui-loader to version 17.0.0"
+    },
+    "migration-1800": {
+      "version": "18.0.0",
+      "factory": "./update/index#update1800",
+      "description": "Update ngx-ui-loader to version 18.0.0"
     }
   }
 }
