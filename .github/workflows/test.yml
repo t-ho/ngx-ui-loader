@@ -16,33 +16,41 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x]
+        node-version: [16.x, 18.x, 20.x]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-${{ matrix.node-version }}-
-            ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
-
-      - name: Install deps
-        run: npm install
+          chrome-version: stable
+          
       - name: Linting
-        run: npx ng lint
-      - name: Build lib
-        run: npx ng build ngx-ui-loader
+        run: npm run lint
+        
+      - name: Build library
+        run: npm run build:lib
+        
+      - name: Build schematics
+        run: npm run build:schematics
+        
       - name: Testing
-        run: npm test
+        run: npm run test
+        
       - name: Upload codecov report
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v4
+        with:
+          fail_ci_if_error: false
+          
       - name: Production build
-        run: npx ng build
+        run: npm run build
