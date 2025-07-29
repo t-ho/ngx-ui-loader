@@ -1,4 +1,5 @@
 /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/prefer-standalone */
 import {
   Component,
   Input,
@@ -31,17 +32,20 @@ import { ShowEvent } from '../utils/interfaces';
   templateUrl: './ngx-ui-loader.component.html',
   styleUrls: ['./ngx-ui-loader.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   @Input() bgsColor: string;
   @Input() bgsOpacity: number;
   @Input() bgsPosition: PositionType;
   @Input() bgsSize: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() bgsTemplate: TemplateRef<any>;
   @Input() bgsType: SpinnerType;
   @Input() fgsColor: string;
   @Input() fgsPosition: PositionType;
   @Input() fgsSize: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() fgsTemplate: TemplateRef<any>;
   @Input() fgsType: SpinnerType;
   @Input() gap: number;
@@ -88,7 +92,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
   constructor(
     private domSanitizer: DomSanitizer,
     private changeDetectorRef: ChangeDetectorRef,
-    private ngxService: NgxUiLoaderService
+    private ngxService: NgxUiLoaderService,
   ) {
     this.initialized = false;
     this.defaultConfig = this.ngxService.getDefaultConfig();
@@ -128,12 +132,12 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
     this.determinePositions();
 
     this.trustedLogoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-      this.logoUrl
+      this.logoUrl,
     );
 
     this.showForegroundWatcher = this.ngxService.showForeground$
       .pipe(
-        filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId)
+        filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId),
       )
       .subscribe((data) => {
         this.showForeground = data.isShow;
@@ -142,7 +146,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
 
     this.showBackgroundWatcher = this.ngxService.showBackground$
       .pipe(
-        filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId)
+        filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId),
       )
       .subscribe((data) => {
         this.showBackground = data.isShow;
@@ -151,7 +155,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
 
     this.foregroundClosingWatcher = this.ngxService.foregroundClosing$
       .pipe(
-        filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId)
+        filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId),
       )
       .subscribe((data) => {
         this.foregroundClosing = data.isShow;
@@ -160,7 +164,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
 
     this.backgroundClosingWatcher = this.ngxService.backgroundClosing$
       .pipe(
-        filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId)
+        filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId),
       )
       .subscribe((data) => {
         this.backgroundClosing = data.isShow;
@@ -189,7 +193,7 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
 
     if (logoUrlChange) {
       this.trustedLogoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-        this.logoUrl
+        this.logoUrl,
       );
     }
   }
@@ -257,33 +261,33 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
           this.logoTop = this.domSanitizer.bypassSecurityTrustStyle(
             `calc(50% - ${this.fgsSize / 2}px - ${textSize / 2}px - ${
               this.gap
-            }px)`
+            }px)`,
           );
           this.spinnerTop = this.domSanitizer.bypassSecurityTrustStyle(
-            `calc(50% + ${this.logoSize / 2}px - ${textSize / 2}px)`
+            `calc(50% + ${this.logoSize / 2}px - ${textSize / 2}px)`,
           );
           this.textTop = this.domSanitizer.bypassSecurityTrustStyle(
             `calc(50% + ${this.logoSize / 2}px + ${this.gap}px + ${
               this.fgsSize / 2
-            }px)`
+            }px)`,
           );
         } else {
           // logo and spinner
           this.logoTop = this.domSanitizer.bypassSecurityTrustStyle(
-            `calc(50% - ${this.fgsSize / 2}px - ${this.gap / 2}px)`
+            `calc(50% - ${this.fgsSize / 2}px - ${this.gap / 2}px)`,
           );
           this.spinnerTop = this.domSanitizer.bypassSecurityTrustStyle(
-            `calc(50% + ${this.logoSize / 2}px + ${this.gap / 2}px)`
+            `calc(50% + ${this.logoSize / 2}px + ${this.gap / 2}px)`,
           );
         }
       } else {
         if (this.text && this.textPosition === POSITION.centerCenter) {
           // spinner and text
           this.spinnerTop = this.domSanitizer.bypassSecurityTrustStyle(
-            `calc(50% - ${textSize / 2}px - ${this.gap / 2}px)`
+            `calc(50% - ${textSize / 2}px - ${this.gap / 2}px)`,
           );
           this.textTop = this.domSanitizer.bypassSecurityTrustStyle(
-            `calc(50% + ${this.fgsSize / 2}px + ${this.gap / 2}px)`
+            `calc(50% + ${this.fgsSize / 2}px + ${this.gap / 2}px)`,
           );
         }
       }
@@ -296,10 +300,10 @@ export class NgxUiLoaderComponent implements OnChanges, OnDestroy, OnInit {
       ) {
         // logo and text
         this.logoTop = this.domSanitizer.bypassSecurityTrustStyle(
-          `calc(50% - ${textSize / 2}px - ${this.gap / 2}px)`
+          `calc(50% - ${textSize / 2}px - ${this.gap / 2}px)`,
         );
         this.textTop = this.domSanitizer.bypassSecurityTrustStyle(
-          `calc(50% + ${this.logoSize / 2}px + ${this.gap / 2}px)`
+          `calc(50% + ${this.logoSize / 2}px + ${this.gap / 2}px)`,
         );
       }
     }
