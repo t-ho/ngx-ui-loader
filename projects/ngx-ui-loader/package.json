@@ -27,7 +27,7 @@
     "@angular/core": ">=16.0.0"
   },
   "dependencies": {
-    "tslib": "^2.4.0"
+    "tslib": "^2.6.0"
   },
   "keywords": [
     "ngx-ui-loader",
