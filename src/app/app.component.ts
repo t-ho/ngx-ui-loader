@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
 
 import { DemoService } from './demo.service';
 
@@ -11,5 +11,8 @@ export class AppComponent {
   /**
    * Constructor
    */
-  constructor(public demoService: DemoService) {}
+  constructor(
+    public demoService: DemoService,
+    public vcRef: ViewContainerRef
+  ) {}
 }

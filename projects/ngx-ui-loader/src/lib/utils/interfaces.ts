@@ -8,12 +8,12 @@ export interface Time {
 }
 
 export interface Task extends Time {
-  delayTimer?: NodeJS.Timer;
+  delayTimer?: ReturnType<typeof setTimeout>;
   isDelayed?: boolean;
   isForeground: boolean;
   isOtherRunning?: boolean;
-  maxTimer?: NodeJS.Timer;
-  minTimer?: NodeJS.Timer;
+  maxTimer?: ReturnType<typeof setTimeout>;
+  minTimer?: ReturnType<typeof setTimeout>;
   startAt?: number;
   taskId: string;
 }
