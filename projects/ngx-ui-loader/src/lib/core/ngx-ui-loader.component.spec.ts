@@ -233,7 +233,7 @@ describe('NgxUiLoaderComponent', () => {
     expect(fgSpinnerEl.style.color).toBe('blue');
     expect(fgSpinnerEl.style.width).toBe('70px');
     expect(fgSpinnerEl.style.height).toBe('70px');
-    expect(fgSpinnerEl.style.top).toBe('calc((50% - 12px) - 15px)'); // gap
+    expect(fgSpinnerEl.style.top).toBe('calc(50% - 27px)'); // gap
     expect(fgContainerEl.style.borderRadius).toBe('120px');
     expect(fgContainerEl.style.backgroundColor).toBe('white');
     expect(progressBarEl.style.color).toBe('teal');
@@ -264,9 +264,9 @@ describe('NgxUiLoaderComponent', () => {
     });
     fixture.detectChanges();
     logoEl = ngxUiLoaderEl.querySelector('.ngx-loading-logo');
-    expect(logoEl.style.top).toBe('calc(((50% - 30px) - 12px) - 24px)');
-    expect(fgSpinnerEl.style.top).toBe('calc((50% + 60px) - 12px)');
-    expect(textEl.style.top).toBe('calc(50% + 60px + 24px + 30px)');
+    expect(logoEl.style.top).toBe('calc(50% - 66px)');
+    expect(fgSpinnerEl.style.top).toBe('calc(50% + 48px)');
+    expect(textEl.style.top).toBe('calc(50% + 114px)');
   });
 
   it('#determinePosition - spinner and logo are center-center', () => {
@@ -284,8 +284,8 @@ describe('NgxUiLoaderComponent', () => {
     });
     fixture.detectChanges();
     logoEl = ngxUiLoaderEl.querySelector('.ngx-loading-logo');
-    expect(logoEl.style.top).toBe('calc((50% - 30px) - 12px)');
-    expect(fgSpinnerEl.style.top).toBe('calc(50% + 60px + 12px)');
+    expect(logoEl.style.top).toBe('calc(50% - 42px)');
+    expect(fgSpinnerEl.style.top).toBe('calc(50% + 72px)');
     expect(textEl.style.top).toBe('30px');
   });
 
@@ -305,8 +305,8 @@ describe('NgxUiLoaderComponent', () => {
     fixture.detectChanges();
     logoEl = ngxUiLoaderEl.querySelector('.ngx-loading-logo');
     expect(logoEl.style.top).toBe('30px');
-    expect(fgSpinnerEl.style.top).toBe('calc((50% - 12px) - 12px)');
-    expect(textEl.style.top).toBe('calc(50% + 30px + 12px)');
+    expect(fgSpinnerEl.style.top).toBe('calc(50% - 24px)');
+    expect(textEl.style.top).toBe('calc(50% + 42px)');
   });
 
   it('#determinePosition - logo and text are center-center', () => {
@@ -324,9 +324,9 @@ describe('NgxUiLoaderComponent', () => {
     });
     fixture.detectChanges();
     logoEl = ngxUiLoaderEl.querySelector('.ngx-loading-logo');
-    expect(logoEl.style.top).toBe('calc((50% - 12px) - 12px)');
+    expect(logoEl.style.top).toBe('calc(50% - 24px)');
     expect(fgSpinnerEl.style.top).toBe('30px');
-    expect(textEl.style.top).toBe('calc(50% + 60px + 12px)');
+    expect(textEl.style.top).toBe('calc(50% + 72px)');
   });
 
   it('#determinePosition - logo, spinner and text are bottom-center', () => {
