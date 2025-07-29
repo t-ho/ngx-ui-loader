@@ -1,4 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSliderModule } from '@angular/material/slider';
+import { ColorPickerDirective } from 'ngx-color-picker';
+
 import {
   NgxUiLoaderService,
   Loader,
@@ -7,7 +23,7 @@ import {
   PB_DIRECTION,
 } from 'ngx-ui-loader';
 import { DemoService } from '../demo.service';
-import { HttpClient } from '@angular/common/http';
+import { ControllerComponent } from '../controller/controller.component';
 
 const LOGO_URL = 'assets/angular.png';
 
@@ -15,6 +31,22 @@ const LOGO_URL = 'assets/angular.png';
   selector: 'app-master-configuration',
   templateUrl: './master-configuration.component.html',
   styleUrls: ['./master-configuration.component.scss'],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatSliderModule,
+    ColorPickerDirective,
+    ControllerComponent,
+  ],
 })
 export class MasterConfigurationComponent implements OnInit {
   spinnerTypes: string[];
@@ -84,5 +116,9 @@ export class MasterConfigurationComponent implements OnInit {
           this.disabled = false;
         },
       );
+  }
+
+  openGithub() {
+    window.open('https://github.com/t-ho/ngx-ui-loader', '_blank');
   }
 }

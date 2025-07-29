@@ -73,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ngx-ui-loader-app:build:production"
+              "buildTarget": "ngx-ui-loader-app:build:production"
             },
             "development": {
-              "browserTarget": "ngx-ui-loader-app:build:development"
+              "buildTarget": "ngx-ui-loader-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-ui-loader-app:build"
+            "buildTarget": "ngx-ui-loader-app:build"
           }
         },
         "test": {

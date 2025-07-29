@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-interface */
 import { DirectionType, PositionType, SpinnerType } from './types';
 
 export interface Time {
@@ -80,4 +79,5 @@ export interface NgxUiLoaderConfig extends Time {
 
 export interface NgxUiLoaderHttpConfig extends Config, Time {}
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface NgxUiLoaderRouterConfig extends Config {}

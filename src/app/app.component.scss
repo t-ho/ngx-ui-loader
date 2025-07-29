@@ -29,10 +29,8 @@ mat-slider {
   padding: 12px;
 }
 
-.mat-icon.mdi-24px {
-  line-height: 24px;
-  margin-right: 4px;
-  margin-bottom: 3px;
+mat-toolbar mat-icon.mdi {
+  font-size: 18px;
 }
 
 .config-info {

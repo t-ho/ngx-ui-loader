@@ -1,16 +1,12 @@
-<div fxLayout="row wrap" fxLayoutAlign="center" style="margin-top: 12px">
+<div class="layout-row-wrap fxLayoutAlign-center" style="margin-top: 12px">
   <div
-    fxFlex="100"
-    fxFlex.gt-sm="960px"
-    fxFlex.gt-sx="600px"
-    fxLayout="row wrap"
-    fxLayoutAlign="center start"
+    class="fxFlex-100 layout-row-wrap fxLayoutAlign-center-start"
+    style="max-width: 960px;"
   >
     <div
       *ngFor="let spinner of spinners"
-      fxFlex.xs="40"
-      class="container"
-      fxFlex="135px"
+      class="fxFlex-xs-40 container"
+      style="flex-basis: 135px; min-width: 135px;"
     >
       <div class="ngx-foreground-spinner spinner-container">
         <div [class]="spinner.class">
@@ -24,9 +20,7 @@
     </div>
   </div>
   <div
-    fxFlex="100"
-    fxLayout="row"
-    fxLayoutAlign="center"
+    class="fxFlex-100 fxLayout-row fxLayoutAlign-center"
     style="margin-top: 24px; margin-bottom: 24px"
   >
     <a mat-raised-button color="primary" [routerLink]="'/'">Back</a>

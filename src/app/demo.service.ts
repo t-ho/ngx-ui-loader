@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgxUiLoaderConfig, NgxUiLoaderService } from 'ngx-ui-loader';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class DemoService {
   config: NgxUiLoaderConfig;
 

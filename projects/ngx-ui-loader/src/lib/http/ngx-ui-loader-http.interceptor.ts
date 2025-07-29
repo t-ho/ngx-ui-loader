@@ -28,7 +28,7 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
     @Optional()
     @Inject(NGX_UI_LOADER_HTTP_CONFIG_TOKEN)
     customConfig: NgxUiLoaderHttpConfig,
-    private loader: NgxUiLoaderService
+    private loader: NgxUiLoaderService,
   ) {
     this.count = 0;
     this.config = {
@@ -44,8 +44,10 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
   }
 
   intercept(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     req: HttpRequest<any>,
-    next: HttpHandler
+    next: HttpHandler,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Observable<HttpEvent<any>> {
     if (isIgnored(req.url, this.exclude.strs, this.exclude.regExps)) {
       return next.handle(req);
@@ -56,13 +58,13 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
       this.loader.startLoader(
         this.config.loaderId,
         HTTP_LOADER_TASK_ID,
-        this.config
+        this.config,
       );
     } else {
       this.loader.startBackgroundLoader(
         this.config.loaderId,
         HTTP_LOADER_TASK_ID,
-        this.config
+        this.config,
       );
     }
 
@@ -75,11 +77,11 @@ export class NgxUiLoaderHttpInterceptor implements HttpInterceptor {
           } else {
             this.loader.stopBackgroundLoader(
               this.config.loaderId,
-              HTTP_LOADER_TASK_ID
+              HTTP_LOADER_TASK_ID,
             );
           }
         }
-      })
+      }),
     );
   }
 }

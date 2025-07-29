@@ -1,4 +1,5 @@
 /* eslint-disable @angular-eslint/directive-selector */
+/* eslint-disable @angular-eslint/prefer-standalone */
 import {
   Directive,
   ElementRef,
@@ -18,7 +19,10 @@ import {
   FAST_OVERLAY_DISAPPEAR_TIME,
 } from '../utils/constants';
 
-@Directive({ selector: '[ngxUiLoaderBlurred]' })
+@Directive({
+  selector: '[ngxUiLoaderBlurred]',
+  standalone: false,
+})
 export class NgxUiLoaderBlurredDirective implements OnInit, OnDestroy {
   @Input() blur: number;
   @Input() loaderId: string;
@@ -29,7 +33,7 @@ export class NgxUiLoaderBlurredDirective implements OnInit, OnDestroy {
   constructor(
     private elementRef: ElementRef,
     private renderer: Renderer2,
-    private loader: NgxUiLoaderService
+    private loader: NgxUiLoaderService,
   ) {
     this.blur = this.loader.getDefaultConfig().blur;
     this.loaderId = this.loader.getDefaultConfig().masterLoaderId;
@@ -42,7 +46,7 @@ export class NgxUiLoaderBlurredDirective implements OnInit, OnDestroy {
   ngOnInit() {
     this.showForegroundWatcher = this.loader.showForeground$
       .pipe(
-        filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId)
+        filter((showEvent: ShowEvent) => this.loaderId === showEvent.loaderId),
       )
       .subscribe((data) => {
         if (data.isShow) {
@@ -50,12 +54,12 @@ export class NgxUiLoaderBlurredDirective implements OnInit, OnDestroy {
           this.renderer.setStyle(
             this.elementRef.nativeElement,
             '-webkit-filter',
-            filterValue
+            filterValue,
           );
           this.renderer.setStyle(
             this.elementRef.nativeElement,
             'filter',
-            filterValue
+            filterValue,
           );
         } else {
           setTimeout(
@@ -64,18 +68,18 @@ export class NgxUiLoaderBlurredDirective implements OnInit, OnDestroy {
                 this.renderer.setStyle(
                   this.elementRef.nativeElement,
                   '-webkit-filter',
-                  'none'
+                  'none',
                 );
                 this.renderer.setStyle(
                   this.elementRef.nativeElement,
                   'filter',
-                  'none'
+                  'none',
                 );
               }
             },
             this.fastFadeOut
               ? FAST_OVERLAY_DISAPPEAR_TIME
-              : OVERLAY_DISAPPEAR_TIME
+              : OVERLAY_DISAPPEAR_TIME,
           );
         }
       });
