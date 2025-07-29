@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
+@use "./styles/flex-layout.scss";
+
 html,
 body {
   height: 100%;

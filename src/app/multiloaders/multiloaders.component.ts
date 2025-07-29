@@ -1,6 +1,15 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
-import { NgxUiLoaderService, Loader, SPINNER } from 'ngx-ui-loader';
+import {
+  NgxUiLoaderService,
+  NgxUiLoaderModule,
+  Loader,
+  SPINNER,
+} from 'ngx-ui-loader';
+import { ControllerComponent } from '../controller/controller.component';
 
 const LOGO_URL = 'assets/angular.png';
 
@@ -8,6 +17,13 @@ const LOGO_URL = 'assets/angular.png';
   selector: 'app-multiloaders',
   templateUrl: './multiloaders.component.html',
   styleUrls: ['./multiloaders.component.scss'],
+  imports: [
+    CommonModule,
+    RouterLink,
+    MatButtonModule,
+    NgxUiLoaderModule,
+    ControllerComponent,
+  ],
 })
 export class MultiloadersComponent {
   loaders: Array<{

@@ -1,11 +1,22 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { NgxUiLoaderService, NgxUiLoaderModule } from 'ngx-ui-loader';
+import { ControllerComponent } from '../controller/controller.component';
 
 @Component({
   selector: 'app-custom-template',
   templateUrl: './custom-template.component.html',
   styleUrls: ['./custom-template.component.scss'],
+  imports: [
+    CommonModule,
+    RouterLink,
+    MatButtonModule,
+    NgxUiLoaderModule,
+    ControllerComponent,
+  ],
 })
 export class CustomTemplateComponent {
   loader: {

@@ -1,0 +1,268 @@
+// Replacement for @angular/flex-layout using CSS Flexbox and Grid
+
+// Layout containers - exact flex-layout replacements
+[class*="fxLayout"] {
+  display: flex;
+  box-sizing: border-box;
+}
+
+.fxLayout-row,
+.layout-row {
+  flex-direction: row;
+}
+
+.fxLayout-column,
+.layout-column {
+  flex-direction: column;
+}
+
+.fxLayout-row-wrap,
+.layout-row-wrap {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+// Layout alignment
+.fxLayoutAlign-center,
+.layout-align-center {
+  justify-content: center;
+}
+
+.fxLayoutAlign-center-start,
+.layout-align-center-start {
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.fxLayoutAlign-center-center,
+.layout-align-center-center {
+  justify-content: center;
+  align-items: center;
+}
+
+// Flex sizing - base classes
+.fxFlex-100,
+.flex-100 {
+  flex: 1 1 100%;
+  max-width: 100%;
+}
+
+.fxFlex-50,
+.flex-50 {
+  flex: 1 1 50%;
+  max-width: 50%;
+}
+
+.fxFlex-40,
+.flex-40 {
+  flex: 1 1 40%;
+  max-width: 40%;
+  box-sizing: border-box;
+}
+
+.fxFlex-36,
+.flex-36 {
+  flex: 1 1 36%;
+  max-width: 36%;
+}
+
+.fxFlex-32,
+.flex-32 {
+  flex: 1 1 32%;
+  max-width: 32%;
+}
+
+// Responsive flex - matching @angular/flex-layout breakpoints exactly
+// xs: 0-599px (default)
+.fxFlex-xs-90,
+.flex-xs-90 {
+  flex: 1 1 90%;
+  max-width: 90%;
+}
+
+.fxFlex-xs-70,
+.flex-xs-70 {
+  flex: 1 1 70%;
+  max-width: 70%;
+}
+
+.fxFlex-xs-40,
+.flex-xs-40 {
+  flex: 1 1 40%;
+  max-width: 40%;
+}
+
+// gt-xs: 600px and above
+@media (min-width: 600px) {
+  .fxFlex-gt-xs-1200,
+  .flex-gt-xs-1200 {
+    flex: 1 1 100% !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+  }
+}
+
+// Fix 40% flex for proper 2x2 grid (accounts for margins)
+@media (min-width: 800px) {
+  .container.fxFlex-40 {
+    flex: 1 1 calc(50% - 24px) !important;
+    max-width: calc(50% - 24px) !important;
+  }
+}
+
+// sm: 600px-959px
+@media (min-width: 600px) and (max-width: 959px) {
+  .fxFlex-sm-50,
+  .flex-sm-50 {
+    flex: 1 1 50% !important;
+    max-width: 50% !important;
+  }
+  .fxFlex-sm-70,
+  .flex-sm-70 {
+    flex: 1 1 70% !important;
+    max-width: 70% !important;
+  }
+  .fxLayout-sm-row,
+  .layout-sm-row {
+    flex-direction: row !important;
+  }
+}
+
+// md: 960px-1279px
+@media (min-width: 960px) and (max-width: 1279px) {
+  .fxFlex-md-50,
+  .flex-md-50 {
+    flex: 1 1 50% !important;
+    max-width: 50% !important;
+  }
+  .fxLayout-md-row,
+  .layout-md-row {
+    flex-direction: row !important;
+  }
+}
+
+// lg: 1280px-1919px
+@media (min-width: 1280px) and (max-width: 1919px) {
+  .fxFlex-lg-90,
+  .flex-lg-90 {
+    flex: 1 1 90% !important;
+    max-width: 90% !important;
+  }
+}
+
+// gt-xs (greater than xs): 600px+
+@media (min-width: 600px) {
+  .fxFlex-gt-xs-50,
+  .flex-gt-xs-50 {
+    flex: 1 1 50% !important;
+    max-width: 50% !important;
+  }
+  .fxFlex-gt-xs-1200,
+  .flex-gt-xs-1200 {
+    flex: 1 1 1200px !important;
+    max-width: 1200px !important;
+  }
+}
+
+// gt-md (greater than md): 1280px+
+@media (min-width: 1280px) {
+  .fxFlex-gt-md-32,
+  .flex-gt-md-32 {
+    flex: 1 1 32% !important;
+    max-width: 32% !important;
+  }
+  .fxFlex-gt-md-36,
+  .flex-gt-md-36 {
+    flex: 1 1 36% !important;
+    max-width: 36% !important;
+  }
+}
+
+// gt-lg (greater than lg): 1920px+
+@media (min-width: 1920px) {
+  .fxFlex-gt-lg-70,
+  .flex-gt-lg-70 {
+    flex: 1 1 70% !important;
+    max-width: 70% !important;
+  }
+}
+
+// Additional responsive classes handled above
+
+// Layout alignment
+.layout-align-center {
+  justify-content: center;
+}
+
+.layout-align-center-start {
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.layout-align-center-center {
+  justify-content: center;
+  align-items: center;
+}
+
+// Responsive layout direction
+@media (min-width: 600px) and (max-width: 959px) {
+  // sm
+  .layout-sm-row {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 960px) and (max-width: 1279px) {
+  // md
+  .layout-md-row {
+    flex-direction: row;
+  }
+}
+
+// Utility classes
+.p-12 {
+  padding: 12px;
+}
+
+.mat-elevation-z4 {
+  box-shadow:
+    0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+// Container utilities for demo app
+.container {
+  margin: 12px;
+  padding: 12px;
+}
+
+.container.master {
+  border: 2px solid #3f51b5;
+  border-radius: 4px;
+}
+
+// Configuration info styling
+.config-info {
+  padding: 12px;
+}
+
+.config-info .place-holder {
+  font-weight: bold;
+  color: #666;
+}
+
+// Spinner display
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  margin: 12px 0;
+}
+
+.spinner-name {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 8px;
+}
