@@ -8,7 +8,15 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
   styleUrls: ['./custom-template.component.scss'],
 })
 export class CustomTemplateComponent {
-  loader: any;
+  loader: {
+    hasProgressBar: boolean;
+    loaderId: string;
+    isMaster: boolean;
+    fgsSize: number;
+    bgsSize: number;
+    gap: number;
+    text: string;
+  };
   /**
    * Constructor
    */

@@ -10,9 +10,17 @@ const LOGO_URL = 'assets/angular.png';
   styleUrls: ['./multiloaders.component.scss'],
 })
 export class MultiloadersComponent {
-  loaders: any[];
+  loaders: Array<{
+    hasProgressBar: boolean;
+    loaderId: string;
+    logoUrl?: string;
+    logoSize?: number;
+    isMaster: boolean;
+    spinnerType: SPINNER;
+    text?: string;
+  }>;
   masterLoader: Loader;
-  timers: any;
+  timers: ReturnType<typeof setTimeout>[];
 
   constructor(private ngxUiLoaderService: NgxUiLoaderService) {
     this.masterLoader = this.ngxUiLoaderService.getLoader();

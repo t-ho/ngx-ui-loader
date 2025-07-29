@@ -31,7 +31,7 @@ export class MasterConfigurationComponent implements OnInit {
   constructor(
     private ngxUiLoaderService: NgxUiLoaderService,
     public demoService: DemoService,
-    private http: HttpClient
+    private http: HttpClient,
   ) {}
 
   /**
@@ -76,11 +76,13 @@ export class MasterConfigurationComponent implements OnInit {
     this.disabled = true;
     this.http
       .get(
-        `https://api.npmjs.org/downloads/range/last-month/ngx-ui-loader?t=${Date.now()}`
+        `https://api.npmjs.org/downloads/range/last-month/ngx-ui-loader?t=${Date.now()}`,
       )
-      .subscribe((res: any) => {
-        console.log(res);
-        this.disabled = false;
-      });
+      .subscribe(
+        (res: { downloads: Array<{ day: string; downloads: number }> }) => {
+          console.log(res);
+          this.disabled = false;
+        },
+      );
   }
 }

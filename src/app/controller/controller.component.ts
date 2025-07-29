@@ -10,8 +10,8 @@ import { NgxUiLoaderService, Loader } from 'ngx-ui-loader';
 export class ControllerComponent implements OnInit, OnDestroy {
   @Input() loader: Loader;
 
-  timers: any[];
-  tasks: any;
+  timers: ReturnType<typeof setTimeout>[];
+  tasks: { [key: string]: boolean };
 
   constructor(private ngxUiLoaderService: NgxUiLoaderService) {}
 
@@ -22,14 +22,17 @@ export class ControllerComponent implements OnInit, OnDestroy {
     this.timers = [];
     this.tasks = {};
     if (this.loader.isMaster) {
-      this.tasks = { ...this.loader.tasks };
+      // Convert Tasks to boolean dictionary for UI state tracking
+      Object.keys(this.loader.tasks).forEach((taskId) => {
+        this.tasks[taskId] = !!this.loader.tasks[taskId];
+      });
     }
   }
 
   fgSlideChange(
     checked: boolean,
     delay: number,
-    taskId: string = 'fg-default'
+    taskId: string = 'fg-default',
   ) {
     if (checked) {
       this.ngxUiLoaderService.startLoader(this.loader.loaderId, taskId);
@@ -48,13 +51,13 @@ export class ControllerComponent implements OnInit, OnDestroy {
     if (checked) {
       this.ngxUiLoaderService.startBackgroundLoader(
         this.loader.loaderId,
-        taskId
+        taskId,
       );
       this.tasks[taskId] = true;
     } else {
       this.ngxUiLoaderService.stopBackgroundLoader(
         this.loader.loaderId,
-        taskId
+        taskId,
       );
       this.tasks[taskId] = false;
     }

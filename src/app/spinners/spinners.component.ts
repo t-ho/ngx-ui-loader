@@ -10,7 +10,11 @@ import { SPINNER_CONFIG } from '../../../projects/ngx-ui-loader/src/lib/utils/co
   ],
 })
 export class SpinnersComponent implements OnInit {
-  spinners: any;
+  spinners: Array<{
+    name: string;
+    divs: number[];
+    class: string;
+  }>;
   constructor() {}
 
   /**
