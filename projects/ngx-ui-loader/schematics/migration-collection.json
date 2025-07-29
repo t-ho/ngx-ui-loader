@@ -14,6 +14,26 @@
       "version": "13.0.0",
       "factory": "./update/index#update1300",
       "description": "Update ngx-ui-loader to version 13.0.0"
+    },
+    "migration-1400": {
+      "version": "14.0.0",
+      "factory": "./update/index#update1400",
+      "description": "Update ngx-ui-loader to version 14.0.0"
+    },
+    "migration-1500": {
+      "version": "15.0.0",
+      "factory": "./update/index#update1500",
+      "description": "Update ngx-ui-loader to version 15.0.0"
+    },
+    "migration-1600": {
+      "version": "16.0.0",
+      "factory": "./update/index#update1600",
+      "description": "Update ngx-ui-loader to version 16.0.0"
+    },
+    "migration-1700": {
+      "version": "17.0.0",
+      "factory": "./update/index#update1700",
+      "description": "Update ngx-ui-loader to version 17.0.0"
     }
   }
 }
