@@ -8,6 +8,7 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    "useDefineForClassFields": false,
     "moduleResolution": "node",
     "importHelpers": true,
     "paths": {
@@ -16,10 +17,10 @@
         "dist/ngx-ui-loader"
       ]
     },
-    "target": "es2020",
-    "module": "es2020",
+    "target": "ES2022",
+    "module": "ES2022",
     "lib": [
-      "es2018",
+      "ES2022",
       "dom"
     ]
   },
