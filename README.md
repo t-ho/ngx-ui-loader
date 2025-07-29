@@ -43,7 +43,8 @@ $ yarn add ngx-ui-loader
 
 | Angular       | Installation                        | Documentation                                                         |
 | ------------- | ----------------------------------- | --------------------------------------------------------------------- |
-| Angular 13    | `npm i --save ngx-ui-loader`        | [v13.x.x](https://tdev.app/ngx-ui-loader)                             |
+| Angular 14    | `npm i --save ngx-ui-loader`        | [v14.x.x](https://tdev.app/ngx-ui-loader)                             |
+| Angular 13    | `npm i --save ngx-ui-loader@13.0.0` | [v13.x.x](https://tdev.app/ngx-ui-loader)                             |
 | Angular 11    | `npm i --save ngx-ui-loader@11.0.0` | [v11.x.x](https://tdev.app/ngx-ui-loader)                             |
 | Angular 10    | `npm i --save ngx-ui-loader@10.0.0` | [v10.x.x](https://tdev.app/ngx-ui-loader)                             |
 | Angular 9     | `npm i --save ngx-ui-loader@9.1.1`  | [v9.x.x](https://tdev.app/ngx-ui-loader)                              |
