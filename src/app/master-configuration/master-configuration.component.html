@@ -32,17 +32,26 @@
     >
       <mat-form-field>
         <input
-          [(colorPicker)]="demoService.config.fgsColor"
           matInput
           placeholder="Foreground Spinner Color (fgsColor)"
           [(ngModel)]="demoService.config.fgsColor"
+          readonly
         />
-        <mat-icon
+        <button
+          mat-icon-button
           matSuffix
-          [style.color]="demoService.config.fgsColor"
-          fontIcon="mdi-palette"
-          fontSet="mdi"
-        ></mat-icon>
+          [(colorPicker)]="demoService.config.fgsColor"
+          [cpPosition]="'bottom'"
+          [cpUseRootViewContainer]="true"
+          (click)="$event.stopPropagation()"
+          type="button"
+        >
+          <mat-icon
+            [style.color]="demoService.config.fgsColor"
+            fontIcon="mdi-palette"
+            fontSet="mdi"
+          ></mat-icon>
+        </button>
       </mat-form-field>
 
       <mat-form-field>
@@ -95,18 +104,27 @@
 
       <mat-form-field>
         <input
-          [(colorPicker)]="demoService.config.overlayColor"
-          cpOutputFormat="rgba"
           matInput
           placeholder="Overlay Color (overlayColor)"
           [(ngModel)]="demoService.config.overlayColor"
+          readonly
         />
-        <mat-icon
+        <button
+          mat-icon-button
           matSuffix
-          [style.color]="demoService.config.overlayColor"
-          fontIcon="mdi-palette"
-          fontSet="mdi"
-        ></mat-icon>
+          [(colorPicker)]="demoService.config.overlayColor"
+          cpOutputFormat="rgba"
+          [cpPosition]="'bottom'"
+          [cpUseRootViewContainer]="true"
+          (click)="$event.stopPropagation()"
+          type="button"
+        >
+          <mat-icon
+            [style.color]="demoService.config.overlayColor"
+            fontIcon="mdi-palette"
+            fontSet="mdi"
+          ></mat-icon>
+        </button>
       </mat-form-field>
 
       <div style="margin-top: 21px; margin-bottom: 20px">
@@ -119,17 +137,26 @@
 
       <mat-form-field *ngIf="demoService.config.hasProgressBar">
         <input
-          [(colorPicker)]="demoService.config.pbColor"
           matInput
           placeholder="Progress Bar Color (pbColor)"
           [(ngModel)]="demoService.config.pbColor"
+          readonly
         />
-        <mat-icon
+        <button
+          mat-icon-button
           matSuffix
-          [style.color]="demoService.config.pbColor"
-          fontIcon="mdi-palette"
-          fontSet="mdi"
-        ></mat-icon>
+          [(colorPicker)]="demoService.config.pbColor"
+          [cpPosition]="'bottom'"
+          [cpUseRootViewContainer]="true"
+          (click)="$event.stopPropagation()"
+          type="button"
+        >
+          <mat-icon
+            [style.color]="demoService.config.pbColor"
+            fontIcon="mdi-palette"
+            fontSet="mdi"
+          ></mat-icon>
+        </button>
       </mat-form-field>
 
       <div style="margin-top: 21px; margin-bottom: 20px">
@@ -176,17 +203,26 @@
     >
       <mat-form-field>
         <input
-          [(colorPicker)]="demoService.config.bgsColor"
           matInput
           placeholder="Background Spinner Color (bgsColor)"
           [(ngModel)]="demoService.config.bgsColor"
+          readonly
         />
-        <mat-icon
+        <button
+          mat-icon-button
           matSuffix
-          [style.color]="demoService.config.bgsColor"
-          fontIcon="mdi-palette"
-          fontSet="mdi"
-        ></mat-icon>
+          [(colorPicker)]="demoService.config.bgsColor"
+          [cpPosition]="'bottom'"
+          [cpUseRootViewContainer]="true"
+          (click)="$event.stopPropagation()"
+          type="button"
+        >
+          <mat-icon
+            [style.color]="demoService.config.bgsColor"
+            fontIcon="mdi-palette"
+            fontSet="mdi"
+          ></mat-icon>
+        </button>
       </mat-form-field>
 
       <mat-form-field>
@@ -300,21 +336,30 @@
 
       <mat-form-field *ngIf="demoService.config.text">
         <input
-          [(colorPicker)]="demoService.config.textColor"
           matInput
           placeholder="Loading Text Color (textColor)"
           [(ngModel)]="demoService.config.textColor"
+          readonly
         />
-        <mat-icon
+        <div
           matSuffix
-          [style.color]="demoService.config.textColor"
-          fontIcon="mdi-palette"
-          fontSet="mdi"
-        ></mat-icon>
+          [(colorPicker)]="demoService.config.textColor"
+          [cpPosition]="'bottom'"
+          [cpUseRootViewContainer]="true"
+          (click)="$event.stopPropagation()"
+        >
+          <button mat-icon-button type="button">
+            <mat-icon
+              [style.color]="demoService.config.textColor"
+              fontIcon="mdi-palette"
+              fontSet="mdi"
+            ></mat-icon>
+          </button>
+        </div>
       </mat-form-field>
     </div>
     <!-- Background }}}-->
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center" fxLayoutGap="12px">
       <button mat-raised-button color="accent" (click)="reset()">
         Reset Configuration
       </button>
