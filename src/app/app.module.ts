@@ -19,9 +19,6 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import {
   NgxUiLoaderModule,
   NgxUiLoaderConfig,
-  SPINNER,
-  POSITION,
-  PB_DIRECTION,
   NgxUiLoaderRouterModule,
   NgxUiLoaderHttpModule,
 } from 'ngx-ui-loader';

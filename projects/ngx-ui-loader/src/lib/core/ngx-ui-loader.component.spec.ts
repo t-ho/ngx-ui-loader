@@ -11,13 +11,9 @@ import { NgxUiLoaderService } from './ngx-ui-loader.service';
 import { SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { SPINNER, POSITION, PB_DIRECTION } from '../utils/enums';
 import { SPINNER_CONFIG, DEFAULT_CONFIG } from '../utils/constants';
-import { PositionType } from '../utils/types';
-
 // DO NOT change the following constants {{{
 const BACKGROUND_CLOSING_CLASS = 'background-closing';
 const DEFAULT_MASTER_LOADER_ID = 'master';
-const DEFAULT_BG_TASK_ID = 'bg-default';
-const DEFAULT_FG_TASK_ID = 'fg-default';
 const DELAY_CLOSING = 1100;
 const DELAY_OPENNING_BG_AFTER_CLOSING_FG = 500;
 const END_TIME = 10000;
@@ -43,18 +39,16 @@ describe('NgxUiLoaderComponent', () => {
   let logoEl: HTMLElement;
   let textEl: HTMLElement;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [NgxUiLoaderComponent],
-        providers: [NgxUiLoaderService],
-      })
-        .overrideComponent(NgxUiLoaderComponent, {
-          set: { changeDetection: ChangeDetectionStrategy.Default },
-        })
-        .compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [NgxUiLoaderComponent],
+      providers: [NgxUiLoaderService],
     })
-  );
+      .overrideComponent(NgxUiLoaderComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NgxUiLoaderComponent);
@@ -128,7 +122,7 @@ describe('NgxUiLoaderComponent', () => {
       loaderId: new SimpleChange(
         DEFAULT_MASTER_LOADER_ID,
         component.loaderId,
-        true
+        true,
       ),
     });
     fixture.detectChanges();
@@ -150,7 +144,7 @@ describe('NgxUiLoaderComponent', () => {
     });
     fixture.detectChanges();
     expect(component.fgSpinnerClass).toBe(
-      SPINNER_CONFIG[SPINNER.ballScaleMultiple].class
+      SPINNER_CONFIG[SPINNER.ballScaleMultiple].class,
     );
   });
 
@@ -161,7 +155,7 @@ describe('NgxUiLoaderComponent', () => {
     });
     fixture.detectChanges();
     expect(component.bgSpinnerClass).toBe(
-      SPINNER_CONFIG[SPINNER.ballScaleMultiple].class
+      SPINNER_CONFIG[SPINNER.ballScaleMultiple].class,
     );
   });
 
@@ -172,7 +166,7 @@ describe('NgxUiLoaderComponent', () => {
     });
     fixture.detectChanges();
     expect(fgSpinnerEl.className).toEqual(
-      jasmine.stringMatching(POSITION.bottomCenter)
+      jasmine.stringMatching(POSITION.bottomCenter),
     );
   });
 
@@ -183,7 +177,7 @@ describe('NgxUiLoaderComponent', () => {
     });
     fixture.detectChanges();
     expect(bgSpinnerEl.className).toEqual(
-      jasmine.stringMatching(POSITION.bottomCenter)
+      jasmine.stringMatching(POSITION.bottomCenter),
     );
   });
 
@@ -204,7 +198,7 @@ describe('NgxUiLoaderComponent', () => {
     });
     fixture.detectChanges();
     expect(progressBarEl.className).toEqual(
-      jasmine.stringMatching('ngx-progress-bar-rtl')
+      jasmine.stringMatching('ngx-progress-bar-rtl'),
     );
   });
 
@@ -353,10 +347,10 @@ describe('NgxUiLoaderComponent', () => {
     loaderService.start();
     fixture.detectChanges();
     expect(progressBarEl.className).toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
     expect(fgContainerEl.className).toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
   });
 
@@ -364,10 +358,10 @@ describe('NgxUiLoaderComponent', () => {
     loaderService.start(TASK_ID_01);
     fixture.detectChanges();
     expect(progressBarEl.className).toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
     expect(fgContainerEl.className).toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
   });
 
@@ -375,10 +369,10 @@ describe('NgxUiLoaderComponent', () => {
     loaderService.start();
     fixture.detectChanges();
     expect(progressBarEl.className).toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
     expect(fgContainerEl.className).toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
     setTimeout(() => {
       loaderService.stop();
@@ -386,24 +380,24 @@ describe('NgxUiLoaderComponent', () => {
     tick(DEFAULT_CONFIG.minTime);
     fixture.detectChanges();
     expect(progressBarEl.className).not.toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
     expect(fgContainerEl.className).not.toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
     expect(progressBarEl.className).toEqual(
-      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS),
     );
     expect(fgContainerEl.className).toEqual(
-      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS),
     );
     tick(DELAY_CLOSING);
     fixture.detectChanges();
     expect(progressBarEl.className).not.toEqual(
-      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS),
     );
     expect(fgContainerEl.className).not.toEqual(
-      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS),
     );
     tick(END_TIME);
   }));
@@ -412,10 +406,10 @@ describe('NgxUiLoaderComponent', () => {
     loaderService.start(TASK_ID_01);
     fixture.detectChanges();
     expect(progressBarEl.className).toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
     expect(fgContainerEl.className).toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
     setTimeout(() => {
       loaderService.stop(TASK_ID_01);
@@ -423,24 +417,24 @@ describe('NgxUiLoaderComponent', () => {
     tick(DEFAULT_CONFIG.minTime);
     fixture.detectChanges();
     expect(progressBarEl.className).not.toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
     expect(fgContainerEl.className).not.toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
     expect(progressBarEl.className).toEqual(
-      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS),
     );
     expect(fgContainerEl.className).toEqual(
-      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS),
     );
     tick(DELAY_CLOSING);
     fixture.detectChanges();
     expect(progressBarEl.className).not.toEqual(
-      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS),
     );
     expect(fgContainerEl.className).not.toEqual(
-      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS),
     );
     tick(END_TIME);
   }));
@@ -450,10 +444,10 @@ describe('NgxUiLoaderComponent', () => {
     loaderService.start();
     fixture.detectChanges();
     expect(progressBarEl.className).toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
     expect(fgContainerEl.className).toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
     setTimeout(() => {
       loaderService.stop();
@@ -461,16 +455,16 @@ describe('NgxUiLoaderComponent', () => {
     tick(DEFAULT_CONFIG.minTime);
     fixture.detectChanges();
     expect(progressBarEl.className).toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
     expect(fgContainerEl.className).toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
     expect(progressBarEl.className).not.toEqual(
-      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS),
     );
     expect(fgContainerEl.className).not.toEqual(
-      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS),
     );
     tick(END_TIME);
   }));
@@ -480,13 +474,13 @@ describe('NgxUiLoaderComponent', () => {
     loaderService.start();
     fixture.detectChanges();
     expect(bgSpinnerEl.className).not.toEqual(
-      jasmine.stringMatching(LOADING_BACKGROUND_CLASS)
+      jasmine.stringMatching(LOADING_BACKGROUND_CLASS),
     );
     expect(progressBarEl.className).toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
     expect(fgContainerEl.className).toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
     setTimeout(() => {
       loaderService.stop();
@@ -494,32 +488,32 @@ describe('NgxUiLoaderComponent', () => {
     tick(DEFAULT_CONFIG.minTime);
     fixture.detectChanges();
     expect(progressBarEl.className).not.toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
     expect(fgContainerEl.className).not.toEqual(
-      jasmine.stringMatching(LOADING_FOREGROUND_CLASS)
+      jasmine.stringMatching(LOADING_FOREGROUND_CLASS),
     );
     expect(progressBarEl.className).toEqual(
-      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS),
     );
     expect(fgContainerEl.className).toEqual(
-      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS),
     );
     tick(DELAY_OPENNING_BG_AFTER_CLOSING_FG);
     fixture.detectChanges();
     expect(bgSpinnerEl.className).toEqual(
-      jasmine.stringMatching(LOADING_BACKGROUND_CLASS)
+      jasmine.stringMatching(LOADING_BACKGROUND_CLASS),
     );
     tick(DELAY_CLOSING - DELAY_OPENNING_BG_AFTER_CLOSING_FG);
     fixture.detectChanges();
     expect(progressBarEl.className).not.toEqual(
-      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS),
     );
     expect(fgContainerEl.className).not.toEqual(
-      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(FOREGROUND_CLOSING_CLASS),
     );
     expect(bgSpinnerEl.className).toEqual(
-      jasmine.stringMatching(LOADING_BACKGROUND_CLASS)
+      jasmine.stringMatching(LOADING_BACKGROUND_CLASS),
     );
     tick(END_TIME);
   }));
@@ -528,7 +522,7 @@ describe('NgxUiLoaderComponent', () => {
     loaderService.startBackground();
     fixture.detectChanges();
     expect(bgSpinnerEl.className).toEqual(
-      jasmine.stringMatching(LOADING_BACKGROUND_CLASS)
+      jasmine.stringMatching(LOADING_BACKGROUND_CLASS),
     );
   });
 
@@ -536,7 +530,7 @@ describe('NgxUiLoaderComponent', () => {
     loaderService.startBackground('test');
     fixture.detectChanges();
     expect(bgSpinnerEl.className).toEqual(
-      jasmine.stringMatching(LOADING_BACKGROUND_CLASS)
+      jasmine.stringMatching(LOADING_BACKGROUND_CLASS),
     );
   });
 
@@ -544,7 +538,7 @@ describe('NgxUiLoaderComponent', () => {
     loaderService.startBackground();
     fixture.detectChanges();
     expect(bgSpinnerEl.className).toEqual(
-      jasmine.stringMatching(LOADING_BACKGROUND_CLASS)
+      jasmine.stringMatching(LOADING_BACKGROUND_CLASS),
     );
     setTimeout(() => {
       loaderService.stopBackground();
@@ -552,15 +546,15 @@ describe('NgxUiLoaderComponent', () => {
     tick(DEFAULT_CONFIG.minTime);
     fixture.detectChanges();
     expect(bgSpinnerEl.className).not.toEqual(
-      jasmine.stringMatching(LOADING_BACKGROUND_CLASS)
+      jasmine.stringMatching(LOADING_BACKGROUND_CLASS),
     );
     expect(bgSpinnerEl.className).toEqual(
-      jasmine.stringMatching(BACKGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(BACKGROUND_CLOSING_CLASS),
     );
     tick(DELAY_CLOSING);
     fixture.detectChanges();
     expect(bgSpinnerEl.className).not.toEqual(
-      jasmine.stringMatching(BACKGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(BACKGROUND_CLOSING_CLASS),
     );
     tick(END_TIME);
   }));
@@ -569,7 +563,7 @@ describe('NgxUiLoaderComponent', () => {
     loaderService.startBackground('test');
     fixture.detectChanges();
     expect(bgSpinnerEl.className).toEqual(
-      jasmine.stringMatching(LOADING_BACKGROUND_CLASS)
+      jasmine.stringMatching(LOADING_BACKGROUND_CLASS),
     );
     setTimeout(() => {
       loaderService.stopBackground('test');
@@ -577,15 +571,15 @@ describe('NgxUiLoaderComponent', () => {
     tick(DEFAULT_CONFIG.minTime);
     fixture.detectChanges();
     expect(bgSpinnerEl.className).not.toEqual(
-      jasmine.stringMatching(LOADING_BACKGROUND_CLASS)
+      jasmine.stringMatching(LOADING_BACKGROUND_CLASS),
     );
     expect(bgSpinnerEl.className).toEqual(
-      jasmine.stringMatching(BACKGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(BACKGROUND_CLOSING_CLASS),
     );
     tick(DELAY_CLOSING);
     fixture.detectChanges();
     expect(bgSpinnerEl.className).not.toEqual(
-      jasmine.stringMatching(BACKGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(BACKGROUND_CLOSING_CLASS),
     );
     tick(END_TIME);
   }));
@@ -595,7 +589,7 @@ describe('NgxUiLoaderComponent', () => {
     loaderService.startBackground();
     fixture.detectChanges();
     expect(bgSpinnerEl.className).toEqual(
-      jasmine.stringMatching(LOADING_BACKGROUND_CLASS)
+      jasmine.stringMatching(LOADING_BACKGROUND_CLASS),
     );
     setTimeout(() => {
       loaderService.stopBackground();
@@ -603,10 +597,10 @@ describe('NgxUiLoaderComponent', () => {
     tick(DEFAULT_CONFIG.minTime);
     fixture.detectChanges();
     expect(bgSpinnerEl.className).toEqual(
-      jasmine.stringMatching(LOADING_BACKGROUND_CLASS)
+      jasmine.stringMatching(LOADING_BACKGROUND_CLASS),
     );
     expect(bgSpinnerEl.className).not.toEqual(
-      jasmine.stringMatching(BACKGROUND_CLOSING_CLASS)
+      jasmine.stringMatching(BACKGROUND_CLOSING_CLASS),
     );
     tick(END_TIME);
   }));
